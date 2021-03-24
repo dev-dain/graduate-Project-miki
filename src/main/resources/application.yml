@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/DaYang?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: wendy-yang24
+    url: jdbc:mysql://3.34.117.216:3306/test?serverTimezone=UTC&characterEncoding=UTF-8
+    username: dayang
+    password: dayang
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -11,7 +11,7 @@ spring:
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: none
+      ddl-auto: create
 
 logging:
   level:
