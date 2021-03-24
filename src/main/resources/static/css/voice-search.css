@@ -1,0 +1,85 @@
+#wrap { background-color: #FFF8E5; }
+.top-area {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding-top: 1rem;  
+}
+header {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  color: #2E0A0A;
+}
+.go-prev {
+  width: 70px;
+  height: 70px;
+  font-size: 3.5rem;
+  color: #2E0A0A;
+  text-align: center;
+  line-height: 70px;
+  background-color: rgba(0, 0, 0, 0);
+}
+h1 {
+  margin: 0;
+  font-size: 3.5rem;
+}
+.mic-area {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mic {
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url('../img/microphone-black-shape.png');
+  background-size: cover;
+  width: 128px;
+  height: 128px;
+}
+.mic:active {
+  filter: invert(50%);
+}
+.notice { 
+  font-size: 2rem;
+  font-weight: 900;
+}
+.bottom-area {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bottom-area > * {
+  margin: 20px;
+}
+.search-input {
+  border: 2px solid #2678D9;
+  border-radius: 15px;
+  width: 360px;
+  height: 55px;
+  padding: 15px;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 700;
+}
+.positive, .retry { 
+  color: #FFF7F0; 
+  width: 140px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 5px;
+}
+.positive {
+  background-color: #2678D9;
+}
+.retry {
+  background-color: #F66657;
+}

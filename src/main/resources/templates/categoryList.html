@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/category.css">
+  <title>CategoryList</title>
+</head>
+<body>
+  <div id="wrap">
+    <div class="top-area">
+      <!-- class="title"-->
+      <header>
+        <button class="go-prev">&lt;</button>
+        <h1>상품 검색</h1>
+      </header>
+      <div class="search">
+        <input type="text" class="search-input" placeholder="피지오겔 DMT 로션 200ml">
+        <button class="search-btn">검색</button>
+        <button class="turn-on-mic" title="https://www.flaticon.com/authors/dave-gandy"></button>
+      </div>
+    </div>
+    <div class="bottom-area">
+      <div class="row">
+        <a href="list-makeup.html" class="category-btn beauty-category">
+          <img 
+            class="category-btn-img"
+            src="./img/cosmetics.png" 
+            alt="https://www.freepik.com"
+          >
+          <p>메이크업</p>
+        </a>
+        <a href="list-skincare.html" class="category-btn beauty-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>스킨</p>
+        </a>        
+        <a href="" class="category-btn beauty-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>미용소품</p>
+        </a>        
+      </div>
+      <div class="row">
+        <a href="" class="category-btn beauty-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>바디</p>
+        </a>        
+        <a href="" class="category-btn beauty-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>헤어</p>
+        </a>        
+        <a href="" class="category-btn beauty-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>향수</p>
+        </a>        
+      </div>
+      <div class="row">
+        <a href="" class="category-btn food-health-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>남성</p>
+        </a>        
+        <a href="" class="category-btn food-health-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>일반식품</p>
+        </a>        
+        <a href="" class="category-btn food-health-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>건강식품</p>
+        </a>        
+      </div>
+      <div class="row">
+        <a href="" class="category-btn etc-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>헬스&위생</p>
+        </a>        
+        <a href="" class="category-btn etc-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>기타</p>
+        </a>        
+        <a href="" class="category-btn etc-category">
+          <img 
+          class="category-btn-img"
+          src="./img/cosmetics.png" 
+          alt="https://www.freepik.com"
+          >
+          <p>도움</p>
+        </a>        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const mic = document.querySelector('.turn-on-mic');
+    const goPrevBtn = document.querySelector('.go-prev');
+
+    goPrevBtn.addEventListener('click', () => history.back());
+    mic.addEventListener('click', () => location.href = 'voice-search.html' );
+  </script>
+</body>
+</html>

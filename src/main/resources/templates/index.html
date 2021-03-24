@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <title>Home</title>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="top-area">
+      <h3 class="clock"></h3>
+    </div>
+    <div class="bottom-area">
+      <a class="link-btn  order-page" href="./order">
+        <span class="btn">
+          <h4>바로 결제</h4>
+          <div class="icon-box">
+            <img
+              class="btn-icon"
+              src="./img/credit-card.png"
+              alt="Icons made by Pause08 https://www.flaticon.com/authors/pause08"
+            >
+          </div>
+          <p>
+            더이상 기다리지 말고<br>
+            <span class="bold-text">바코드 결제</span>
+            해보세요
+          </p>
+        </span>
+      </a>
+      <a class="link-btn test-page" href="./test">
+        <span class="btn">
+          <h4>테스트</h4>
+          <div class="icon-box">
+            <img
+              class="btn-icon"
+              src="./img/makeup.png"
+              alt="Icons made by Freepik https://www.freepik.comIcons"
+            >
+          </div>
+          <p>
+            마음에 든 그 제품!<br>
+            <span class="bold-text">바로 테스트</span>
+            해보세요
+          </p>
+        </span>
+      </a>
+      <a class="link-btn search-page" href="categoryList">
+        <span class="btn">
+          <h4>상품 검색</h4>
+          <div class="icon-box">
+            <img
+              class="btn-icon"
+              src="./img/loupe.png"
+              alt="Icons made by Freepik https://www.freepik.comIcons"
+            >
+          </div>
+          <p>
+            어떤 제품 찾으세요?<br>
+            <span class="bold-text">미키에게 말해주세요</span>
+          </p>
+        </span>
+      </a>
+    </div>
+  </div>
+  <script>
+    const clock = document.querySelector('.clock');
+    const clockFunc = () => {
+      let today = new Date();
+      let h = (today.getHours() > 12) ?
+        today.getHours() - 12 : today.getHours();
+      h = (h < 10) ? '0' + h : h;
+      let m = (today.getMinutes() < 10) ?
+        '0' + today.getMinutes() : today.getMinutes();
+      let amorpm = (today.getHours() < 12) ? 'AM' : 'PM';
+      clock.innerHTML = `${amorpm} ${h}:${m}`;
+    }
+    clockFunc();
+    setInterval(clockFunc, 1000);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/voice-search.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
+  <script src="./js/p5.speech.js"></script>
+  <title>Voice search page</title>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="top-area">
+      <header>
+        <button class="go-prev">&lt;</button>
+        <h1>음성 검색</h1>
+      </header>
+      <div class="mic-area">
+        <button class="mic"></button>
+        <p class="notice">듣고 있습니다...</p>
+      </div>
+    </div>
+    <div class="bottom-area">
+      <input class="search-input" type="text" id="speech">
+      <div class="button-box">
+        <button class="positive">맞아요</button>
+        <button class="retry">다시 하기</button>
+      </div>
+    </div>
+  </div>
+  <script src="./js/speech-recognition.js"></script>
+  <script>
+    const searchInput = document.getElementById('speech');
+    const goPrevBtn = document.querySelector('.go-prev');
+    const retry = document.querySelector('.retry');
+
+    goPrevBtn.addEventListener('click', () => { history.back(); });
+
+    retry.addEventListener('click', () => { searchInput.value = ''; });
+  </script>
+</body>
+
+</html>

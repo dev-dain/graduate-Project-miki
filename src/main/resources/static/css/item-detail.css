@@ -1,0 +1,103 @@
+#wrap { 
+  background-color: #FFFAF9; 
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  max-height: 100vh;
+}
+header {
+  background-color: #2E0A0A;
+  color: #FFFAF9;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+}
+header > * { margin: 0 10px;}
+.go-prev {
+  width: 70px;
+  height: 70px;
+  font-size: 2.5rem;
+  color: #FFFAF9;
+  text-align: center;
+  line-height: 70px;
+  background-color: rgba(0, 0, 0, 0);
+}
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-overflow: ellipsis;
+}
+.detail-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80%;
+}
+.item-btn {
+  width: 45px;
+  height: 45px;
+  margin: 0 15px;
+  font-size: 1.5rem;
+  background: #3E4247;
+  font-weight: 900;
+  border-radius: 50%;
+  color: #ECF2FD;
+  z-index: 10;
+}
+.img-container {
+  overflow-y: scroll;
+  height: 100%;
+}
+*[class^="detail-img-"] {
+  width: 100%;
+  height: auto;
+}
+.btn-container {
+  position: absolute;
+  right: 0;
+  top: 20%;
+  background-color: #FFE1C5;
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.btn-container > * {
+  margin: 5px 0;
+}
+.cont-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px 24px;
+}
+.btn-container > .put-in-cart {
+  background-color: #FFC41E;
+  background-image: url('../img/shopping-cart.png');
+}
+.go-test {
+  background-color: #FF8569;
+  background-image: url('../img/cosmetics.png');
+}
+.view-review {
+  background-color: #44A4FE;
+  background-image: url('../img/loupe.png');
+}
+footer {
+  height: 60px;
+  background-color: rgba(46, 10, 10, 1);
+  color: #FFFAF9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer > p {
+  font-size: 1.5rem;
+  font-weight: 900;
+}

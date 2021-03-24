@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품 상세 페이지</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/item-detail.css">
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <button class="go-prev">&lt;</button>
+      <h1 class="title">포렌코즈 베어 섀도우 팔레트</h1>
+    </header>
+    <div class="detail-container">
+      <button class="item-btn item-prev-btn">&lt;</button>
+      <div class="btn-container">
+        <button class="cont-btn put-in-cart"></button>
+        <button class="cont-btn go-test"></button>
+        <button class="cont-btn view-review"></button>
+      </div>  
+      <div class="img-container">
+        <img 
+          src="http://mimg.lalavla.com/resources/images/prdimg/202102/23/10005110_20210223121750.jpg" 
+          alt=""
+          class="detail-img-1"
+        >
+      </div>
+      <button class="item-btn item-next-btn">&gt;</button>
+    </div>
+    <footer>
+      <p class="put-in-cart">장바구니에 담기</p>
+    </footer>
+  </div>
+  <script>
+    const goPrevBtn = document.querySelector('.go-prev');
+
+    goPrevBtn.addEventListener('click', () => { history.back(); });
+  </script>
+</body>
+</html>
