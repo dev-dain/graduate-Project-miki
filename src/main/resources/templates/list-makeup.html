@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/category-part.css">
   <link rel="stylesheet" href="./css/animation.css">
-  <title>스킨케어</title>
+  <title>메이크업</title>
 </head>
 <body>
   <div id="wrap">
@@ -15,7 +15,7 @@
     <header>
       <div class="title-container">
         <button class="go-prev">&lt;</button>
-        <h1 class="title">스킨케어</h1>  
+        <h1 class="title">메이크업</h1>  
       </div>
       <div class="top-button-container">
         <button class="turn-on-mic" title="https://www.flaticon.com/authors/dave-gandy"></button>
@@ -120,7 +120,7 @@
 
     goPrevBtn.addEventListener('click', () => { history.back(); });
 
-    mic.addEventListener('click', () => location.href = 'voice-search.html');
+    mic.addEventListener('click', () => location.href = './voice-search.html');
     cart.addEventListener('click', () => {
       //아직 cart.html 구현 전
       location.href = './cart.html';
@@ -191,7 +191,7 @@
 
     itemCardList.forEach(item => {
       item.addEventListener('click', () => {
-        location.href = 'item2.html';
+        location.href = './item2.html';
       });
     });
   </script>

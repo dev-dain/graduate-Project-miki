@@ -7,9 +7,9 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class Item_img { //아이템 안에 상세정보 사진들
+public class Item_img {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="item_img_id")
     private Long id;
 

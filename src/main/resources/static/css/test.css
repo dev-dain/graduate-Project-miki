@@ -1,0 +1,119 @@
+#wrap { 
+  background-color: #FFF8E5; 
+  display: flex;
+  flex-flow: column nowrap;
+  max-height: 1500px;
+}
+header {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;  
+}
+.title-container {
+  display: flex;
+  align-items: center;
+}
+.go-prev {
+  width: 70px;
+  height: 70px;
+  font-size: 3rem;
+  color: #2E0A0A;
+  text-align: center;
+  line-height: 70px;
+  background-color: rgba(0, 0, 0, 0);
+}
+h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+.top-button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 2rem;
+}
+.go-cart {
+  margin-left: 25px;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url('../img/shopping-cart.png');
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  font-size: 0;
+}
+.btn-container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+.btn-container > .btn {
+  background: #F66657;
+  color: #FFF7F0;
+  font-weight: 700;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+.item-container {
+  width: 100%;
+  height: 100px;
+  display: flex;
+}
+.item-prev-btn, .item-next-btn {
+  height: 100px;
+  width: 50px;
+  background: #C4C4C4;
+  color: #FFFFFF;
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+.item {
+  width: 100px;
+  height: 100px;
+  background: #FFFFFF;
+}
+.item > .item-img-container {
+  width: 100%;
+  height: 75px;
+  position: relative;
+}
+.item-img-container > .item-thumbnail {
+  width: 100px;
+  max-height: 100%;
+  object-fit: contain;
+}
+.item-select-check {
+  border: #F66657 solid 2px;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  cursor: pointer;
+}
+.item-title-container {
+  background-color: #FDE7A9;
+  color: #2E0A0A;
+  font-weight: 700;
+  width: 100%;
+  height: 25px;
+  text-align: center;
+}
+.cam-container {
+  align-self: center;
+  width: 90%;
+  min-height: 600px;
+  border: #FDE7A9 3px solid;
+  border-radius: 10px;
+  box-shadow: #ffd966 0 4px 12px;
+  background: #fff;
+}
+#test-cam {
+  width: 100%;
+  height: 100%;
+  transform: rotateY(180deg) scaleY(2.0); /* 거울 모드 */
+}

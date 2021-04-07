@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Getter @Setter
 public class Item_option {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name="item_option_id")
     private Long id;
 

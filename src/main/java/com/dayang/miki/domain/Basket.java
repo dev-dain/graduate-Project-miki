@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter@Setter
 public class Basket {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="basket_id")
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)

@@ -12,7 +12,7 @@ import java.util.List;
 @Getter @Setter
 public class Orders {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="order_id")
     private Long id;
     private LocalDateTime orderDate; //주문시간

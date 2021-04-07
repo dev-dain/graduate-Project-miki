@@ -15,10 +15,14 @@ header {
   padding: 0 1.5rem;
   color: #2E0A0A;
 }
+.title-container {
+  display: flex;
+  align-items: center;
+}
 .go-prev {
   width: 70px;
   height: 70px;
-  font-size: 3.5rem;
+  font-size: 3rem;
   color: #2E0A0A;
   text-align: center;
   line-height: 70px;
@@ -26,7 +30,7 @@ header {
 }
 h1 {
   margin: 0;
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 .mic-area {
   display: flex;

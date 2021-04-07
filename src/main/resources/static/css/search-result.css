@@ -1,0 +1,21 @@
+.result-container {
+  padding: 20px 30px;
+  width: 100%;
+  background: #FFDA73;
+  color: #312112;
+  margin-bottom: 30px;
+}
+.result-text {
+  font-size: 1.3rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+.result-count {
+  font-size: 2rem;
+  color: #E93C15;
+  font-weight: 900;
+}
+.item-container {
+  align-self: center;
+  padding: 30px;
+}

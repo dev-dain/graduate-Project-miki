@@ -11,7 +11,6 @@
 </head>
 <body>
   <div id="wrap">
-    <!-- class header -->
     <header>
       <div class="title-container">
         <button class="go-prev">&lt;</button>
@@ -47,6 +46,20 @@
         <div class="item-row">
           <div class="item-card">
             <img 
+              src="http://mimg.lalavla.com/resources/images/prdimg/20201117/1001834/1001834_D_004_550.jpg" 
+              alt="" 
+              class="thumbnail-img"
+            >
+            <hr class="divide-img-info">
+            <p class="item-title">센카 퍼펙트 휩 페이셜 워시 2입 세트</p>
+            <div class="price-container">
+              <p class="origin-price">16,000원</p>
+              <div class="discount-price">12,800원</div>
+            </div>
+            <!-- <button class="go-test"></button> -->
+          </div>
+          <div class="item-card">
+            <img 
               src="http://mimg.lalavla.com/resources/images/prdimg/20200206/10004725/10004725_D_001_550.jpg" 
               alt="" 
               class="thumbnail-img"
@@ -56,20 +69,6 @@
               폼 120ml</p>
             <div class="price-container">
               <p class="origin-price">16,000원</p>
-              <div class="discount-price">11,600원</div>
-            </div>
-            <!-- <button class="go-test"></button> -->
-          </div>
-          <div class="item-card">
-            <img 
-              src="http://mimg.lalavla.com/resources/images/prdimg/20210125/10006982/10006982_D_001_550.jpg" 
-              alt="" 
-              class="thumbnail-img"
-            >
-            <hr class="divide-img-info">
-            <p class="item-title">유리피부 그란떼 클렌징 오일 300ml</p>
-            <div class="price-container">
-              <!-- <p class="origin-price">16,000원</p> -->
               <div class="discount-price">11,600원</div>
             </div>
             <!-- <button class="go-test"></button> -->
@@ -78,30 +77,29 @@
         <div class="item-row">
           <div class="item-card">
             <img 
-              src="http://mimg.lalavla.com/resources/images/prdimg/20200206/10004725/10004725_D_001_550.jpg" 
+              src="http://mimg.lalavla.com/resources/images/prdimg/20200826/10006094/10006094_D_001_550.jpg" 
               alt="" 
               class="thumbnail-img"
             >
             <hr class="divide-img-info">
-            <p class="item-title">아누아 어성초 약산성 클렌징 
-              폼 120ml</p>
+            <p class="item-title">유세린 더머토클린 3in1 미셀러 클렌징폼 1+1 기획</p>
             <div class="price-container">
-              <p class="origin-price">16,000원</p>
-              <div class="discount-price">11,600원</div>
+              <!-- <p class="origin-price">26,000원</p> -->
+              <div class="discount-price">20,800원</div>
             </div>
             <!-- <button class="go-test"></button> -->
           </div>
           <div class="item-card">
             <img 
-              src="http://mimg.lalavla.com/resources/images/prdimg/20210125/10006982/10006982_D_001_550.jpg" 
+              src="http://mimg.lalavla.com/resources/images/prdimg/20180815/1000144/1000144_D_001_550.jpg" 
               alt="" 
               class="thumbnail-img"
             >
             <hr class="divide-img-info">
-            <p class="item-title">유리피부 그란떼 클렌징 오일 300ml</p>
+            <p class="item-title">아벤느 클리낭스 클렌징 젤 100ml</p>
             <div class="price-container">
-              <!-- <p class="origin-price">16,000원</p> -->
-              <div class="discount-price">11,600원</div>
+              <p class="origin-price">9,900원</p>
+              <div class="discount-price">4,950원</div>
             </div>
             <!-- <button class="go-test"></button> -->
           </div>
@@ -124,7 +122,7 @@
 
     goPrevBtn.addEventListener('click', () => { history.back(); });
 
-    mic.addEventListener('click', () => location.href = 'voice-search.html');
+    mic.addEventListener('click', () => location.href = './voice-search.html');
     cart.addEventListener('click', () => {
       //아직 cart.html 구현 전
       location.href = './cart.html';
@@ -195,7 +193,7 @@
 
     itemCardList.forEach(item => {
       item.addEventListener('click', () => {
-        location.href = 'item.html';
+        location.href = './item.html';
       });
     });
   </script>

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Review_img {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="review_img_id")
     private Long id;
     @ManyToOne

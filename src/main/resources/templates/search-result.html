@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/category-part.css">
+  <link rel="stylesheet" href="./css/search-result.css">
+  <title>검색 결과</title>
+</head>
+
+<body>
+  <div id="wrap">
+    <header>
+      <div class="title-container">
+        <button class="go-prev">&lt;</button>
+        <h1 class="title">검색 결과</h1>
+      </div>
+      <div class="top-button-container">
+        <button class="turn-on-mic" title="https://www.flaticon.com/authors/dave-gandy"></button>
+        <button class="go-cart" title="https://www.freepik.com"></button>
+      </div>
+    </header>
+    <div class="result-container">
+      <p class="result-text">
+        으아아
+      </p>
+    </div>
+    <div class="item-container">
+      <button class="item-btn item-prev-btn">&lt;</button>
+      <div class="item-row-container">
+        <div class="item-row">
+          <div class="item-card">
+            <img src="http://mimg.lalavla.com/resources/images/prdimg/20201117/1001834/1001834_D_004_550.jpg" alt=""
+              class="thumbnail-img">
+            <hr class="divide-img-info">
+            <p class="item-title">센카 퍼펙트 휩 페이셜 워시 2입 세트</p>
+            <div class="price-container">
+              <p class="origin-price">16,000원</p>
+              <div class="discount-price">12,800원</div>
+            </div>
+            <!-- <button class="go-test"></button> -->
+          </div>
+          <div class="item-card">
+            <img src="http://mimg.lalavla.com/resources/images/prdimg/20210125/10006982/10006982_D_001_550.jpg" alt=""
+              class="thumbnail-img">
+            <hr class="divide-img-info">
+            <p class="item-title">아누아 어성초 아크네 약산성 클렌징 폼 1+1</p>
+            <div class="price-container">
+              <!-- <p class="origin-price">16,000원</p> -->
+              <div class="discount-price">16,000원</div>
+            </div>
+            <!-- <button class="go-test"></button> -->
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="item-card">
+            <img src="http://mimg.lalavla.com/resources/images/prdimg/20200826/10006094/10006094_D_001_550.jpg" alt=""
+              class="thumbnail-img">
+            <hr class="divide-img-info">
+            <p class="item-title">유세린 더머토클린 3in1 미셀러 클렌징폼 1+1 기획</p>
+            <div class="price-container">
+              <p class="origin-price">26,000원</p>
+              <div class="discount-price">20,800원</div>
+            </div>
+            <!-- <button class="go-test"></button> -->
+          </div>
+          <div class="item-card">
+            <img src="http://mimg.lalavla.com/resources/images/prdimg/20180815/1000144/1000144_D_001_550.jpg" alt=""
+              class="thumbnail-img">
+            <hr class="divide-img-info">
+            <p class="item-title">아벤느 클리낭스 클렌징 젤 100ml</p>
+            <div class="price-container">
+              <p class="origin-price">9,900원</p>
+              <div class="discount-price">4,950원</div>
+            </div>
+            <!-- <button class="go-test"></button> -->
+          </div>
+        </div>
+      </div>
+      <button class="item-btn item-next-btn">&gt;</button>
+    </div>
+  </div>
+
+  <script>
+    const mic = document.querySelector('.turn-on-mic');
+    const cart = document.querySelector('.go-cart');
+    const goPrevBtn = document.querySelector('.go-prev');
+
+    goPrevBtn.addEventListener('click', () => { history.back(); });
+
+    mic.addEventListener('click', () => location.href = './voice-search.html');
+    cart.addEventListener('click', () => {
+      //아직 cart.html 구현 전
+      location.href = './cart.html';
+    });
+
+    const nameList = ['아누아', '포렌코즈베어'];
+    const itemList = {
+      '아누아': 17,
+      '포렌코즈베어': 2
+    };
+
+    const searchParams = new URLSearchParams(location.search);
+    const keyword = searchParams.get('name');
+    const processedKeyword = keyword.split(' ').join('');
+
+    const itemContainer = document.querySelector('.item-container');
+
+    const resultText = document.querySelector('.result-text');
+    const resultCount = ((itemList[processedKeyword] === undefined) ? 0 : itemList[processedKeyword]);
+    resultText.innerHTML = 
+      `"${keyword}"의 검색결과는<br>
+        <strong class="result-count">
+        ${resultCount}건</strong> 입니다.`
+
+    if (processedKeyword === '포렌코즈베어') {
+      itemContainer.innerHTML = `
+      <div class="item-row-container">
+        <div class="item-row">
+          <div class="item-card">
+            <img 
+              src="http://mimg.lalavla.com/resources/images/prdimg/20210223/10005110/10005110_D_004_550.jpg" 
+              alt="" 
+              class="thumbnail-img"
+            >
+            <hr class="divide-img-info">
+            <p class="item-title">포렌코즈 베어 섀도우 팔레트</p>
+            <div class="price-container">
+              <p class="origin-price">20,000원</p>
+              <div class="discount-price">12,600원</div>
+            </div>
+            <button class="go-test">테스트</button>
+          </div>
+          <div class="item-card">
+            <img 
+              src="http://mimg.lalavla.com/resources/images/prdimg/20200922/10006216/10006216_D_001_360.jpg" 
+              alt="" 
+              class="thumbnail-img"
+            >
+            <hr class="divide-img-info">
+            <p class="item-title">포렌코즈 베어 블러셔</p>
+            <div class="price-container">
+              <p class="origin-price">16,000원</p>
+              <div class="discount-price">12,800원</div>
+            </div>
+            <button class="go-test">테스트</button>
+          </div>
+        </div>
+      </div>
+      `;
+    }
+
+    
+    if (!resultCount) {
+      itemContainer.innerHTML = `
+        <img 
+          class="category-btn-img"
+          src="./img/information.png" 
+          alt="https://www.freepik.com"
+          style="width: 128px; margin-bottom: 50px;";
+        >
+        <p style="font-size: 2rem; font-weight: 900;">검색 결과가 없습니다.</p>
+      `;
+      itemContainer.style.flexDirection = 'column';
+      itemContainer.style.justifyContent = 'center';
+    }
+  </script>
+</body>
+
+</html>

@@ -7,13 +7,11 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class History {
+public class Store {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="history_id")
+    @Column(name="store_id")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="item_id")
-    private Item item;
+    private String store_name;
 }

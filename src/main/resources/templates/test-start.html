@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>테스트</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/test-start.css">
+</head>
+
+<body>
+  <div id="wrap">
+    <header>
+      <div class="title-container">
+        <button class="go-prev">&lt;</button>
+        <h1 class="title">테스트</h1>
+      </div>
+      <div class="top-button-container">
+        <button class="go-cart" title="https://www.freepik.com"></button>
+      </div>
+    </header>
+    <div class="btn-container">
+      <button class="barcode-btn select-btn">
+        바코드 찍은 상품 테스트
+      </button>
+      <button class="search-btn select-btn">
+        검색해서 테스트
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const goPrevBtn = document.querySelector('.go-prev');
+    const cart = document.querySelector('.go-cart');
+    const barcodeBtn = document.querySelector('.barcode-btn');
+    const searchBtn = document.querySelector('.search-btn');
+
+    goPrevBtn.addEventListener('click', () => { history.back(); });
+    cart.addEventListener('click', () => {
+      //아직 cart.html 구현 전
+      location.href = './cart.html';
+    });
+
+    barcodeBtn.addEventListener('click', () => location.href = './barcode.html');
+    searchBtn.addEventListener('click', () => location.href = './test.html');
+
+  </script>
+</body>
+
+</html>
