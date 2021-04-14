@@ -17,14 +17,15 @@
         <h1>상품 검색</h1>
       </header>
       <div class="search">
-        <input type="text" class="search-input" placeholder="피지오겔 DMT 로션 200ml">
+        <input type="text" class="search-input" placeholder="상품 명을 입력하세요">
         <button class="search-btn">검색</button>
         <button class="turn-on-mic" title="https://www.flaticon.com/authors/dave-gandy"></button>
       </div>
     </div>
     <div class="bottom-area">
       <div class="row">
-        <a href="./list-makeup.html" class="category-btn beauty-category">
+        <a href="category/30"></a>
+        <a href="category" class="category-btn beauty-category">
           <img 
             class="category-btn-img"
             src="./img/cosmetics.png" 
@@ -32,7 +33,7 @@
           >
           <p>메이크업</p>
         </a>
-        <a href="./list-skincare.html" class="category-btn beauty-category">
+        <a href="list-skincare.html" class="category-btn beauty-category">
           <img 
             class="category-btn-img"
             src="./img/skincare.png" 
@@ -135,7 +136,7 @@
     const goPrevBtn = document.querySelector('.go-prev');
 
     goPrevBtn.addEventListener('click', () => history.back());
-    mic.addEventListener('click', () => location.href = './voice-search.html' );
+    mic.addEventListener('click', () => location.href = 'voice-search.html' );
   </script>
 </body>
 </html>

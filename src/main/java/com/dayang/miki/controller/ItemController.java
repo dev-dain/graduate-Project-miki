@@ -1,25 +1,87 @@
 package com.dayang.miki.controller;
 
-import com.dayang.miki.domain.Item;
+import com.dayang.miki.domain.*;
 import com.dayang.miki.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
 
-    @GetMapping("/bigCategory/{category_id}")
-    public String bigCategory(@PathVariable("category_id") Long category_id, Model model){
+    @GetMapping("/categoryList")
+    public String searchItem(){ return "searchItem/categoryList"; }
+
+    @GetMapping("/category/{category_id}")
+    public String categoryItem(@PathVariable("category_id") Long category_id, Model model){
         List<Item> items = itemService.categoryItemList(category_id);
-        model.addAttribute("items", items);
-        return "test";
+        model.addAttribute("item", items);
+        return "searchItem/list-makeup";
+    }
+    @GetMapping("/item/{item_id}")
+    public String Item(@PathVariable("item_id")Long id, Model model){
+        Item item = itemService.findOne(id);
+        itemService.save(item);
+
+        Item_img item_img = itemService.itemImg(item);
+        int cnt = itemService.reviewCnt(item);
+        double rate = itemService.reviewRate(item);
+        model.addAttribute("item_id", item.getId());
+        model.addAttribute("item_name",item.getName());
+        model.addAttribute("item_img", item_img);
+        model.addAttribute("item_price", item.getItem_price());
+        model.addAttribute("item_discountPrice", item.getDiscount_price());
+        model.addAttribute("review_rate", rate);
+        model.addAttribute("review_count", cnt);
+
+        return "searchItem/item2";
+    }
+    @GetMapping("/item/{item_id}/detail")
+    public String ItemDetail(@PathVariable("item_id") Long id, Model model){
+        Item item = itemService.findOne(id);
+        List<Product_img> product_img = itemService.productImgs(item);
+        model.addAttribute("product_img",product_img);
+        return "searchItem/list-detail";
+    }
+
+    @GetMapping("/item/{item_id}/item_option")
+    public List<Item_option> ItemOption(@PathVariable("item_id") Long id, Model model){
+        Item item = itemService.findOne(id);
+        List<Item_option> item_options = itemService.itemOptionList(item);
+        return item_options;
+    }
+
+    @GetMapping("/searchVoice")
+    public String searchVoice(){
+        return "searchItem/voice-search";
+    }
+    @GetMapping("/searchItem")
+    public String search(@PathVariable("keyword")String keyword, Model model){
+        if(itemService.findByItemName(keyword).size()>0) {
+            List<Item> items = itemService.findByItemName(keyword);
+            List<Item_img> item_imgs = new ArrayList<>();
+            for(Item item : items){
+                item_imgs.add(itemService.itemImg(item));
+            }
+            model.addAttribute("item",itemService.findByBrandName(keyword));
+            model.addAttribute("item_img", item_imgs);
+            model.addAttribute("item_count", items.size());
+        }
+        if(itemService.findByBrandName(keyword)!=null)model.addAttribute("brand", itemService.findByBrandName(keyword));
+        if(itemService.getCategoryByName(keyword)!=null)model.addAttribute("category", itemService.getCategoryByName(keyword));
+
+        return "searchItem/search-result";
     }
 
 }

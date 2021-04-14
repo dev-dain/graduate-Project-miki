@@ -15,8 +15,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="item_id")
     private Long id;
-
-    private String item_name;
+    @Column(name="item_name")
+    private String name;
 
     private String item_img;
     private int item_price;

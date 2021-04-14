@@ -17,7 +17,9 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Orders order;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
     private float rate;
     private String review_content;
     private LocalDateTime created_at;

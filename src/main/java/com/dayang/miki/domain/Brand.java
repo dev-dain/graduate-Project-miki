@@ -13,6 +13,7 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="brand_id")
     private Long id;
-    private String brand_name;
+    @Column(name ="brand_name")
+    private String name;
     private String brand_img;
 }
