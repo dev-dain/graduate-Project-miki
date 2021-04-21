@@ -1,8 +1,9 @@
 package com.dayang.miki.service;
 
-import com.dayang.miki.repository.BasketRepository;
+
+import com.dayang.miki.domain.Cart;
+import com.dayang.miki.repository.CartRepository;
 import org.assertj.core.api.Assertions;
-import com.dayang.miki.domain.Basket;
 import com.dayang.miki.domain.Item;
 import com.dayang.miki.domain.Item_option;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,11 @@ import java.util.*;
 class BasketServiceTest {
 
     @Autowired
-    BasketService basketService;
+    CartService cartService;
     @Autowired
     ItemService itemService;
     @Autowired
-    BasketRepository basketRepository;
+    CartRepository cartRepository;
     @Test
     @Rollback(value = false)
     void save(){
@@ -30,27 +31,27 @@ class BasketServiceTest {
         Item item = itemService.findOne(5L);
         Item_option item_option = itemService.Single_Item_option("더랩바이블랑두 올리고 히알루론산 토너+로션 2종 기획 - 더랩바이블랑두 올리고 히알루론산 토너+로션 2종 기획");
         //given
-        Basket basket = Basket.createBasket(item, item_option, 5);
+        Cart cart = Cart.createCart(item, item_option, 5);
 
-        basketService.validate(basket);
+        cartService.validate(cart);
         //then
 
     }
     @Test
     void findAll(){
-        List<Basket> basketList = basketService.findAll();
-        for(Basket basket : basketList){
-            System.out.println(basket.getId() + " " + basket.getItem().getName());
+        List<Cart> CartList = cartService.findAll();
+        for(Cart cart : CartList){
+            System.out.println(cart.getId() + " " + cart.getItem().getName());
         }
     }
 
     @Test
     void deleteOne(){
-        basketService.deleteOne(1L);
+        cartService.deleteOne(1L);
     }
     @Test
     @Rollback(value = false)
     void deleteAll(){
-        basketService.truncateBasket();
+        cartService.truncateCart();
     }
 }

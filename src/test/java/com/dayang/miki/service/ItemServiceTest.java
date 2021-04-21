@@ -32,11 +32,11 @@ class ItemServiceTest {
     void categoryItemList(){
 
         //given
-        Long category_id = 36L;
+        Long category_id = 45L;
         //when
         List<Item> items = itemService.categoryItemList(category_id);
         for(Item item : items){
-            System.out.println("item = " +item.getName());
+            System.out.println("item name = " +item.getName()+" item_id = "+item.getId());
         }
         //then
     }
@@ -134,7 +134,7 @@ class ItemServiceTest {
 
     @Test
     void findCategoryByName(){
-        String name = "로션";
+        String name = "베이스메이크업";
         List<Category> id = categoryRepository.findByNameContaining(name);
         for(Category i : id){
             System.out.println(i.getId());

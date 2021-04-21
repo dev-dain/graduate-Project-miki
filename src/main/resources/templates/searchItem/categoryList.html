@@ -1,142 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/category.css">
-  <title>CategoryList</title>
+  <title>상품 검색 & 카테고리</title>
 </head>
 <body>
-  <div id="wrap">
-    <div class="top-area">
-      <!-- class="title"-->
-      <header>
-        <button class="go-prev">&lt;</button>
-        <h1>상품 검색</h1>
-      </header>
-      <div class="search">
-        <input type="text" class="search-input" placeholder="상품 명을 입력하세요">
-        <button class="search-btn">검색</button>
-        <button class="turn-on-mic" title="https://www.flaticon.com/authors/dave-gandy"></button>
-      </div>
-    </div>
-    <div class="bottom-area">
-      <div class="row">
-        <a href="category/30"></a>
-        <a href="category" class="category-btn beauty-category">
-          <img 
-            class="category-btn-img"
-            src="./img/cosmetics.png" 
-            alt="https://www.freepik.com"
-          >
-          <p>메이크업</p>
-        </a>
-        <a href="list-skincare.html" class="category-btn beauty-category">
-          <img 
-            class="category-btn-img"
-            src="./img/skincare.png" 
-            alt="https://www.flaticon.com/authors/iconixar"
-          >
-          <p>스킨</p>
-        </a>        
-        <a href="" class="category-btn beauty-category">
-          <img 
-          class="category-btn-img"
-          src="./img/cotton-swabs.png" 
-          alt="https://www.flaticon.com/authors/dinosoftlabs"
-          >
-          <p>미용소품</p>
-        </a>        
-      </div>
-      <div class="row">
-        <a href="" class="category-btn beauty-category">
-          <img 
-          class="category-btn-img"
-          src="./img/body-lotion.png" 
-          alt="https://www.flaticon.com/authors/eucalyp"
-          >
-          <p>바디</p>
-        </a>        
-        <a href="" class="category-btn beauty-category">
-          <img 
-          class="category-btn-img"
-          src="./img/hair-washing.png" 
-          alt="https://www.freepik.com"
-          >
-          <p>헤어</p>
-        </a>      
-        <a href="" class="category-btn beauty-category">
-          <img 
-          class="category-btn-img"
-          src="./img/perfume.png" 
-          alt="https://www.flaticon.com/authors/smashicons"
-          >
-          <p>향수</p>
-        </a>        
-      </div>
-      <div class="row">
-        <a href="" class="category-btn food-health-category">
-          <img 
-          class="category-btn-img"
-          src="./img/electric-shaver.png" 
-          alt="https://www.flaticon.com/authors/good-ware"
-          >
-          <p>남성</p>
-        </a>        
-        <a href="" class="category-btn food-health-category">
-          <img 
-          class="category-btn-img"
-          src="./img/snack.png" 
-          alt="https://www.freepik.com"
-          >
-          <p>일반식품</p>
-        </a>    
-        <a href="" class="category-btn food-health-category">
-          <img 
-          class="category-btn-img"
-          src="./img/capsule.png" 
-          alt="https://www.flaticon.com/authors/xnimrodx"
-          >
-          <p>건강식품</p>
-        </a>        
-      </div>
-      <div class="row">
-        <a href="" class="category-btn etc-category">
-          <img 
-          class="category-btn-img"
-          src="./img/dumbell.png" 
-          alt="https://www.flaticon.com/authors/vitaly-gorbachev"
-          >
-          <p>헬스&위생</p>
-        </a>        
-        <a href="" class="category-btn etc-category">
-          <img 
-          class="category-btn-img"
-          src="./img/menu.png" 
-          alt="https://www.flaticon.com/authors/those-icons"
-          >
-          <p>기타</p>
-        </a>        
-        <a href="" class="category-btn etc-category">
-          <img 
-          class="category-btn-img"
-          src="./img/information.png" 
-          alt="https://www.freepik.com"
-          >
-          <p>도움</p>
-        </a>        
-      </div>
+<div id="wrap">
+  <div class="top-area">
+    <!-- class="title"-->
+    <header>
+      <button class="go-prev">&lt;</button>
+      <h1>상품 검색</h1>
+    </header>
+    <div class="search">
+      <input type="text" class="search-input" placeholder="피지오겔 DMT 로션 200ml">
+      <button class="search-btn">검색</button>
+      <button class="turn-on-mic" title="https://www.flaticon.com/authors/dave-gandy"></button>
     </div>
   </div>
+  <div class="bottom-area">
+    <div class="row">
+      <a href="./category/30" class="category-btn beauty-category">
+        <img
+                class="category-btn-img"
+                src="./img/cosmetics.png"
+                alt="https://www.freepik.com"
+        >
+        <p>메이크업</p>
+      </a>
+      <a href="./category?list=1" class="category-btn beauty-category">
+        <img
+                class="category-btn-img"
+                src="./img/skincare.png"
+                alt="https://www.flaticon.com/authors/iconixar"
+        >
+        <p>스킨</p>
+      </a>
+      <a href="./category?list=76" class="category-btn beauty-category">
+        <img
+                class="category-btn-img"
+                src="./img/cotton-swabs.png"
+                alt="https://www.flaticon.com/authors/dinosoftlabs"
+        >
+        <p>미용소품</p>
+      </a>
+    </div>
+    <div class="row">
+      <a href="./category?list=54" class="category-btn beauty-category">
+        <img
+                class="category-btn-img"
+                src="./img/body-lotion.png"
+                alt="https://www.flaticon.com/authors/eucalyp"
+        >
+        <p>바디</p>
+      </a>
+      <a href="./category?list=70" class="category-btn beauty-category">
+        <img
+                class="category-btn-img"
+                src="./img/hair-washing.png"
+                alt="https://www.freepik.com"
+        >
+        <p>헤어</p>
+      </a>
+      <a href="./category?list=112" class="category-btn beauty-category">
+        <img
+                class="category-btn-img"
+                src="./img/perfume.png"
+                alt="https://www.flaticon.com/authors/smashicons"
+        >
+        <p>향수</p>
+      </a>
+    </div>
+    <div class="row">
+      <a href="./category?list=119" class="category-btn food-health-category">
+        <img
+                class="category-btn-img"
+                src="./img/electric-shaver.png"
+                alt="https://www.flaticon.com/authors/good-ware"
+        >
+        <p>남성</p>
+      </a>
+      <a href="./category?list=127" class="category-btn food-health-category">
+        <img
+                class="category-btn-img"
+                src="./img/snack.png"
+                alt="https://www.freepik.com"
+        >
+        <p>일반식품</p>
+      </a>
+      <a href="./category?list=123" class="category-btn food-health-category">
+        <img
+                class="category-btn-img"
+                src="./img/capsule.png"
+                alt="https://www.flaticon.com/authors/xnimrodx"
+        >
+        <p>건강식품</p>
+      </a>
+    </div>
+    <div class="row">
+      <a href="./category?list=93" class="category-btn etc-category">
+        <img
+                class="category-btn-img"
+                src="./img/dumbell.png"
+                alt="https://www.flaticon.com/authors/vitaly-gorbachev"
+        >
+        <p>헬스&위생</p>
+      </a>
+      <a href="./category?list=135" class="category-btn etc-category">
+        <img
+                class="category-btn-img"
+                src="./img/menu.png"
+                alt="https://www.flaticon.com/authors/those-icons"
+        >
+        <p>기타</p>
+      </a>
+      <a href="" class="category-btn etc-category">
+        <img
+                class="category-btn-img"
+                src="./img/information.png"
+                alt="https://www.freepik.com"
+        >
+        <p>도움</p>
+      </a>
+    </div>
+  </div>
+</div>
 
-  <script>
-    const mic = document.querySelector('.turn-on-mic');
-    const goPrevBtn = document.querySelector('.go-prev');
+<script>
+  const mic = document.querySelector('.turn-on-mic');
+  const goPrevBtn = document.querySelector('.go-prev');
 
-    goPrevBtn.addEventListener('click', () => history.back());
-    mic.addEventListener('click', () => location.href = 'voice-search.html' );
-  </script>
+  goPrevBtn.addEventListener('click', () => history.back());
+  mic.addEventListener('click', () => location.href = './searchVoice' );
+</script>
 </body>
 </html>

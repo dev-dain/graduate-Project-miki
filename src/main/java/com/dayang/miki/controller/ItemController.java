@@ -5,10 +5,7 @@ import com.dayang.miki.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,11 +20,11 @@ public class ItemController {
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
 
-    @GetMapping("/category/{category_id}")
-    public String categoryItem(@PathVariable("category_id") Long category_id, Model model){
+    @RequestMapping(method = RequestMethod.GET, value ="category/{list}")
+    public String categoryItem(@PathVariable("list") Long category_id, Model model){
         List<Item> items = itemService.categoryItemList(category_id);
         model.addAttribute("item", items);
-        return "searchItem/list-makeup";
+        return "searchItem/category";
     }
     @GetMapping("/item/{item_id}")
     public String Item(@PathVariable("item_id")Long id, Model model){
@@ -83,5 +80,4 @@ public class ItemController {
 
         return "searchItem/search-result";
     }
-
 }

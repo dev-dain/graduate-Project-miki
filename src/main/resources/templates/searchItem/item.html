@@ -1,58 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상품</title>
+  <title></title>
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/item.css">
 </head>
 <body>
-  <div id="wrap">
-    <header>
-      <div class="title-container">
-        <button class="go-prev">&lt;</button>
-        <h1 class="title">상품</h1>  
-      </div>
-      <div class="top-button-container">
-        <button class="go-cart" title="https://www.freepik.com"></button>  
-      </div>
-    </header>
-    <div class="img-container">
-      <img 
-        src="http://mimg.lalavla.com/resources/images/prdimg/20200206/10004725/10004725_D_001_550.jpg" 
-        alt="" 
-        class="item-img"
-      >
+<div id="wrap">
+  <header>
+    <div class="title-container">
+      <button class="go-prev">&lt;</button>
+      <h1 class="title">상품</h1>
     </div>
-    <div class="info-container">
-      <h3 class="item-title">아누아 어성초 약산성 클렌징 
-        폼 120ml</h3>
-      <div class="price-container">
-        <p class="origin-price">16,000원</p>
-        <p class="discount-price">11,600원</p>
-      </div>
-      <div class="rate-container">
-        <span class="rate">★ 5.0</span>
-        <span class="review-count">(34)</span>
-      </div>
-      <div class="btn-container">
-        <button class="cont-btn put-in-cart"></button>
-        <!-- <button class="cont-btn go-test"></button> -->
-        <button class="cont-btn view-review"></button>
-      </div>
+    <div class="top-button-container">
+      <button class="go-cart" title="https://www.freepik.com"></button>
     </div>
-    <footer>
-      <p class="go-info">상품 상세 설명 보기</p>
-    </footer>
-  </div>
-  <script>
-    const goPrevBtn = document.querySelector('.go-prev');
-    const footer = document.querySelector('footer');
+  </header>
+  <div class="img-container">
 
-    goPrevBtn.addEventListener('click', () => history.back());
-    footer.addEventListener('click', () => location.href = 'item-detail.html');
-  </script>
+  </div>
+  <div class="info-container">
+
+  </div>
+  <footer>
+    <p class="go-info">상품 상세 설명 보기</p>
+  </footer>
+</div>
+<script src="./js/createBtnContainer.js"></script>
+<script src="./js/item.js"></script>
 </body>
 </html>

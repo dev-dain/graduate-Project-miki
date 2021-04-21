@@ -18,6 +18,10 @@ public class OrderItem {
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_option_id")
+    private Item_option item_option;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="order_id")
     private Orders order;
 
@@ -25,10 +29,11 @@ public class OrderItem {
     private int count; //주문 수량
 
     //==생성 메서드==//
-    public static OrderItem createOrderItem(Item item, int orderPrice, int count){
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count, Item_option item_option){
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
         orderItem.setOrderPrice(orderPrice);
+        orderItem.setItem_option(item_option);
         orderItem.setCount(count);
 
         //넘어온 만큰 갯수를 까줘야 한다.

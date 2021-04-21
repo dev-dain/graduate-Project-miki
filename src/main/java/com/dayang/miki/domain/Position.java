@@ -11,8 +11,8 @@ public class Position {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private Long latitude;
-    private Long longitude;
+    private String latitude;
+    private String longitude;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="store_id")

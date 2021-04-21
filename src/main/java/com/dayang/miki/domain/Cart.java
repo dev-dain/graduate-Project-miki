@@ -7,10 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Getter@Setter
-public class Basket {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="basket_id")
+    @Column(name ="cart_id")
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="item_id")
@@ -20,11 +20,11 @@ public class Basket {
     private Item_option item_option;
     private int count;
 
-    public static Basket createBasket(Item item, Item_option item_option, int cnt){
-        Basket basket = new Basket();
-        basket.setItem(item);
-        if(item_option!=null) basket.setItem_option(item_option);
-        basket.setCount(cnt);
-        return basket;
+    public static Cart createCart(Item item, Item_option item_option, int cnt){
+        Cart cart = new Cart();
+        cart.setItem(item);
+        if(item_option!=null) cart.setItem_option(item_option);
+        cart.setCount(cnt);
+        return cart;
     }
 }
