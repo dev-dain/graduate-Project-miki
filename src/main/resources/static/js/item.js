@@ -135,7 +135,7 @@ const footer = document.querySelector('footer');
 
 
 goPrevBtn.addEventListener('click', () => history.back());
-cart.addEventListener('click', () => location.href = '/basket');
+cart.addEventListener('click', () => location.href = '/cart');
 ////////////////////////////
 //item_id 아직 정해지지 않음
 ////////////////////////////
