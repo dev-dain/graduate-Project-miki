@@ -1,5 +1,4 @@
-{
-  const List = {
+const List = {
   "1": {
     "title":"스킨케어",
     "MediumCategory": [
@@ -109,7 +108,7 @@
       ]}
     ]
   },
-  "30": {
+  30: {
     "title":"메이크업",
     "MediumCategory":[
       {"category_id":31,"M_category_name":"립메이크업","SmallCategory":[
@@ -196,7 +195,7 @@
       ]}
     ]
   },
-  "54": {
+  54: {
     "title":"바디케어",
     "MediumCategory":[
       {"category_id":55,"M_category_name":"바디로션","SmallCategory":[
@@ -253,7 +252,7 @@
       ]}
     ]
   },
-  "70": {
+  70: {
     "title":"헤어케어",
     "MediumCategory":[
       {"category_id":71,"M_category_name":"샴푸","SmallCategory":[]},
@@ -272,7 +271,7 @@
       ]}
     ]
   },
-  "76": {
+  76: {
     "title":"뷰티&헬스 툴",
     "MediumCategory":[
       {"category_id":77,"M_category_name":"뷰티 소품","SmallCategory":[
@@ -332,7 +331,7 @@
       {"category_id":80,"M_category_name":"헬스 소품","SmallCategory":[]}
     ]
   },
-  "93": {
+  93: {
     "title":"건강/위생",
     "MediumCategory":[
       {"category_id":94,"M_category_name":"구강용품","SmallCategory":[
@@ -401,7 +400,7 @@
       ]}
     ]
   },
-  "112": {
+  112: {
     "title":"프래그런스",
     "MediumCategory":[
       {"category_id":113,"M_category_name":"퍼퓸","SmallCategory":[
@@ -426,7 +425,7 @@
       ]}
     ]
   },
-  "119": {
+  119: {
     "title":"남성",
     "MediumCategory":[
       {"category_id":120,"M_category_name":"남성 스킨/바디","SmallCategory":[]},
@@ -434,14 +433,14 @@
       {"category_id":122,"M_category_name":"남성 메이크업","SmallCategory":[]}
     ]
   },
-  "123": {
+  123: {
     "title":"건강식품",
     "MediumCategory":[
       {"category_id":124,"M_category_name":"건강기능식품","SmallCategory":[]},
       {"category_id":125,"M_category_name":"비타민","SmallCategory":[]}
     ]
   },
-  "127": {
+  127: {
     "title":"일반식품",
     "MediumCategory":[
       {"category_id":128,"M_category_name":"스낵/쿠키","SmallCategory":[]},
@@ -453,11 +452,10 @@
       {"category_id":134,"M_category_name":"간편/대용식","SmallCategory":[]}
     ]
   },
-  "135":{"title":"기타",
+  135:{"title":"기타",
     "MediumCategory":[
       {"category_id":136,"M_category_name":"디자인가전","SmallCategory":[]},
       {"category_id":137,"M_category_name":"생활용품","SmallCategory":[]}
     ]
   }
-}
 }

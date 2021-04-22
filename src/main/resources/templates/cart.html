@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>장바구니</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/cart.css">
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <div class="title-container">
+        <button class="go-prev">&lt;</button>
+        <h1 class="title">장바구니</h1>
+        <h1 class="cart-count"></h1>
+      </div>
+    </header>
+    <div class="cart-container">
+      <div class="select-all-container">
+        <button class="select-all-btn">&#10004;</button>
+        <span class="select-all-span">전체 선택</span>
+      </div>
+      <div class="item-row-container">
+        
+      </div>
+      <div class="cart-page-container">
+        <button class="go-prev-page-btn">&lt;</button>
+        <span class="current-page"></span>
+        <button class="go-next-page-btn">&gt;</button>
+      </div>
+    </div>
+    <div class="total-price-container">
+      <div class="total-discount">
+        <p class="price-info">총 할인 금액</p>
+        <p class="total-discount-price"></p>
+      </div>
+      <div class="total-pay">
+        <p class="price-info">총 결제 금액</p>
+        <p class="total-pay-price"></p>
+      </div>
+    </div>
+    <div class="cart-btn-container">
+      <button class="delete-all-btn">
+        전체 삭제
+      </button>
+      <button class="go-payment">결제하기</button>
+    </div>
+  </div>
+
+  <script src="./js/cart.js"></script>
+</body>
+</html>

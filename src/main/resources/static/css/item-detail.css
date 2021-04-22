@@ -1,3 +1,8 @@
+@keyframes makeVisible {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 #wrap { 
   background-color: #FFFAF9; 
   flex-direction: column;
@@ -96,8 +101,128 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 footer > p {
   font-size: 1.5rem;
   font-weight: 900;
+}
+
+.modal-container {
+  position: absolute;
+  top: 0; left: 0; 
+  z-index: 10;
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  display: none;
+  background-color: rgb(64, 64, 64, .85);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* opacity: 0;
+  animation: makeVisible .2s ease-in-out forwards; */
+}
+.modal {
+  background-color: #fff;
+  width: 80%;
+  height: 350px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal > * {
+  padding: 15px 0;
+}
+.modal > *:first-child {
+  padding-top: 50px;
+}
+.modal-header {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2E0A0A;
+}
+[class^='modal-option-'] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  padding: 5px 0;
+  font-weight: 700;
+  border-bottom: 2px solid #2E0A0A;
+}
+.modal-option-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  border: none;
+}
+.goods-count-container {
+  display: flex;
+}
+[class^='m-sub-count'], [class^='m-add-count'] {
+  background-color: #A4D0F9;
+  color: #2E0A0A;
+  border: none;
+  width: 30px;
+  height: 35px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+[class^='m-sub-count'] {
+  border-radius: 10px 0 0 10px;
+}
+[class^='m-add-count'] {
+  border-radius: 0 10px 10px 0;
+}
+[class^='m-count'] {
+  text-align: center;
+  color: #2E0A0A;
+  background-color: #FCFCFC;
+  border: none;
+  width: 70px;
+  height: 35px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.m-sub-count, .m-add-count {
+  height: 60px;
+  width: 60px;
+  font-size: 2rem;
+  font-weight: 900;
+}
+.m-sub-count {
+  border-radius: 20px 0 0 20px;
+}
+.m-add-count {
+  border-radius: 0 20px 20px 0;
+}
+.m-count {
+  width: 200px;
+  height: 60px;
+  font-size: 2rem;
+  font-weight: 900;
+}
+.modal-btn-container {
+  width: 100%;
+  border-radius: 30px;
+  padding-bottom: 0;
+}
+.put-cart, .cancel {
+  width: 50%;
+  height: 80px;
+  background-color: #fff;
+  font-size: 1.8rem;
+  border-top: #A4D0F9 solid 3px;
+  font-weight: 900;
+}
+.put-cart {
+  border-right: #A4D0F9 solid 3px;
+  color: #2678D9;
+}
+.cancel {
+  color: #E93C15;
 }
