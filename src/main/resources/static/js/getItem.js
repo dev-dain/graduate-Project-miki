@@ -111,7 +111,7 @@ const createItemCard = item => {
   }
 
   itemCard.addEventListener('click', () => 
-    location.href = `./item/${item.item_id}`
+    location.href = `../item/${item.item_id}`
   );
 
   return itemCard;

@@ -5,7 +5,7 @@ const cartItemList = [
     item_name: '포렌코즈 베어 섀도우 팔레트',
     item_price: '20,000원',
     item_discountPrice: '12,600원',
-    item_optionList = [
+    item_optionList: [
       '포렌코즈 베어 섀도우 팔레트'
     ],
     item_selected: true

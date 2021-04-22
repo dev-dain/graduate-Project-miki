@@ -42,14 +42,14 @@ public class ItemController {
         model.addAttribute("review_rate", rate);
         model.addAttribute("review_count", cnt);
 
-        return "searchItem/item2";
+        return "searchItem/item";
     }
     @GetMapping("/item/{item_id}/detail")
     public String ItemDetail(@PathVariable("item_id") Long id, Model model){
         Item item = itemService.findOne(id);
         List<Product_img> product_img = itemService.productImgs(item);
         model.addAttribute("product_img",product_img);
-        return "searchItem/list-detail";
+        return "searchItem/item-detail";
     }
 
     @GetMapping("/item/{item_id}/item_option")
@@ -63,6 +63,7 @@ public class ItemController {
     public String searchVoice(){
         return "searchItem/voice-search";
     }
+
     @GetMapping("/searchItem")
     public String search(@PathVariable("keyword")String keyword, Model model){
         if(itemService.findByItemName(keyword).size()>0) {

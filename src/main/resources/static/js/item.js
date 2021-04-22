@@ -135,11 +135,11 @@ const footer = document.querySelector('footer');
 
 
 goPrevBtn.addEventListener('click', () => history.back());
-cart.addEventListener('click', () => location.href = './basket');
+cart.addEventListener('click', () => location.href = '/basket');
 ////////////////////////////
 //item_id 아직 정해지지 않음
 ////////////////////////////
-footer.addEventListener('click', () => location.href = `./item/${item_id}/detail`);
+footer.addEventListener('click', () => location.href = `/item/${item.item_id}/detail`);
 
 
 const imgContainer = document.querySelector('.img-container');

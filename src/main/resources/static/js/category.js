@@ -1,6 +1,10 @@
+///////////////////
+// page를 어떻게 처리할 것인가? 쿼리를 붙일 것인지 내부적으로 localStorage로 가지고 있을 것인지..
+//////////////////
+
+
 // 카테고리 받아오는 과정
 const j_list = JSON.parse(JSON.stringify(List));
-// j_midList = j_list[URLSearch.get('list')].MediumCategory;
 const list_num = ((window.location.href).split('/')).slice(-1);
 const j_midList = j_list[list_num].MediumCategory;
 
@@ -22,9 +26,9 @@ const goItemNextBtn = document.querySelector('.item-next-btn');
 
 goPrevBtn.addEventListener('click', () => { history.back(); });
 
-mic.addEventListener('click', () => location.href = './searchVoice');
+mic.addEventListener('click', () => location.href = '/searchVoice');
 cart.addEventListener('click', () => {
-  location.href = './basket';
+  location.href = '/cart';
 });
 
 
@@ -174,9 +178,3 @@ foldBtn.addEventListener('click', () => {
     }, 300);
   }
 });
-
-// itemCardList.forEach(item => {
-//   item.addEventListener('click', () => {
-//     location.href = './item2.html';
-//   });
-// });
