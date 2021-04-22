@@ -1,3 +1,6 @@
+# java 버전이 달라서 build.gradle도 수정도 포함하지 않기로 함
+build.gradle
+
 HELP.md
 .gradle
 build/
