@@ -9,4 +9,7 @@ public class MainController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/stores")
+    public String getStore() { return "stores"; }
 }
