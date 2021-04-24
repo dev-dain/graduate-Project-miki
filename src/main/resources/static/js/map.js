@@ -28,21 +28,9 @@ const fetchData = () => {
 
     const positions = [];
 
-
-    // fetch('/stores')
-    //     .then(res => res.json())
-    //     .then(res => res.map(store => {
-    //         positions.push({
-    //             id: store.store_id,
-    //             name: store.store_name,
-    //             location: store.store_location,
-    //             tel: store.store_number,
-    //             latlng: new kakao.maps.LatLng(store.store_latitude, store.store_longtitude)
-    //         });
-    //     }))
-    //     .catch(e => console.error(e));
-
-    const stores = [
+    
+    // 여기부터
+    let stores = [
         {
             store_id: '20',
             store_name: '성신여대점',
@@ -82,6 +70,22 @@ const fetchData = () => {
             longtitude: store.store_longtitude
         });
     });
+    // 여기까지
+
+    // fetch('/stores/23')
+    //     .then(res => res.json())
+    //     .then(res => res.map(store => {
+    //         positions.push({
+    //             id: store.store_id,
+    //             name: store.store_name,
+    //             location: store.store_location,
+    //             tel: store.store_number,
+    //             latlng: new kakao.maps.LatLng(store.store_latitude, store.store_longtitude)
+    //         });
+    //     }))
+    //     .catch(e => console.error(e));
+
+
 
     // 마커 이미지의 이미지 주소입니다
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";

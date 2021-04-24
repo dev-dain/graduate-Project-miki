@@ -18,11 +18,8 @@ curLocation.innerHTML = `
 const storeListContainer = document.querySelector('.store-list-container');
 
 let storeList = [];
-// fetch('/store?store_id=23')
-//     .then(res => res.json())
-//     .then(res => res.forEach(store => storeList.push(store)))
-//     .catch(e => console.error(e));
 
+// 여기부터
 storeList = [
     {
         store_id: '20',
@@ -51,6 +48,12 @@ storeList = [
         store_longtitude: '127.021068'
     }
 ];
+// 여기까지
+
+// fetch('/stores/23')
+//     .then(res => res.json())
+//     .then(res => res.forEach(store => storeList.push(store)))
+//     .catch(e => console.error(e));
 
 const getStoreInfo = (index, store) => {
     const storeInfo = document.createElement('div');
