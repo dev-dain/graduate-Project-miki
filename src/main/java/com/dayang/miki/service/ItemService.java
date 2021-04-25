@@ -74,11 +74,7 @@ public class ItemService {
         List<Category> categories = itemLogicRepository.friendCategory(category);
         return categories;
     }
-    @Transactional
-    public List<Category> getBabyCategory(Category category){
-        List<Category> categories = itemLogicRepository.babyCategory(category);
-        return categories;
-    }
+
     @Transactional
     public List<Item_option> itemOptionList(Item item){return itemLogicRepository.itemOptions(item);}
     @Transactional

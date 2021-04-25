@@ -48,7 +48,6 @@ public class ItemController {
                 items.add(i);
             }
         }
-        System.out.println("category_id :  " + category_id.getClass().getName());
         model.addAttribute("item", items);
         return "searchItem/new";
     }

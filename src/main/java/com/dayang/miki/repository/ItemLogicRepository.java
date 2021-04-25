@@ -89,11 +89,4 @@ public class ItemLogicRepository {
                 .setParameter("category", category)
                 .getResultList();
     }
-
-    //자기 자식 카테고리 찾기
-    public List<Category> babyCategory(Category category){
-        return em.createQuery("select c.child from Category c where c.parent =:category", Category.class)
-                .setParameter("category", category)
-                .getResultList();
-    }
 }
