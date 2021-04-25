@@ -15,14 +15,50 @@ const item = {
   item_price: '20,000원',
   item_discountPrice: '12,600원',
   item_isTestable: true,
+  // 옵션이 없는 상품의 경우 optionList에는 상품 이름과 같은 옵션 1개만 담김
   item_optionList: [
-    // 옵션이 없는 상품의 경우 optionList에는 상품 이름과 같은 옵션 1개만 담김
-    '01 페일',
-    '02 블링크',
-    '03 미디움',
-    '04 레이크',
-    '05 우디',
-    '06 뮤트'
+    {
+      option_id: 1,
+      option_name: '01 페일',
+      option_price: '20,000원',
+      option_discountPrice: '12,600원',
+      option_isSoldout: false
+    },
+    {
+      option_id: 2,
+      option_name: '02 블링크',
+      option_price: '20,000원',
+      option_discountPrice: '12,600원',
+      option_isSoldout: false
+    },
+    {
+      option_id: 3,
+      option_name: '03 미디움',
+      option_price: '20,000원',
+      option_discountPrice: '12,600원',
+      option_isSoldout: false
+    },
+    {
+      option_id: 4,
+      option_name: '04 레이크',
+      option_price: '20,000원',
+      option_discountPrice: '12,600원',
+      option_isSoldout: true
+    },
+    {
+      option_id: 5,
+      option_name: '05 우디',
+      option_price: '20,000원',
+      option_discountPrice: '12,600원',
+      option_isSoldout: false
+    },
+    {
+      option_id: 6,
+      option_name: '06 뮤트',
+      option_price: '20,000원',
+      option_discountPrice: '12,600원',
+      option_isSoldout: true
+    },
   ]
 };
 
@@ -101,10 +137,5 @@ footer.addEventListener('click', () => {
   const modal = (item.item_optionList.length <= 1) 
     ? singleOptionModal(item) 
     : multipleOptionModal(item);
-  // if (item.item_optionList.length <= 1) {
-  //   const modal = singleOptionModal(item);
-  // } else {
-  //   const modal = multipleOptionModal(item);
-  // }
   modalContainer.appendChild(modal);
 });
