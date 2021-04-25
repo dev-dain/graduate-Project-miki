@@ -4,6 +4,7 @@ import com.dayang.miki.domain.*;
 import com.dayang.miki.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +21,38 @@ public class ItemController {
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
 
+    @Transactional
     @RequestMapping(method = RequestMethod.GET, value ="/category/{list}")
     public String categoryItem(@PathVariable("list") Long category_id, Model model){
-        List<Item> items = itemService.categoryItemList(category_id);
+        Category category = itemService.findOneCategory(category_id);
+        List<Category> categories = itemService.getFriendCategory(category);
+
+        List<Category> showCategory = new ArrayList<>();
+        List<Category> tmp = new ArrayList<>();
+        for(Category c : categories){
+            tmp = itemService.getFriendCategory(c);
+            if(tmp.size()==0){
+                showCategory.add(c);
+            }
+            else{
+                for(Category cc : tmp){
+                    showCategory.add(cc);
+                }
+            }
+        }
+        List<Item> items = new ArrayList<>();
+        List<Item> tmp2 = new ArrayList<>();
+        for(Category c : showCategory){
+            tmp2 = itemService.categoryItemList(c.getId());
+            for(Item i : tmp2){
+                items.add(i);
+            }
+        }
+        System.out.println("category_id :  " + category_id.getClass().getName());
         model.addAttribute("item", items);
         return "searchItem/new";
     }
+
     @GetMapping("/item/{item_id}")
     public String Item(@PathVariable("item_id")Long id, Model model){
         Item item = itemService.findOne(id);

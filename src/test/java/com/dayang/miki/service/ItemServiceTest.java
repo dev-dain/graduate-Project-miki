@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -29,10 +30,33 @@ class ItemServiceTest {
     CategoryRepository categoryRepository;
 
     @Test
+    void items(){
+        Long id = 30L;
+        Category category = itemService.findOneCategory(id);
+        List<Category> categories = itemService.getFriendCategory(category);
+
+        List<Category> showCategory = new ArrayList<>();
+        List<Category> tmp = new ArrayList<>();
+        for(Category c : categories){
+            tmp = itemService.getFriendCategory(c);
+            if(tmp.size()==0){
+                showCategory.add(c);
+            }
+            else{
+                for(Category cc : tmp){
+                    showCategory.add(cc);
+                }
+            }
+        }
+        for(Category c: showCategory){
+            System.out.println(c.getName());
+        }
+    }
+    @Test
     void categoryItemList(){
 
         //given
-        Long category_id = 45L;
+        Long category_id = 37L;
         //when
         List<Item> items = itemService.categoryItemList(category_id);
         for(Item item : items){
