@@ -20,11 +20,11 @@ public class ItemController {
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
 
-    @RequestMapping(method = RequestMethod.GET, value ="category/{list}")
+    @RequestMapping(method = RequestMethod.GET, value ="/category/{list}")
     public String categoryItem(@PathVariable("list") Long category_id, Model model){
         List<Item> items = itemService.categoryItemList(category_id);
         model.addAttribute("item", items);
-        return "searchItem/category";
+        return "searchItem/new";
     }
     @GetMapping("/item/{item_id}")
     public String Item(@PathVariable("item_id")Long id, Model model){
