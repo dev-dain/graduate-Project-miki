@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
-    <span th:text="${item}"></span>
+<p>hello this is new page</p>
+<div class="container">
+    <div>
+        <table class="table table-striped">
+            <tbody>
+            <tr th:each="item : ${item}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.item_price}"></td>
+                <td th:text="${item.stockQuantity}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

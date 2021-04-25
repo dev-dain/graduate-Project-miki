@@ -18,7 +18,12 @@ public class ItemLogicRepository {
     public Item findOne(Long id){
         return em.find(Item.class, id);
     }
-
+    //카테고리 하나 검색
+    public Category findOneCategory(Long id){
+        return em.createQuery("select c from Category c where c.id =:id", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
     //브랜드로 아이템찾기
     public List<Item> findItemByBrandName(Brand brand){
         return em.createQuery("select i from Item i where i.brand =:brand", Item.class)
@@ -81,6 +86,13 @@ public class ItemLogicRepository {
     //자기 친구들 카테고리 찾기
     public List<Category>friendCategory(Category category){
         return em.createQuery("select c from Category c where c.parent =:category", Category.class)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
+    //자기 자식 카테고리 찾기
+    public List<Category> babyCategory(Category category){
+        return em.createQuery("select c.child from Category c where c.parent =:category", Category.class)
                 .setParameter("category", category)
                 .getResultList();
     }

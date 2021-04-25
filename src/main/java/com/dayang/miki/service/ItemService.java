@@ -4,6 +4,7 @@ import com.dayang.miki.domain.*;
 import com.dayang.miki.repository.*;
 import com.dayang.miki.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,11 @@ public class ItemService {
     public Item findOne (Long item_id){return itemLogicRepository.findOne(item_id);}
 
     @Transactional
+    public Category findOneCategory(Long category_id){
+        Category category = itemLogicRepository.findOneCategory(category_id);
+        return category;
+    }
+    @Transactional
     public List<Item> findByItemName (String name){
         List<Item> items = itemRepo.findByNameContaining(name);
         List<Item> item_List = new ArrayList<>();
@@ -57,8 +63,22 @@ public class ItemService {
 
     @Transactional
     public List<Category> getCategoryByName(String name){return categoryRepository.findByNameContaining(name);}
+
+    public List<Item> categoryItemList(Long id){
+        List<Item> items = itemLogicRepository.getByCategory(id);
+        Hibernate.initialize(items);
+        return items;
+    }
     @Transactional
-    public List<Item> categoryItemList(Long id){return itemLogicRepository.getByCategory(id);}
+    public List<Category> getFriendCategory(Category category){
+        List<Category> categories = itemLogicRepository.friendCategory(category);
+        return categories;
+    }
+    @Transactional
+    public List<Category> getBabyCategory(Category category){
+        List<Category> categories = itemLogicRepository.babyCategory(category);
+        return categories;
+    }
     @Transactional
     public List<Item_option> itemOptionList(Item item){return itemLogicRepository.itemOptions(item);}
     @Transactional
