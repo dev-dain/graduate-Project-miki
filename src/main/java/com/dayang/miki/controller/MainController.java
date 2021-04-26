@@ -10,6 +10,4 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/stores")
-    public String getStore() { return "stores"; }
 }
