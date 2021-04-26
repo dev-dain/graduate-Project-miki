@@ -24,11 +24,11 @@ public class StoreRepository {
                 .getResultList();
     }
 
-    public List<Store> findAllStore(){
+    public List<Store> getAllStore(){
         return (List<Store>) em.createQuery("select s from Store s", Store.class)
                 .getResultList();
     }
-    public Store findSingleStore(String name){
+    public Store getSingleStore(String name){
         return em.createQuery("select s from Store s where s.store_name =: name", Store.class)
                 .setParameter("name", name)
                 .getSingleResult();
