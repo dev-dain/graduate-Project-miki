@@ -36,6 +36,7 @@ public class Item {
     /**
      * STOCK 감소
      **/
+
     public void removeStock(int quantity){
         int retStock = this.stockQuantity - quantity;
         this.stockQuantity =retStock;
@@ -43,6 +44,7 @@ public class Item {
     /**
      * STOCK 증가
      **/
+
     public void addStock(int quantity) {
         this.stockQuantity += quantity;
     }

@@ -3,11 +3,13 @@ package com.dayang.miki.controller;
 import com.dayang.miki.domain.*;
 import com.dayang.miki.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,12 +25,12 @@ public class ItemController {
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET, value ="/category/{list}")
-    public String categoryItem(@PathVariable("list") Long category_id, Model model){
+    public String categoryItem(@PathVariable("list") Long category_id, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
         Category category = itemService.findOneCategory(category_id);
         List<Category> categories = itemService.getFriendCategory(category);
 
         List<Category> showCategory = new ArrayList<>();
-        List<Category> tmp = new ArrayList<>();
+        List<Category> tmp;
         for(Category c : categories){
             tmp = itemService.getFriendCategory(c);
             if(tmp.size()==0){
@@ -40,15 +42,11 @@ public class ItemController {
                 }
             }
         }
-        List<Item> items = new ArrayList<>();
-        List<Item> tmp2 = new ArrayList<>();
-        for(Category c : showCategory){
-            tmp2 = itemService.categoryItemList(c.getId());
-            for(Item i : tmp2){
-                items.add(i);
-            }
-        }
+        List<Item> items;
+        items = itemService.findItemByCategory(showCategory, pageNum);
         model.addAttribute("item", items);
+        model.addAttribute("pageNum", pageNum);
+
         return "searchItem/new";
     }
 

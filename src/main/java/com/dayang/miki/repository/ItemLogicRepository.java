@@ -2,6 +2,7 @@ package com.dayang.miki.repository;
 
 import com.dayang.miki.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

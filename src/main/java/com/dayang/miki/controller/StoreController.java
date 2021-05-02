@@ -25,7 +25,8 @@ public class StoreController {
     }
 
     @GetMapping("/admin/login")
-    public String login(@PathVariable String passwrd){
+    public String login(@PathVariable("password") String passwrd, @PathVariable("store_name") String name){
+
         return "redirect:/";
     }
 }

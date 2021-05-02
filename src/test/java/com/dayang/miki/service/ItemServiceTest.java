@@ -36,7 +36,7 @@ class ItemServiceTest {
         List<Category> categories = itemService.getFriendCategory(category);
 
         List<Category> showCategory = new ArrayList<>();
-        List<Category> tmp = new ArrayList<>();
+        List<Category> tmp;
         for(Category c : categories){
             tmp = itemService.getFriendCategory(c);
             if(tmp.size()==0){
@@ -52,18 +52,7 @@ class ItemServiceTest {
             System.out.println(c.getName());
         }
     }
-    @Test
-    void categoryItemList(){
 
-        //given
-        Long category_id = 37L;
-        //when
-        List<Item> items = itemService.categoryItemList(category_id);
-        for(Item item : items){
-            System.out.println("item name = " +item.getName()+" item_id = "+item.getId());
-        }
-        //then
-    }
     @Test
     void findByName(){
 

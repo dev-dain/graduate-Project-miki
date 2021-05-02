@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<!--이거느눔\슨 화ㅕㅁㅇ님-->
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <p>hello this is new page</p>
@@ -16,6 +17,14 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <div th:with="right=${pageNum}+1">
+            <div th:with="left=${pageNum}-1">
 
+            <a th:href="@{'/30?page='+ ${right}}">[[${pageNum}-1]]</a>
+
+        <a th:href="@{'/30?page=' + ${left}+}">[[${pageNum}+1]]</a>
+    </span>
+    </div>
 </body>
 </html>
