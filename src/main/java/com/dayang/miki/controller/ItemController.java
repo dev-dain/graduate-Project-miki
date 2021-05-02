@@ -45,7 +45,8 @@ public class ItemController {
         List<Item> items;
         items = itemService.findItemByCategory(showCategory, pageNum);
         model.addAttribute("item", items);
-        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("right", pageNum+1);
+        model.addAttribute("left", pageNum-1);
 
         return "searchItem/new";
     }

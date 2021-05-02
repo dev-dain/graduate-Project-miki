@@ -18,12 +18,9 @@
         </table>
     </div>
     <div>
-        <div th:with="right=${pageNum}+1">
-            <div th:with="left=${pageNum}-1">
+        <a th:href="@{'/?page=' + ${left}}">뒤로가기</a>
 
-            <a th:href="@{'/30?page='+ ${right}}">[[${pageNum}-1]]</a>
-
-        <a th:href="@{'/30?page=' + ${left}+}">[[${pageNum}+1]]</a>
+        <a th:href="@{'/?page='+ ${right}}">앞으로 가기</a>
     </span>
     </div>
 </body>
