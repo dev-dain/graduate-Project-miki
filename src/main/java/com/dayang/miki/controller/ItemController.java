@@ -50,7 +50,7 @@ public class ItemController {
         }
         System.out.println("category_id :  " + category_id.getClass().getName());
         model.addAttribute("item", items);
-        return "searchItem/new";
+        return "searchItem/category";
     }
 
     @GetMapping("/item/{item_id}")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,13 +33,48 @@
     <div class="item-container">
         <button class="item-btn item-prev-btn">&lt;</button>
         <div class="item-row-container">
-
+            <!--
+             th:each="item, index : ${item}"
+                item : com.dayang.miki.domain.Item@3a8c0897
+                index : {index = 0, count = 1, size = 80, current = com.dayang.miki.domain.Item@3a8c0897}
+            -->
+<!--            <div class="item-row" th:if="${index.index} < 2">-->
+<!--                <div class="item-card">-->
+<!--                    <span th:text="${item.name}"></span>-->
+<!--                    <span th:text="${index}"></span>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
         <button class="item-btn item-next-btn">&gt;</button>
     </div>
 </div>
 
-<script src='/js/category.js'></script>
-<script src='/js/getItem.js'></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*[# th:each="tmp : ${item}"]*/
+    noti(/*[[${tmp.name}]]*/, /*[[${tmp.item_price}]]*/);
+    /*[/]*/
+
+    /*]]>*/
+
+    function noti(testValue, tmpValue){
+        console.log(testValue, tmpValue);
+    }
+</script>
+
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    window.onload = () => {-->
+<!--        const itemList = /*[[ ${item[0].name} ]]*/;-->
+<!--        console.log(itemList);-->
+<!--    };-->
+<!--    /*]]>*/-->
+<!--</script>-->
+
+
+<!--<script src='/js/category.js'></script>-->
+<!--<script src='/js/getItem.js'></script>-->
 </body>
 </html>
