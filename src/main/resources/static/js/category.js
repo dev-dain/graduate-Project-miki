@@ -1,11 +1,7 @@
-///////////////////
-// page를 어떻게 처리할 것인가? 쿼리를 붙일 것인지 내부적으로 localStorage로 가지고 있을 것인지..
-//////////////////
-
-
 // 카테고리 받아오는 과정
 const j_list = JSON.parse(JSON.stringify(List));
-const list_num = ((window.location.href).split('/')).slice(-1);
+const list_num = ((window.location.href).split('/')).slice(-1)[0].split('?')[0];
+console.log(list_num);
 const j_midList = j_list[list_num].MediumCategory;
 
 // titleContainer의 title 정하기
@@ -21,46 +17,11 @@ docTitle.textContent = `카테고리 : ${h1Title.textContent}`;
 const goPrevBtn = document.querySelector('.go-prev');
 const mic = document.querySelector('.turn-on-mic');
 const cart = document.querySelector('.go-cart');
-const goItemPrevBtn = document.querySelector('.item-prev-btn');
-const goItemNextBtn = document.querySelector('.item-next-btn');
 
 goPrevBtn.addEventListener('click', () => { history.back(); });
-
 mic.addEventListener('click', () => location.href = '/searchVoice');
 cart.addEventListener('click', () => {
   location.href = '/cart';
-});
-
-
-
-const checkFirstPage = page => (page <= 1);
-const checkLastPage = (page, length) => (Number(page) >= length);
-
-goItemPrevBtn.addEventListener('click', () => {
-  if (checkFirstPage(Number(URLSearch.get('page')))) {
-    console.log('First Page!');
-    alert('제일 첫 페이지입니다.');
-  } else {
-    URLSearch.set('page', URLSearch.get('page') - 1);
-    console.log(URLSearch.get('page'));
-    // 주소창의 page 쿼리 자체를 바꿔버리면 화면이 새로고침됨
-    // const searchQuery = (location.search).split('page');
-    // location.search = `${searchQuery[0]}page=${URLSearch.get('page')}`;
-
-    //////////////////////
-    // 앞의 결과를 다시 가져오는 코드가 있어야 함
-    //////////////////////
-  }
-});
-
-////////////////////
-// 다음 버튼을 눌렀을 때 어떻게 할 것인지는 좀 나중에 생각..
-// """"""""""전체 페이지 수를 알아야""""""""""""""" 설정이 가능함
-// 아니면 그냥 맨뒤 페이지일 때 > 누르면 맨앞으로,
-// 맨앞 페이지일 떄 < 누르면 맨뒤로 가게 만들 수도 있긴 함
-////////////////////
-goItemNextBtn.addEventListener('click', () => {
-  // if (checkLastPage(Number(URLSearch.get('page'))))
 });
 
 
@@ -74,6 +35,30 @@ j_midList.forEach(mid => {
   const midBtn = document.createElement('button');
   midBtn.classList += 'mid-btn cat';
   midBtn.textContent = mid.M_category_name;
+  midBtn.addEventListener('click', () => {
+    console.log(mid.category_id);
+    localStorage.setItem('page', 1);
+
+    fetch(`/category/${mid.category_id}`)
+        .then(res => res.text())
+        .then(data => {
+          const wrapContainer = document.getElementById('wrap');
+          const itemRowContainer = document.createElement('div');
+          itemRowContainer.classList += 'item-container';
+          let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
+          itemRowContainer.innerHTML = itemContainer;
+          console.log(itemContainer);
+          wrapContainer.removeChild(wrapContainer.lastElementChild);
+          wrapContainer.appendChild(itemRowContainer);
+
+          // const itemRowContainer = document.querySelector('.item-row-container');
+          // let rowContainer = data.split('<tbody')[1].split('</tbody>')[0];
+          // rowContainer = '<tbody ' + rowContainer;
+          // console.log(rowContainer);
+          // itemRowContainer.innerHTML = rowContainer;
+        })
+        .catch(e => console.error(e));
+  });
 
   if (mid.SmallCategory) {
     j_smallCatList.push(JSON.parse(JSON.stringify(mid.SmallCategory)));
@@ -115,7 +100,30 @@ for (let i = 0; i < midCatList.length; i++) {
         smallBtn.textContent = small.S_category_name;
 
         // 소 카테고리 각 버튼에도 이벤트 핸들러 붙이기
-        smallBtn.addEventListener('click', () => { 
+        smallBtn.addEventListener('click', () => {
+          console.log(small.category_id);
+          localStorage.setItem('page', 1);
+
+          fetch(`/category/${small.category_id}`)
+              .then(res => res.text())
+              .then(data => {
+                const wrapContainer = document.getElementById('wrap');
+                const itemRowContainer = document.createElement('div');
+                itemRowContainer.classList += 'item-container';
+                let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
+                itemRowContainer.innerHTML = itemContainer;
+                console.log(itemContainer);
+                wrapContainer.removeChild(wrapContainer.lastElementChild);
+                wrapContainer.appendChild(itemRowContainer);
+
+                // const itemRowContainer = document.querySelector('.item-row-container');
+                // let rowContainer = data.split('<tbody')[1].split('</tbody>')[0];
+                // rowContainer = '<tbody ' + rowContainer;
+                // console.log(rowContainer);
+                // itemRowContainer.innerHTML = rowContainer;
+              })
+              .catch(e => console.error(e));
+
           for (let j = 0; j < smallCatBar.children.length; j++) {
             if (smallCatBar.children[j].classList.contains('cat-selected')) {
               smallCatBar.children[j].classList.remove('cat-selected');

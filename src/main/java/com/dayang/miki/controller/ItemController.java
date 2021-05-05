@@ -44,11 +44,12 @@ public class ItemController {
         }
         List<Item> items;
         items = itemService.findItemByCategory(showCategory, pageNum);
+        model.addAttribute("category", category_id);
         model.addAttribute("item", items);
         model.addAttribute("right", pageNum+1);
         model.addAttribute("left", pageNum-1);
 
-        return "searchItem/new";
+        return "searchItem/category";
     }
 
     @GetMapping("/item/{item_id}")
