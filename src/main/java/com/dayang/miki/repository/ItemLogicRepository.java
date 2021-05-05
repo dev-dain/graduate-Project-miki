@@ -2,6 +2,7 @@ package com.dayang.miki.repository;
 
 import com.dayang.miki.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -86,13 +87,6 @@ public class ItemLogicRepository {
     //자기 친구들 카테고리 찾기
     public List<Category>friendCategory(Category category){
         return em.createQuery("select c from Category c where c.parent =:category", Category.class)
-                .setParameter("category", category)
-                .getResultList();
-    }
-
-    //자기 자식 카테고리 찾기
-    public List<Category> babyCategory(Category category){
-        return em.createQuery("select c.child from Category c where c.parent =:category", Category.class)
                 .setParameter("category", category)
                 .getResultList();
     }

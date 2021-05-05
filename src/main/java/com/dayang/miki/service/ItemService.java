@@ -5,13 +5,19 @@ import com.dayang.miki.repository.*;
 import com.dayang.miki.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
+import org.hibernate.boot.archive.scan.spi.PackageInfoArchiveEntryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,6 +28,15 @@ public class ItemService {
     private final ItemRepository itemRepo;
     private final BrandRepository brandRepository;
     private final HistoryRepository historyRepository;
+
+    private static final int BLOCK_PAGE_NUM_COUNT = 5;  // 블럭에 존재하는 페이지 번호 수
+    private static final int PAGE_ITEM_COUNT = 4;       // 한 페이지에 존재하는 게시글 수
+
+//    @Transactional
+//    public List<Item> getBoardList(Integer pageNum, Long category_id, Integer curPageNum){
+//        Page<Item> page =itemRepo.findAll(PageRequest.of(pageNum - 1, PAGE_ITEM_COUNT, Sort.by(Sort.Direction.ASC, "title")));
+//    }
+
 
     @Transactional
     public void save (Item item){
@@ -64,9 +79,10 @@ public class ItemService {
     @Transactional
     public List<Category> getCategoryByName(String name){return categoryRepository.findByNameContaining(name);}
 
-    public List<Item> categoryItemList(Long id){
-        List<Item> items = itemLogicRepository.getByCategory(id);
-        Hibernate.initialize(items);
+    public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
+
+        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 4));
+
         return items;
     }
     @Transactional
@@ -74,11 +90,7 @@ public class ItemService {
         List<Category> categories = itemLogicRepository.friendCategory(category);
         return categories;
     }
-    @Transactional
-    public List<Category> getBabyCategory(Category category){
-        List<Category> categories = itemLogicRepository.babyCategory(category);
-        return categories;
-    }
+
     @Transactional
     public List<Item_option> itemOptionList(Item item){return itemLogicRepository.itemOptions(item);}
     @Transactional

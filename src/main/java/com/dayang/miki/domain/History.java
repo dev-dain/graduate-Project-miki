@@ -18,6 +18,9 @@ public class History {
     @JoinColumn(name="item_id")
     private Item item;
 
+    @Column(columnDefinition = "integer default 1")
+    private Integer count;
+
     public static History createHistory(Item item){
         History history = new History();
         history.setItem(item);
