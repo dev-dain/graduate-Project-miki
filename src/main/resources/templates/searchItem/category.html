@@ -51,32 +51,14 @@
                         <td th:if="${item.item_price} != ${item.discount_price}" th:text="${item.item_price}원" class="origin-price">
                         </td>
                         <td th:text="${item.discount_price}" class="discount-price" style="margin: 0 20px 20px 20px">원</td>
-                        <td>
-                            <button th:if="${item.is_testable}" class="go-test">테스트</button>
+                        <td th:if="${item.is_testable} == 1">
+                            <button th:text="${item.is_testable}" class="go-test" ></button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-            <!--
-             th:each="item, index : ${item}"
-                item : com.dayang.miki.domain.Item@3a8c0897
-                index : {index = 0, count = 1, size = 80, current = com.dayang.miki.domain.Item@3a8c0897}
-            -->
-<!--            <div class="item-row" th:if="${index.index} < 2">-->
-<!--                <div class="item-card">-->
-<!--                    <span th:text="${item.name}"></span>-->
-<!--                    <span th:text="${index}"></span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
         <button th:onclick="'javascript:goNextPage(' + ${category} + ')'"
             class="item-btn item-next-btn">&gt;</button>
-<!--        <div>-->
-<!--            <a th:href="@{'/category/' + ${category} + '?page=' + ${left}}">뒤로가기</a>-->
-
-<!--            <a th:href="@{'/category/' + ${category} + '?page='+ ${right}}">앞으로 가기</a>-->
-<!--            </span>-->
-<!--        </div>-->
     </div>
 </div>
 
@@ -97,7 +79,7 @@
 
     const goItemPage = id => location.href = `/item/${id}`;
 
-    const URLSearch = new URLSearchParams(location.search);
+    // const URLSearch = new URLSearchParams(location.search);
     const checkFirstPage = page => (page <= 1);
     const checkLastPage = (page, length) => (Number(page) >= length);
 
@@ -118,12 +100,6 @@
                     console.log(itemContainer);
                     wrapContainer.removeChild(wrapContainer.lastElementChild);
                     wrapContainer.appendChild(itemRowContainer);
-
-                    // const itemRowContainer = document.querySelector('.item-row-container');
-                    // let rowContainer = data.split('<tbody')[1].split('</tbody>')[0];
-                    // rowContainer = '<tbody ' + rowContainer;
-                    // console.log(rowContainer);
-                    // itemRowContainer.innerHTML = rowContainer;
                 })
                 .catch(e => console.error(e));
 
