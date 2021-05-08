@@ -48,9 +48,16 @@
                             <hr class="divide-img-info">
                         </td>
                         <td th:text="${item.name}" class="item-title"></td>
-                        <td th:if="${item.item_price} != ${item.discount_price}" th:text="${item.item_price}원" class="origin-price">
+                        <td
+                                th:if="${item.item_price} != ${item.discount_price}"
+                                th:text="${item.item_price} + '원'"
+                                class="origin-price"
+                                style="width: 50%; margin: 0 0 -30px 0; padding: 10px 20px;">
                         </td>
-                        <td th:text="${item.discount_price}" class="discount-price" style="margin: 0 20px 20px 20px">원</td>
+                        <td
+                                th:text="${item.discount_price} + '원'"
+                                class="discount-price"
+                                style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</td>
                         <td th:if="${item.is_testable} == 1">
                             <button th:text="${item.is_testable}" class="go-test" ></button>
                         </td>
