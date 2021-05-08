@@ -75,6 +75,9 @@ public class ItemController {
     public String ItemDetail(@PathVariable("item_id") Long id, Model model){
         Item item = itemService.findOne(id);
         List<Product_img> product_img = itemService.productImgs(item);
+        model.addAttribute("item_id", item.getId());
+        model.addAttribute("item_name", item.getName());
+        model.addAttribute("item_isTestable", item.getIs_testable());
         model.addAttribute("product_img",product_img);
         return "searchItem/item-detail";
     }
