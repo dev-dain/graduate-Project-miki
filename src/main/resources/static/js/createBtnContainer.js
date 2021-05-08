@@ -7,12 +7,14 @@ const createBtnContainer = (id, isTestable) => {
   putInCartBtn.addEventListener('click', () => console.log('장바구니에 담음'));
 
   const goTestBtn = document.createElement('button');
-  if (isTestable) {
+  if (Number(isTestable)) {
     goTestBtn.classList += 'cont-btn go-test';
     ///////////////////////
     // 어떻게 테스트하게 할지 정해야 함
     ///////////////////////
     goTestBtn.addEventListener('click', () => console.log('test'));    
+  } else {
+    goTestBtn.style.display = 'none';
   }
 
   const viewReviewBtn = document.createElement('button');

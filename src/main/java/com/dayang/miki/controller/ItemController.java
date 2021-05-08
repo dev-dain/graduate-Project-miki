@@ -65,6 +65,7 @@ public class ItemController {
         model.addAttribute("item_img", item_img);
         model.addAttribute("item_price", item.getItem_price());
         model.addAttribute("item_discountPrice", item.getDiscount_price());
+        model.addAttribute("item_isTestable", item.getIs_testable());
         model.addAttribute("review_rate", rate);
         model.addAttribute("review_count", cnt);
 
