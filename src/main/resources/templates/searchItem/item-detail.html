@@ -62,7 +62,7 @@
   const goPrevBtn = document.querySelector('.go-prev')
   const goItemPrevBtn = document.querySelector('.item-prev-btn');
   const goItemNextBtn = document.querySelector('.item-next-btn');
-  // const footer = document.querySelector('footer');
+  const footer = document.querySelector('footer');
   const imgContainer = document.querySelector('.img-container');
   const modalContainer = document.querySelector('.modal-container');
 
@@ -107,12 +107,31 @@
 
   footer.addEventListener('click', () => {
     modalContainer.innerHTML = '';
-    modalContainer.style.display = 'flex';
+    // modalContainer.style.display = 'flex';
 
-    const modal = (item.item_optionList.length <= 1)
-            ? singleOptionModal(item)
-            : multipleOptionModal(item);
-    modalContainer.appendChild(modal);
+    fetch(`/item/${item_id}/item_option`)
+            .then(res => {
+              // res.text();
+              console.log(res);
+            })
+            .then(data => {
+              1;
+              // console.log(data)
+              // const wrapContainer = document.getElementById('wrap');
+              // const itemRowContainer = document.createElement('div');
+              // itemRowContainer.classList += 'item-container';
+              // let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
+              // itemRowContainer.innerHTML = itemContainer;
+              // console.log(itemContainer);
+              // wrapContainer.removeChild(wrapContainer.lastElementChild);
+              // wrapContainer.appendChild(itemRowContainer);
+            })
+            .catch(e => console.error(e));
+
+    // const modal = (item.item_optionList.length <= 1)
+    //         ? singleOptionModal(item)
+    //         : multipleOptionModal(item);
+    // modalContainer.appendChild(modal);
   });
 
 </script>
