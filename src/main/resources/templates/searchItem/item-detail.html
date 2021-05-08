@@ -105,19 +105,17 @@
     }
   });
 
-  // footer.addEventListener('click', () => {
-  //   modalContainer.innerHTML = '';
-  //   modalContainer.style.display = 'flex';
-  //
-  //   const modal = (item.item_optionList.length <= 1)
-  //           ? singleOptionModal(item)
-  //           : multipleOptionModal(item);
-  //   modalContainer.appendChild(modal);
-  // });
+  footer.addEventListener('click', () => {
+    modalContainer.innerHTML = '';
+    modalContainer.style.display = 'flex';
 
+    const modal = (item.item_optionList.length <= 1)
+            ? singleOptionModal(item)
+            : multipleOptionModal(item);
+    modalContainer.appendChild(modal);
+  });
 
 </script>
 <script src="/js/itemDetailModal.js"></script>
-<!--<script src="/js/itemDetail.js"></script>-->
 </body>
 </html>
