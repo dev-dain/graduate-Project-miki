@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -31,25 +32,12 @@ class ItemServiceTest {
 
     @Test
     void items(){
-        Long id = 30L;
+        Long id = 41L;
         Category category = itemService.findOneCategory(id);
         List<Category> categories = itemService.getFriendCategory(category);
-
-        List<Category> showCategory = new ArrayList<>();
-        List<Category> tmp;
-        for(Category c : categories){
-            tmp = itemService.getFriendCategory(c);
-            if(tmp.size()==0){
-                showCategory.add(c);
-            }
-            else{
-                for(Category cc : tmp){
-                    showCategory.add(cc);
-                }
-            }
-        }
-        for(Category c: showCategory){
-            System.out.println(c.getName());
+        List<Item> items = itemService.getByCategory(id);
+        for(Item i : items){
+            System.out.println("item_name = " + i.getName()+" item_id = "+ i.getId());
         }
     }
 

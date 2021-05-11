@@ -79,9 +79,9 @@ public class ItemService {
     @Transactional
     public List<Category> getCategoryByName(String name){return categoryRepository.findByNameContaining(name);}
 
-    public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
+    public Page<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
 
-        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 4));
+        Page<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 4));
 
         return items;
     }
@@ -90,7 +90,10 @@ public class ItemService {
         List<Category> categories = itemLogicRepository.friendCategory(category);
         return categories;
     }
-
+    @Transactional
+    public List<Item> getByCategory(Long category_id) {
+        return itemLogicRepository.getByCategory(category_id);
+    }
     @Transactional
     public List<Item_option> itemOptionList(Item item){return itemLogicRepository.itemOptions(item);}
     @Transactional
