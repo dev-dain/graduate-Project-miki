@@ -21,7 +21,7 @@ public class StoreController {
         List<Position> positions = storeService.findAllPosition();
         model.addAttribute("stores", stores);
         model.addAttribute("positions", positions);
-        return "stores";
+        return "store/stores";
     }
 
     @GetMapping("/admin/login")
