@@ -21,8 +21,8 @@ public class CartController {
     private final CartService cartService;
     private final ItemService itemService;
 
-    @GetMapping("/basket")
-    public String basket(Model model){
+    @GetMapping("/cart")
+    public String cart(Model model){
         List<Cart> baskets = cartService.findAll();
         List<Item_img> imgs = new ArrayList<>();
         for(Cart basket : baskets){
@@ -30,18 +30,18 @@ public class CartController {
         }
         model.addAttribute(baskets);
         model.addAttribute(imgs);
-        return "/basket/basket";
+        return "/cart/cart";
     }
 
-    @DeleteMapping("/basket/{basket_id}")
-    public String deleteOne(@PathVariable("basket_id") Long id){
+    @DeleteMapping("/cart/{cart_id}")
+    public String deleteOne(@PathVariable("cart_id") Long id){
         cartService.deleteOne(id);
-        return "redirect:/basket/basket";
+        return "redirect:/cart/cart";
     }
-    @DeleteMapping("/basket")
+    @DeleteMapping("/cart")
     public String deleteAll(){
         cartService.truncateCart();
-        return "redirect:/basket/basket";
+        return "redirect:/cart/cart";
     }
 
 }
