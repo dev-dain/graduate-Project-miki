@@ -47,15 +47,12 @@ j_midList.forEach(mid => {
                 itemRowContainer.classList += 'item-container';
                 let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
                 itemRowContainer.innerHTML = itemContainer;
-                console.log(itemContainer);
                 wrapContainer.removeChild(wrapContainer.lastElementChild);
                 wrapContainer.appendChild(itemRowContainer);
 
-                // const itemRowContainer = document.querySelector('.item-row-container');
-                // let rowContainer = data.split('<tbody')[1].split('</tbody>')[0];
-                // rowContainer = '<tbody ' + rowContainer;
-                // console.log(rowContainer);
-                // itemRowContainer.innerHTML = rowContainer;
+                localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
+                console.log('category', localStorage.getItem('categoryMax'));
+
             })
             .catch(e => console.error(e));
     });
@@ -112,15 +109,12 @@ for (let i = 0; i < midCatList.length; i++) {
                             itemRowContainer.classList += 'item-container';
                             let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
                             itemRowContainer.innerHTML = itemContainer;
-                            console.log(itemContainer);
                             wrapContainer.removeChild(wrapContainer.lastElementChild);
                             wrapContainer.appendChild(itemRowContainer);
 
-                            // const itemRowContainer = document.querySelector('.item-row-container');
-                            // let rowContainer = data.split('<tbody')[1].split('</tbody>')[0];
-                            // rowContainer = '<tbody ' + rowContainer;
-                            // console.log(rowContainer);
-                            // itemRowContainer.innerHTML = rowContainer;
+                            localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
+                            console.log('category ', localStorage.getItem('categoryMax'));
+
                         })
                         .catch(e => console.error(e));
 

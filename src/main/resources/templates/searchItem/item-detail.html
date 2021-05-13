@@ -17,10 +17,10 @@
   </header>
   <div class="detail-container">
     <button class="item-btn item-prev-btn">&lt;</button>
-<!--    <div class="item-card" th:each="productImg: ${product_img}"-->
-<!--        style="width: 225px; margin: 10px;">-->
-<!--      <img th:src="${productImg.product_img}" class="thumbnail-img" th:alt="${productImg.id}">-->
-<!--    </div>-->
+    <!--    <div class="item-card" th:each="productImg: ${product_img}"-->
+    <!--        style="width: 225px; margin: 10px;">-->
+    <!--      <img th:src="${productImg.product_img}" class="thumbnail-img" th:alt="${productImg.id}">-->
+    <!--    </div>-->
     <div class="btn-container">
 
     </div>
@@ -57,7 +57,7 @@
 
   const btnContainer = document.querySelector('.btn-container');
   createBtnContainer(item_id, item_isTestable).forEach(el =>
-            btnContainer.appendChild(el));
+          btnContainer.appendChild(el));
 
   const goPrevBtn = document.querySelector('.go-prev')
   const goItemPrevBtn = document.querySelector('.item-prev-btn');

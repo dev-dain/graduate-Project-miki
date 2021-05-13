@@ -33,6 +33,7 @@
     </div>
     <button class="fold fold-btn">^</button>
     <div class="item-container">
+        <p class="maxNum" style="display: none;" th:text="${maxNum}"></p>
         <button th:onclick="'javascript:goPrevPage(' + ${category} + ')'"
            class="item-btn item-prev-btn">
             &lt;
@@ -80,16 +81,18 @@
 
     /*]]>*/
 
-    function noti(testValue, tmpValue){
+    function noti(testValue, tmpValue) {
         console.log(testValue, tmpValue);
     }
+
+    localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
+    console.log(localStorage.getItem('categoryMax'));
 
 
     const goItemPage = id => location.href = `/item/${id}`;
 
-    // const URLSearch = new URLSearchParams(location.search);
     const checkFirstPage = page => (page <= 1);
-    const checkLastPage = (page, length) => (Number(page) >= length);
+    const checkLastPage = page => page >= Number(localStorage.getItem('categoryMax'));
 
     const goPrevPage = category => {
         if (checkFirstPage(Number(localStorage.getItem('page')))) {
@@ -105,7 +108,6 @@
                     itemRowContainer.classList += 'item-container';
                     let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
                     itemRowContainer.innerHTML = itemContainer;
-                    console.log(itemContainer);
                     wrapContainer.removeChild(wrapContainer.lastElementChild);
                     wrapContainer.appendChild(itemRowContainer);
                 })
@@ -115,43 +117,27 @@
         }
     }
 
-
-    ////////////////////
-    // 다음 버튼을 눌렀을 때 어떻게 할 것인지는 좀 나중에 생각..
-    // """"""""""전체 페이지 수를 알아야""""""""""""""" 설정이 가능함
-    // 아니면 그냥 맨뒤 페이지일 때 > 누르면 맨앞으로,
-    // 맨앞 페이지일 떄 < 누르면 맨뒤로 가게 만들 수도 있긴 함
-    ////////////////////
-
-    //일단 보류..
     const goNextPage = category => {
-        // if (checkLastPage(Number(URLSearch.get('page')))) {
-        //     console.log('First Page!');
-        //     alert('제일 마지막 페이지입니다.');
-        // } else {
-        //     location.href = `/category/${category}?page=${URLSearch.get('page')}`;
-        // }
-        // location.href = `/category/${category}?page=${Number(URLSearch.get('page')) + 1}`;
-        fetch(`/category/${category}?page=${Number(localStorage.getItem('page')) + 1}`)
-            .then(res => res.text())
-            .then(data => {
-                const wrapContainer = document.getElementById('wrap');
-                const itemRowContainer = document.createElement('div');
-                itemRowContainer.classList += 'item-container';
-                let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-                itemRowContainer.innerHTML = itemContainer;
-                console.log(itemContainer);
-                wrapContainer.removeChild(wrapContainer.lastElementChild);
-                wrapContainer.appendChild(itemRowContainer);
+        if (checkLastPage(Number(localStorage.getItem('page')))) {
+            console.log('Last Page!');
+            alert('제일 마지막 페이지입니다.');
+        } else {
+            fetch(`/category/${category}?page=${Number(localStorage.getItem('page')) + 1}`)
+                .then(res => res.text())
+                .then(data => {
+                    const wrapContainer = document.getElementById('wrap');
+                    const itemRowContainer = document.createElement('div');
+                    itemRowContainer.classList += 'item-container';
+                    let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
+                    itemRowContainer.innerHTML = itemContainer;
+                    console.log(itemContainer);
+                    wrapContainer.removeChild(wrapContainer.lastElementChild);
+                    wrapContainer.appendChild(itemRowContainer);
 
-                // const itemRowContainer = document.querySelector('.item-row-container');
-                // let rowContainer = data.split('<tbody')[1].split('</tbody>')[0];
-                // rowContainer = '<tbody ' + rowContainer;
-                // console.log(rowContainer);
-                // itemRowContainer.innerHTML = rowContainer;
-            })
-            .catch(e => console.error(e));
-        localStorage.setItem('page', Number(localStorage.getItem('page')) + 1);
+                })
+                .catch(e => console.error(e));
+            localStorage.setItem('page', Number(localStorage.getItem('page')) + 1);
+        }
     }
 </script>
 
