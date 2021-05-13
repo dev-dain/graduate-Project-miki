@@ -34,19 +34,20 @@ public class ItemController {
         List<Category> tmp;
         for(Category c : categories){
             tmp = itemService.getFriendCategory(c);
-            if(tmp.size()==0){
-                showCategory.add(c);
-            }
-            else{
+            showCategory.add(c);
+            if(tmp.size()!=0){
                 for(Category cc : tmp){
                     showCategory.add(cc);
                 }
             }
         }
-
-        Page<Item> items;
+        if(itemService.getByCategory(category_id).size()!=0){
+            showCategory.add(category);
+        }
+        List<Item> items;
         items = itemService.findItemByCategory(showCategory, pageNum);
-
+        long maxNum = itemService.getItemNum(showCategory);
+        model.addAttribute("maxNum", maxNum);
         model.addAttribute("category", category_id);
         model.addAttribute("item", items);
 

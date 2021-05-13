@@ -31,6 +31,42 @@ class ItemServiceTest {
     CategoryRepository categoryRepository;
 
     @Test
+    void pagingItem(){
+        Long category_id = 36L;
+        int pageNum = 1;
+        Category category = itemService.findOneCategory(category_id);
+        List<Category> categories = itemService.getFriendCategory(category);
+        categories.add(category);
+        List<Category> showCategory = new ArrayList<>();
+        List<Category> tmp;
+
+
+        for(Category c : categories){
+            tmp = itemService.getFriendCategory(c);
+            showCategory.add(c);
+            if(tmp.size()!=0){
+                for(Category cc : tmp){
+                    showCategory.add(cc);
+                }
+            }
+        }
+        if(itemService.getByCategory(category_id).size()!=0){
+            showCategory.add(category);
+        }
+        System.out.println("===================================================");
+        System.out.println("그다음 친구들");
+
+        for(Category c : categories){
+            System.out.println(c.getId());
+
+        }
+        System.out.println("===================================================");
+        System.out.println(itemService.getItemNum(showCategory));
+        System.out.println(itemService.getItemNum(showCategory)/4);
+    }
+
+
+    @Test
     void items(){
         Long id = 41L;
         Category category = itemService.findOneCategory(id);

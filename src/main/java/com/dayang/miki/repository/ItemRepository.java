@@ -14,8 +14,15 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findByNameContaining(String name);
 
-    @Query(nativeQuery =true,value = "select i.* from item i inner join category_item c \n" +
+    @Query(nativeQuery =true,
+            value = "select count(i.item_id) from item i inner join category_item c \n" +
+            "on i.item_id = c.item_id\n" +
+            "where category_id in (:ids);")
+    long countItemNum(@Param("ids")List<Category> ids);
+
+    @Query(nativeQuery =true,
+            value = "select i.* from item i inner join category_item c \n" +
             "on i.item_id = c.item_id\n" +
             "where category_id in (:ids) ")
-    Page<Item> findItemByIn(@Param("ids") List<Category> ids, Pageable pageable);
+    List<Item> findItemByIn(@Param("ids") List<Category> ids, Pageable pageable);
 }

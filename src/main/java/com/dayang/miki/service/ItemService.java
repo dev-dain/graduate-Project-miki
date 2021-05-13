@@ -79,9 +79,17 @@ public class ItemService {
     @Transactional
     public List<Category> getCategoryByName(String name){return categoryRepository.findByNameContaining(name);}
 
-    public Page<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
+    @Transactional
+    public long getItemNum(List<Category> ids){
+        long count = itemRepo.countItemNum(ids);
+        if (count%4==0) return count/4;
+        else return (count/4)+1;
+    }
 
-        Page<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 4));
+    @Transactional
+    public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
+
+        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 4));
 
         return items;
     }
