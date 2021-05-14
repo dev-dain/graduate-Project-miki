@@ -21,7 +21,13 @@ public class StoreController {
         List<Position> positions = storeService.findAllPosition();
         model.addAttribute("stores", stores);
         model.addAttribute("positions", positions);
-        return "stores";
+        return "store/stores";
+    }
+
+    // 임시로 만든 login 
+    @GetMapping("/login")
+    public String store_login(){
+        return "login/login";
     }
 
     @GetMapping("/admin/login")
