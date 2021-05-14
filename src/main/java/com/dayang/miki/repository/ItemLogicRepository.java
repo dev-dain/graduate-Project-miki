@@ -33,6 +33,7 @@ public class ItemLogicRepository {
                 .getResultList();
     }
 
+
     // 카테고리 아이디 검색
     public List<Item> getByCategory(Long category_id){
         Category category = em.find(Category.class, category_id);
@@ -89,6 +90,14 @@ public class ItemLogicRepository {
     public List<Category>friendCategory(Category category){
         return em.createQuery("select c from Category c where c.parent =:category", Category.class)
                 .setParameter("category", category)
+                .getResultList();
+    }
+
+    //해당 매장 아이템 수량 가져오기
+    public List<StoreQuantity>storeQuantityList(Item item, Store store){
+        return em.createQuery("select sq from StoreQuantity sq where sq.store =:store and sq.item =:item", StoreQuantity.class)
+                .setParameter("store", store)
+                .setParameter("item", item)
                 .getResultList();
     }
 }

@@ -141,9 +141,11 @@ public class ItemService {
         return itemLogicRepository.Single_Item_option(name);
     }
 
-/*
+
     @Transactional
-    public
-*/
+    public List<StoreQuantity> storeQuantityList(Item item, Store store){
+        return itemLogicRepository.storeQuantityList(item, store);
+    }
+
 
 }

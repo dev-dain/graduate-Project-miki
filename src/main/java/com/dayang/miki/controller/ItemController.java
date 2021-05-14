@@ -2,6 +2,7 @@ package com.dayang.miki.controller;
 
 import com.dayang.miki.domain.*;
 import com.dayang.miki.service.ItemService;
+import com.dayang.miki.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
@@ -20,7 +21,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
-
+    private final StoreService storeService;
+    private final Long store_id = 1L;
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
 
@@ -88,8 +90,11 @@ public class ItemController {
     @GetMapping("/item/{item_id}/item_option")
     public String ItemOption(@PathVariable("item_id") Long id, Model model){
         Item item = itemService.findOne(id);
+        Store store = storeService.findById(store_id);
+        List<StoreQuantity> storeQuantities = itemService.storeQuantityList(item, store);
         List<Item_option> item_options = itemService.itemOptionList(item);
-        model.addAttribute(item_options);
+        model.addAttribute("item_option", item_options);
+        model.addAttribute("store_Quantity", storeQuantities);
         return "searchItem/item-detail";
     }
 
@@ -98,7 +103,7 @@ public class ItemController {
         return "searchItem/voice-search";
     }
 
-    @GetMapping("/searchItem")
+    @GetMapping("/searchItem/{keyword}")
     public String search(@PathVariable("keyword")String keyword, Model model){
         if(itemService.findByItemName(keyword).size()>0) {
             List<Item> items = itemService.findByItemName(keyword);

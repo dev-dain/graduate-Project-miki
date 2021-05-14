@@ -33,4 +33,9 @@ public class StoreRepository {
                 .setParameter("name", name)
                 .getSingleResult();
     }
+    public Store findById(Long id){
+        return em.createQuery("select s from Store s where s.id =: id", Store.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
 }

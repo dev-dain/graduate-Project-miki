@@ -16,6 +16,11 @@ public class StoreService {
     private final StoreRepository storeRepository;
 
     @Transactional
+    public Store findById(Long id){
+        Store store = storeRepository.findById(id);
+        return store;
+    }
+    @Transactional
     public Store findSingleStore(String name){
         Store store = storeRepository.getSingleStore(name);
         return store;
