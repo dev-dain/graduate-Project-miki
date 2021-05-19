@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,16 @@ class ItemServiceTest {
     BrandRepository brandRepository;
     @Autowired
     CategoryRepository categoryRepository;
+
+/*    @Test
+    @Rollback(false)
+    void change(){
+        Long category_id = 36L;
+        List<Item> items = itemService.getByCategory(category_id);
+        for(Item item : items){
+            itemService.updateTestable(item.getId());
+        }
+    }*/
 
     @Test
     void pagingItem(){

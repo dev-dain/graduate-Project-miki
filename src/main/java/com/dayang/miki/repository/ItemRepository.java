@@ -5,6 +5,7 @@ import com.dayang.miki.domain.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -25,4 +26,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "on i.item_id = c.item_id\n" +
             "where category_id in (:ids) ")
     List<Item> findItemByIn(@Param("ids") List<Category> ids, Pageable pageable);
+
+   /* @Modifying
+    @Query("UPDATE Item i set i.is_testable ='Y' where i.id =:id")
+    void updateShowCount(@Param("id") Long id);*/
 }

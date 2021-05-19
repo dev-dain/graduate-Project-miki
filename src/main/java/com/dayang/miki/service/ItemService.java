@@ -147,5 +147,8 @@ public class ItemService {
         return itemLogicRepository.storeQuantityList(item, store);
     }
 
-
+/*    @Transactional
+    public void updateTestable(Long id){
+        itemRepo.updateShowCount(id);
+    }*/
 }
