@@ -7,7 +7,7 @@ let colorSet;
 let colorAlpha;
 
 function preload(){
-  lipStickColor = loadImage("color.png");
+  lipStickColor = loadImage("../img/color.png");
   
 }
 function setup() {
