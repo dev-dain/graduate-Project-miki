@@ -41,15 +41,15 @@
 <!--        <div class="item-row-container">-->
                 <table class="table table-striped item-row-container" style="margin: 0;">
                     <tbody style="width: 490px; display: flex; flex-flow: row wrap;">
-                    <tr class="item-card" th:each="item : ${item}" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'"
+                    <tr class="item-card" th:each="item : ${item}"
                         style="width: 225px; margin: 10px;">
-                        <td style="display: flex; justify-content: center; align-items: center;">
+                        <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'">
                             <img th:src="${item.item_img}" class="thumbnail-img" th:alt="${item.name}"></img>
                         </td>
                         <td>
                             <hr class="divide-img-info">
                         </td>
-                        <td th:text="${item.name}" class="item-title"></td>
+                        <td th:text="${item.name}" class="item-title" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'"></td>
                         <td
                                 th:if="${item.item_price} != ${item.discount_price}"
                                 th:text="${item.item_price} + '원'"
@@ -60,8 +60,8 @@
                                 th:text="${item.discount_price} + '원'"
                                 class="discount-price"
                                 style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</td>
-                        <td th:if="${item.is_testable} == 1">
-                            <button th:text="${item.is_testable}" class="go-test" ></button>
+                        <td th:if="${item.is_testable} == 'Y'">
+                            <button class="go-test" th:onclick="'javascript:goTestPage(' + ${item.id} + ')'">테스트</button>
                         </td>
                     </tr>
                     </tbody>
@@ -90,6 +90,7 @@
 
 
     const goItemPage = id => location.href = `/item/${id}`;
+    const goTestPage = id => location.href = `/test/${id}`;
 
     const checkFirstPage = page => (page <= 1);
     const checkLastPage = page => page >= Number(localStorage.getItem('categoryMax'));
