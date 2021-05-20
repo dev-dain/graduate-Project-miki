@@ -107,31 +107,22 @@
 
   footer.addEventListener('click', () => {
     modalContainer.innerHTML = '';
-    // modalContainer.style.display = 'flex';
+    modalContainer.style.display = 'flex';
 
     fetch(`/item/${item_id}/item_option`)
-            .then(res => {
-              // res.text();
-              console.log(res);
-            })
+            .then(res => res.text())
             .then(data => {
-              1;
-              // console.log(data)
-              // const wrapContainer = document.getElementById('wrap');
-              // const itemRowContainer = document.createElement('div');
-              // itemRowContainer.classList += 'item-container';
-              // let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-              // itemRowContainer.innerHTML = itemContainer;
-              // console.log(itemContainer);
-              // wrapContainer.removeChild(wrapContainer.lastElementChild);
-              // wrapContainer.appendChild(itemRowContainer);
+              const wrapContainer = document.getElementById('wrap');
+              const script = document.createElement('script');
+              const modalContainer = document.querySelector('.modal-container');
+              const optionContainer = data.split('<body>')[1].split('<script>')[0];
+              const scriptText = data.split('<script>')[1].split('//')[0];
+              modalContainer.innerHTML = optionContainer;
+              console.log(scriptText);
+              script.innerHTML = scriptText;
+              wrapContainer.appendChild(script);
             })
             .catch(e => console.error(e));
-
-    // const modal = (item.item_optionList.length <= 1)
-    //         ? singleOptionModal(item)
-    //         : multipleOptionModal(item);
-    // modalContainer.appendChild(modal);
   });
 
 </script>

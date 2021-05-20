@@ -110,18 +110,18 @@ footer > p {
 
 .modal-container {
   position: absolute;
-  top: 0; left: 0; 
+  bottom: 60px; left: 0;
   z-index: 10;
   margin: 0;
   width: 100%;
   min-height: 100%;
   display: none;
-  background-color: rgb(64, 64, 64, .85);
+  background-color: rgba(64, 64, 64, .85);
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  /* opacity: 0;
-  animation: makeVisible .2s ease-in-out forwards; */
+  opacity: 0;
+  animation: makeVisible .2s ease-in-out forwards;
 }
 .modal {
   background-color: #fff;
@@ -135,6 +135,32 @@ footer > p {
 }
 .modal > * {
   padding: 15px 0;
+}
+.option-container {
+  background: #fff;
+  width: 100%;
+  padding: 30px;
+}
+th {
+  font-size: 1.5rem;
+  padding-bottom: 20px;
+}
+.option-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.td-option {
+  padding: 5px 0;
+  cursor: pointer;
+  background: #fff;
+  width: 100%;
+  text-align: left;
+}
+.soldout-btn {
+  color: #E93C15;
+  font-weight: 700;
 }
 .modal > *:first-child {
   padding-top: 50px;

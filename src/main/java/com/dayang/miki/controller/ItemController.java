@@ -95,7 +95,7 @@ public class ItemController {
         List<Item_option> item_options = itemService.itemOptionList(item);
         model.addAttribute("item_option", item_options);
         model.addAttribute("store_Quantity", storeQuantities);
-        return "searchItem/item-detail";
+        return "searchItem/item-option";
     }
 
     @GetMapping("/searchVoice")

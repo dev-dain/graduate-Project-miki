@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- item-detail에서 '장바구니 담기' 버튼을 선택했을 때 나올 옵션 선택 코드 조각 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 보기</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/item-detail.css">
+</head>
+<body>
+    <table class="option-container">
+        <thead>
+            <tr>
+                <th colspan="2">옵션 선택</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="option-row" th:each="option : ${item_option}">
+<!--            <td th:text="${option.id}"></td>-->
+                <td>
+                    <button class="td-option"th:text="${option.item_option_name}"></button>
+                </td>
+<!--            <td th:text="${option.item.name}"></td>-->
+            </tr>
+        </tbody>
+    </table>
+
+<script th:inline="javascript">
+    const quantityList = [];
+    /*<![CDATA[*/
+
+    /*[# th:each="quantity : ${store_Quantity}"]*/
+    quantityList.push(/*[[${quantity.stockquantity}]]*/);
+    /*[/]*/
+
+    /*]]>*/
+
+    const tbody = document.querySelector('tbody');
+    console.log(`tbody : ${tbody.children.length}`);
+    for (let i = 0; i < tbody.children.length; i++) {
+        if (!quantityList[i]) {
+            tbody.children[i].children[0].children[0].disabled = true;
+            tbody.children[i].children[0].children[0].style.color = 'gray';
+            const soldoutBtn = document.createElement('span');
+            soldoutBtn.classList += 'soldout-btn';
+            soldoutBtn.textContent = '품절';
+            tbody.children[i].appendChild(soldoutBtn);
+        } else {
+            tbody.children[i].children[0].addEventListener('click', () => {
+                console.log('hi');
+            });
+        }
+    }
+
+    // dummy
+
+</script>
+</body>
+</html>
