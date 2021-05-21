@@ -29,7 +29,7 @@
   </div>
   <div class="item-container">
     <p class="maxNum" style="display: none;" th:text="${maxNum}"></p>
-    <button th:onclick="'javascript:goPrevPage(' + ${category} + ')'"
+    <button th:onclick="'javascript:goPrevPage()'"
             class="item-btn item-prev-btn">
       &lt;
     </button>
@@ -61,13 +61,15 @@
       </tr>
       </tbody>
     </table>
-    <button th:onclick="'javascript:goNextPage(' + ${category} + ')'"
+    <button th:onclick="'javascript:goNextPage()'"
             class="item-btn item-next-btn">&gt;</button>
   </div>
 </div>
 
 <script th:inline="javascript">
   /*<![CDATA[*/
+
+  const keyword = /*[[ ${keyword} ]]*/;
 
   /*[# th:each="tmp : ${item}"]*/
   noti(/*[[${tmp.name}]]*/, /*[[${tmp.item_price}]]*/);
@@ -90,23 +92,24 @@
     location.href = './cart';
   });
 
-  localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
-  console.log(localStorage.getItem('categoryMax'));
+  localStorage.setItem('searchMax', document.querySelector('.maxNum').textContent);
+  console.log(localStorage.getItem('searchMax'));
+  localStorage.setItem('page', 1);
 
 
   const goItemPage = id => location.href = `/item/${id}`;
   const goTestPage = id => location.href = `/test/${id}`;
 
   const checkFirstPage = page => (page <= 1);
-  const checkLastPage = page => page >= Number(localStorage.getItem('categoryMax'));
+  const checkLastPage = page => page >= Number(localStorage.getItem('searchMax'));
 
-  const goPrevPage = category => {
+  const goPrevPage = () => {
     if (checkFirstPage(Number(localStorage.getItem('page')))) {
       console.log('First Page!');
       alert('제일 첫 페이지입니다.');
     } else {
       // location.href = `/category/${category}?page=${Number(URLSearch.get('page')) - 1}`;
-      fetch(`/category/${category}?page=${Number(localStorage.getItem('page')) - 1}`)
+      fetch(`/searchVoice/${keyword}?page=${Number(localStorage.getItem('page')) - 1}`)
               .then(res => res.text())
               .then(data => {
                 const wrapContainer = document.getElementById('wrap');
@@ -123,12 +126,12 @@
     }
   }
 
-  const goNextPage = category => {
+  const goNextPage = () => {
     if (checkLastPage(Number(localStorage.getItem('page')))) {
       console.log('Last Page!');
       alert('제일 마지막 페이지입니다.');
     } else {
-      fetch(`/category/${category}?page=${Number(localStorage.getItem('page')) + 1}`)
+      fetch(`/searchVoice/${keyword}?page=${Number(localStorage.getItem('page')) + 1}`)
               .then(res => res.text())
               .then(data => {
                 const wrapContainer = document.getElementById('wrap');
@@ -136,7 +139,6 @@
                 itemRowContainer.classList += 'item-container';
                 let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
                 itemRowContainer.innerHTML = itemContainer;
-                console.log(itemContainer);
                 wrapContainer.removeChild(wrapContainer.lastElementChild);
                 wrapContainer.appendChild(itemRowContainer);
 
@@ -145,21 +147,6 @@
       localStorage.setItem('page', Number(localStorage.getItem('page')) + 1);
     }
   }
-
-
-  // if (!resultCount) {
-  //   itemContainer.innerHTML = `
-  //       <img
-  //         class="category-btn-img"
-  //         src="./img/information.png"
-  //         alt="https://www.freepik.com"
-  //         style="width: 128px; margin-bottom: 50px;";
-  //       >
-  //       <p style="font-size: 2rem; font-weight: 900;">검색 결과가 없습니다.</p>
-  //     `;
-  //   itemContainer.style.flexDirection = 'column';
-  //   itemContainer.style.justifyContent = 'center';
-  // }
 </script>
 </body>
 
