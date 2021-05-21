@@ -52,8 +52,8 @@ public class ItemService {
         return category;
     }
     @Transactional
-    public List<Item> findByItemName (String name){
-        List<Item> items = itemRepo.findByNameContaining(name);
+    public List<Item> findByItemName (String name, Integer pageNum){
+        List<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 4));
         List<Item> item_List = new ArrayList<>();
 
         if (items.isEmpty()) return item_List;

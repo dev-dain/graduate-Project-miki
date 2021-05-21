@@ -102,21 +102,26 @@ public class ItemController {
     public String searchVoicePage() { return "searchItem/voice-search"; }
 
     @GetMapping("/searchVoice/{keyword}")
-    public String searchVoice(@PathVariable("keyword")String keyword, Model model){
-        if(itemService.findByItemName(keyword).size()==0){
+    public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+        if(itemService.findByItemName(keyword, pageNum).size()==0){
             return "searchItem/voice-search";
         }
-        List<Item> items = itemService.findByItemName(keyword);
+        List<Item> items = itemService.findByItemName(keyword, pageNum);
+        long maxNum = 0;
+        if(items.size()<=4) maxNum=0;
+        else if(items.size()%4!=0)maxNum = (items.size()/4)+1;
+        else maxNum = items.size()/4;
         model.addAttribute("keyword", keyword);
         model.addAttribute("item", items);
         model.addAttribute("count", items.size());
+        model.addAttribute("maxNum", maxNum);
         return "searchItem/search-result";
     }
 
     @GetMapping("/searchItem/{keyword}")
-    public String search(@PathVariable("keyword")String keyword, Model model){
-        if(itemService.findByItemName(keyword).size()>0) {
-            List<Item> items = itemService.findByItemName(keyword);
+    public String search(@PathVariable("keyword")String keyword, Model model,@RequestParam(value="page", defaultValue = "1") Integer pageNum){
+        if(itemService.findByItemName(keyword, pageNum).size()>0) {
+            List<Item> items = itemService.findByItemName(keyword, pageNum);
             List<Item_img> item_imgs = new ArrayList<>();
             for(Item item : items){
                 item_imgs.add(itemService.itemImg(item));
