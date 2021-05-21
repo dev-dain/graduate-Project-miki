@@ -106,7 +106,7 @@ public class ItemController {
         List items = itemService.findByItemName(keyword);
         model.addAttribute("item", items);
         model.addAttribute("count", items.size());
-        return "searchItem/voice-search";
+        return "searchItem/search-result";
     }
 
     @GetMapping("/searchItem/{keyword}")
