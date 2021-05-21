@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/category-part.css">
   <link rel="stylesheet" href="/css/search-result.css">
-  <link rel="stylesheet" href="/css/category.css">
   <title>검색 결과</title>
 </head>
 
@@ -25,16 +24,21 @@
     </div>
   </header>
   <div class="result-container">
-    <p class="result-text" th:text="${keyword} + '의 검색 결과는 ' + ${count} + '건입니다.'"></p>
+    <p class="result-text">
+      <span class="highlight" th:text="${keyword}"></span>
+      <span> 의 검색 결과는 </span>
+      <span class="highlight" th:text="${count}"></span>
+      <span> 건입니다.</span>
+    </p>
   </div>
   <div class="item-container">
     <p class="maxNum" style="display: none;" th:text="${maxNum}"></p>
-    <button th:onclick="'javascript:goPrevPage()'"
+    <button th:onclick="'javascript:goPrevPage()'" th:if="${count} != 0"
             class="item-btn item-prev-btn">
       &lt;
     </button>
     <!--        <div class="item-row-container">-->
-    <table class="table table-striped item-row-container" style="margin: 0;">
+    <table class="table table-striped item-row-container" style="margin: 0;" th:if="${count} != 0">
       <tbody style="width: 490px; display: flex; flex-flow: row wrap;">
       <tr class="item-card" th:each="item : ${item}"
           style="width: 225px; margin: 10px;">
@@ -61,7 +65,15 @@
       </tr>
       </tbody>
     </table>
-    <button th:onclick="'javascript:goNextPage()'"
+    <div class="no-result" th:if="${count} == 0">
+      <img class="no-result-pic" src="/img/information.png"></img>
+      <p class="no-result-caution">현재 취급하지 않는 상품입니다. :(</p>
+      <div class="no-result-btn-container">
+        <button class="no-result-btn go-search">다시 검색하기</button>
+        <button class="no-result-btn go-home">홈으로 가기</button>
+      </div>
+    </div>
+    <button th:onclick="'javascript:goNextPage()'" th:if="${count} != 0"
             class="item-btn item-next-btn">&gt;</button>
   </div>
 </div>
@@ -84,13 +96,17 @@
   const mic = document.querySelector('.turn-on-mic');
   const cart = document.querySelector('.go-cart');
   const goPrevBtn = document.querySelector('.go-prev');
+  const goSearchBtn = document.querySelector('.go-search');
+  const goHomeBtn = document.querySelector('.go-home');
 
   goPrevBtn.addEventListener('click', () => { history.back(); });
 
-  mic.addEventListener('click', () => location.href = './searchVoice');
+  mic.addEventListener('click', () => location.href = '/searchVoice');
   cart.addEventListener('click', () => {
-    location.href = './cart';
+    location.href = '/cart';
   });
+  goSearchBtn.addEventListener('click', () => location.href = '/searchVoice');
+  goHomeBtn.addEventListener('click', () => location.href = '/');
 
   localStorage.setItem('searchMax', document.querySelector('.maxNum').textContent);
   console.log(localStorage.getItem('searchMax'));
