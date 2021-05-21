@@ -20,5 +20,5 @@ public class StoreQuantity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_option_id")
     private Item_option item_option;
-    private int stockquantity;
+    private int stock_quantity;
 }
