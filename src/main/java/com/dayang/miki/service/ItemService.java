@@ -52,16 +52,10 @@ public class ItemService {
         return category;
     }
     @Transactional
-    public List<Item> findByItemName (String name, Integer pageNum){
-        List<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 4));
-        List<Item> item_List = new ArrayList<>();
+    public Page<Item> findByItemName (String name, Integer pageNum){
+        Page<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 4));
 
-        if (items.isEmpty()) return item_List;
-
-        for (Item item : items) {
-            item_List.add(item);
-        }
-        return item_List;
+        return items;
     }
 
     @Transactional

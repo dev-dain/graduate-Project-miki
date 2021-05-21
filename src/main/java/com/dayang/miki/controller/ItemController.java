@@ -103,32 +103,29 @@ public class ItemController {
 
     @GetMapping("/searchVoice/{keyword}")
     public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
-        if(itemService.findByItemName(keyword, pageNum).size()==0){
+        if(itemService.findByItemName(keyword, pageNum).getTotalElements()==0){
             return "searchItem/voice-search";
         }
-        List<Item> items = itemService.findByItemName(keyword, pageNum);
-        long maxNum = 0;
-        if(items.size()<=4) maxNum=0;
-        else if(items.size()%4!=0)maxNum = (items.size()/4)+1;
-        else maxNum = items.size()/4;
+        Page<Item> items = itemService.findByItemName(keyword, pageNum);
+
         model.addAttribute("keyword", keyword);
         model.addAttribute("item", items);
-        model.addAttribute("count", items.size());
-        model.addAttribute("maxNum", maxNum);
+        model.addAttribute("count", items.getTotalElements());
+        model.addAttribute("maxNum", items.getTotalPages());
         return "searchItem/search-result";
     }
 
     @GetMapping("/searchItem/{keyword}")
     public String search(@PathVariable("keyword")String keyword, Model model,@RequestParam(value="page", defaultValue = "1") Integer pageNum){
-        if(itemService.findByItemName(keyword, pageNum).size()>0) {
-            List<Item> items = itemService.findByItemName(keyword, pageNum);
+        if(itemService.findByItemName(keyword, pageNum).getTotalElements()>0) {
+            Page<Item> items = itemService.findByItemName(keyword, pageNum);
             List<Item_img> item_imgs = new ArrayList<>();
             for(Item item : items){
                 item_imgs.add(itemService.itemImg(item));
             }
             model.addAttribute("item",itemService.findByBrandName(keyword));
             model.addAttribute("item_img", item_imgs);
-            model.addAttribute("item_count", items.size());
+            model.addAttribute("item_count", items.getTotalElements());
         }
         if(itemService.findByBrandName(keyword)!=null)model.addAttribute("brand", itemService.findByBrandName(keyword));
         if(itemService.getCategoryByName(keyword)!=null)model.addAttribute("category", itemService.getCategoryByName(keyword));

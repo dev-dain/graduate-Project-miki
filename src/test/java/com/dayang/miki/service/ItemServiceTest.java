@@ -30,6 +30,20 @@ class ItemServiceTest {
     BrandRepository brandRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Test
+    void voiceSearch(){
+        String keyword = "삐아";
+        int pageNum = 1;
+        List<Item> items = itemService.findByItemName(keyword, pageNum);
+        for(Item item : items){
+            System.out.println(item.getName());
+        }
+        int maxNum = 0;
+        if(items.size()<=4) maxNum=0;
+        else if(items.size()%4!= 0)maxNum = (items.size()/4)+1;
+        else maxNum = items.size()/4;
+        System.out.println(maxNum);
+    }
 
 /*    @Test
     @Rollback(false)
@@ -94,7 +108,7 @@ class ItemServiceTest {
         //given
         String name = "ddd";
         //when
-        List<Item> items = itemService.findByItemName(name);
+        List<Item> items = itemService.findByItemName(name, 1);
         //then
         for(Item item : items){
             System.out.println(item.getName());

@@ -13,7 +13,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    List<Item> findByNameContaining(String name, Pageable pageable);
+
+    Page<Item> findByNameContaining(String name, Pageable pageable);
 
     @Query(nativeQuery =true,
             value = "select count(i.item_id) from item i inner join category_item c \n" +
