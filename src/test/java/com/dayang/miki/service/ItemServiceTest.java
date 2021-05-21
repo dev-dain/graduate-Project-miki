@@ -34,15 +34,12 @@ class ItemServiceTest {
     void voiceSearch(){
         String keyword = "삐아";
         int pageNum = 1;
-        List<Item> items = itemService.findByItemName(keyword, pageNum);
+        Page<Item> items = itemService.findByItemName(keyword, 3);
         for(Item item : items){
             System.out.println(item.getName());
         }
-        int maxNum = 0;
-        if(items.size()<=4) maxNum=0;
-        else if(items.size()%4!= 0)maxNum = (items.size()/4)+1;
-        else maxNum = items.size()/4;
-        System.out.println(maxNum);
+         System.out.println(items.getTotalElements());
+        System.out.println(items.getTotalPages());
     }
 
 /*    @Test
@@ -108,7 +105,7 @@ class ItemServiceTest {
         //given
         String name = "ddd";
         //when
-        List<Item> items = itemService.findByItemName(name, 1);
+        Page<Item> items = itemService.findByItemName(name, 1);
         //then
         for(Item item : items){
             System.out.println(item.getName());

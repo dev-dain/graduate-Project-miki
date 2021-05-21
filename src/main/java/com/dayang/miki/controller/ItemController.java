@@ -103,10 +103,12 @@ public class ItemController {
 
     @GetMapping("/searchVoice/{keyword}")
     public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
-        if(itemService.findByItemName(keyword, pageNum).getTotalElements()==0){
-            return "searchItem/voice-search";
-        }
         Page<Item> items = itemService.findByItemName(keyword, pageNum);
+
+        if(items.getTotalElements()==0){
+            model.addAttribute("count", items.getTotalElements());
+            return "searchItem/search-result";
+        }
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("item", items);
