@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
@@ -46,9 +46,9 @@
 
     positiveBtn.addEventListener('click', () => {
       if (!searchInput.value) {
-        alert('검색어를 말해주세요.');
+        alert('검색어를 입력해 주세요.');
       } else {
-        location.href = `search-result.html`;
+        location.href = `/searchVoice/${searchInput.value}`;
       }
     });
   </script>
