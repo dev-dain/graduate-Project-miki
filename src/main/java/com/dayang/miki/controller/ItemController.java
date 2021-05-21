@@ -98,8 +98,14 @@ public class ItemController {
         return "searchItem/item-option";
     }
 
-    @GetMapping("/searchVoice")
-    public String searchVoice(){
+    @GetMapping("/searchVoice/{keyword}")
+    public String searchVoice(@PathVariable("keyword")String keyword, Model model){
+        if(itemService.findByItemName(keyword).size()==0){
+            return "searchItem/voice-search";
+        }
+        List items = itemService.findByItemName(keyword);
+        model.addAttribute("item", items);
+        model.addAttribute("count", items.size());
         return "searchItem/voice-search";
     }
 

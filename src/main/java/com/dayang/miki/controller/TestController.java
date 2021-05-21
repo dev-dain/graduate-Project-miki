@@ -17,6 +17,11 @@ public class TestController {
     }
 
     @GetMapping("/test/{item_id}")
+    public String singleTestItem(@PathVariable("item_id") Long id, Model model){
+        return "test/test-main";
+    }
+
+    @GetMapping("/test/{cart_id}")
     public String testItems(@PathVariable("item_id") Long id, Model model){
         return "test/test-main";
     }
