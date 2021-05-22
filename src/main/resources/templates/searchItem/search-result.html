@@ -33,7 +33,7 @@
   </div>
   <div class="item-container">
     <p class="maxNum" style="display: none;" th:text="${maxNum}"></p>
-    <button th:onclick="'javascript:goPrevPage()'" th:if="${count} != 0"
+    <button th:onclick="'javascript:goPrevPage(' + ${count} + ')'" th:if="${count} != 0"
             class="item-btn item-prev-btn">
       &lt;
     </button>
@@ -73,7 +73,7 @@
         <button class="no-result-btn go-home">홈으로 가기</button>
       </div>
     </div>
-    <button th:onclick="'javascript:goNextPage()'" th:if="${count} != 0"
+    <button th:onclick="'javascript:goNextPage(' + ${count} + ')'" th:if="${count} != 0"
             class="item-btn item-next-btn">&gt;</button>
   </div>
 </div>
@@ -98,6 +98,8 @@
   const goPrevBtn = document.querySelector('.go-prev');
   const goSearchBtn = document.querySelector('.go-search');
   const goHomeBtn = document.querySelector('.go-home');
+  const itemPrevBtn = document.querySelector('.item-prev-btn');
+  const itemNextBtn = document.querySelector('.item-next-btn');
 
   goPrevBtn.addEventListener('click', () => { history.back(); });
 
@@ -105,8 +107,6 @@
   cart.addEventListener('click', () => {
     location.href = '/cart';
   });
-  goSearchBtn.addEventListener('click', () => location.href = '/searchVoice');
-  goHomeBtn.addEventListener('click', () => location.href = '/');
 
   localStorage.setItem('searchMax', document.querySelector('.maxNum').textContent);
   console.log(localStorage.getItem('searchMax'));
@@ -119,7 +119,7 @@
   const checkFirstPage = page => (page <= 1);
   const checkLastPage = page => page >= Number(localStorage.getItem('searchMax'));
 
-  const goPrevPage = () => {
+  const goPrevPage = count => {
     if (checkFirstPage(Number(localStorage.getItem('page')))) {
       console.log('First Page!');
       alert('제일 첫 페이지입니다.');
@@ -142,7 +142,7 @@
     }
   }
 
-  const goNextPage = () => {
+  const goNextPage = count => {
     if (checkLastPage(Number(localStorage.getItem('page')))) {
       console.log('Last Page!');
       alert('제일 마지막 페이지입니다.');
@@ -163,6 +163,9 @@
       localStorage.setItem('page', Number(localStorage.getItem('page')) + 1);
     }
   }
+
+  goSearchBtn.addEventListener('click', () => location.href = '/searchVoice');
+  goHomeBtn.addEventListener('click', () => location.href = '/');
 </script>
 </body>
 
