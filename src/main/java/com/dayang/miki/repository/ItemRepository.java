@@ -2,6 +2,7 @@ package com.dayang.miki.repository;
 
 import com.dayang.miki.domain.Category;
 import com.dayang.miki.domain.Item;
+import com.dayang.miki.domain.Item_img;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,6 +28,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "on i.item_id = c.item_id\n" +
             "where category_id in (:ids) ")
     List<Item> findItemByIn(@Param("ids") List<Category> ids, Pageable pageable);
+
 
    /* @Modifying
     @Query("UPDATE Item i set i.is_testable ='Y' where i.id =:id")

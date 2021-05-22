@@ -48,7 +48,7 @@ public class ItemLogicRepository {
 
     //상품 자체 이미지
     public Item_img itemImg(Item item){
-        return em.createQuery("select ii from Item_img ii where ii.item =:item", Item_img.class)
+        return em.createQuery("select distinct(ii) from Item_img ii where ii.item =:item", Item_img.class)
                 .setParameter("item", item)
                 .getSingleResult();
     }

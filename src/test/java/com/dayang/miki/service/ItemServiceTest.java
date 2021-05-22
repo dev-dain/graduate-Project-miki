@@ -30,6 +30,14 @@ class ItemServiceTest {
     BrandRepository brandRepository;
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Test
+    void imgTest(){
+        Long id = 324L;
+        itemService.itemImg(id);
+    }
+
+
     @Test
     void voiceSearch(){
         String keyword = "삐아";

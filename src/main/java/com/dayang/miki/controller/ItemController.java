@@ -22,6 +22,7 @@ import java.util.Map;
 public class ItemController {
     private final ItemService itemService;
     private final StoreService storeService;
+
     private final Long store_id = 1L;
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
@@ -62,7 +63,7 @@ public class ItemController {
         Item item = itemService.findOne(id);
         itemService.save(item);
 
-        Item_img item_img = itemService.itemImg(item);
+        Item_img item_img = itemService.itemImg(item.getId());
         int cnt = itemService.reviewCnt(item);
         double rate = itemService.reviewRate(item);
         model.addAttribute("item_id", item.getId());
@@ -123,7 +124,7 @@ public class ItemController {
             Page<Item> items = itemService.findByItemName(keyword, pageNum);
             List<Item_img> item_imgs = new ArrayList<>();
             for(Item item : items){
-                item_imgs.add(itemService.itemImg(item));
+                item_imgs.add(itemService.itemImg(item.getId()));
             }
             model.addAttribute("item",itemService.findByBrandName(keyword));
             model.addAttribute("item_img", item_imgs);

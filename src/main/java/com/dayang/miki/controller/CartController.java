@@ -26,7 +26,7 @@ public class CartController {
         List<Cart> baskets = cartService.findAll();
         List<Item_img> imgs = new ArrayList<>();
         for(Cart basket : baskets){
-            imgs.add(itemService.itemImg(basket.getItem()));
+            imgs.add(itemService.itemImg(basket.getItem().getId()));
         }
         model.addAttribute(baskets);
         model.addAttribute(imgs);
@@ -38,6 +38,7 @@ public class CartController {
         cartService.deleteOne(id);
         return "redirect:/cart/cart";
     }
+
     @DeleteMapping("/cart")
     public String deleteAll(){
         cartService.truncateCart();

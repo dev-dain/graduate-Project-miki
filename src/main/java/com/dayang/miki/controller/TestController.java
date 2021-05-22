@@ -21,7 +21,7 @@ public class TestController {
         return "test/test-main";
     }
 
-    @GetMapping("/test/{cart_id}")
+    @GetMapping("/testAll/{cart_id}")
     public String testItems(@PathVariable("item_id") Long id, Model model){
         return "test/test-main";
     }
