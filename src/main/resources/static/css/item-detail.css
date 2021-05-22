@@ -209,7 +209,7 @@ th {
   color: #2E0A0A;
   background-color: #FCFCFC;
   border: none;
-  width: 70px;
+  width: 50px;
   height: 35px;
   font-size: 0.9rem;
   font-weight: 700;
@@ -251,4 +251,49 @@ th {
 }
 .cancel {
   color: #E93C15;
+  border-top: none;
+  text-align: right;
+  cursor: pointer;
+}
+.cancel-s {
+  color: #E93C15;
+  border-top: none;
+  text-align: right;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+.close { text-align: right; }
+.table-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.fold-option-btn {
+  align-items: center;
+  margin: 0 auto;
+  width: 50px;
+  background: #FFC41E;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.option-select {
+  width: 100%;
+  border: 3px solid #2E0A0A;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #444;
+  cursor: pointer;
+}
+.option-select-tr {
+  opacity: 0;
+  margin-bottom: 30px;
+}
+div[class^="s-option-"] {
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

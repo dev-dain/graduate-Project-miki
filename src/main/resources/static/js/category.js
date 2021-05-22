@@ -166,7 +166,7 @@ foldBtn.addEventListener('click', () => {
             foldBtn.classList.add('unfold');
             foldBtn.classList.add('rotate');
             smallCatBar.style.display = 'none';
-        }, 300);
+        }, 200);
     } else {
         if (smallCatBar.classList.contains('fold-bar')) {
             smallCatBar.classList.remove('fold-bar');
@@ -177,6 +177,6 @@ foldBtn.addEventListener('click', () => {
             foldBtn.classList.remove('rotate');
             foldBtn.classList.add('fold');
             smallCatBar.style.display = 'flex';
-        }, 300);
+        }, 200);
     }
 });

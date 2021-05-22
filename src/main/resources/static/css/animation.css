@@ -19,5 +19,5 @@
   transform: rotate(180deg);
 }
 
-.fold-bar { animation: fold-bar forwards .3s ease-in-out; }
-.unfold-bar { animation: unfold-bar forwards .3s ease-in-out; }
+.fold-bar { animation: fold-bar forwards .2s ease-in-out; }
+.unfold-bar { animation: unfold-bar forwards .2s ease-in-out; }
