@@ -30,6 +30,26 @@ class ItemServiceTest {
     BrandRepository brandRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    StoreService storeService;
+
+    @Test
+    void positionDist(){
+        Long id = 1L;
+        Store store = storeService.findById(id);
+        Position position = storeService.findSinglePosition(store);
+
+        List<Position> positions = storeService.findAllPosition();
+        List<Double> dist = new ArrayList<>();
+        for(Position position1 : positions){
+            dist.add(storeService.positionDist(position.getLatitude(), position1.getLatitude(),
+                    position.getLongitude(), position1.getLongitude()));
+        }
+        for(Double d : dist){
+            System.out.println(d);
+        }
+    }
+
 
     @Test
     void imgTest(){

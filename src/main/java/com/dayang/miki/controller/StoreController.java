@@ -24,6 +24,23 @@ public class StoreController {
         return "store/stores";
     }
 
+    @GetMapping("/storeDistance/{store_id}")
+    public String distance(@PathVariable("store_id")Long id, Model model){
+        Store store = storeService.findById(id);
+        Position position = storeService.findSinglePosition(store);
+        List<Store> stores = storeService.findAllStore();
+        List<Position> positions = storeService.findAllPosition();
+        List<Double> dist = new ArrayList<>();
+        for(Position position1 : positions){
+            dist.add(storeService.positionDist(position.getLatitude(), position1.getLatitude(),
+                    position.getLongitude(), position1.getLongitude()));
+        }
+        model.addAttribute("store", stores);
+        model.addAttribute("distance",dist); //같은 인덱스 순서대로 들어있어용
+
+        return "store/stores";
+    }
+
     // 임시로 만든 login 
     @GetMapping("/login")
     public String store_login(){
