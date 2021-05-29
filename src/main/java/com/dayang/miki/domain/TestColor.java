@@ -24,6 +24,7 @@ public class TestColor {
     private Item_option item_option;
 
     private String colorCode;
+    private double alpha;
 
     private char face_location;
 }

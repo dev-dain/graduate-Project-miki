@@ -104,6 +104,9 @@ public class ItemController {
 
     @GetMapping("/searchVoice/{keyword}")
     public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+
+
+
         Page<Item> items = itemService.findByItemName(keyword, pageNum);
 
         if(items.getTotalElements()==0){
