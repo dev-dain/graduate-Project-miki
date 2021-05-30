@@ -1,8 +1,8 @@
 const mapContainer = document.getElementById('map')
 const mapOption = {
-    //접속했을 때 보이는 구역은 미아사거리역점
+    //접속했을 때 보이는 구역은 현재 로그인한 매장 위치위치
     /////////////////////
-    center: new kakao.maps.LatLng(37.613672, 127.030438),
+    center: new kakao.maps.LatLng(curLatitude, curLongitude),
     level: 7
 }
 const map = new kakao.maps.Map(mapContainer, mapOption);
@@ -28,65 +28,19 @@ const fetchData = () => {
 
     const positions = [];
 
-    
-    // 여기부터
-    let stores = [
-        {
-            store_id: '20',
-            store_name: '성신여대점',
-            // 도로명 주소도 필요하겠네요
-            store_location: '서울시 성북구 돈암로 64',
-            store_number: '02-783-0529',
-            store_latitude: '37.592628',
-            store_longtitude: '127.017762'
-        },
-        {
-            store_id: '35',
-            store_name: '고대점',
-            store_location: '서울시 성북구 안암로3길 25',
-            store_number: '02-705-6920',
-            store_latitude: '37.585419',
-            store_longtitude: '127.029142'
-        },
-        {
-            // 서울에 있는 매장을 더 추가해야겠네요
-            store_id: '36',
-            store_name: '경희플라자점',
-            store_location: '서울시 동대문구 회기동 경희대학교병원 A동 105호',
-            store_number: '02-683-0962',
-            store_latitude: '37.588503',
-            store_longtitude: '127.021068'
-        }
-    ];
-
-    stores.map(store => {
+    storeList.map(store => {
         positions.push({
             id: store.store_id,
             name: store.store_name,
             location: store.store_location,
             tel: store.store_number,
-            latlng: new kakao.maps.LatLng(store.store_latitude, store.store_longtitude),
+            latlng: new kakao.maps.LatLng(store.store_latitude, store.store_longitude),
             latitude: store.store_latitude,
-            longtitude: store.store_longtitude
+            longitude: store.store_longitude
         });
     });
-    // 여기까지
 
-    // fetch('/stores/23')
-    //     .then(res => res.json())
-    //     .then(res => res.map(store => {
-    //         positions.push({
-    //             id: store.store_id,
-    //             name: store.store_name,
-    //             location: store.store_location,
-    //             tel: store.store_number,
-    //             latlng: new kakao.maps.LatLng(store.store_latitude, store.store_longtitude)
-    //         });
-    //     }))
-    //     .catch(e => console.error(e));
-
-
-
+    
     // 마커 이미지의 이미지 주소입니다
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
@@ -132,7 +86,7 @@ const fetchData = () => {
         kakao.maps.event.addListener(marker, 'click', () => {
             infowindow.open(map, marker);
             const bounds = new kakao.maps.LatLngBounds();
-            bounds.extend(new kakao.maps.LatLng(position.latitude, position.longtitude));
+            bounds.extend(new kakao.maps.LatLng(position.latitude, position.longitude));
             map.setBounds(bounds);
         });
     });

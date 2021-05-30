@@ -37,8 +37,9 @@ public class StoreController {
         }
         model.addAttribute("store", stores);
         model.addAttribute("distance",dist); //같은 인덱스 순서대로 들어있어용
+        model.addAttribute("positions", positions);
 
-        return "store/stores";
+        return "store/store-content";
     }
 
     // 임시로 만든 login 
