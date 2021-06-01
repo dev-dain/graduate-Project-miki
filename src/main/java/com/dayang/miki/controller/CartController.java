@@ -1,15 +1,15 @@
 package com.dayang.miki.controller;
 
 import com.dayang.miki.domain.Cart;
+import com.dayang.miki.domain.Item;
 import com.dayang.miki.domain.Item_img;
+import com.dayang.miki.domain.Item_option;
 import com.dayang.miki.service.CartService;
 import com.dayang.miki.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +22,28 @@ public class CartController {
     private final ItemService itemService;
 
     @GetMapping("/cart")
-    public String cart(Model model){
-        List<Cart> baskets = cartService.findAll();
+    public String cartList(Model model){
+        List<Cart> carts= cartService.findAll();
         List<Item_img> imgs = new ArrayList<>();
-        for(Cart basket : baskets){
-            imgs.add(itemService.itemImg(basket.getItem().getId()));
+        for(Cart cart : carts){
+            imgs.add(itemService.itemImg(cart.getItem().getId()));
         }
-        model.addAttribute(baskets);
+        model.addAttribute(carts);
         model.addAttribute(imgs);
+
         return "/cart/cart";
+    }
+
+    @PostMapping("/cart")
+    public void insertCart(@RequestParam("item_id")Long item_id, @PathVariable("item_option_id")Long item_option_id, @PathVariable("count") int count){
+
+        Item item = itemService.findOne(item_id);
+        Item_option item_option = itemService.findItemOptionById(item_option_id);
+        Cart cart = new Cart();
+        cart.setItem(item);
+        cart.setItem_option(item_option);
+        cart.setCount(count);
+        cartService.save(cart);
     }
 
     @DeleteMapping("/cart/{cart_id}")

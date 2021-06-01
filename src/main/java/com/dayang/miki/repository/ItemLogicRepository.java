@@ -93,6 +93,12 @@ public class ItemLogicRepository {
                 .getResultList();
     }
 
+    public Item_option findItemOptionById(Long id){
+        return em.createQuery("select io from Item_option io where io.id =:id", Item_option.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
     //해당 매장 아이템 수량 가져오기
     public List<StoreQuantity>storeQuantityList(Item item, Store store){
         return em.createQuery("select sq from StoreQuantity sq where sq.store =:store and sq.item =:item", StoreQuantity.class)

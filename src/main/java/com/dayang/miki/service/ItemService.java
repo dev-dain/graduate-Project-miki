@@ -141,6 +141,10 @@ public class ItemService {
     public List<StoreQuantity> storeQuantityList(Item item, Store store){
         return itemLogicRepository.storeQuantityList(item, store);
     }
+    @Transactional
+    public Item_option findItemOptionById(Long id){
+        return itemLogicRepository.findItemOptionById(id);
+    }
 
 /*    @Transactional
     public void updateTestable(Long id){
