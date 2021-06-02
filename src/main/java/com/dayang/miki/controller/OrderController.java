@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -22,7 +23,7 @@ public class OrderController {
     private final OrderService orderService;
     private final ItemService itemService;
     @PostMapping("/order")
-    public String order(List<Cart> cart, Model model){
+    public String order(@RequestBody List<Cart> cart, Model model){
 
         int price =0;
         for(Cart cart1 : cart){

@@ -35,7 +35,7 @@ public class CartController {
     }
 
     @PostMapping("/cart")
-    public void insertCart(@RequestBody CartItem cartItem){
+    public String insertCart(@RequestBody CartItem cartItem){
 
         Long item_id = cartItem.getItem_id();
         Long item_option_id = cartItem.getItem_option_id();
@@ -48,6 +48,8 @@ public class CartController {
         cart.setItem_option(item_option);
         cart.setCount(count);
         cartService.save(cart);
+
+        return "redirect:/item/item_id/item_option";
     }
 
     @DeleteMapping("/cart/{cart_id}")
