@@ -29,16 +29,15 @@ public class CartController {
         List<Item_img> imgs = new ArrayList<>();
         for(Cart cart : carts){
             imgs.add(itemService.itemImg(cart.getItem().getId()));
-            items.add(cart.getItem());    // 오류
-//            items.add(itemService.findOne(cart.getItem().getId()));
-            item_options.add(cart.getItem_option());    // 오류
+            items.add(itemService.findOne(cart.getItem().getId()));
+            item_options.add(itemService.findItemOptionById(cart.getItem_option().getId()));
         }
         model.addAttribute("item_options", item_options);
         model.addAttribute("items", items);
         model.addAttribute("carts", carts);
         model.addAttribute("imgs", imgs);
 
-        return "/cart/cart";
+        return "cart/cart";
     }
 
     @PostMapping("/cart")

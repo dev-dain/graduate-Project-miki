@@ -2,6 +2,7 @@ package com.dayang.miki.service;
 
 
 import com.dayang.miki.domain.Cart;
+import com.dayang.miki.domain.Item_img;
 import com.dayang.miki.repository.CartRepository;
 import org.assertj.core.api.Assertions;
 import com.dayang.miki.domain.Item;
@@ -42,6 +43,25 @@ class BasketServiceTest {
         List<Cart> CartList = cartService.findAll();
         for(Cart cart : CartList){
             System.out.println(cart.getId() + " " + cart.getItem().getName());
+        }
+    }
+
+    @Test
+    void cartList(){
+        List<Cart> carts= cartService.findAll();
+        List<Item> items = new ArrayList<>();
+        List<Item_option> item_options = new ArrayList<>();
+        List<Item_img> imgs = new ArrayList<>();
+        for(Cart cart : carts){
+            imgs.add(itemService.itemImg(cart.getItem().getId()));
+            items.add(cart.getItem());
+            item_options.add(cart.getItem_option());
+        }
+        for(Item item : items){
+            System.out.println(item.getId());
+        }
+        for(Item_option item_option : item_options){
+            System.out.println(item_option.getId());
         }
     }
 
