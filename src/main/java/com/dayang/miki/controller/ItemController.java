@@ -143,7 +143,8 @@ public class ItemController {
     public String review(@PathVariable("item_id")Long id, Model model){
         Item item = itemService.findOne(id);
         List<Review> reviews = itemService.getReviewList(item);
-        var review = new HashMap<Review, Review_img>();
+//        var review = new HashMap<Review, Review_img>();
+        Map<Review, Review_img> review= new HashMap<>();
         Review_img review_img;
         for(Review review1 : reviews){
             review_img = itemService.getReviewImg(review1);

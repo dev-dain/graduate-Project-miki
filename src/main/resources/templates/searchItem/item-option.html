@@ -95,7 +95,7 @@
         subCountBtn.textContent = '-';
         addCountBtn.textContent = '+';
 
-        selectedOptionList.push({option_id, count: 1});
+        selectedOptionList.push({item_id: id, item_option_id: option_id, count: 1});
 
         subCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) < 2) {

@@ -130,17 +130,21 @@
         /* 계속 쇼핑 / 장바구니 가기 모달 추가로 띄우기 필요 */
         alert('장바구니에 담겼습니다. :)');
         //뭐야..???
-        fetch(`/cart/${item_id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify(selectedOptionList)
-        })
-                .then(res => res.json())
-                .then(console.log('done'))
-                .catch(e => console.error(e));
+        selectedOptionList.forEach(option => {
+          fetch(`/cart`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(option)
+          })
+                  .then(res => res.json())
+                  .then(data => console.log(data))
+                  .catch(e => console.error(e));
+        });
+
       }
+
         modalContainer.style.display = 'none';
         modalContainer.innerHTML = '';
         wrapContainer.lastElementChild.remove();
