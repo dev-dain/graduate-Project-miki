@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
       <div class="title-container">
         <button class="go-prev">&lt;</button>
         <h1 class="title">장바구니</h1>
-        <h1 class="cart-count"></h1>
+        <h1 class="cart-count" th:text="' (' + ${carts.size() + ')'}"></h1>
       </div>
     </header>
     <div class="cart-container">
@@ -23,7 +23,7 @@
         <span class="select-all-span">전체 선택</span>
       </div>
       <div class="item-row-container">
-        
+
       </div>
       <div class="cart-page-container">
         <button class="go-prev-page-btn">&lt;</button>
@@ -48,6 +48,24 @@
       <button class="go-payment">결제하기</button>
     </div>
   </div>
+
+  <script th:inline="javascript">
+    const noti = (name, id) => console.log(name, id);
+    /*<![CDATA[*/
+
+    /*[# th:each="item : ${items}"]*/
+    noti(/*[[${item.name}]]*/, /*[[${item.id}]]*/);
+    /*[/]*/
+
+    /*[# th:each="img : ${imgs}"]*/
+    noti(/*[[${img.item_img}]]*/, /*[[${img.id}]]*/);
+    /*[/]*/
+
+    /*]]>*/
+    const itemRowContainer = document.querySelector('.item-row-container');
+    const itemRowList = [];
+
+  </script>
 
   <script src="/js/cart.js"></script>
 </body>
