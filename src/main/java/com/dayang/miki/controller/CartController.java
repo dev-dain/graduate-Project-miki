@@ -24,10 +24,13 @@ public class CartController {
     @GetMapping("/cartList")
     public String cartList(Model model){
         List<Cart> carts= cartService.findAll();
+        List<Item> items = new ArrayList<>();
         List<Item_img> imgs = new ArrayList<>();
         for(Cart cart : carts){
             imgs.add(itemService.itemImg(cart.getItem().getId()));
+            items.add(cart.getItem());
         }
+        model.addAttribute(items);
         model.addAttribute(carts);
         model.addAttribute(imgs);
 
