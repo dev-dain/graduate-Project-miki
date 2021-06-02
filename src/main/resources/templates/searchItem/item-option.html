@@ -71,6 +71,8 @@
     const foldOptionBtn = document.querySelector('.fold-option-btn');
     const cancelSpan = document.querySelector('.cancel');
 
+
+    /* 개별 옵션을 클릭했을 때 선택된 상품으로 등록하는 함수 */
     const addOption = (id, option_id, name) => {
         const sOptionDiv = document.createElement('div');
         const nameSpan = document.createElement('span');
@@ -93,15 +95,27 @@
         subCountBtn.textContent = '-';
         addCountBtn.textContent = '+';
 
+        selectedOptionList.push({option_id, count: 1});
+
         subCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) < 2) {
                 alert('수량은 1개 이상이어야 합니다.');
             } else {
                 countInput.value = Number(countInput.value) - 1;
+                for (let i = 0; i < selectedOptionList.length; i++) {
+                    if (selectedOptionList[i].option_id === option_id) {
+                        selectedOptionList[i].count = Number(countInput.value);
+                    }
+                }
             }
         });
         addCountBtn.addEventListener('click', () => {
             countInput.value = Number(countInput.value) + 1;
+            for (let i = 0; i < selectedOptionList.length; i++) {
+                if (selectedOptionList[i].option_id === option_id) {
+                    selectedOptionList[i].count = Number(countInput.value);
+                }
+            }
         });
         cancelSpan.addEventListener('click', () => {
             countInput.value = 0;
@@ -109,7 +123,12 @@
                 if (option === sOptionDiv) {
                     selectedOption.removeChild(option);
                 }
-            })
+            });
+            for (let i = 0; i < selectedOptionList.length; i++) {
+                if (selectedOptionList[i].option_id === option_id) {
+                    selectedOptionList.splice(i, 1);
+                }
+            }
         });
 
         countDiv.appendChild(subCountBtn);
@@ -127,6 +146,7 @@
         const modalContainer = document.querySelector('.modal-container');
         modalContainer.style.display = 'none';
         selectedList = [];
+        selectedOptionList = [];
         selectedOption.innerHTML = '';
     });
 
@@ -175,7 +195,6 @@
             });
         }
     }
-
 
 
 

@@ -55,6 +55,9 @@
   localStorage.setItem(`item-id-${item_id}`, 0);
   const productImgLen = productImgList.length;
 
+  // 선택된 옵션의 id, option_id, count가 객체로 들어갈 리스트
+  let selectedOptionList = [];
+
   const btnContainer = document.querySelector('.btn-container');
   createBtnContainer(item_id, item_isTestable).forEach(el =>
           btnContainer.appendChild(el));
@@ -124,7 +127,19 @@
     }
     try {
       if (modalContainer.children[0].children[1].children[1].lastElementChild.children[0].hasChildNodes()) {
+        /* 계속 쇼핑 / 장바구니 가기 모달 추가로 띄우기 필요 */
         alert('장바구니에 담겼습니다. :)');
+        //뭐야..???
+        fetch(`/cart/${item_id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(selectedOptionList)
+        })
+                .then(res => res.json())
+                .then(console.log('done'))
+                .catch(e => console.error(e));
       }
         modalContainer.style.display = 'none';
         modalContainer.innerHTML = '';

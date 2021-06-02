@@ -190,8 +190,8 @@ th {
   display: flex;
 }
 [class^='m-sub-count'], [class^='m-add-count'] {
-  background-color: #A4D0F9;
-  color: #2E0A0A;
+  background-color: #FFC41E;
+  color: #fff;
   border: none;
   width: 30px;
   height: 35px;
@@ -207,7 +207,7 @@ th {
 [class^='m-count'] {
   text-align: center;
   color: #2E0A0A;
-  background-color: #FCFCFC;
+  background-color: #fff;
   border: none;
   width: 50px;
   height: 35px;
