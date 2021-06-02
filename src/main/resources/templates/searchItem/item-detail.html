@@ -131,6 +131,7 @@
         alert('장바구니에 담겼습니다. :)');
         //뭐야..???
         selectedOptionList.forEach(option => {
+          console.log(option);
           fetch(`/cart`, {
             method: 'POST',
             headers: {

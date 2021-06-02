@@ -103,7 +103,7 @@
             } else {
                 countInput.value = Number(countInput.value) - 1;
                 for (let i = 0; i < selectedOptionList.length; i++) {
-                    if (selectedOptionList[i].option_id === option_id) {
+                    if (selectedOptionList[i].item_option_id === option_id) {
                         selectedOptionList[i].count = Number(countInput.value);
                     }
                 }
@@ -112,7 +112,7 @@
         addCountBtn.addEventListener('click', () => {
             countInput.value = Number(countInput.value) + 1;
             for (let i = 0; i < selectedOptionList.length; i++) {
-                if (selectedOptionList[i].option_id === option_id) {
+                if (selectedOptionList[i].item_option_id === option_id) {
                     selectedOptionList[i].count = Number(countInput.value);
                 }
             }
@@ -125,7 +125,7 @@
                 }
             });
             for (let i = 0; i < selectedOptionList.length; i++) {
-                if (selectedOptionList[i].option_id === option_id) {
+                if (selectedOptionList[i].item_option_id === option_id) {
                     selectedOptionList.splice(i, 1);
                 }
             }
