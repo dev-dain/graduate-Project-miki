@@ -25,11 +25,14 @@ public class CartController {
     public String cartList(Model model){
         List<Cart> carts= cartService.findAll();
         List<Item> items = new ArrayList<>();
+        List<Item_option> item_options = new ArrayList<>();
         List<Item_img> imgs = new ArrayList<>();
         for(Cart cart : carts){
             imgs.add(itemService.itemImg(cart.getItem().getId()));
             items.add(cart.getItem());
+            item_options.add(cart.getItem_option());
         }
+        model.addAttribute(item_options);
         model.addAttribute(items);
         model.addAttribute(carts);
         model.addAttribute(imgs);
