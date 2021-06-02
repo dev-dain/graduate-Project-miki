@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @SpringBootTest
@@ -242,5 +243,24 @@ class ItemServiceTest {
         Brand brand = itemService.findByBrandName(name);
 
         System.out.println(brand.getId());
+    }
+    @Test
+    void reviewTest(){
+        Item item = itemService.findOne(338L);
+        List<Review> reviews = itemService.getReviewList(item);
+        var review = new HashMap<Review, Review_img>();
+        Review_img review_img;
+        for(Review review1 : reviews){
+            review_img = itemService.getReviewImg(review1);
+            if(itemService.getReviewImg(review1)!=null){
+                review.put(review1, review_img);
+            }
+            else review.put(review1, null);
+        }
+
+        for(Review review1 : reviews){
+            if(review.get(review1)!=null) System.out.println(review.get(review1).getId());
+            else System.out.println("null");
+        }
     }
 }
