@@ -29,6 +29,7 @@ public class ItemService {
     private final BrandRepository brandRepository;
     private final HistoryRepository historyRepository;
     private final ItemImgRepository itemImgRepository;
+    private final ItemOptionRepository itemOptionRepository;
 
     private static final int BLOCK_PAGE_NUM_COUNT = 5;  // 블럭에 존재하는 페이지 번호 수
     private static final int PAGE_ITEM_COUNT = 4;       // 한 페이지에 존재하는 게시글 수
@@ -38,6 +39,10 @@ public class ItemService {
 //        Page<Item> page =itemRepo.findAll(PageRequest.of(pageNum - 1, PAGE_ITEM_COUNT, Sort.by(Sort.Direction.ASC, "title")));
 //    }
 
+    @Transactional
+    public void updateStockQuantity(int stockQuantity, Long item_option_id){
+        itemOptionRepository.updateStockQuantity(stockQuantity, item_option_id);
+    }
 
     @Transactional
     public void save (Item item){

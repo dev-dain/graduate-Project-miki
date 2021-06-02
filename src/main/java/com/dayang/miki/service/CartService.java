@@ -2,18 +2,16 @@ package com.dayang.miki.service;
 
 
 import com.dayang.miki.domain.Cart;
-import com.dayang.miki.domain.Item;
-import com.dayang.miki.domain.Item_option;
 
 import com.dayang.miki.repository.CartRepo;
 import com.dayang.miki.repository.CartRepository;
-import com.dayang.miki.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,11 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService {
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
+    private final CartRepo cartRepo;
 
-    @Autowired
-    private CartRepo cartRepo;
     @Transactional
     public Long save(Cart cart){
         cartRepository.save(cart);
@@ -37,7 +33,9 @@ public class CartService {
     }
     @Transactional
     public List<Cart> findAll(){
-        return cartRepository.findAll();
+        List<Cart> carts = new ArrayList<>();
+        carts = cartRepository.findAll();
+        return carts;
     }
     @Transactional
     public void truncateCart() {

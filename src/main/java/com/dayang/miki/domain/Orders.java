@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,9 +17,8 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="order_id")
     private Long id;
-    private LocalDateTime orderDate; //주문시간
-    @Enumerated(EnumType.STRING)
-    private PayMethod pay; //주문 방법 --> QR코드, BARCODE
+    private Date orderDate; //주문시간
+    private int pay; //주문 가격
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문 상태
 
@@ -29,7 +30,9 @@ public class Orders {
         orderItem.setOrder(this);
     }
     //==생성 메서드==//
-    public static Orders createOrder(PayMethod pay, OrderItem... orderItems){
+
+    //==비즈니스 로직==//
+/*    public static Orders createOrder(double pay, OrderItem... orderItems){
         Orders order = new Orders();
         for(OrderItem orderItem : orderItems){
             order.addOrderItem(orderItem);
@@ -38,8 +41,7 @@ public class Orders {
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;
-    }
-    //==비즈니스 로직==//
+    }*/
     /**
      * 주문취소
      */

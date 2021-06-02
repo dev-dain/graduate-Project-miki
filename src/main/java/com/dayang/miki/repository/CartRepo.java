@@ -23,4 +23,6 @@ public interface CartRepo extends JpaRepository<Cart, Long> {
     @Modifying
     @Query("UPDATE Cart c SET c.count = c.count + :cnt WHERE c.id = :id")
     int updateCnt(@Param("cnt") int cnt, @Param("id")Long id);
+
+
 }

@@ -29,8 +29,4 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "where category_id in (:ids) ")
     List<Item> findItemByIn(@Param("ids") List<Category> ids, Pageable pageable);
 
-
-   /* @Modifying
-    @Query("UPDATE Item i set i.is_testable ='Y' where i.id =:id")
-    void updateShowCount(@Param("id") Long id);*/
 }
