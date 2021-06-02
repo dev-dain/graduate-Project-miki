@@ -35,8 +35,10 @@ public class CartController {
     }
 
     @PostMapping("/cart")
-    public void insertCart(@RequestParam("item_id")Long item_id, @RequestParam("item_option_id")Long item_option_id, @RequestParam("count") int count){
+    public void insertCart(@RequestParam("item_id")int item_id1, @RequestParam("item_option_id")int item_option_id1, @RequestParam("count") int count){
 
+        Long item_id = Long.valueOf(item_id1);
+        Long item_option_id = Long.valueOf(item_option_id1);
         Item item = itemService.findOne(item_id);
         Item_option item_option = itemService.findItemOptionById(item_option_id);
         Cart cart = new Cart();
