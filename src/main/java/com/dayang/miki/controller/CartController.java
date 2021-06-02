@@ -21,7 +21,7 @@ public class CartController {
     private final CartService cartService;
     private final ItemService itemService;
 
-    @GetMapping("/cart")
+    @GetMapping("/cartList")
     public String cartList(Model model){
         List<Cart> carts= cartService.findAll();
         List<Item_img> imgs = new ArrayList<>();
