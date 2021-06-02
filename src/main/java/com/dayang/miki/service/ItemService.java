@@ -30,6 +30,7 @@ public class ItemService {
     private final HistoryRepository historyRepository;
     private final ItemImgRepository itemImgRepository;
     private final ItemOptionRepository itemOptionRepository;
+    private final ReviewRepository reviewRepository;
 
     private static final int BLOCK_PAGE_NUM_COUNT = 5;  // 블럭에 존재하는 페이지 번호 수
     private static final int PAGE_ITEM_COUNT = 4;       // 한 페이지에 존재하는 게시글 수
@@ -149,6 +150,20 @@ public class ItemService {
     @Transactional
     public Item_option findItemOptionById(Long id){
         return itemLogicRepository.findItemOptionById(id);
+    }
+
+    @Transactional
+    public List<Review> getReviewList(Item item){return reviewRepository.getReview(item);}
+
+    @Transactional
+    public Review_img getReviewImg(Review review){
+        Review_img review_img;
+        try {
+            review_img = reviewRepository.getReviewImg(review);
+        }catch (EmptyResultDataAccessException e){
+            review_img = null;
+        }
+        return review_img;
     }
 
 /*    @Transactional

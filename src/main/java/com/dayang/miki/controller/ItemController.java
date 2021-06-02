@@ -138,4 +138,23 @@ public class ItemController {
 
         return "searchItem/search-result";
     }
+
+    @GetMapping("/review/{item_id}")
+    public String review(@PathVariable("item_id")Long id, Model model){
+        Item item = itemService.findOne(id);
+        List<Review> reviews = itemService.getReviewList(item);
+        var review = new HashMap<Review, Review_img>();
+        Review_img review_img;
+        for(Review review1 : reviews){
+            review_img = itemService.getReviewImg(review1);
+            if(itemService.getReviewImg(review1)!=null){
+                review.put(review1, review_img);
+            }
+            else review.put(review1, null);
+        }
+        model.addAttribute("review", reviews);
+        model.addAttribute("reviewImg", review);
+
+        return "review";
+    }
 }

@@ -21,7 +21,7 @@ public class CartController {
     private final CartService cartService;
     private final ItemService itemService;
 
-    @GetMapping("/cart")
+    @GetMapping("/cartList")
     public String cartList(Model model){
         List<Cart> carts= cartService.findAll();
         List<Item_img> imgs = new ArrayList<>();
@@ -35,7 +35,7 @@ public class CartController {
     }
 
     @PostMapping("/cart")
-    public void insertCart(@RequestParam("item_id")Long item_id, @PathVariable("item_option_id")Long item_option_id, @PathVariable("count") int count){
+    public void insertCart(@RequestParam("item_id")Long item_id, @RequestParam("item_option_id")Long item_option_id, @RequestParam("count") int count){
 
         Item item = itemService.findOne(item_id);
         Item_option item_option = itemService.findItemOptionById(item_option_id);
