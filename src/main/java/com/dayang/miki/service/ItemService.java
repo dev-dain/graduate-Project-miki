@@ -31,6 +31,7 @@ public class ItemService {
     private final ItemImgRepository itemImgRepository;
     private final ItemOptionRepository itemOptionRepository;
     private final ReviewRepository reviewRepository;
+    private final ReviewRepo reviewRepo;
 
     private static final int BLOCK_PAGE_NUM_COUNT = 5;  // 블럭에 존재하는 페이지 번호 수
     private static final int PAGE_ITEM_COUNT = 4;       // 한 페이지에 존재하는 게시글 수
@@ -154,6 +155,11 @@ public class ItemService {
 
     @Transactional
     public List<Review> getReviewList(Item item){return reviewRepository.getReview(item);}
+
+    @Transactional
+    public List<Review> findReviewByItem(Item item, Integer pageNum){
+        return reviewRepo.findByItem(item, PageRequest.of(pageNum-1, 4, Sort.by("id")));
+    }
 
     @Transactional
     public Review_img getReviewImg(Review review){

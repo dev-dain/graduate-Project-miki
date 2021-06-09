@@ -247,20 +247,16 @@ class ItemServiceTest {
     @Test
     void reviewTest(){
         Item item = itemService.findOne(338L);
-        List<Review> reviews = itemService.getReviewList(item);
-        var review = new HashMap<Review, Review_img>();
-        Review_img review_img;
-        for(Review review1 : reviews){
-            review_img = itemService.getReviewImg(review1);
-            if(itemService.getReviewImg(review1)!=null){
-                review.put(review1, review_img);
-            }
-            else review.put(review1, null);
-        }
+        List<Review> reviews = itemService.findReviewByItem(item,1);
+        List<Review_img> review_imgs = new ArrayList<>();
+        for(Review review : reviews){
+                review_imgs.add(itemService.getReviewImg(review));
+           System.out.println(review.getReview_content());
+       }
+       for(Review_img review_img: review_imgs) {
+           if(review_img==null) System.out.println("null");
+          else System.out.println(review_img.getReview_img());
+       }
 
-        for(Review review1 : reviews){
-            if(review.get(review1)!=null) System.out.println(review.get(review1).getId());
-            else System.out.println("null");
-        }
     }
 }

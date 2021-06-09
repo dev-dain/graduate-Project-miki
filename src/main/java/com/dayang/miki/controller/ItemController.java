@@ -140,22 +140,13 @@ public class ItemController {
     }
 
     @GetMapping("/review/{item_id}")
-    public String review(@PathVariable("item_id")Long id, Model model){
+    public String review(@PathVariable("item_id")Long id, Model model,@RequestParam(value="page", defaultValue = "1") Integer pageNum){
         Item item = itemService.findOne(id);
-        List<Review> reviews = itemService.getReviewList(item);
-//        var review = new HashMap<Review, Review_img>();
-        Map<Review, Review_img> review= new HashMap<>();
-        Review_img review_img;
-        for(Review review1 : reviews){
-            review_img = itemService.getReviewImg(review1);
-            if(itemService.getReviewImg(review1)!=null){
-                review.put(review1, review_img);
-            }
-            else review.put(review1, null);
-        }
+        List<Review> reviews = itemService.findReviewByItem(item,pageNum);
+        List<Review_img> review_imgs = new ArrayList<>();
+        for(Review review : reviews) review_imgs.add(itemService.getReviewImg(review));
         model.addAttribute("review", reviews);
-        model.addAttribute("reviewImg", review);
-
+        model.addAttribute("review_img", review_imgs);
         return "review";
     }
 }
