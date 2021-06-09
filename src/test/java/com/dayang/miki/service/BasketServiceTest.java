@@ -10,6 +10,7 @@ import com.dayang.miki.domain.Item_option;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,15 +39,15 @@ class BasketServiceTest {
         //then
 
     }
-    @Test
+/*    @Test
     void findAll(){
         List<Cart> CartList = cartService.findAll();
         for(Cart cart : CartList){
             System.out.println(cart.getId() + " " + cart.getItem().getName());
         }
-    }
+    }*/
 
-    @Test
+/*    @Test
     void cartList(){
         List<Cart> carts= cartService.findAll();
         List<Item> items = new ArrayList<>();
@@ -63,7 +64,7 @@ class BasketServiceTest {
         for(Item_option item_option : item_options){
             System.out.println(item_option.getId());
         }
-    }
+    }*/
 
     @Test
     void deleteOne(){
@@ -73,5 +74,44 @@ class BasketServiceTest {
     @Rollback(value = false)
     void deleteAll(){
         cartService.truncateCart();
+    }
+
+    @Test
+    void t(){
+        List<Item> tmpItems = cartService.getItemNoPage();
+
+        List<Item_img> imgs = itemService.getCartImg(tmpItems, 1);
+        for(Item_img item_img : imgs) System.out.println(item_img.getItem().getId());
+    }
+
+    @Test
+    void testCart(){
+        int pageNum = 1;
+
+        Page<Cart> carts= cartService.findAll(pageNum);
+        List<Item> items = cartService.getItem(pageNum);
+        List<Item_option> item_options = cartService.getItemOption(pageNum);
+
+        List<Item> tmpItems = cartService.getItemNoPage();
+        List<Item_img> imgs = itemService.getCartImg(tmpItems, pageNum);
+        System.out.println("----------------------------------");
+
+        for(Cart cart : carts){
+            System.out.println(cart.getItem().getId());
+        }
+        System.out.println("----------------------------------");
+        for(Item item : items){
+            System.out.println(item.getId());
+        }
+        System.out.println("----------------------------------");
+
+        for(Item_option item_option : item_options){
+            System.out.println(item_option.getItem().getId());
+        }
+        System.out.println("----------------------------------");
+        for(Item_img item_img : imgs){
+            System.out.println(item_img.getItem().getId());
+        }
+        System.out.println("----------------------------------");
     }
 }

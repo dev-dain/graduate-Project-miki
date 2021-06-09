@@ -2,7 +2,9 @@ package com.dayang.miki.repository;
 
 import com.dayang.miki.domain.Cart;
 import com.dayang.miki.domain.Item;
+import com.dayang.miki.domain.Item_option;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,13 +17,9 @@ public class CartRepository {
 
     public void save(Cart cart){ em.persist(cart); }
 
-    public List<Cart> findAll(){
-        return em.createQuery("select c from Cart c", Cart.class)
-                .getResultList();
-    }
-    public Cart findOne(Item item){
-        return em.createQuery("select c from Cart c where c.item =:item", Cart.class)
-                .setParameter("item", item)
+    public Cart findOne(Item_option item_option){
+        return em.createQuery("select c from Cart c where c.item_option =:item_option", Cart.class)
+                .setParameter("item_option", item_option)
                 .getSingleResult();
     }
 

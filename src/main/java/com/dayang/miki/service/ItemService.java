@@ -166,6 +166,12 @@ public class ItemService {
         return review_img;
     }
 
+    @Transactional
+    public List<Item_img> getCartImg(List<Item> items, Integer pageNum){
+        List<Item_img> item_imgs = itemImgRepository.itemImgcart(items, PageRequest.of(pageNum-1, 4));
+        return item_imgs;
+    }
+
 /*    @Transactional
     public void updateTestable(Long id){
         itemRepo.updateShowCount(id);

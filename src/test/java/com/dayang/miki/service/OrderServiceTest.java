@@ -1,12 +1,10 @@
 package com.dayang.miki.service;
 
-import com.dayang.miki.domain.Cart;
-import com.dayang.miki.domain.OrderItem;
-import com.dayang.miki.domain.OrderStatus;
-import com.dayang.miki.domain.Orders;
+import com.dayang.miki.domain.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +29,8 @@ public class OrderServiceTest {
     public void testOrder(){
 
 
-        List<Cart> cart= new ArrayList<>();
-        cart = cartService.findAll();
+        Page<Cart> cart;
+        cart = cartService.findAll(0);
 
         int price =0;
         for(Cart cart1 : cart){
@@ -72,7 +70,7 @@ public class OrderServiceTest {
     }
     @Test
     public void orderItem(){
-        List<Cart> carts =cartService.findAll();
+        Page<Cart> carts =cartService.findAll(0);
         int price = 0;
         Orders order = orderService.findOne(529L);
         for(Cart cart :carts){
@@ -86,5 +84,9 @@ public class OrderServiceTest {
             orderItem.setOrder(order);
             orderService.orderItem(orderItem);
         }
+    }
+    @Test
+    public void tessst(){
+        List<Item> items = cartService.getItem(0);
     }
 }

@@ -7,6 +7,7 @@ import com.dayang.miki.domain.Item_option;
 import com.dayang.miki.service.CartService;
 import com.dayang.miki.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +23,14 @@ public class CartController {
     private final ItemService itemService;
 
     @GetMapping("/cartList")
-    public String cartList(Model model){
-        List<Cart> carts= cartService.findAll();
-        List<Item> items = new ArrayList<>();
-        List<Item_option> item_options = new ArrayList<>();
-        List<Item_img> imgs = new ArrayList<>();
-        for(Cart cart : carts){
-            imgs.add(itemService.itemImg(cart.getItem().getId()));
-            items.add(itemService.findOne(cart.getItem().getId()));
-            item_options.add(itemService.findItemOptionById(cart.getItem_option().getId()));
-        }
+    public String cartList(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+        Page<Cart> carts= cartService.findAll(pageNum);
+        List<Item> items = cartService.getItem(pageNum);
+        List<Item> tmpItems = cartService.getItemNoPage();
+
+        List<Item_option> item_options = cartService.getItemOption(pageNum);
+        List<Item_img> imgs = itemService.getCartImg(tmpItems, pageNum);
+
         model.addAttribute("item_options", item_options);
         model.addAttribute("items", items);
         model.addAttribute("carts", carts);
@@ -53,7 +52,7 @@ public class CartController {
         cart.setItem(item);
         cart.setItem_option(item_option);
         cart.setCount(count);
-        cartService.save(cart);
+        cartService.validate(cart);
 
         return "redirect:/item/item_id/item_option";
     }

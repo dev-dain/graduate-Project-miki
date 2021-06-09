@@ -106,4 +106,5 @@ public class ItemLogicRepository {
                 .setParameter("item", item)
                 .getResultList();
     }
+
 }
