@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -74,5 +75,14 @@ public class CartService {
     public List<Item> getItemNoPage(){
         List<Item> items = cartRepo.getItemNoPage();
         return items;
+    }
+    @Transactional
+    public Optional<Cart> findOne(Long id){
+        return cartRepo.findById(id);
+    }
+
+    @Transactional
+    public void updateCartNum(int cnt, Item_option item_option){
+        cartRepo.updateCnt(cnt, item_option);
     }
 }

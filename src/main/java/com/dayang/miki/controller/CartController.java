@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,6 +38,12 @@ public class CartController {
         model.addAttribute("imgs", imgs);
 
         return "cart/cart";
+    }
+    @PostMapping("/cart/{cart_id}")
+    public String updateCart(@PathVariable("cart_id") Long id, @RequestParam(value = "cnt") int cnt){
+        Optional<Cart> cart = cartService.findOne(id);
+        cartService.updateCartNum(cnt, cart.get().getItem_option());
+        return "redirect:/cart/cart";
     }
 
     @PostMapping("/cart")

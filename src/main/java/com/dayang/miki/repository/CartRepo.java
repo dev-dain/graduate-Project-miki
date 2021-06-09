@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CartRepo extends JpaRepository<Cart, Long> {
     @Modifying
@@ -37,4 +38,5 @@ public interface CartRepo extends JpaRepository<Cart, Long> {
 
     Page<Cart> findAll(Pageable pageable);
 
+    Optional<Cart> findById(Long id);
 }
