@@ -54,8 +54,12 @@ class ItemServiceTest {
 
     @Test
     void imgTest(){
-        Long id = 324L;
-        itemService.itemImg(id);
+        Long id = 49L;
+        Category category = itemService.findOneCategory(id);
+        List<Item> items = itemService.getByCategory(category.getId());
+        for(Item item : items){
+            System.out.println(item.getId() +" " + item.getName());
+        }
     }
 
 

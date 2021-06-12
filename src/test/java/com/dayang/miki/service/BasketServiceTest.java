@@ -76,24 +76,16 @@ class BasketServiceTest {
         cartService.truncateCart();
     }
 
-    @Test
-    void t(){
-        List<Item> tmpItems = cartService.getItemNoPage();
-
-        List<Item_img> imgs = itemService.getCartImg(tmpItems, 1);
-        for(Item_img item_img : imgs) System.out.println(item_img.getItem().getId());
-    }
 
     @Test
     void testCart(){
         int pageNum = 1;
 
-        Page<Cart> carts= cartService.findAll(pageNum);
-        List<Item> items = cartService.getItem(pageNum);
-        List<Item_option> item_options = cartService.getItemOption(pageNum);
+        List<Cart> carts= cartService.findAll();
+        List<Item> items = cartService.getItem();
+        List<Item_option> item_options = cartService.getItemOption();
 
-        List<Item> tmpItems = cartService.getItemNoPage();
-        List<Item_img> imgs = itemService.getCartImg(tmpItems, pageNum);
+        List<Item_img> imgs = itemService.getCartImg(items);
         System.out.println("----------------------------------");
 
         for(Cart cart : carts){

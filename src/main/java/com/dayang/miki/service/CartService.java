@@ -38,9 +38,9 @@ public class CartService {
         cartRepo.deleteById(basket_id);
     }
     @Transactional
-    public Page<Cart> findAll(Integer pageNum){
-        Page<Cart> carts;
-        carts = cartRepo.findAll(PageRequest.of(pageNum-1, 4, Sort.by("item")));
+    public List<Cart> findAll(){
+        List<Cart> carts;
+        carts = cartRepo.findAll();
         return carts;
     }
     @Transactional
@@ -60,22 +60,18 @@ public class CartService {
     }
 
     @Transactional
-    public List<Item> getItem(Integer pageNum){
-        List<Item> items= cartRepo.getItem(PageRequest.of(pageNum-1, 4));
+    public List<Item> getItem(){
+        List<Item> items= cartRepo.getItem();
         return items;
     }
 
     @Transactional
-    public List<Item_option> getItemOption(Integer pageNum){
-        List<Item_option> item_options = cartRepo.getItemOption(PageRequest.of(pageNum-1, 4));
+    public List<Item_option> getItemOption(){
+        List<Item_option> item_options = cartRepo.getItemOption();
         return item_options;
     }
 
-    @Transactional
-    public List<Item> getItemNoPage(){
-        List<Item> items = cartRepo.getItemNoPage();
-        return items;
-    }
+
     @Transactional
     public Optional<Cart> findOne(Long id){
         return cartRepo.findById(id);

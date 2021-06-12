@@ -29,8 +29,8 @@ public class OrderServiceTest {
     public void testOrder(){
 
 
-        Page<Cart> cart;
-        cart = cartService.findAll(0);
+        List<Cart> cart;
+        cart = cartService.findAll();
 
         int price =0;
         for(Cart cart1 : cart){
@@ -70,7 +70,7 @@ public class OrderServiceTest {
     }
     @Test
     public void orderItem(){
-        Page<Cart> carts =cartService.findAll(0);
+        List<Cart> carts =cartService.findAll();
         int price = 0;
         Orders order = orderService.findOne(529L);
         for(Cart cart :carts){
@@ -87,6 +87,6 @@ public class OrderServiceTest {
     }
     @Test
     public void tessst(){
-        List<Item> items = cartService.getItem(0);
+        List<Item> items = cartService.getItem();
     }
 }

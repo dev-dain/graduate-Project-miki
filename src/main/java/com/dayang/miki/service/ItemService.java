@@ -173,8 +173,8 @@ public class ItemService {
     }
 
     @Transactional
-    public List<Item_img> getCartImg(List<Item> items, Integer pageNum){
-        List<Item_img> item_imgs = itemImgRepository.itemImgcart(items, PageRequest.of(pageNum-1, 4));
+    public List<Item_img> getCartImg(List<Item> items){
+        List<Item_img> item_imgs = itemImgRepository.itemImgcart(items);
         return item_imgs;
     }
 

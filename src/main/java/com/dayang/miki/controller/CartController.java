@@ -24,13 +24,11 @@ public class CartController {
     private final ItemService itemService;
 
     @GetMapping("/cartList")
-    public String cartList(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
-        Page<Cart> carts= cartService.findAll(pageNum);
-        List<Item> items = cartService.getItem(pageNum);
-        List<Item> tmpItems = cartService.getItemNoPage();
-
-        List<Item_option> item_options = cartService.getItemOption(pageNum);
-        List<Item_img> imgs = itemService.getCartImg(tmpItems, pageNum);
+    public String cartList(Model model){
+        List<Cart> carts= cartService.findAll();
+        List<Item> items = cartService.getItem();
+        List<Item_option> item_options = cartService.getItemOption();
+        List<Item_img> imgs = itemService.getCartImg(items);
 
         model.addAttribute("item_options", item_options);
         model.addAttribute("items", items);
