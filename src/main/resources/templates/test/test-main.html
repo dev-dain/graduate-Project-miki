@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,18 +34,30 @@
         <button class="item-prev-btn">&lt;</button>
         <div class="item">
             <div class="item-img-container">
-                <!--        <img-->
-                <!--                src="http://mimg.lalavla.com/resources/images/prdimg/20200713/10005437/10005437_D_001_550.jpg"-->
-                <!--                alt=""-->
-                <!--                class="item-thumbnail"-->
-                <!--        >-->
+
+<!--               # 이미지 클릭 시 -> 옵션을 변경할 수 있는 창 띄우는 부분-->
+<!--                <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:이부분에 옵션 선택하는 자바스크립트 함수 추가'">-->
+<!--                    <img th:src="${item_img}" class="test_prd_img"></img>-->
+<!--                </td>-->
+<!--               #이부분이 왜 출력이안되는지? 질문하기 !-->
+                <img th:src="${item_img}">
                 <input type="checkbox" name="" value="" class="item-select-check" checked></input>
             </div>
             <div class="item-title-container">
-                <p class="item-title">섀 도 우</p>
+                <p class="item-title" th:text="${item_name}"></p>
+            </div>
+            <div class="option_selector">
+                <button id="option_btn"></button>
             </div>
         </div>
         <button class="item-next-btn">&gt;</button>
+        <div class="option_container">
+            <tr class="option-row" th:each="option : ${item_option}">
+                <td>
+                    <button class="td-option"th:text="${option.item_option_name}"></button>
+                </td>
+            </tr>
+        </div>
     </div>
 </div>
 </body>
