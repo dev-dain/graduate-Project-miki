@@ -14,5 +14,5 @@ public interface ItemImgRepository extends JpaRepository<Item_img,Long> {
     Item_img itemImg(@Param("id")Long id);
 
     @Query("select distinct i from Item_img i where i.item in (:items)")
-    List<Item_img> itemImgcart(@Param("items") List<Item> items, Pageable pageable);
+    List<Item_img> itemImgcart(@Param("items") List<Item> items);
 }
