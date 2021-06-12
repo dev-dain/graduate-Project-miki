@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/review.css">
+  <title>리뷰 페이지</title>
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <button class="go-prev">&lt;</button>
+    <!-- <h1 th:text="${item_name}" class="title"></h1> -->
+    <h1>제품명</h1>
+  </header>
+  <div class="rate-container">
+    <div class='RatingStar'>
+      <div class='RatingScore'>
+        <div class='outer-star'><div class='inner-star'></div></div>
+      </div>
+    </div>
+
+    <div class="rating_num">
+      <p>4.5 / 5.0</p>
+      <!-- <p th:text="${rate} + / 5.0 "></p> -->
+    </div>
+  </div>
+  <hr width = "100%" color = "black" size = "3" class="divide_line">
+  <div class="middle-container">
+    <p>총 11건</p>
+    <p th:text="${review_count} + 건 "></p>
+
+    <div class="btn-container">
+      <button id="higher_btn">별점 높은 순</button>
+      <button id="lower_btn">별점 낮은 순</button>
+      <button id="new_btn">최신 순</button>
+    </div>
+  </div>
+  <hr width = "100%" color = "black" size = "3" class="divide_line">
+  <div class="main_container">
+    <div class="info-container">
+      <div id="circle"></div>
+
+      <div class='u_RatingStar'>
+        <div class='RatingScore'>
+          <div class='outer-star'><div class='inner-star'></div></div>
+        </div>
+      </div>
+
+      <div class="review-container">
+        <p>제품명:블라블라샬라샬라</p>
+        <p th:text="제품명 : + ${item_name} " id="prd_name"></p>
+        <p>리뷰 내용: 아주 좋아요~ </p>
+        <p th:text="리뷰 내용: + ${review}" id="review_content"></p>
+      </div>
+      <hr width = "100%" color = "black" size = "3" class="divide_line">
+    </div>
+  </div>
+</div>
+
+<script>
+  ratings = {RatingScore: 4.5}
+  totalRating = 5;
+  table = document.querySelector('.RatingStar');
+  function rateIt() {
+    for (rating in ratings) {
+      ratingPercentage = ratings[rating] / totalRating * 100;
+      ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
+      star = table.querySelector(`.${rating} .inner-star`);
+      numberRating = table.querySelector(`.${rating} .numberRating`);
+      star.style.width = ratingRounded;
+      numberRating.innerText = ratings[rating];
+    }
+  }
+  rateIt()
+
+  user_ratings = {RatingScore: 4.5}
+  totalRating = 5;
+  table = document.querySelector('.u_RatingStar');
+  function u_rateIt() {
+    for (rating in user_ratings) {
+      ratingPercentage = user_ratings[rating] / totalRating * 100;
+      ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
+      star = table.querySelector(`.${rating} .inner-star`);
+      numberRating = table.querySelector(`.${rating} .numberRating`);
+      star.style.width = ratingRounded;
+      numberRating.innerText = user_ratings[rating];
+    }
+  }
+  u_rateIt()
+
+
+</script>
+</body>
+</html>
