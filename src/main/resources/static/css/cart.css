@@ -60,3 +60,184 @@ h1 {
   flex-direction: column;
   width: 100%;
 }
+.item-row {
+  display: flex;
+  width: 100%;
+  padding: 20px 15px;
+  background: #fff;
+  border-bottom: 2px solid #FFC41E;
+}
+.row-left-area {
+  position: relative;
+  margin-right: 15px;
+}
+.item-thumbnail-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+}
+.item-check-btn {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  border: 2px solid #E93C15;
+  background: #fff;
+  color: #E93C15;
+  line-height: 0px;
+}
+.row-right-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 10px;
+}
+.name-area {
+  display: flex;
+  justify-content: space-between;
+}
+.name-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2E0A0A;
+}
+.delete-item-btn {
+  margin: 0 10px 10px 10px;
+  width: 25px;
+  height: 25px;
+  /* https://www.flaticon.com/authors/bqlqn */
+  background-color: #fff;
+  background-image: url('../img/trash.png');
+  background-size: cover;
+}
+.count-price-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+[class^='m-sub-count'], [class^='m-add-count'] {
+  background-color: #FFC41E;
+  color: #fff;
+  border: none;
+  width: 30px;
+  height: 35px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+[class^='m-sub-count'] {
+  border-radius: 10px 0 0 10px;
+}
+[class^='m-add-count'] {
+  border-radius: 0 10px 10px 0;
+}
+[class^='m-count'] {
+  text-align: center;
+  color: #2E0A0A;
+  background-color: #fff;
+  border: none;
+  width: 50px;
+  height: 35px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.m-sub-count, .m-add-count {
+  height: 60px;
+  width: 60px;
+  font-size: 2rem;
+  font-weight: 900;
+}
+.m-sub-count {
+  border-radius: 20px 0 0 20px;
+}
+.m-add-count {
+  border-radius: 0 20px 20px 0;
+}
+.m-count {
+  width: 200px;
+  height: 60px;
+  font-size: 2rem;
+  font-weight: 900;
+}
+.price-area {
+  width: 50%;
+  text-align: right;
+}
+.price-area > * {
+  margin: 5px;
+}
+.origin-price {
+  color: #A7A4A4;
+  text-decoration: line-through;
+}
+.discount-price {
+  color: #E93C15;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+.cart-page-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart-page-container > * {
+  margin: 15px;
+}
+.go-prev-page-btn, .go-next-page-btn {
+  width: 40px;
+  height: 40px;
+  background: #2E0A0A;
+  color: #fff;
+}
+.go-prev-page-btn {
+  border-radius: 10px 0 0 10px;
+}
+.go-next-page-btn {
+  border-radius: 0 10px 10px 0;
+}
+.current-page {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2E0A0A;
+}
+.total-price-container {
+  margin: 25px;
+}
+.total-pay {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.price-info {
+  color: #2E0A0A;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.total-pay-price {
+  display: inline-block;
+  margin-left: 25px;
+  color: #E93C15;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.cart-btn-container {
+  margin: 25px;
+  display: flex;
+  justify-content: center;
+}
+.cart-btn-container > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px;
+  width: 150px;
+  height: 55px;
+  background: #F66657;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 15px;
+}
