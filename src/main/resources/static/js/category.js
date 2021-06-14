@@ -21,7 +21,7 @@ const cart = document.querySelector('.go-cart');
 goPrevBtn.addEventListener('click', () => { history.back(); });
 mic.addEventListener('click', () => location.href = '/searchVoice');
 cart.addEventListener('click', () => {
-    location.href = '/cart';
+    location.href = '/cartList';
 });
 
 
