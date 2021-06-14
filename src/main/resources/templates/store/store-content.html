@@ -63,9 +63,11 @@
     console.log(storeList);
 
     const mic = document.querySelector('.turn-on-mic');
+    const goCart = document.querySelector('.go-cart');
     const goPrevBtn = document.querySelector('.go-prev');
 
     goPrevBtn.addEventListener('click', () => history.back());
+    goCart.addEventListener('click', () => location.href = '/cartList');
     mic.addEventListener('click', () => location.href = '/searchVoice' );
 
     const curStoreID = localStorage.getItem('store_id') || 1;
