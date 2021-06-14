@@ -4,7 +4,7 @@ const createBtnContainer = (id, isTestable) => {
   /////////////////////
   // 장바구니에 어떻게 담을 것인지 생각해야 함
   /////////////////////
-  putInCartBtn.addEventListener('click', () => location.href('/cartList'));
+  putInCartBtn.addEventListener('click', () => location.href = '/cartList');
 
   const goTestBtn = document.createElement('button');
   if (isTestable === 'Y') {

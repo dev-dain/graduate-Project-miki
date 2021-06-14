@@ -307,6 +307,9 @@
     }
 
 
+    const goPrevBtn = document.querySelector('.go-prev');
+    goPrevBtn.addEventListener('click', () => history.back());
+
     localStorage.setItem('cart_page', 1);
     let curCartPage = 1;
     const maxCartPage = Math.ceil(itemRowList.length / pageViewCount);
