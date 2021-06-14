@@ -54,7 +54,7 @@ class ItemServiceTest {
 
     @Test
     void imgTest(){
-        Long id = 49L;
+        Long id = 47L;
         Category category = itemService.findOneCategory(id);
         List<Item> items = itemService.getByCategory(category.getId());
         for(Item item : items){
@@ -251,7 +251,7 @@ class ItemServiceTest {
     @Test
     void reviewTest(){
         Item item = itemService.findOne(338L);
-        List<Review> reviews = itemService.findReviewByItem(item,1);
+        List<Review> reviews = itemService.findReviewByItem(item);
         List<Review_img> review_imgs = new ArrayList<>();
         for(Review review : reviews){
                 review_imgs.add(itemService.getReviewImg(review));

@@ -80,7 +80,8 @@ class BasketServiceTest {
     @Test
     void testCart(){
         int pageNum = 1;
-
+        int[] arr = {};
+        arr[0] = 1;
         List<Cart> carts= cartService.findAll();
         List<Item> items = cartService.getItem();
         List<Item_option> item_options = cartService.getItemOption();

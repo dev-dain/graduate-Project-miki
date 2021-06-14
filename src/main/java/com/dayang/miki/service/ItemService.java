@@ -157,8 +157,8 @@ public class ItemService {
     public List<Review> getReviewList(Item item){return reviewRepository.getReview(item);}
 
     @Transactional
-    public List<Review> findReviewByItem(Item item, Integer pageNum){
-        return reviewRepo.findByItem(item, PageRequest.of(pageNum-1, 4, Sort.by("id")));
+    public List<Review> findReviewByItem(Item item){
+        return reviewRepo.findByItem(item);
     }
 
     @Transactional

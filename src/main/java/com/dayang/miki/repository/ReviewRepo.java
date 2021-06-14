@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ReviewRepo extends JpaRepository<Review, Long> {
 
-    List<Review> findByItem(Item item, Pageable pageable);
+    List<Review> findByItem(Item item);
 }
