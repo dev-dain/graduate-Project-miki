@@ -147,6 +147,6 @@ public class ItemController {
         for(Review review : reviews) review_imgs.add(itemService.getReviewImg(review));
         model.addAttribute("review", reviews);
         model.addAttribute("review_img", review_imgs);
-        return "review";
+        return "searchItem/review";
     }
 }
