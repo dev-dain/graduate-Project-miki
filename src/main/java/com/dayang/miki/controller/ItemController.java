@@ -140,7 +140,7 @@ public class ItemController {
     }
 
     @GetMapping("/review/{item_id}")
-    public String review(@PathVariable("item_id")Long id, Model model,@RequestParam(value="page", defaultValue = "1") Integer pageNum){
+    public String review(@PathVariable("item_id")Long id, Model model){
         Item item = itemService.findOne(id);
         List<Review> reviews = itemService.findReviewByItem(item);
         List<Review_img> review_imgs = new ArrayList<>();

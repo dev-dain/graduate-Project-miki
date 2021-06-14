@@ -38,9 +38,10 @@ public class CartController {
         return "cart/cart";
     }
     @PostMapping("/cart/{cart_id}")
-    public String updateCart(@PathVariable("cart_id") Long id, @RequestParam(value = "cnt") int cnt){
+    public String updateCart(@PathVariable("cart_id") Long id, @RequestBody CartItem cartItem){
+
         Optional<Cart> cart = cartService.findOne(id);
-        cartService.updateCartNum(cnt, cart.get().getItem_option());
+        cartService.updateCartNum(cartItem.getCount(), cart.get().getItem_option());
         return "redirect:/cart/cart";
     }
 
