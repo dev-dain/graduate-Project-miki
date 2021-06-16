@@ -22,6 +22,6 @@ const createBtnContainer = (id, isTestable) => {
   ////////////////////
   // 어떻게 리뷰를 보게 할 것인지 결정해야 함
   ////////////////////
-  viewReviewBtn.addEventListener('click', () => console.log('리뷰'));
+  viewReviewBtn.addEventListener('click', () => location.href = `/review/${id}`);
   return [putInCartBtn, goTestBtn, viewReviewBtn]
 }
