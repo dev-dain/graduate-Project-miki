@@ -145,6 +145,7 @@ public class ItemController {
         List<Review> reviews = itemService.findReviewByItem(item);
         List<Review_img> review_imgs = new ArrayList<>();
         for(Review review : reviews) review_imgs.add(itemService.getReviewImg(review));
+        model.addAttribute("item", item);
         model.addAttribute("review", reviews);
         model.addAttribute("review_img", review_imgs);
         return "searchItem/review";
