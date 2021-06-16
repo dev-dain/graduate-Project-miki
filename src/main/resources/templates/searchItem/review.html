@@ -14,8 +14,8 @@
     <h1 th:text="${item.name}" class="title"></h1>
   </header>
   <div class="rate-row">
-    <span class="star-rate"></span>
-    <span class="num-rate"></span>
+    <div class="star-rate"></div>
+    <div class="num-rate"></div>
   </div>
   <div class="rate-info-row">
     <p class="rate-count"></p>
@@ -23,27 +23,15 @@
 <!--    <button class="rate-btn-low"></button>-->
 <!--    <button class="rate-btn-recent"></button>-->
   </div>
+  <div class="btn-container">
+    <!-- 세로 버튼바 들어가는 자리 -->
+  </div>
   <div class="review-container">
-    <div class="btn-container">
-      <!-- 세로 버튼바 들어가는 자리 -->
-    </div>
-    <div class="review-row">
-      <div class="review-info">
-        <span class="star-rate"></span>
-        <span class="num-rate"></span>
-      </div>
-      <div class="review-content">
-        <p class="review-option"></p>
-        <p class="review-text"></p>
-        <div class="review-img-container">
-          <img src="" class="review-img">
-        </div>
-        <p class="review-date"></p>
-      </div>
-    </div>
+
   </div>
 </div>
 
+<script src="/js/createBtnContainer.js"></script>
 <script th:inline="javascript">
   const rateList = [];
   const rateObject = {};
@@ -70,7 +58,7 @@
 
   i = 0;
   const imgList = [];
-  imgList.fill('', 0, totalRateCount);
+  // imgList.fill('', totalRateCount);
 
   /*[# th:each="img : ${review_img}"]*/
   imgList[i++] = /*[[${img.review_img}]]*/;
@@ -79,19 +67,33 @@
 
   /*]]>*/
 
-  console.log(imgList);
 
   const avgRate = (rateList.reduce((a, x) => a += x)) / totalRateCount;
   const goPrevBtn = document.querySelector('.go-prev');
   goPrevBtn.addEventListener('click', () => history.back());
 
+  const btnContainer = document.querySelector('.btn-container');
+  createBtnContainer(item_id, item_isTestable).forEach(el =>
+          btnContainer.appendChild(el));
+
+  const starMaker = rate => {
+    if (rate < 2) return '⭐';
+    else if (rate < 3) return '⭐⭐';
+    else if (rate < 4) return '⭐⭐⭐';
+    else if (rate < 5) return '⭐⭐⭐⭐';
+    else return '⭐⭐⭐⭐⭐';
+  }
+
   const rateRowStarRate = document.querySelector('.rate-row > .star-rate');
+  rateRowStarRate.textContent = starMaker(avgRate);
   const rateRowNumRate = document.querySelector('.rate-row > .num-rate');
-  rateRowNumRate.textContent = `${avgRate.toFixed(1)} / 5점`;
+  rateRowNumRate.innerHTML = `${avgRate.toFixed(1)} <span class="light-color"> / 5<sub class="little-size">점</sub></span>`;
 
   const rateCount = document.querySelector('.rate-count');
-  rateCount.textContent = `총 ${rateList.length}건`;
+  rateCount.textContent = `총 ${rateList.length} 건`;
 
+
+  console.log(imgList);
 
   const createRateRow = review_id => {
     const reviewRow = document.createElement('div');
@@ -100,10 +102,11 @@
     const reviewInfo = document.createElement('div');
     reviewInfo.classList.add('review-info');
 
-    const starRate = document.createElement('span');
+    const starRate = document.createElement('div');
     starRate.classList.add('star-rate');
     /* 나중에 별 넣기 */
-    const numRate = document.createElement('span');
+    starRate.textContent = starMaker(rateObject[review_id].rate);
+    const numRate = document.createElement('div');
     numRate.classList.add('num-rate');
     numRate.textContent = `${rateObject[review_id].rate}점`;
 
@@ -134,7 +137,9 @@
 
     const reviewDate = document.createElement('p');
     reviewDate.classList.add('review-date');
-    reviewDate.textContent = rateObject[review_id].date;
+
+    const dateText = rateObject[review_id].date.split('T')[0].replace(/-/gi, '. ');
+    reviewDate.textContent = dateText;
 
     reviewContent.appendChild(reviewDate);
 
