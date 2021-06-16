@@ -14,10 +14,7 @@
     <h1 th:text="${item.name}" class="title"></h1>
   </header>
   <div class="rate-row">
-    <span class="star-rate" th:text="${review_img.size()}"></span>
-    <div class="test" th:each="img: ${review}">
-      <span th:text="${img.review_img}"></span>
-    </div>
+    <span class="star-rate"></span>
     <span class="num-rate"></span>
   </div>
   <div class="rate-info-row">
@@ -57,11 +54,13 @@
   const item_name = /*[[ ${item.name} ]]*/;
   const item_isTestable = /*[[ ${item.is_testable} ]]*/;
   let id = '';
+  let i = 0;
 
   /*[# th:each="r : ${review}"]*/
   rateList.push(/*[[${r.rate}]]*/);
   id = /*[[${r.id}]]*/;
   rateObject[id] = {
+    index: i++,
     rate: /*[[${r.rate}]]*/,
     text: /*[[${r.review_content}]]*/,
     date: /*[[${r.created_at}]]*/
@@ -69,10 +68,18 @@
   totalRateCount++;
   /*[/]*/
 
+  i = 0;
+  const imgList = [];
+  imgList.fill('', 0, totalRateCount);
 
+  /*[# th:each="img : ${review_img}"]*/
+  imgList[i++] = /*[[${img.review_img}]]*/;
 
+  /*[/]*/
 
   /*]]>*/
+
+  console.log(imgList);
 
   const avgRate = (rateList.reduce((a, x) => a += x)) / totalRateCount;
   const goPrevBtn = document.querySelector('.go-prev');
@@ -112,13 +119,13 @@
 
     reviewContent.appendChild(reviewText);
 
-    if (rateObject[review_id].img) {
+    if (imgList[rateObject[review_id].index]) {
       const reviewImgContainer = document.createElement('div');
       reviewImgContainer.classList.add('review-img-container');
 
       const reviewImg = document.createElement('img');
       reviewImg.classList.add('review-img');
-      reviewImg.src = rateObject[review_id].img;
+      reviewImg.src = imgList[rateObject[review_id].index];
 
       reviewImgContainer.appendChild(reviewImg);
 

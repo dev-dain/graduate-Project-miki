@@ -167,7 +167,7 @@ public class ItemService {
         try {
             review_img = reviewRepository.getReviewImg(review);
         }catch (EmptyResultDataAccessException e){
-            review_img = null;
+            review_img = new Review_img();
         }
         return review_img;
     }
