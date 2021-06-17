@@ -272,8 +272,23 @@
           discountPrice -= item_obj[item_option_obj[optionId].parent_id].discount_price;
           originPriceText.textContent = `${originPrice} 원`;
           discountPriceText.textContent = `${discountPrice} 원`;
+
+          fetch(`/cart/${cart_count_obj[optionId].id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+              item_id: item_option_obj[optionId].parent_id,
+              item_option_id: optionId,
+              count: Number(countInput.value)
+            })
+          })
+                  .then(res => res.json())
+                  .then(data => console.log(data))
+                  .catch(e => console.error(e))
         }
-      });
+      })
 
       addCountBtn.addEventListener('click', e => {
         e.preventDefault();
@@ -288,6 +303,21 @@
         discountPrice += item_obj[item_option_obj[optionId].parent_id].discount_price;
         originPriceText.textContent = `${originPrice} 원`;
         discountPriceText.textContent = `${discountPrice} 원`;
+
+        fetch(`/cart/${cart_count_obj[optionId].id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+            item_id: item_option_obj[optionId].parent_id,
+            item_option_id: optionId,
+            count: Number(countInput.value)
+          })
+        })
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(e => console.error(e))
       });
 
       countDiv.appendChild(subCountBtn);
@@ -403,34 +433,6 @@
     });
 
 
-
-    /*
-     * <div class="item-row" th:each="cart : ${carts}, img : ${imgs}">
-            <div class="left-area">
-              <img class="cart-item-img">
-              <button class="select-btn"></button>
-            </div>
-            <div class="right-area">
-              <div class="cart-title-area">
-                <p class="cart-title"></p>
-                <button class="cart-item-delete-btn"></button>
-              </div>
-              <div class="cart-option-area">
-                <div class="cart-item-selected-option"></div>
-              </div>
-              <div class="cart-count-price-area">
-                <div class="cart-count-area">
-                  <!-- 수량 조절 버튼 -->
-                  <span class="cart-item-count"></span>
-                </div>
-                <div class="cart-price-area">
-                  <span class="item-origin-price"></span>
-                  <span class="item-discount-price"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-    * */
   </script>
 
   <script src="/js/cart.js"></script>
