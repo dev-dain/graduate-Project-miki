@@ -44,13 +44,39 @@ public class TestController {
 
 
 
-/*    @GetMapping("/testAll")
+    @GetMapping("/testAll")
     public String testItems( Model model){
         List<Cart> carts = cartService.findAll();
+        List<Item> items = new ArrayList<>();
+
+        List<Item_img> item_imgs = new ArrayList<>();
+
+        List<Item_option> item_options = new ArrayList<>();
+        List<Item_option> tmpItemOption = new ArrayList<>();
+
         List<TestColor> testColors = new ArrayList<>();
+        List<TestColor> tmpTestColor = new ArrayList<>();
+
         for(Cart c : carts){
-            if(c.getItem().getIs_testable()=='Y') testColors.add(testService.findByItem(c.getItem()));
+            if(c.getItem().getIs_testable()=='Y') {
+                items.add(itemService.findOne(c.getItem().getId()));
+                item_imgs.add(itemService.itemImg(c.getItem().getId()));
+
+                tmpItemOption = itemService.itemOptionList(c.getItem());
+                for(Item_option item_option : tmpItemOption){
+                    item_options.add(item_option);
+                }
+
+                tmpTestColor = testService.findByItem(c.getItem());
+                for(TestColor testColor : tmpTestColor){
+                    testColors.add(testColor);
+                }
+            }
         }
+        model.addAttribute("items", items);
+        model.addAttribute("item_img", item_imgs);
+        model.addAttribute("item_options", item_options);
+        model.addAttribute("testColors", testColors);
         return "test/test-main";
-    }*/
+    }
 }
