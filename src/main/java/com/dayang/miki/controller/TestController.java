@@ -58,7 +58,8 @@ public class TestController {
         List<TestColor> tmpTestColor = new ArrayList<>();
 
         for(Cart c : carts){
-            if(c.getItem().getIs_testable()=='Y') {
+            Item item = itemService.findOne(c.getItem().getId());
+            if(item.getIs_testable()=='Y') {
                 items.add(itemService.findOne(c.getItem().getId()));
                 item_imgs.add(itemService.itemImg(c.getItem().getId()));
 
@@ -77,6 +78,7 @@ public class TestController {
         model.addAttribute("item_img", item_imgs);
         model.addAttribute("item_options", item_options);
         model.addAttribute("testColors", testColors);
+
         return "test/test-main";
     }
 }

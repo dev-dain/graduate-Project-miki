@@ -26,5 +26,5 @@ public class TestColor {
     private String colorCode;
     private double alpha;
 
-    private FaceLocation face_location;
+    private String face_location;
 }

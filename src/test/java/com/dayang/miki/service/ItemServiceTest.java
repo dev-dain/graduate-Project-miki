@@ -35,6 +35,15 @@ class ItemServiceTest {
     StoreService storeService;
 
     @Test
+    void testItem(){
+       Category category = itemService.findOneCategory(50L);
+       List<Item>items = itemService.getByCategory(category.getId());
+       for(Item item : items){
+           itemService.update(item.getId());
+       }
+    }
+
+    @Test
     void positionDist(){
         Long id = 1L;
         Store store = storeService.findById(id);
