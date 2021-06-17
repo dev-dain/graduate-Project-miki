@@ -22,5 +22,4 @@ public class CartRepository {
                 .setParameter("item_option", item_option)
                 .getSingleResult();
     }
-
 }
