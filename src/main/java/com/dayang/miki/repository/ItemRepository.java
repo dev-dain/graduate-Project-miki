@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -29,6 +30,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "where category_id in (:ids) ")
     List<Item> findItemByIn(@Param("ids") List<Category> ids, Pageable pageable);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Item SET is_testable = 'Y' where id =:id")
+    void updateTestable(@Param("id") Long id);
 
 
 }
