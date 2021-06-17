@@ -40,11 +40,12 @@
     goPrevBtn.addEventListener('click', () => { history.back(); });
     cart.addEventListener('click', () => {
       //아직 cart.html 구현 전
-      location.href = './cart.html';
+      location.href = '/cartList';
     });
 
-    barcodeBtn.addEventListener('click', () => location.href = './barcode.html');
-    searchBtn.addEventListener('click', () => location.href = 'test.html');
+    // 바코드 페이지 현재 없음
+    barcodeBtn.addEventListener('click', () => location.href = '/barcode');
+    searchBtn.addEventListener('click', () => location.href = '/searchVoice');
 
   </script>
 </body>
