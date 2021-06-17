@@ -5,7 +5,7 @@ class Face {
       let [x, y] = sil.silhouette[i];
       vertex(x, y);
     }
-    endShape();
+    endShape(CLOSE);
   }
 
   lips() {
