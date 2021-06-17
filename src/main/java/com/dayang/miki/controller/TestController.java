@@ -31,7 +31,13 @@ public class TestController {
     @GetMapping("/test/{item_id}")
     public String ItemOption(@PathVariable("item_id") Long id, Model model){
         Item item = itemService.findOne(id);
+        Item_img item_img = itemService.itemImg(item.getId());
+        List<Item_option> item_options = itemService.itemOptionList(item);
         List<TestColor> testColors = testService.findByItem(item);
+
+        model.addAttribute("item_img", item_img);
+        model.addAttribute("item", item);
+        model.addAttribute("item_options", item_options);
         model.addAttribute("testColor", testColors);
         return "test/test-main";
     }
