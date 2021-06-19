@@ -28,6 +28,7 @@
         <button class="add-item btn">상품 추가</button>
         <button class="pay-item btn">결제</button>
     </div>
+    <div class="my_div"> 영역 </div>
     <div class="item-container">
         <button class="item-prev-btn">&lt;</button>
         <div class="item">
@@ -44,64 +45,96 @@
             <div class="item-title-container">
                 <p class="item-title" th:text="${item.getName()}"></p>
             </div>
-            <div class="option_selector">
-                <button id="option_btn"></button>
+            <div class="option_table">
+<!--                <button id="option_btn"></button>-->
+<!--                <tr class="option-row" th:each="option : ${item_options}">-->
+<!--                    <td>-->
+<!--                        <button class="td-option"th:text="${option.item_option_name}"></button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+                <table class="opt_table">
+<!--                    <tr class="option-row">-->
+<!--                        <td>-->
+<!--                            <button class="td-option"></button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                </table>
             </div>
         </div>
         <button class="item-next-btn">&gt;</button>
-        <div class="option_container">
-            # 수정필요
-            <tr class="option-row" th:each="option : ${item_options}">
-                <td>
-                    <button class="td-option"th:text="${option.item_option_name}"></button>
-                </td>
-            </tr>
-        </div>
     </div>
 </div>
 </body>
 <!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
 <script th:inline="javascript">
+    const item_obj = {};
+    let item_id;
+    let item_option_id;
+    let option_name;
+    let textNode;
 
     /*<![CDATA[*/
 
+    item_id = /*[[${item.id}]]*/;
+
     /*[# th:each="t_color : ${testColor}"]*/
-    console.log(/*[[ ${t_color.colorCode}]]*/);
+    /*[# th:each="option : ${item_options}"]*/
+    item_option_id = /*[[${option.id}]]*/;
+    item_obj[item_option_id] ={
+        id : /*[[${option.id}]]*/,  // 사실 이부분도 item_option_id로 하고싶었는데 안되서 이렇게바꿔둠.. 왜 안될까요...
+        face_location: /*[[${t_color.face_location}]]*/,
+        c_code: /*[[${t_color.colorCode}]]*/,
+        alpha: /*[[${t_color.alpha}]]*/
+    };
+
+    ///// 옵션이름 가져오는 부분
+    /*[# th:each="option : ${item_options}"]*/
+    option_names = /*[[${option.item_option_name}]]*/;
+
+    // 이 부분을 어떻게 해야할지 22
+    ///// 옵션 이름을 순서대로 가져와서 출력해보려고했음 (인덱스로 가져오려했는데 요소들의 첫 글자만 갖고옴;;;)
+    // textNode = document.createTextNode(option_names);
+    // document.querySelector('.my_div').appendChild(textNode);
 
     /*[/]*/
 
+
+    /*[/]*/
+    /*[/]*/
+
+    // 동적 테이블 생성 부분  (버튼을 만들어서 --> 어떻게 텍스트를 넣을지..? 이부분도 헷갈림...)
+    const table = document.querySelector('.option_table');  // 어디다가 붙일건지
+    var trNode   = document.createElement("tr");
+    var tdNode1  = document.createElement("td"); // <td></td>생성
+    var opt_btn = document.createElement("button") // <button></button> 생성
+    // 이 부분을 어떻게 해야할지 22
+    var nameNode = document.createTextNode(option_names); // button 내용 ()
+    //// 이부분에서 classList add로 추가해두고싶은데 어떻게 할지,,333 이렇게 해도 되는건지..?
+    nameNode.classList.add(`-${item_id}--${item_option_id}-`);
+
+    opt_btn.appendChild(nameNode); //하위 두개 합치기
+    tdNode1.appendChild(opt_btn);  //상위 두개 합치기
+    trNode.appendChild(tdNode1);
+    table.appendChild(trNode);
+
+
+
     /*]]>*/
-    console.log(color);
+
+    console.log(item_obj)
+
+    var count = Object.keys(item_obj).length; // 객체 크기 저장
+    console.log(count);
 
 
-    // console.log(color);
-    // let R,G,B,A;
-    // const pos = 'N'; // 어느 부위인지 확인할 변수
-    // const arr = []; // R,G,B 값 담아두는 배열
+    // 이벤트 리스너 부분 어떻게 할지 4444 (클릭 시 class 이름 가져와서 - 기준으로 자른뒤에 그걸로 값 다시 뽑기 )
+    // const option_btn = document.querySelector('.td-option');
+    // option_btn.addEventListener('click', e => {
+    //     e.preventDefault();
+    /
     //
-    // # 헥사코드 -> RGB 변환 함수
-    // function hexToRgb(color){
-    //     if(color.length != 6){
-    //         throw "DB 오류(헥사코드는 6자리)";
-    //     }
-    //
-    //     const RgbHex = color.match(/.{1,2}/g);
-    //     const Rgb = [
-    //         parseInt(RgbHex[0], 16),
-    //         parseInt(RgbHex[1], 16),
-    //         parseInt(RgbHex[2], 16)
-    //     ];
-    //     return Rgb;
-    // }
+    // });
 
-
-    // arr = hexToRgb(color);
-    // R = arr[0];
-    // G = arr[1];
-    // B = arr[2];
-    //
-    // // face-mesh 적용
-    // drawKeypoints(R,G,B,A,pos);
 
 </script>
 <script src="/js/sketch.js"></script>
