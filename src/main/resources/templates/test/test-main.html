@@ -50,6 +50,10 @@
     let option_name;
     let textNode;
 
+    let position = -1;
+    let alpha = 0;
+    let h_color;
+
     /*<![CDATA[*/
     item_id = /*[[${item.id}]]*/;
     img_src = /*[[${item_img.item_img}]]*/;
@@ -94,6 +98,24 @@
         }
     });
 
+    // hex to RGB
+    let R,G,B;
+    const pos = 'N'; // 어느 부위인지 확인할 변수
+    let c_arr = [0,0,0]; // R,G,B 값 담아두는 배열
+
+    function hexToRgb ( hex ){
+        var values = hex.split(''), r, g, b;
+
+        r = parseInt(values[0].toString() + values[1].toString(), 16);
+        g = parseInt(values[2].toString() + values[3].toString(), 16);
+        b = parseInt(values[4].toString() + values[5].toString(), 16);
+
+        return [r, g, b];
+
+    }
+
+
+
     const createItemOptionContainer = item_id => {
         const itemOptionContainer = document.createElement('div');
         itemOptionContainer.classList.add(`item-option-container-${item_id}`);
@@ -103,10 +125,21 @@
             option.classList.add(`item-option-${item_id}-${optionId}`);
             option.textContent = item_obj[optionId].name;
             option.addEventListener('click', () => {
+                let getClass = option.getAttribute('class');
+                let split_C = split(getClass,'-'); // split_C[3] : optionId
+                console.log(item_obj[split_C[3]].face_location);
+                position = item_obj[split_C[3]].face_location;
+                alpha = item_obj[split_C[3]].alpha;
+                h_color = item_obj[split_C[3]].c_code;
+                console.log(h_color.length)
                 // 여기서 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출하면 됨
-                //
-                //
-                //
+                c_arr = hexToRgb(h_color);
+                R = c_arr[0];
+                G = c_arr[1];
+                B = c_arr[2];
+                console.log(c_arr,R,G,B);
+                console.log(typeof position,position);
+                drawKeypoints(R,G,B,alpha,position);
             });
             itemOptionContainer.appendChild(option);
         });

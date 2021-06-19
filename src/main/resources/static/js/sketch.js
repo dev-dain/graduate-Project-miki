@@ -28,32 +28,43 @@ function modelReady() {
 
 function draw() {
   image(video, 0, 0, width, height);
-  drawKeypoints();
+  drawKeypoints(R,G,B,alpha,position);
 }
 
+// function drawKeypoints(){
+//   // 맨 처음 실행
+//   fill(255, 0, 0, 50);
+//   face.lips();
+// }
 
+function drawKeypoints(R,G,B,A,pos) {
+  if (pos != -1){
+    for (let i = 0; i < predictions.length; i += 1) {
+      sil = predictions[i].annotations;
+      noStroke();
 
-function drawKeypoints() {
-  //function drawKeypoints(R,G,B,A,pos){
-  for (let i = 0; i < predictions.length; i += 1) {
-    sil = predictions[i].annotations;
-    noStroke();
-
-    fill(255, 0, 0, 50);
-    face.lips();
-    // fill(255, 255, 255, 50); //얼굴 윤곽 rgb+투명도
-    // face.silhouette(); 
-    // switch (pos){
-    // case 'L':
-    //   fill(R,G,B,A);
-    //   face.lips();
-    // case 'C':
-    //     /* fill cheek position */
-    // case 'B':
-    //   /* fill eyebrow position */
-    // default :
-    //   return 0;
+      fill(255, 0, 0, 50);
+      face.lips();
+      // fill(255, 255, 255, 50); //얼굴 윤곽 rgb+투명도
+      // face.silhouette();
+      switch (pos) {
+        case 'L':
+          fill(R, G, B, A);
+          console.log('진입 성공')
+          face.lips();
+          // case 'C':
+          //     /* fill cåheek position */
+          // case 'B':
+          //   /* fill eyebrow position */
+        default :
+          return 0;
+      }
+    }
   }
+  else{}
+
+
+}
 
 //     fill(255,0,0, 50); //입술 rgb+투명도
 //     fill(R,G,B,A);
@@ -75,4 +86,3 @@ function drawKeypoints() {
   // ellipse(sil.rightCheek[0][0], sil.rightCheek[0][1], 20 , 20);
   // ellipse(sil.leftCheek[0][0], sil.leftCheek[0][1], 20 , 20);
 
-}

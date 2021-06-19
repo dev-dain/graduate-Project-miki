@@ -4,7 +4,7 @@ body {
   align-items: center;
 }
 #wrap {
-  background-color: #FFF8E5; 
+  background-color: #FFF8E5;
   display: flex;
   flex-flow: column nowrap;
   min-height: 0;
@@ -15,7 +15,7 @@ header {
   height: 120px;
   display: flex;
   justify-content: space-between;
-  padding: 2rem 0;  
+  padding: 2rem 0;
 }
 .title-container {
   display: flex;
