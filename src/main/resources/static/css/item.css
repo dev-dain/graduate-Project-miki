@@ -2,7 +2,6 @@
   background-color: #FFF8E5; 
   display: flex;
   flex-flow: column nowrap;
-  max-height: 1500px;
 }
 header {
   width: 100%;
@@ -17,9 +16,9 @@ header {
   align-items: center;
 }
 .go-prev {
-  width: 70px;
-  height: 70px;
-  font-size: 3rem;
+  width: 120px;
+  height: 120px;
+  font-size: 4.5rem;
   color: #2E0A0A;
   text-align: center;
   line-height: 70px;
@@ -27,7 +26,7 @@ header {
 }
 h1 {
   margin: 0;
-  font-size: 3rem;
+  font-size: 4.5rem;
 }
 .top-button-container {
   display: flex;
@@ -40,8 +39,8 @@ h1 {
   background-color: rgba(0, 0, 0, 0);
   background-image: url('../img/shopping-cart.png');
   background-size: cover;
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   font-size: 0;
 }
 .img-container {
@@ -49,20 +48,20 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center; 
-  padding: 30px;
+  padding: 60px;
 }
 .item-img {
-  width: 360px;
-  height: 360px;
-  border-radius: 30px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50px;
 }
 .info-container {
   display: flex;
   flex-direction: column;
-  padding: 20px 30px;
+  padding: 50px;
 }
 .item-title {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: 900;
   word-break: keep-all;
 }
@@ -74,19 +73,19 @@ h1 {
   color: #A7A4A4;
   text-decoration: line-through;
   font-weight: 700;
-  padding-right: 10px;
-  font-size: 1.2rem;
+  padding-right: 40px;
+  font-size: 1.5rem;
 }
 .discount-price {
   color: #E93C15;
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 .rate-container {
-  margin: 15px 0;
+  margin: 25px 0;
   color: #D9A40F;
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 .btn-container {
   align-self: center;
@@ -97,13 +96,13 @@ h1 {
   margin: 0 0.5rem;
 }
 .cont-btn {
-  width: 60px;
-  height: 60px;
+  width: 128px;
+  height: 129px;
   border: none;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 32px 32px;
+  background-size: 64px;
 }
 .put-in-cart {
   background-color: #FFC41E;
@@ -118,10 +117,10 @@ h1 {
   background-image: url('../img/loupe.png');
 }
 footer {
-  height: 60px;
+  height: 120px;
   position: fixed;
   bottom: 0;
-  width: 600px;
+  width: 100%;
   background-color: #2E0A0A;
   color: #FFFAF9;
   display: flex;
@@ -130,6 +129,6 @@ footer {
   cursor: pointer;
 }
 footer > p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 900;
 }

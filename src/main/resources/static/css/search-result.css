@@ -1,16 +1,13 @@
 #wrap {
   color: #2E0A0A;
 }
-header {
-    height: 150px;
-}
 .result-container {
-  padding: 20px 30px;
+  padding: 40px;
   width: 100%;
   background: #FFDA73;
 }
 .result-text {
-  font-size: 1.3rem;
+  font-size: 2rem;
   line-height: 2rem;
   font-weight: 700;
 }
@@ -24,7 +21,7 @@ header {
   padding: 30px;
 }
 .highlight {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   color: #E93C15;
   font-weight: 900;
 }
@@ -34,12 +31,12 @@ header {
   align-items: center;
 }
 .no-result-pic {
-  width: 150px;
-  height: 150px;
-  margin-bottom: 40px;
+  width: 256px;
+  height: 256px;
+  margin-bottom: 80px;
 }
 .no-result-caution {
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 .no-result-btn-container {
   display: flex;
@@ -47,13 +44,14 @@ header {
   justify-content: space-around;
 }
 .no-result-btn {
-  width: 130px;
-  height: 50px;
+  width: 200px;
+  height: 80px;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   background: #F66657;
   color: #fff;
   font-weight: 700;
   padding: 10px;
   margin: 10px;
+  font-size: 1.5rem;
 }
