@@ -38,8 +38,8 @@
       &lt;
     </button>
     <!--        <div class="item-row-container">-->
-    <table class="table table-striped item-row-container" style="margin: 0;" th:if="${count} != 0">
-      <tbody style="width: 490px; display: flex; flex-flow: row wrap;">
+    <table class="table table-striped item-row-container" style="margin: 0; width: 100%;" th:if="${count} != 0">
+      <tbody style="display: flex; flex-flow: row wrap; justify-content: center;">
       <tr class="item-card" th:each="item : ${item}"
           style="width: 225px; margin: 10px;">
         <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'">

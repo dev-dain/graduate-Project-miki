@@ -61,7 +61,7 @@ public class ItemService {
     }
     @Transactional
     public Page<Item> findByItemName (String name, Integer pageNum){
-        Page<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 4));
+        Page<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 9));
 
         return items;
     }
@@ -91,7 +91,7 @@ public class ItemService {
     @Transactional
     public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
 
-        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 4));
+        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 9));
 
         return items;
     }

@@ -7,7 +7,7 @@
   height: 50%;
 }
 .top-area h3 {
-  font-size: 3.5rem;
+  font-size: 5rem;
 }
 .bottom-area {
   background: linear-gradient(to bottom, #fde7a9 30%, #fb9070 30% 60%, #a4d0f9 60%);
@@ -40,22 +40,22 @@
 .search-page { background-color: #A4D0F9; }
 .btn > h4 {
   display: inline-block;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 700;
   width: 25%;
 }
 .btn-icon {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
 }
 .btn > p {
   display: inline-block;
   text-align: right;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 500;
 }
 .bold-text {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
 }
 .order-page h4, .order-page p { color: #322E0C; }

@@ -8,21 +8,20 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  max-height: 100vh;
 }
 header {
   background-color: #2E0A0A;
   color: #FFFAF9;
   display: flex;
   align-items: center;
-  height: 80px;
+  height: 150px;
   width: 100%;
 }
 header > * { margin: 0 10px;}
 .go-prev {
-  width: 70px;
-  height: 70px;
-  font-size: 2.5rem;
+  width: 100px;
+  height: 100px;
+  font-size: 3rem;
   color: #FFFAF9;
   text-align: center;
   line-height: 70px;
@@ -30,20 +29,21 @@ header > * { margin: 0 10px;}
 }
 h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   text-overflow: ellipsis;
+  word-break: keep-all;
 }
 .detail-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80%;
+  height: 84%;
 }
 .item-btn {
-  width: 45px;
-  height: 45px;
+  width: 65px;
+  height: 65px;
   margin: 0 15px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   background: #3E4247;
   font-weight: 900;
   border-radius: 50%;
@@ -63,24 +63,24 @@ h1 {
   right: 0;
   top: 20%;
   background-color: #FFE1C5;
-  border-radius: 10px 0 0 10px;
+  border-radius: 20px 0 0 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
 }
 .btn-container > * {
   margin: 5px 0;
 }
 .cont-btn {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border: none;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 24px 24px;
+  background-size: 36px 36px;
 }
 .btn-container > .put-in-cart {
   background-color: #FFC41E;
@@ -95,7 +95,7 @@ h1 {
   background-image: url('../img/loupe.png');
 }
 footer {
-  height: 60px;
+  height: 150px;
   background-color: rgba(46, 10, 10, 1);
   color: #FFFAF9;
   display: flex;
@@ -104,13 +104,13 @@ footer {
   cursor: pointer;
 }
 footer > p {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 900;
 }
 
 .modal-container {
   position: absolute;
-  bottom: 60px; left: 0;
+  bottom: 150px; left: 0;
   z-index: 10;
   margin: 0;
   width: 100%;
@@ -139,10 +139,10 @@ footer > p {
 .option-container {
   background: #fff;
   width: 100%;
-  padding: 30px;
+  padding: 40px;
 }
 th {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   padding-bottom: 20px;
 }
 .option-row {
@@ -152,10 +152,11 @@ th {
   align-items: center;
 }
 .td-option {
-  padding: 5px 0;
+  padding: 10px 0;
   cursor: pointer;
   background: #fff;
   width: 100%;
+  font-size: 1.3rem;
   text-align: left;
 }
 .soldout-btn {
@@ -193,9 +194,9 @@ th {
   background-color: #FFC41E;
   color: #fff;
   border: none;
-  width: 30px;
-  height: 35px;
-  font-size: 1rem;
+  width: 40px;
+  height: 45px;
+  font-size: 1.3rem;
   font-weight: 700;
 }
 [class^='m-sub-count'] {
@@ -209,9 +210,9 @@ th {
   color: #2E0A0A;
   background-color: #fff;
   border: none;
-  width: 50px;
-  height: 35px;
-  font-size: 0.9rem;
+  width: 80px;
+  height: 45px;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 .m-sub-count, .m-add-count {
@@ -254,13 +255,15 @@ th {
   border-top: none;
   text-align: right;
   cursor: pointer;
+  font-size: 2.5rem;
 }
 .cancel-s {
+  margin-left: 30px;
   color: #E93C15;
   border-top: none;
   text-align: right;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 900;
 }
 .close { text-align: right; }
@@ -272,28 +275,33 @@ th {
 .fold-option-btn {
   align-items: center;
   margin: 0 auto;
-  width: 50px;
+  width: 100px;
+  height: 60px;
   background: #FFC41E;
   color: #fff;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 .option-select {
   width: 100%;
   border: 3px solid #2E0A0A;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 1rem;
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 1.5rem;
   color: #444;
   cursor: pointer;
 }
 .option-select-tr {
   opacity: 0;
-  margin-bottom: 30px;
+  height: 100px;
+  margin-bottom: 50px;
 }
 div[class^="s-option-"] {
   padding: 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+div[class^="s-option-"] > span {
+    font-size: 1.2rem;
 }

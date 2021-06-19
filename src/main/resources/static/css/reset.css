@@ -43,9 +43,9 @@ body {
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  max-width: 600px;
+  max-width: 100%;
   min-height: 100vh;
-  max-height: 1500px;
+  max-height: 100vh;
 }
 *::-webkit-scrollbar {
   width: 10px;
