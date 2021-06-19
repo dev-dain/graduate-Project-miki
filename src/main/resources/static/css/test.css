@@ -62,33 +62,41 @@ h1 {
   padding: 10px 15px;
   border-radius: 10px;
 }
-.item-container {
+.item-row {
   width: 100%;
-  height: 100px;
+  height: 220px;
   display: flex;
+  position: relative;
 }
 .item-prev-btn, .item-next-btn {
-  height: 100px;
-  width: 50px;
+  height: 220px;
+  width: 80px;
   background: #F66657;
   color: #FFFFFF;
   font-weight: bolder;
   font-size: 1.5rem;
 }
-.item {
-  width: 100px;
-  height: 100px;
-  background: #FFFFFF;
-}
-.item > .item-img-container {
+.item-container {
   width: 100%;
-  height: 75px;
+  height: 220px;
+}
+div[class^='item-div-'] {
+  background: #FFFFFF;
+  height: 220px;
+  width: 180px;
   position: relative;
 }
-.item-img-container > .item-thumbnail {
-  width: 100px;
-  max-height: 100%;
-  object-fit: contain;
+button[class^='item-check-btn'] {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #F66657;
+  background: #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 10;
+  color: #E93C15;
 }
 .item-select-check {
   border: #F66657 solid 2px;
@@ -101,13 +109,13 @@ h1 {
   background: #fff;
   cursor: pointer;
 }
-.item-title-container {
-  background-color: #FDE7A9;
+div[class^='item-title'] {
   color: #2E0A0A;
-  font-weight: 700;
-  width: 100%;
-  height: 25px;
   text-align: center;
+  font-weight: 700;
+  word-break: keep-all;
+  font-size: 1.1rem;
+  padding: 5px;
 }
 .cam-container {
   align-self: center;
@@ -126,4 +134,23 @@ video {
 #defaultCanvas0 {
   max-width: 600px;
   border: 3px solid #FFC41E;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+}
+div[class^='item-img-container'] {
+  cursor: pointer;
+}
+img[class^='item-img-'] {
+  width: 180px;
+  height: 170px;
+}
+div[class^='item-option-container-'] {
+  position: absolute;
+  top: 220px;
+  left: 0;
+  opacity: 0;
+}
+.show {
+  opacity: 1 !important;
 }

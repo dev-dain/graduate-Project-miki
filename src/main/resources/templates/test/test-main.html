@@ -28,38 +28,10 @@
         <button class="add-item btn">상품 추가</button>
         <button class="pay-item btn">결제</button>
     </div>
-    <div class="my_div"> 영역 </div>
-    <div class="item-container">
+    <div class="item-row">
         <button class="item-prev-btn">&lt;</button>
-        <div class="item">
-            <div class="item-img-container">
+        <div class="item-container">
 
-<!--               # 이미지 클릭 시 -> 옵션을 변경할 수 있는 창 띄우는 부분-->
-<!--                <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:이부분에 옵션 선택하는 자바스크립트 함수 추가'">-->
-<!--                    <img th:src="${item_img}" class="test_prd_img"></img>-->
-<!--                </td>-->
-<!--               #이부분이 왜 출력이안되는지? 질문하기 !-->
-<!--                <img th:src="${item_img}">-->
-                <input type="checkbox" name="" value="" class="item-select-check" checked></input>
-            </div>
-            <div class="item-title-container">
-                <p class="item-title" th:text="${item.getName()}"></p>
-            </div>
-            <div class="option_table">
-<!--                <button id="option_btn"></button>-->
-<!--                <tr class="option-row" th:each="option : ${item_options}">-->
-<!--                    <td>-->
-<!--                        <button class="td-option"th:text="${option.item_option_name}"></button>-->
-<!--                    </td>-->
-<!--                </tr>-->
-                <table class="opt_table">
-<!--                    <tr class="option-row">-->
-<!--                        <td>-->
-<!--                            <button class="td-option"></button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-                </table>
-            </div>
         </div>
         <button class="item-next-btn">&gt;</button>
     </div>
@@ -68,74 +40,109 @@
 <!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
 <script th:inline="javascript">
     const item_obj = {};
+    const option_obj = {};
+    const optionIdList = [];
+
+    let img_src;
+    let item_name;
     let item_id;
     let item_option_id;
     let option_name;
     let textNode;
 
     /*<![CDATA[*/
-
     item_id = /*[[${item.id}]]*/;
+    img_src = /*[[${item_img.item_img}]]*/;
+    item_name = /*[[${item.name}]]*/;
 
-    /*[# th:each="t_color : ${testColor}"]*/
     /*[# th:each="option : ${item_options}"]*/
     item_option_id = /*[[${option.id}]]*/;
-    item_obj[item_option_id] ={
-        id : /*[[${option.id}]]*/,  // 사실 이부분도 item_option_id로 하고싶었는데 안되서 이렇게바꿔둠.. 왜 안될까요...
+    optionIdList.push(item_option_id);
+    option_obj[item_option_id] = /*[[${option.item_option_name}]]*/;
+    /*[/]*/
+
+
+    /*[# th:each="t_color : ${testColor}"]*/
+    item_option_id = /*[[${t_color.item_option.id}]]*/;
+    item_obj[item_option_id] = {
+        parent_id: item_id,
+        id: item_option_id,
+        name: option_obj[item_option_id],
         face_location: /*[[${t_color.face_location}]]*/,
         c_code: /*[[${t_color.colorCode}]]*/,
         alpha: /*[[${t_color.alpha}]]*/
-    };
-
-    ///// 옵션이름 가져오는 부분
-    /*[# th:each="option : ${item_options}"]*/
-    option_names = /*[[${option.item_option_name}]]*/;
-
-    // 이 부분을 어떻게 해야할지 22
-    ///// 옵션 이름을 순서대로 가져와서 출력해보려고했음 (인덱스로 가져오려했는데 요소들의 첫 글자만 갖고옴;;;)
-    // textNode = document.createTextNode(option_names);
-    // document.querySelector('.my_div').appendChild(textNode);
-
+    }
     /*[/]*/
-
-
-    /*[/]*/
-    /*[/]*/
-
-    // 동적 테이블 생성 부분  (버튼을 만들어서 --> 어떻게 텍스트를 넣을지..? 이부분도 헷갈림...)
-    const table = document.querySelector('.option_table');  // 어디다가 붙일건지
-    var trNode   = document.createElement("tr");
-    var tdNode1  = document.createElement("td"); // <td></td>생성
-    var opt_btn = document.createElement("button") // <button></button> 생성
-    // 이 부분을 어떻게 해야할지 22
-    var nameNode = document.createTextNode(option_names); // button 내용 ()
-    //// 이부분에서 classList add로 추가해두고싶은데 어떻게 할지,,333 이렇게 해도 되는건지..?
-    nameNode.classList.add(`-${item_id}--${item_option_id}-`);
-
-    opt_btn.appendChild(nameNode); //하위 두개 합치기
-    tdNode1.appendChild(opt_btn);  //상위 두개 합치기
-    trNode.appendChild(tdNode1);
-    table.appendChild(trNode);
-
-
 
     /*]]>*/
 
-    console.log(item_obj)
+    const itemOptionCount = optionIdList.length;
 
-    var count = Object.keys(item_obj).length; // 객체 크기 저장
-    console.log(count);
+    const itemContainer = document.querySelector('.item-container');
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add(`item-div-${item_id}`);
 
+    const itemCheck = document.createElement('button');
+    let isItemCheck = true;
+    itemCheck.classList.add(`item-check-btn-${item_id}`);
+    itemCheck.innerHTML = '&#10004;';
+    itemCheck.addEventListener('click', () => {
+        if (isItemCheck) {
+            itemCheck.innerHTML = '';
+        } else {
+            itemCheck.innerHTML = '&#10004;';
+        }
+    });
 
-    // 이벤트 리스너 부분 어떻게 할지 4444 (클릭 시 class 이름 가져와서 - 기준으로 자른뒤에 그걸로 값 다시 뽑기 )
-    // const option_btn = document.querySelector('.td-option');
-    // option_btn.addEventListener('click', e => {
-    //     e.preventDefault();
-    /
-    //
-    // });
+    const createItemOptionContainer = item_id => {
+        const itemOptionContainer = document.createElement('div');
+        itemOptionContainer.classList.add(`item-option-container-${item_id}`);
 
+        optionIdList.forEach(optionId => {
+            const option = document.createElement('button');
+            option.classList.add(`item-option-${item_id}-${optionId}`);
+            option.textContent = item_obj[optionId].name;
+            option.addEventListener('click', () => {
+                // 여기서 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출하면 됨
+                //
+                //
+                //
+            });
+            itemOptionContainer.appendChild(option);
+        });
 
+        return itemOptionContainer;
+    };
+
+    const itemOptionContainer = createItemOptionContainer(item_id);
+
+    const itemImgContainer = document.createElement('div');
+    itemImgContainer.classList.add(`item-img-container-${item_id}`);
+    const itemImg = document.createElement('img');
+    itemImg.classList.add(`item-img-${item_id}`);
+    itemImg.src = img_src;
+
+    itemImgContainer.appendChild(itemImg);
+
+    itemImgContainer.addEventListener('click', () => {
+        console.log('clicked');
+        if (itemOptionContainer.classList.contains('show')) {
+            itemOptionContainer.classList.remove('show');
+        } else {
+            itemOptionContainer.classList.add('show');
+        }
+    });
+
+    const itemTitle = document.createElement('div');
+    itemTitle.classList.add(`item-title-${item_id}`);
+    itemTitle.textContent = item_name;
+
+    itemDiv.appendChild(itemCheck);
+    itemDiv.appendChild(itemImgContainer);
+    itemDiv.appendChild(itemTitle);
+    itemDiv.appendChild(itemOptionContainer);
+
+    itemContainer.appendChild(itemDiv);
 </script>
 <script src="/js/sketch.js"></script>
 </html>
