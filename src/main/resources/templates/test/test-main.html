@@ -114,7 +114,9 @@
 
     }
 
-
+    let getClass;
+    let split_C;
+    let first_c =[];
 
     const createItemOptionContainer = item_id => {
         const itemOptionContainer = document.createElement('div');
@@ -122,24 +124,16 @@
 
         optionIdList.forEach(optionId => {
             const option = document.createElement('button');
+            option.classList.add(`item_options`);
             option.classList.add(`item-option-${item_id}-${optionId}`);
             option.textContent = item_obj[optionId].name;
             option.addEventListener('click', () => {
-                let getClass = option.getAttribute('class');
-                let split_C = split(getClass,'-'); // split_C[3] : optionId
-                console.log(item_obj[split_C[3]].face_location);
-                position = item_obj[split_C[3]].face_location;
-                alpha = item_obj[split_C[3]].alpha;
-                h_color = item_obj[split_C[3]].c_code;
-                console.log(h_color.length)
-                // 여기서 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출하면 됨
-                c_arr = hexToRgb(h_color);
-                R = c_arr[0];
-                G = c_arr[1];
-                B = c_arr[2];
-                console.log(c_arr,R,G,B);
-                console.log(typeof position,position);
-                drawKeypoints(R,G,B,alpha,position);
+                getClass = option.getAttribute('class');
+                split_C = split(getClass,'-'); // split_C[3] : optionId
+                // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
+                set_color(split_C);
+                // console.log(c_arr,R,G,B);
+                // console.log(typeof position,position);
             });
             itemOptionContainer.appendChild(option);
         });
@@ -147,6 +141,24 @@
         return itemOptionContainer;
     };
 
+    // 맨 처음 로딩시 -> 0번 옵션 색상으로 자동 설정
+    window.onload = function(){
+        getClass = document.getElementsByClassName(`item_options`);
+        first_c = getClass[0].classList[1];
+        console.log(first_c)
+        split_C = split(first_c,'-');
+        set_color(split_C);
+    };
+
+    function set_color(split_C){
+        position = item_obj[split_C[3]].face_location;
+        alpha = item_obj[split_C[3]].alpha;
+        h_color = item_obj[split_C[3]].c_code;
+        c_arr = hexToRgb(h_color);
+        R = c_arr[0];
+        G = c_arr[1];
+        B = c_arr[2];
+    }
     const itemOptionContainer = createItemOptionContainer(item_id);
 
     const itemImgContainer = document.createElement('div');
