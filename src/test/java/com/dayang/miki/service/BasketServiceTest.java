@@ -1,12 +1,9 @@
 package com.dayang.miki.service;
 
 
-import com.dayang.miki.domain.Cart;
-import com.dayang.miki.domain.Item_img;
+import com.dayang.miki.domain.*;
 import com.dayang.miki.repository.CartRepository;
 import org.assertj.core.api.Assertions;
-import com.dayang.miki.domain.Item;
-import com.dayang.miki.domain.Item_option;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -66,6 +63,17 @@ class BasketServiceTest {
         }
     }*/
 
+    @Autowired
+    TestService testService;
+    @Test
+    void ddd(){
+        Item item = itemService.findOne(324L);
+        List<TestColor> testColors = testService.findByItem(item);
+        List<Item_option> item_options = itemService.itemOptionList(item);
+        for(Item_option item_option : item_options){
+            System.out.println(item_option.getId());
+        }
+    }
     @Test
     void deleteOne(){
         cartService.deleteOne(1L);

@@ -15,6 +15,7 @@ public class TestService {
     private final TestRepository testRepository;
 
     public List<TestColor> findByItem(Item item){
-        return testRepository.findByItem(item);
+        List<TestColor> testColors = testRepository.findByItem(item);
+        return testColors;
     }
 }

@@ -33,8 +33,6 @@ public class ItemService {
     private final ReviewRepository reviewRepository;
     private final ReviewRepo reviewRepo;
 
-    private static final int BLOCK_PAGE_NUM_COUNT = 5;  // 블럭에 존재하는 페이지 번호 수
-    private static final int PAGE_ITEM_COUNT = 4;       // 한 페이지에 존재하는 게시글 수
 
 
     @Transactional
@@ -84,8 +82,8 @@ public class ItemService {
     @Transactional
     public long getItemNum(List<Category> ids){
         long count = itemRepo.countItemNum(ids);
-        if (count%4==0) return count/4;
-        else return (count/4)+1;
+        if (count%9==0) return count/9;
+        else return (count/9)+1;
     }
 
     @Transactional
