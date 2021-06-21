@@ -35,8 +35,9 @@ class ItemServiceTest {
     StoreService storeService;
 
     @Test
+    @Rollback(value = false)
     void testItem(){
-       Category category = itemService.findOneCategory(50L);
+       Category category = itemService.findOneCategory(49L);
        List<Item>items = itemService.getByCategory(category.getId());
        for(Item item : items){
            itemService.update(item.getId());
