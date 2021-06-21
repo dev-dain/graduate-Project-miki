@@ -17,7 +17,8 @@
   font-weight: 900;
 }
 .item-container {
-  align-self: center;
+  display: flex;
+  justify-content: center;
   padding: 30px;
 }
 .highlight {

@@ -8,7 +8,7 @@
 }
 header {
   width: 100%;
-  height: 15%;
+  height: 200px;
   display: flex;
   justify-content: space-between;
   padding: 2rem 0;
@@ -18,9 +18,9 @@ header {
   align-items: center;
 }
 .go-prev {
-  width: 70px;
-  height: 70px;
-  font-size: 3rem;
+  width: 100px;
+  height: 100px;
+  font-size: 4.5rem;
   color: #2E0A0A;
   text-align: center;
   line-height: 70px;
@@ -28,32 +28,43 @@ header {
 }
 h1 {
   margin: 0;
-  font-size: 3rem;
+  font-size: 4rem;
 }
+/*
+.divide-line {
+  background-image: linear-gradient(to right, #FFF8E5 30%, #FFC41E 30% 70%, #FFF8E5 70%);
+  width: 100%;
+  height: 4px;
+  border: none;
+  margin: 20px;
+}
+*/
 .cart-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 .select-all-container {
-  height: 60px;
-  padding: 10px 20px;
+  height: 150px;
+  padding: 30px;
   display: flex;
   align-items: center;
+  border-bottom: 2px solid #ffc41e;
+  background: #ffe089;
 }
 .select-all-btn {
   background: #fff;
-  width: 35px;
-  height: 35px;
+  width: 64px;
+  height: 64px;
   border: 3px solid #F66657;
   border-radius: 10px;
-  margin-right: 10px;
+  margin-right: 30px;
   color: #F66657;
-  font-size: 1.3rem;
+  font-size: 2.5rem;
   font-weight: 700;
 }
 .select-all-span {
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: 900;
 }
 .item-row-container {
@@ -64,7 +75,7 @@ h1 {
 .item-row {
   display: flex;
   width: 100%;
-  padding: 20px 15px;
+  padding: 30px;
   background: #fff;
   border-bottom: 2px solid #FFC41E;
 }
@@ -73,19 +84,20 @@ h1 {
   margin-right: 15px;
 }
 .item-thumbnail-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 15px;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
 }
 .item-check-btn {
   position: absolute;
-  left: 5px;
-  top: 5px;
-  width: 25px;
-  height: 25px;
-  border-radius: 5px;
+  left: 10px;
+  top: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
   border: 2px solid #E93C15;
   background: #fff;
+  font-size: 2rem;
   color: #E93C15;
   line-height: 0px;
 }
@@ -94,25 +106,28 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 10px;
+  margin: 20px;
 }
 .name-area {
   display: flex;
   justify-content: space-between;
 }
 .name-text {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #2E0A0A;
 }
 .delete-item-btn {
   margin: 0 10px 10px 10px;
-  width: 25px;
-  height: 25px;
+  width: 36px;
+  height: 36px;
   /* https://www.flaticon.com/authors/bqlqn */
   background-color: #fff;
   background-image: url('../img/trash.png');
   background-size: cover;
+}
+.option-text {
+    font-size: 1.1rem;
 }
 .count-price-area {
   display: flex;
@@ -123,9 +138,9 @@ h1 {
   background-color: #FFC41E;
   color: #fff;
   border: none;
-  width: 30px;
-  height: 35px;
-  font-size: 1rem;
+  width: 40px;
+  height: 45px;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 [class^='m-sub-count'] {
@@ -139,9 +154,9 @@ h1 {
   color: #2E0A0A;
   background-color: #fff;
   border: none;
-  width: 50px;
-  height: 35px;
-  font-size: 0.9rem;
+  width: 80px;
+  height: 45px;
+  font-size: 1.3rem;
   font-weight: 700;
 }
 .m-sub-count, .m-add-count {
@@ -172,11 +187,12 @@ h1 {
 .origin-price {
   color: #A7A4A4;
   text-decoration: line-through;
+  font-size: 1.2rem;
 }
 .discount-price {
   color: #E93C15;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 .cart-page-container {
   width: 100%;
@@ -188,10 +204,11 @@ h1 {
   margin: 15px;
 }
 .go-prev-page-btn, .go-next-page-btn {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   background: #2E0A0A;
   color: #fff;
+  font-size: 2rem;
 }
 .go-prev-page-btn {
   border-radius: 10px 0 0 10px;
@@ -200,7 +217,7 @@ h1 {
   border-radius: 0 10px 10px 0;
 }
 .current-page {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #2E0A0A;
 }
@@ -214,14 +231,14 @@ h1 {
 }
 .price-info {
   color: #2E0A0A;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 .total-pay-price {
   display: inline-block;
   margin-left: 25px;
   color: #E93C15;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
 }
 .cart-btn-container {
@@ -234,11 +251,11 @@ h1 {
   justify-content: center;
   align-items: center;
   margin: 0 15px;
-  width: 150px;
-  height: 55px;
+  width: 200px;
+  height: 80px;
   background: #F66657;
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  border-radius: 15px;
+  border-radius: 20px;
 }

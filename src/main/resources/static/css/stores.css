@@ -1,11 +1,10 @@
 #wrap {
     display: flex;
     flex-flow: column nowrap;
-    max-height: 1500px;
 }
 header {
     width: 100%;
-    height: 15%;
+    height: 180px;
     display: flex;
     justify-content: space-between;
     padding: 2rem 0;
@@ -15,9 +14,9 @@ header {
     align-items: center;
 }
 .go-prev {
-    width: 70px;
-    height: 70px;
-    font-size: 3rem;
+    width: 120px;
+    height: 120px;
+    font-size: 4.5rem;
     color: #2E0A0A;
     text-align: center;
     line-height: 70px;
@@ -25,7 +24,7 @@ header {
 }
 h1 {
     margin: 0;
-    font-size: 3rem;
+    font-size: 4rem;
 }
 .top-button-container {
     display: flex;
@@ -38,8 +37,8 @@ h1 {
     background-color: rgba(0, 0, 0, 0);
     background-image: url('../img/microphone-black-shape.png');
     background-size: cover;
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
     font-size: 0;
 }
 .go-cart {
@@ -47,30 +46,31 @@ h1 {
     background-color: rgba(0, 0, 0, 0);
     background-image: url('../img/shopping-cart.png');
     background-size: cover;
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
     font-size: 0;
 }
 .map-container {
     width: 100%;
-    height: 600px;
+    height: 800px;
+    margin: 40px
 }
 .current-location {
     width: 100%;
-    height: 80px;
+    height: 120px;
     color: #2E0A0A;
     font-weight: 700;
-    padding: 20px;
-    font-size: 1.2rem;
+    padding: 20px 0;
+    font-size: 1.8rem;
 }
 .cur-location { margin: 0; }
 .emphasize {
-    font-size: 1.5rem;
+    font-size: 2.2rem;
     color: #E93C15;
 }
 #map {
     width: 100%;
-    height: 520px;
+    height: 700px;
 }
 [class^='store-info-'] {
     display: flex;
@@ -87,7 +87,7 @@ h1 {
 [class^='store-info-name-'] {
     display: block;
     padding: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #163D78;
     border: none;
     margin-bottom: 10px;

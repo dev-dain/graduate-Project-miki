@@ -93,8 +93,10 @@
     itemCheck.addEventListener('click', () => {
         if (isItemCheck) {
             itemCheck.innerHTML = '';
+            isItemCheck = false;
         } else {
             itemCheck.innerHTML = '&#10004;';
+            isItemCheck = true;
         }
     });
 
@@ -152,7 +154,8 @@
 
     function set_color(split_C){
         position = item_obj[split_C[3]].face_location;
-        alpha = item_obj[split_C[3]].alpha;
+<!--        alpha = item_obj[split_C[3]].alpha;-->
+        alpha = 1.0;
         h_color = item_obj[split_C[3]].c_code;
         c_arr = hexToRgb(h_color);
         R = c_arr[0];
@@ -188,6 +191,18 @@
     itemDiv.appendChild(itemOptionContainer);
 
     itemContainer.appendChild(itemDiv);
+
+    const goPrevBtn = document.querySelector('.go-prev');
+    const goCartBtn = document.querySelector('.go-cart');
+
+    goPrevBtn.addEventListener('click', () => history.back());
+    goCartBtn.addEventListener('click', () => location.href = '/cartList');
+
+    const addItemBtn = document.querySelector('.add-item');
+    const payItemBtn = document.querySelector('.pay-item');
+
+    addItemBtn.addEventListener('click', () => location.href = '/categoryList');
+    payItemBtn.addEventListener('click', () => location.href = '/cartList');
 </script>
 <script src="/js/sketch.js"></script>
 </html>

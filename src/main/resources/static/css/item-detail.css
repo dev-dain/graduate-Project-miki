@@ -6,7 +6,7 @@
 #wrap { 
   background-color: #FFFAF9; 
   flex-direction: column;
-  justify-content: space-between;
+/*  justify-content: space-between; */
   position: relative;
 }
 header {
@@ -37,7 +37,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 84%;
+  height: 83.4%;
 }
 .item-btn {
   width: 65px;
