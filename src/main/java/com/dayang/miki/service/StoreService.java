@@ -1,5 +1,6 @@
 package com.dayang.miki.service;
 
+import com.dayang.miki.domain.Item_option;
 import com.dayang.miki.domain.Position;
 import com.dayang.miki.domain.Store;
 import com.dayang.miki.repository.PositionRepository;
@@ -55,4 +56,6 @@ public class StoreService {
         Optional<Position> position = positionRepository.findByStore(store);
         return position;
     }
+
+
 }

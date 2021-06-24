@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 public class Orders {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="order_id")
@@ -29,8 +30,8 @@ public class Orders {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
-    //==생성 메서드==//
 
+    //==생성 메서드==//
     //==비즈니스 로직==//
 /*    public static Orders createOrder(double pay, OrderItem... orderItems){
         Orders order = new Orders();
@@ -42,23 +43,6 @@ public class Orders {
         order.setOrderDate(LocalDateTime.now());
         return order;
     }*/
-    /**
-     * 주문취소
-     */
-    public void cancel(){
-        this.setStatus(OrderStatus.CANCEL);
-        for(OrderItem orderItem : orderItems){
-            orderItem.cancel();
-        }
-    }
-    //==조회 로직==//
 
-    /**
-     *전체 주문 가격 조회
-     */
-    public int getTotalPrice(){
-        return orderItems.stream()
-                .mapToInt(OrderItem::getTotalPrice)
-                .sum();
-    }
+
 }

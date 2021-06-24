@@ -28,9 +28,8 @@ public class OrderService {
         return orderRepository.findOne(id);
     }
     @Transactional
-    public Long orderItem(OrderItem orderItem){
+    public void orderItem(OrderItem orderItem){
         orderItemRepository.save(orderItem);
-        return orderItem.getId();
     }
     @Transactional
     public Long getMaxOrderNum(){

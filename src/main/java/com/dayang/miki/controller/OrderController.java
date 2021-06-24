@@ -24,7 +24,7 @@ public class OrderController {
     private final CartService cartService;
 
     @PostMapping("/order")
-    public String order(@RequestBody List<Cart> cart, Model model){
+    public String order(@RequestBody List<Cart> cart){
 
         int price =0;
         for(Cart cart1 : cart){
@@ -52,14 +52,22 @@ public class OrderController {
             orderItem.setCount(cart1.getCount());
             price += (cart1.getItem().getItem_price() - cart1.getItem().getDiscount_price()) * cart1.getCount();
             orderItem.setOrderPrice(price);
+            orderService.orderItem(orderItem);
         }
 
-        model.addAttribute("order_code", "D97AY998AN9G" + order_id );
         return "order/order_success";
     }
+
+
+
+    @GetMapping("/orderFail")
+    public String orderFail(){
+        return "orer/orderFail";
+    }
+
     @GetMapping("/orderList")
-    public String cartList(Model model){
-        List<Cart> carts= cartService.findAll();
+    public String orderList(Model model){
+        List<Cart> carts = cartService.findAll();
         List<Item> items = cartService.getItem();
         List<Item_option> item_options = cartService.getItemOption();
         List<Item_img> imgs = itemService.getCartImg(items);
@@ -71,4 +79,5 @@ public class OrderController {
 
         return "order/orderList";
     }
+
 }

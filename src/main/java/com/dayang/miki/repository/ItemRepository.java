@@ -32,7 +32,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Item SET is_testable = 'Y' where id =:id")
+    @Query("UPDATE Item SET is_testable = '0' where id =:id")
     void updateTestable(@Param("id") Long id);
 
 

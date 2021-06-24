@@ -40,6 +40,7 @@ class ItemServiceTest {
        Category category = itemService.findOneCategory(49L);
        List<Item>items = itemService.getByCategory(category.getId());
        for(Item item : items){
+           //System.out.println(item.getId()+" "+item.getName());
            itemService.update(item.getId());
        }
     }
@@ -125,6 +126,7 @@ class ItemServiceTest {
             System.out.println(c.getId());
 
         }
+
         System.out.println("===================================================");
         System.out.println(itemService.getItemNum(showCategory));
         System.out.println(itemService.getItemNum(showCategory)/4);

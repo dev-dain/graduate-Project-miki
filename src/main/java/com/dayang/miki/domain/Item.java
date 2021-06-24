@@ -36,7 +36,6 @@ public class Item {
     /**
      * STOCK 감소
      **/
-
     public void removeStock(int quantity){
         int retStock = this.stockQuantity - quantity;
         this.stockQuantity =retStock;

@@ -143,8 +143,8 @@ public class ItemService {
 
 
     @Transactional
-    public List<StoreQuantity> storeQuantityList(Item item, Store store){
-        return itemLogicRepository.storeQuantityList(item, store);
+    public StoreQuantity storeQuantityList(Item_option item_option, Store store){
+        return itemLogicRepository.storeQuantityList(item_option, store);
     }
     @Transactional
     public Item_option findItemOptionById(Long id){

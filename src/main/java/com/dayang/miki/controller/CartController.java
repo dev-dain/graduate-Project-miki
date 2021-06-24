@@ -1,11 +1,9 @@
 package com.dayang.miki.controller;
 
-import com.dayang.miki.domain.Cart;
-import com.dayang.miki.domain.Item;
-import com.dayang.miki.domain.Item_img;
-import com.dayang.miki.domain.Item_option;
+import com.dayang.miki.domain.*;
 import com.dayang.miki.service.CartService;
 import com.dayang.miki.service.ItemService;
+import com.dayang.miki.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -22,14 +20,20 @@ public class CartController {
 
     private final CartService cartService;
     private final ItemService itemService;
+    private final StoreService storeService;
 
     @GetMapping("/cartList")
-    public String cartList(Model model){
+    public String cartList(@RequestParam("store_id")Long store_id, Model model){
         List<Cart> carts= cartService.findAll();
         List<Item> items = cartService.getItem();
         List<Item_option> item_options = cartService.getItemOption();
         List<Item_img> imgs = itemService.getCartImg(items);
-
+        Store store = storeService.findById(store_id);
+        List<StoreQuantity> storeQuantities = new ArrayList<>();
+        for (Item_option item_option : item_options){
+             storeQuantities.add(itemService.storeQuantityList(item_option, store));
+        }
+        model.addAttribute("storeQuantity", storeQuantities);
         model.addAttribute("item_options", item_options);
         model.addAttribute("items", items);
         model.addAttribute("carts", carts);

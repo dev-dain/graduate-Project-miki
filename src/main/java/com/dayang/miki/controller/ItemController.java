@@ -92,8 +92,14 @@ public class ItemController {
     public String ItemOption(@PathVariable("item_id") Long id, Model model){
         Item item = itemService.findOne(id);
         Store store = storeService.findById(store_id);
-        List<StoreQuantity> storeQuantities = itemService.storeQuantityList(item, store);
         List<Item_option> item_options = itemService.itemOptionList(item);
+
+        List<StoreQuantity> storeQuantities = new ArrayList<>();
+        for (Item_option item_option : item_options){
+            storeQuantities.add(itemService.storeQuantityList(item_option, store));
+        }
+
+
         model.addAttribute("item_option", item_options);
         model.addAttribute("store_Quantity", storeQuantities);
         return "searchItem/item-option";
