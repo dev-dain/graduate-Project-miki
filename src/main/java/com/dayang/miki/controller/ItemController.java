@@ -88,6 +88,7 @@ public class ItemController {
         return "searchItem/item-detail";
     }
 
+
     @GetMapping("/item/{item_id}/item_option")
     public String ItemOption(@PathVariable("item_id") Long id, Model model){
         Item item = itemService.findOne(id);
