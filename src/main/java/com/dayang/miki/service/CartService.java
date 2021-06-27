@@ -70,7 +70,14 @@ public class CartService {
         List<Item_option> item_options = cartRepo.getItemOption();
         return item_options;
     }
-
+    public Item getSelectItem(Long id){
+        Item item = cartRepo.getSelectItem(id);
+        return item;
+    }
+    public Item_option getSelectItemOption(Long id){
+        Item_option item_option = cartRepo.getSelectItemOption(id);
+        return item_option;
+    }
 
     @Transactional
     public Optional<Cart> findOne(Long id){

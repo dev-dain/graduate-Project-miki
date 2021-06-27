@@ -27,6 +27,12 @@ public interface CartRepo extends JpaRepository<Cart, Long> {
     @Query("select c.item from Cart c")
     List<Item> getItem();
 
+    @Query("select c.item from Cart c where c.id =:id ")
+    Item getSelectItem(Long id);
+
+    @Query("select c.item_option from Cart c where c.id =:id")
+    Item_option getSelectItemOption(Long id);
+
     @Query("select c.item_option from Cart c")
     List<Item_option> getItemOption();
 

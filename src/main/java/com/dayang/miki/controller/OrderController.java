@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -65,8 +66,8 @@ public class OrderController {
         return "orer/orderFail";
     }
 
-    @GetMapping("/orderList")
-    public String orderList(Model model){
+    @GetMapping("/orderAllList")
+    public String orderAllList(Model model){
         List<Cart> carts = cartService.findAll();
         List<Item> items = cartService.getItem();
         List<Item_option> item_options = cartService.getItemOption();
@@ -80,4 +81,24 @@ public class OrderController {
         return "order/orderList";
     }
 
+    @PostMapping("/orderSelectList")
+    public String orderSelectList(@RequestBody List<Cart> cartList, Model model){
+
+        List<Item> items =  new ArrayList<>();
+        List<Item_option> item_options = new ArrayList<>();
+
+        for(Cart cart : cartList){
+            items.add(cartService.getSelectItem(cart.getId()));
+            item_options.add(cartService.getSelectItemOption(cart.getId()));
+        }
+        List<Item_img> item_imgs = itemService.getCartImg(items);
+
+
+        model.addAttribute("item_options", item_options);
+        model.addAttribute("items", items);
+        model.addAttribute("carts", cartList);
+        model.addAttribute("imgs", item_imgs);
+
+        return "order/orderList";
+    }
 }
