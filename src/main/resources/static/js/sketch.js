@@ -3,18 +3,16 @@ let video;
 let predictions = [];
 let face;
 let sil;
-// const R = 123;
-// const G = 0;
-// const B = 0;
-// const A = 50;
-// const pos = N; // 어느 부위인지 확인할 변수
 
 function setup() {
-  createCanvas(640, 480);
+  // createCanvas(640, 480);
+  createCanvas(1600, 800);
+  // createCanvas(640, 480);
   video = createCapture(VIDEO);
-  video.size(width, height);
+  // video.size(1024, 768);
+  // video.size(windowWidth, windowHeight);
   facemesh = ml5.facemesh(video, modelReady);
- 
+
   facemesh.on("predict", (results) => {
     predictions = results;
   });
@@ -27,50 +25,38 @@ function modelReady() {
 }
 
 function draw() {
+  // background(0);
+  // scale(1.5);
   image(video, 0, 0, width, height);
+
   drawKeypoints();
 }
 
-
 function drawKeypoints() {
+  // background(0, 0, 0, 150);
   for (let i = 0; i < predictions.length; i += 1) {
     sil = predictions[i].annotations;
     noStroke();
-
-    switch (position) {
+ 
+     switch (position) {
       case 'L':
         fill(R,G,B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
         face.lips();
-        // case 'C':
-        //     /* fill cåheek position */
-        // case 'B':
-        //   /* fill eyebrow position */
+      // case 'C':
+      //   /* fill cåheek position */
+      //   fill(R, G, B, 10); //투명도 10
+      //   face.leftCheeck();  //볼터치
+      // case 'B':
+      //   /* fill eyebrow position */
+      //   fill(R, G, B, 10);
+      //   face.leftEyebrow();  //눈썹
       default :
         return 0;
     }
+
   }
-
 }
-// fill(255, 255, 255, 50); //얼굴 윤곽 rgb+투명도
-// face.silhouette();
 
-//     fill(255,0,0, 50); //입술 rgb+투명도
-//     fill(R,G,B,A);
-//     face.lips();
-
-//     fill(0,0,255, 50); //오른쪽 눈 꺼풀 rgb+투명도
-//     face.rightEyeUpper();
-
-//     fill(0,0,0, 50); //오른쪽 눈 아래 rgb+투명도
-//     face.rightEyeLower();
-
-//     fill(0,0,255, 50); //왼쪽 눈 꺼풀 rgb+투명도
-//     face.leftEyeUpper();
-
-//     fill(0,0,0, 50); //왼쪽 눈 아래 rgb+투명도
-//     face.leftEyeLower();
-
-  //볼 좌우 연지곤지(수정필요)
-  // ellipse(sil.rightCheek[0][0], sil.rightCheek[0][1], 20 , 20);
-  // ellipse(sil.leftCheek[0][0], sil.leftCheek[0][1], 20 , 20);
-
+// function windowResized() {
+//   resizeCanvas(windowWidth, windowHeight);
+// }
