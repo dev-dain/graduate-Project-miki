@@ -40,23 +40,20 @@ function drawKeypoints() {
  
      switch (position) {
       case 'L':
+        /* fill lip position */
         fill(R,G,B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
         face.lips();
-      // case 'C':
-      //   /* fill cåheek position */
-      //   fill(R, G, B, 10); //투명도 10
-      //   face.leftCheeck();  //볼터치
-      // case 'B':
-      //   /* fill eyebrow position */
-      //   fill(R, G, B, 10);
-      //   face.leftEyebrow();  //눈썹
+      case 'C':
+        /* fill cheek position */
+        fill(R, G, B, 10); //투명도 10
+        face.leftCheeck();  //볼터치
+      case 'B':
+        /* fill eyebrow position */
+        fill(R, G, B, 10);
+        face.leftEyebrow();  //눈썹
       default :
         return 0;
     }
 
   }
 }
-
-// function windowResized() {
-//   resizeCanvas(windowWidth, windowHeight);
-// }
