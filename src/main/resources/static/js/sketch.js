@@ -6,7 +6,7 @@ let sil;
 
 function setup() {
   // createCanvas(640, 480);
-  createCanvas(1600, 800);
+  createCanvas(1000, 1200);
   // createCanvas(640, 480);
   video = createCapture(VIDEO);
   // video.size(1024, 768);
