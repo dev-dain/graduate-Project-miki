@@ -51,6 +51,7 @@ h1 {
   align-items: center;
   border-bottom: 2px solid #ffc41e;
   background: #ffe089;
+  position: relative;
 }
 .select-all-btn {
   background: #fff;
@@ -246,16 +247,29 @@ h1 {
   display: flex;
   justify-content: center;
 }
-.cart-btn-container > button {
+.cart-btn-container > button, .delete-all-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 15px;
   width: 200px;
   height: 80px;
-  background: #F66657;
+  background: #FFC41E;
   color: #fff;
   font-size: 1.6rem;
   font-weight: 700;
   border-radius: 20px;
+}
+.test-all-btn {
+  background: #F66657 !important;
+}
+.delete-all-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: #2E0A0A;
+    color: #fff8e5;
+}
+.delete-all-btn > img {
+  filter: invert(1);
 }
