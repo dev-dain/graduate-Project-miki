@@ -141,7 +141,6 @@ video {
   transform: rotateY(180deg) scaleY(2.0); /* 거울 모드 */
 }
 #defaultCanvas0 {
-  max-width: 600px;
   border: 3px solid #FFC41E;
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg); /* Safari and Chrome */
