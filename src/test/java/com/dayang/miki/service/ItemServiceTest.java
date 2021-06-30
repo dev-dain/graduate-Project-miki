@@ -37,7 +37,7 @@ class ItemServiceTest {
     @Test
     @Rollback(value = false)
     void testItem(){
-       Category category = itemService.findOneCategory(49L);
+       Category category = itemService.findOneCategory(47L);
        List<Item>items = itemService.getByCategory(category.getId());
        for(Item item : items){
            //System.out.println(item.getId()+" "+item.getName());
@@ -78,7 +78,7 @@ class ItemServiceTest {
     void voiceSearch(){
         String keyword = "삐아";
         int pageNum = 1;
-        Page<Item> items = itemService.findByItemName(keyword, 3);
+        Page<Item> items = itemService.findByItemName(keyword, 3, "");
         for(Item item : items){
             System.out.println(item.getName());
         }
@@ -150,7 +150,7 @@ class ItemServiceTest {
         //given
         String name = "ddd";
         //when
-        Page<Item> items = itemService.findByItemName(name, 1);
+        Page<Item> items = itemService.findByItemName(name, 1, "");
         //then
         for(Item item : items){
             System.out.println(item.getName());

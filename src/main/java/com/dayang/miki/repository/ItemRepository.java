@@ -32,7 +32,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Item SET is_testable = '0' where id =:id")
+    @Query("UPDATE Item SET is_testable = 'Y' where id =:id")
     void updateTestable(@Param("id") Long id);
 
     @Transactional
@@ -50,5 +50,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("UPDATE Item SET order_cnt =:order_cnt where id=:id")
     void updateOrderCnt(@Param("order_cnt")int order_cnt, @Param("id")Long id);
 
-
+    @Transactional
+    @Query(nativeQuery = true,
+            value = "select * from item  order by popularity DESC Limit 10")
+    List<Item> popularity();
 }

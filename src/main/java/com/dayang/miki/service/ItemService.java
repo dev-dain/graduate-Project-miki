@@ -80,7 +80,10 @@ public class ItemService {
         if (count%9==0) return count/9;
         else return (count/9)+1;
     }
-
+    @Transactional
+    public List<Item> popularity(){
+        return itemRepo.popularity();
+    }
     @Transactional
     public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum, String sort){
 

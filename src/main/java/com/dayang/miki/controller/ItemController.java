@@ -159,4 +159,17 @@ public class ItemController {
         model.addAttribute("review_img", review_imgs);
         return "searchItem/review";
     }
+
+    @GetMapping("/barcode")
+    public String barcode(){
+        return "barcode/barcode";
+    }
+
+    @GetMapping("/popularity")
+    public String populart(Model model){
+        List<Item> items = itemService.popularity();
+        model.addAttribute("item", items);
+        return "searchItem/popularity";
+    }
+
 }
