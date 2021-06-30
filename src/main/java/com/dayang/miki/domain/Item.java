@@ -30,6 +30,10 @@ public class Item {
     @JoinColumn(name="brand_id")
     private Brand brand;
 
+    private int popularity = 1;
+    private int review_cnt = 1;
+    private int order_cnt = 1;
+
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 

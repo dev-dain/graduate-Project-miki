@@ -27,7 +27,6 @@ public class ItemService {
     private final CategoryRepository categoryRepository;
     private final ItemRepository itemRepo;
     private final BrandRepository brandRepository;
-    private final HistoryRepository historyRepository;
     private final ItemImgRepository itemImgRepository;
     private final ItemOptionRepository itemOptionRepository;
     private final ReviewRepository reviewRepository;
@@ -44,11 +43,7 @@ public class ItemService {
         itemOptionRepository.updateStockQuantity(stockQuantity, item_option_id);
     }
 
-    @Transactional
-    public void save (Item item){
-        History history = History.createHistory(item);
-        historyRepository.save(history);
-    }
+
     @Transactional
     public Item findOne (Long item_id){return itemLogicRepository.findOne(item_id);}
 
@@ -58,8 +53,8 @@ public class ItemService {
         return category;
     }
     @Transactional
-    public Page<Item> findByItemName (String name, Integer pageNum){
-        Page<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 9));
+    public Page<Item> findByItemName (String name, Integer pageNum, String sort){
+        Page<Item> items = itemRepo.findByNameContaining(name, PageRequest.of(pageNum-1, 9, Sort.by(sort)));
 
         return items;
     }
@@ -87,9 +82,9 @@ public class ItemService {
     }
 
     @Transactional
-    public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum){
+    public List<Item> findItemByCategory(List<Category> categoryids, Integer pageNum, String sort){
 
-        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 9));
+        List<Item> items = itemRepo.findItemByIn(categoryids, PageRequest.of(pageNum-1, 9, Sort.by(sort)));
 
         return items;
     }
@@ -141,7 +136,19 @@ public class ItemService {
         return itemLogicRepository.Single_Item_option(name);
     }
 
+    @Transactional
+    public void updateReviewCnt(Long id, int reviewCnt){
+        itemRepo.updateReview(reviewCnt, id);
+    }
 
+    @Transactional
+    public void updateOrderCnt(Long id, int orderCnt){
+        itemRepo.updateOrderCnt(orderCnt, id);
+    }
+    @Transactional
+    public void updatePopularity(Long id, int popularity){
+        itemRepo.updatePopularity(popularity + 1, id);
+    }
     @Transactional
     public StoreQuantity storeQuantityList(Item_option item_option, Store store){
         return itemLogicRepository.storeQuantityList(item_option, store);

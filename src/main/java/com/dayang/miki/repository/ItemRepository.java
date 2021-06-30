@@ -35,5 +35,20 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("UPDATE Item SET is_testable = '0' where id =:id")
     void updateTestable(@Param("id") Long id);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Item SET review_cnt =:review_cnt where id =:id")
+    void updateReview(@Param("review_cnt")int review_cnt, @Param("id")Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Item SET popularity =:popularity where id =:id")
+    void updatePopularity(@Param("popularity")int popularity, @Param("id")Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Item SET order_cnt =:order_cnt where id=:id")
+    void updateOrderCnt(@Param("order_cnt")int order_cnt, @Param("id")Long id);
+
 
 }

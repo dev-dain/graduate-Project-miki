@@ -23,13 +23,12 @@ public class ItemController {
     private final ItemService itemService;
     private final StoreService storeService;
 
-    private final Long store_id = 1L;
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET, value ="/category/{list}")
-    public String categoryItem(@PathVariable("list") Long category_id, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+    public String categoryItem(@PathVariable("list") Long category_id, @RequestParam(value = "sort", defaultValue = "item_id") String sort, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
         Category category = itemService.findOneCategory(category_id);
         List<Category> categories = itemService.getFriendCategory(category);
 
@@ -48,7 +47,7 @@ public class ItemController {
             showCategory.add(category);
         }
         List<Item> items;
-        items = itemService.findItemByCategory(showCategory, pageNum);
+        items = itemService.findItemByCategory(showCategory, pageNum, sort);
         long maxNum = itemService.getItemNum(showCategory);
         model.addAttribute("maxNum", maxNum);
         model.addAttribute("category", category_id);
@@ -61,11 +60,14 @@ public class ItemController {
     @GetMapping("/item/{item_id}")
     public String Item(@PathVariable("item_id")Long id, Model model){
         Item item = itemService.findOne(id);
-        itemService.save(item);
+        itemService.updatePopularity(item.getId(), item.getPopularity());
 
         Item_img item_img = itemService.itemImg(item.getId());
         int cnt = itemService.reviewCnt(item);
         double rate = itemService.reviewRate(item);
+
+        if(item.getReview_cnt() !=cnt )itemService.updateReviewCnt(item.getId(), cnt);
+
         model.addAttribute("item_id", item.getId());
         model.addAttribute("item_name",item.getName());
         model.addAttribute("item_img", item_img);
@@ -90,7 +92,7 @@ public class ItemController {
 
 
     @GetMapping("/item/{item_id}/item_option")
-    public String ItemOption(@PathVariable("item_id") Long id, Model model){
+    public String ItemOption(@PathVariable("item_id") Long id, @PathVariable("store_id") Long store_id, Model model){
         Item item = itemService.findOne(id);
         Store store = storeService.findById(store_id);
         List<Item_option> item_options = itemService.itemOptionList(item);
@@ -110,11 +112,11 @@ public class ItemController {
     public String searchVoicePage() { return "searchItem/voice-search"; }
 
     @GetMapping("/searchVoice/{keyword}")
-    public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+    public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value= "sort", defaultValue = "id")String sort, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
 
 
 
-        Page<Item> items = itemService.findByItemName(keyword, pageNum);
+        Page<Item> items = itemService.findByItemName(keyword, pageNum, sort);
 
         if(items.getTotalElements()==0){
             model.addAttribute("count", items.getTotalElements());
@@ -129,9 +131,9 @@ public class ItemController {
     }
 
     @GetMapping("/searchItem/{keyword}")
-    public String search(@PathVariable("keyword")String keyword, Model model,@RequestParam(value="page", defaultValue = "1") Integer pageNum){
-        if(itemService.findByItemName(keyword, pageNum).getTotalElements()>0) {
-            Page<Item> items = itemService.findByItemName(keyword, pageNum);
+    public String search(@PathVariable("keyword")String keyword, Model model, @RequestParam(value="sort", defaultValue = "id")String sort, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+        if(itemService.findByItemName(keyword, pageNum, sort).getTotalElements()>0) {
+            Page<Item> items = itemService.findByItemName(keyword, pageNum, sort);
             List<Item_img> item_imgs = new ArrayList<>();
             for(Item item : items){
                 item_imgs.add(itemService.itemImg(item.getId()));
