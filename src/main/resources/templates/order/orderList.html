@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/order.css">
+    <title>주문 / 결제</title>
+</head>
+<body>
+    <div id="wrap">
+        <header>
+            <div class="title-container">
+                <button class="go-prev">&lt;</button>
+                <h1 class="title">주문 / 결제</h1>
+            </div>
+        </header>
+        <div class="content-container">
+            <div class="row-list">
+                <div class="row-info">
+                    <div class="row-title">주문 상품</div>
+                    <button class="fold-btn fold">^</button>
+                </div>
+                <div class="row-items-container">
+                    <!-- cart에 있는 item-row와 동일 -->
+                </div>
+            </div>
+            <div class="row-price">
+                <div class="row-info">
+                    <div class="row-title">최종 결제 금액</div>
+                    <div class="row-price"></div>
+                    <button class="fold-btn fold">^</button>
+                </div>
+                <div class="row-price-info">
+                    <div class="row-left-area"></div>
+                    <div class="row-right-area"></div>
+                </div>
+            </div>
+            <div class="row-pay-way">
+                <div class="row-info">
+                    <div class="row-title">주문 상품</div>
+                    <button class="fold-btn fold">^</button>
+                </div>
+                <div class="row-way-list">
+                    <img class="pay-way-img">
+                    <img class="pay-way-img">
+                    <img class="pay-way-img">
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="row-notice">
+                <button class="notice-check-btn"></button>
+                <p class="notice-text">
+                    주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?
+                </p>
+            </div>
+            <button class="go-pay-btn"></button>
+        </footer>
+    </div>
+
+<script th:inline="javascript">
+    const goPrevBtn = document.querySelector('.go-prev');
+    goPrevBtn.addEventListener('click', () => history.back());
+
+
+</script>
+</body>
+</html>
