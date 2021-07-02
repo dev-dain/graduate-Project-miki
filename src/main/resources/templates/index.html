@@ -82,6 +82,10 @@
   }
   clockFunc();
   setInterval(clockFunc, 1000);
+
+  if (!localStorage.getItem('store_id')) {
+    localStorage.setItem('store_id', '1');
+  }
 </script>
 </body>
 

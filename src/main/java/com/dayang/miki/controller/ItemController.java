@@ -91,7 +91,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("/item/{item_id}/item_option")
+    @GetMapping("item/{store_id}/{item_id}/item_option")
     public String ItemOption(@PathVariable("item_id") Long id, @PathVariable("store_id") Long store_id, Model model){
         Item item = itemService.findOne(id);
         Store store = storeService.findById(store_id);

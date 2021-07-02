@@ -69,6 +69,7 @@
   const imgContainer = document.querySelector('.img-container');
   const modalContainer = document.querySelector('.modal-container');
   const wrapContainer = document.getElementById('wrap');
+  const storeId = localStorage.getItem('store_id');
 
   const checkFirstPage = page => (page <= 0);
   const checkLastPage = (page, length) => (Number(page) + 1 >= length);
@@ -114,7 +115,7 @@
     const script = document.createElement('script');
 
     if (wrapContainer.lastElementChild.tagName !== 'SCRIPT') {
-      fetch(`/item/${item_id}/item_option`)
+      fetch(`/item/${storeId}/${item_id}/item_option`)
               .then(res => res.text())
               .then(data => {
                 const optionContainer = data.split('<body>')[1].split('<script>')[0];

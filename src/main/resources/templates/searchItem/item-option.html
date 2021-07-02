@@ -61,6 +61,7 @@
 
     /*]]>*/
 
+    console.log(quantityList);
     /* const item_id = window.location.pathname.split('/')[2]; */
     const tbody = document.querySelector('tbody');
     const optionContainer = document.querySelector('.option-container');
@@ -73,7 +74,7 @@
 
 
     /* 개별 옵션을 클릭했을 때 선택된 상품으로 등록하는 함수 */
-    const addOption = (id, option_id, name) => {
+    const addOption = (id, option_id, quantity, name) => {
         const sOptionDiv = document.createElement('div');
         const nameSpan = document.createElement('span');
         nameSpan.textContent = name;
@@ -110,10 +111,14 @@
             }
         });
         addCountBtn.addEventListener('click', () => {
-            countInput.value = Number(countInput.value) + 1;
-            for (let i = 0; i < selectedOptionList.length; i++) {
-                if (selectedOptionList[i].item_option_id === option_id) {
-                    selectedOptionList[i].count = Number(countInput.value);
+            if (Number(countInput.value) >= quantity) {
+                alert('재고 상품보다 많이 담을 수 없습니다.');
+            } else {
+                countInput.value = Number(countInput.value) + 1;
+                for (let i = 0; i < selectedOptionList.length; i++) {
+                    if (selectedOptionList[i].item_option_id === option_id) {
+                        selectedOptionList[i].count = Number(countInput.value);
+                    }
                 }
             }
         });
@@ -186,7 +191,7 @@
                 if (!selectedList.includes(tbody.children[i].children[0].textContent.trim())) {
                     const item_name = tbody.children[i].children[0].textContent.trim();
                     selectedList.push(item_name);
-                    addOption(item_id, optionIDList[i], item_name);
+                    addOption(item_id, optionIDList[i], quantityList[i], item_name);
                 }
 
                 optionRows.forEach(row => row.style.display = 'none');
