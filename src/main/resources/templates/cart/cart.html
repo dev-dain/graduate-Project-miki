@@ -53,6 +53,9 @@
       <button class="go-payment-part-btn">선택 상품 결제</button>
       <button class="go-payment-all-btn">전체 상품 결제</button>
     </div>
+    <div class="modal-container">
+
+    </div>
   </div>
 
   <script th:inline="javascript">
@@ -121,6 +124,39 @@
     const itemRowContainer = document.querySelector('.item-row-container');
     const itemRowList = [];
     const totalPayPrice = document.querySelector('.total-pay-price');
+    const modalContainer = document.querySelector('.modal-container');
+
+
+    const createModal = state => {
+      const modalBG = document.createElement('div');
+      modalBG.classList.add('modal-background');
+
+      const modalBox = document.createElement('div');
+      modalBox.classList.add('modal-box');
+
+      const modalCloseBtn = document.createElement('span');
+      modalCloseBtn.classList.add('modal-close-btn');
+      modalCloseBtn.innerHTML = '&times;';
+      modalCloseBtn.addEventListener('click', () => {
+        modalContainer.innerHTML = '';
+        modalContainer.classList.remove('display');
+      });
+
+      const modalContent = document.createElement('p');
+      modalContent.classList.add('modal-content');
+      if (state === 'excess') {
+        modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+      } else {
+        modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+      }
+
+      modalBox.appendChild(modalCloseBtn);
+      modalBox.appendChild(modalContent);
+
+      modalBG.appendChild(modalBox);
+
+      return modalBG;
+    }
 
 
     const createItemRow = optionId => {
@@ -268,7 +304,9 @@
         if (!countPriceArea.parentElement.previousSibling.children[1].textContent) return;
 
         if (Number(countInput.value) < 2) {
-          alert('수량은 1개 이상이어야 합니다.');
+          // alert('수량은 1개 이상이어야 합니다.');
+          modalContainer.appendChild(createModal('lack'));
+          modalContainer.classList.add('display');
         } else {
           countInput.value = Number(countInput.value) - 1;
           cart_count_obj[optionId].count = countInput.value;
@@ -303,7 +341,9 @@
         if (!countPriceArea.parentElement.previousSibling.children[1].textContent) return;
 
         if (Number(countInput.value) >= item_option_obj[optionId].quantity) {
-          alert('재고 수량보다 많이 담을 수 없습니다.');
+          modalContainer.appendChild(createModal('excess'));
+          modalContainer.classList.add('display');
+          // alert('재고 수량보다 많이 담을 수 없습니다.');
         } else {
           countInput.value = Number(countInput.value) + 1;
           cart_count_obj[optionId].count = countInput.value;
