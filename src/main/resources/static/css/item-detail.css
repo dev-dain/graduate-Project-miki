@@ -305,3 +305,52 @@ div[class^="s-option-"] {
 div[class^="s-option-"] > span {
     font-size: 1.2rem;
 }
+
+.modal-in-modal {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+.modal-background {
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, .8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-box {
+  width: 1200px;
+  height: 600px;
+  padding: 100px;
+  background-color: #fff;
+  border-radius: 50px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.modal-close-btn {
+  color: #E93C15;
+  font-size: 5rem;
+  align-self: flex-end;
+  font-weight: 900;
+  cursor: pointer;
+}
+.modal-content {
+  margin-top: 100px;
+  font-size: 4.5rem;
+  font-weight: 700;
+  word-break: keep-all;
+  text-align: center;
+}
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.display {
+  display: block !important;
+  animation: fade-in forwards .3s;
+}

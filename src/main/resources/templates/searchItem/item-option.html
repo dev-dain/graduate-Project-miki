@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/css/item-detail.css">
 </head>
 <body>
+    <div class="modal-in-modal">
+
+    </div>
     <div class="table-container">
         <button class="fold-option-btn rotate">^</button>
         <table class="option-container">
@@ -71,6 +74,40 @@
     const optionSelect = document.querySelector('.option-select-tr > td');
     const foldOptionBtn = document.querySelector('.fold-option-btn');
     const cancelSpan = document.querySelector('.cancel');
+    const modalInModal = document.querySelector('.modal-in-modal');
+
+
+
+    const createModal = state => {
+        const modalBG = document.createElement('div');
+        modalBG.classList.add('modal-background');
+
+        const modalBox = document.createElement('div');
+        modalBox.classList.add('modal-box');
+
+        const modalCloseBtn = document.createElement('span');
+        modalCloseBtn.classList.add('modal-close-btn');
+        modalCloseBtn.innerHTML = '&times;';
+        modalCloseBtn.addEventListener('click', () => {
+            modalInModal.innerHTML = '';
+            modalInModal.classList.remove('display');
+        });
+
+        const modalContent = document.createElement('p');
+        modalContent.classList.add('modal-content');
+        if (state === 'excess') {
+            modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+        } else {
+            modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+        }
+
+        modalBox.appendChild(modalCloseBtn);
+        modalBox.appendChild(modalContent);
+
+        modalBG.appendChild(modalBox);
+
+        return modalBG;
+    }
 
 
     /* 개별 옵션을 클릭했을 때 선택된 상품으로 등록하는 함수 */
@@ -100,7 +137,9 @@
 
         subCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) < 2) {
-                alert('수량은 1개 이상이어야 합니다.');
+                /* alert('수량은 1개 이상이어야 합니다.'); */
+                modalInModal.appendChild(createModal('lack'));
+                modalInModal.classList.add('display');
             } else {
                 countInput.value = Number(countInput.value) - 1;
                 for (let i = 0; i < selectedOptionList.length; i++) {
@@ -112,7 +151,9 @@
         });
         addCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) >= quantity) {
-                alert('재고 상품보다 많이 담을 수 없습니다.');
+                modalInModal.appendChild(createModal('excess'));
+                modalInModal.classList.add('display');
+                /* alert('재고 상품보다 많이 담을 수 없습니다.'); */
             } else {
                 countInput.value = Number(countInput.value) + 1;
                 for (let i = 0; i < selectedOptionList.length; i++) {
