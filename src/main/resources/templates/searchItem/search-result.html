@@ -105,7 +105,7 @@
 
   mic.addEventListener('click', () => location.href = '/searchVoice');
   cart.addEventListener('click', () => {
-    location.href = '/cartList';
+    location.href = `/cartList/${localStorage.getItem('store_id')}`;
   });
 
   localStorage.setItem('searchMax', document.querySelector('.maxNum').textContent);

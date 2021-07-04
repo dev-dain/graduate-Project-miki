@@ -20,7 +20,7 @@ const cart = document.querySelector('.go-cart');
 goPrevBtn.addEventListener('click', () => { history.back(); });
 mic.addEventListener('click', () => location.href = '/searchVoice');
 cart.addEventListener('click', () => {
-    location.href = '/cartList';
+    location.href = `/cartList/${localStorage.getItem('store_id')}`;
 });
 
 const fetchData = (curCategory, sortWay) => {

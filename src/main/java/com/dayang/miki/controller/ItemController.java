@@ -34,8 +34,7 @@ public class ItemController {
 
         List<Category> showCategory = new ArrayList<>();
         List<Category> tmp;
-        for(Category c : categories){
-            tmp = itemService.getFriendCategory(c);
+        for(Category c : categories){            tmp = itemService.getFriendCategory(c);
             showCategory.add(c);
             if(tmp.size()!=0){
                 for(Category cc : tmp){

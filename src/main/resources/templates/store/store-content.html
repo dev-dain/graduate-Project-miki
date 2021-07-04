@@ -67,7 +67,7 @@
     const goPrevBtn = document.querySelector('.go-prev');
 
     goPrevBtn.addEventListener('click', () => history.back());
-    goCart.addEventListener('click', () => location.href = '/cartList');
+    goCart.addEventListener('click', () => location.href = `/cartList/${localStorage.getItem('store_id')}`);
     mic.addEventListener('click', () => location.href = '/searchVoice' );
 
     const curStoreID = localStorage.getItem('store_id') || 1;
