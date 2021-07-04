@@ -23,6 +23,11 @@
             <button class="go-cart" title="https://www.freepik.com"></button>
         </div>
     </header>
+    <div class="sort-container">
+        <button class="sort-btn-popularity">인기순</button>
+        <button class="sort-btn-order_cnt">판매수량순</button>
+        <button class="sort-btn-review_cnt">리뷰순</button>
+    </div>
     <div class="mid-category">
 
     </div>
@@ -74,20 +79,18 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-
-    /*[# th:each="tmp : ${item}"]*/
-    noti(/*[[${tmp.name}]]*/, /*[[${tmp.item_price}]]*/);
-    /*[/]*/
+    let curCategory = /*[[${category}]]*/;
 
     /*]]>*/
 
-    function noti(testValue, tmpValue) {
-        console.log(testValue, tmpValue);
-    }
+    console.log(`category: ${curCategory}`);
 
     localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
     console.log(localStorage.getItem('categoryMax'));
 
+
+    let sortWay = localStorage.getItem('sort-way') || 'popularity';
+    const wrapContainer = document.getElementById('wrap');
 
     const goItemPage = id => location.href = `/item/${id}`;
     const goTestPage = id => location.href = `/test/${id}`;
