@@ -17,50 +17,53 @@
                 <h1 class="title">주문 / 결제</h1>
             </div>
         </header>
-        <div class="content-container">
-            <div class="row-list">
-                <div class="row-info">
-                    <div class="row-title">주문 상품</div>
-                    <button class="fold-btn-items fold">^</button>
+        <div class="content">
+            <div class="content-container">
+                <div class="row-list">
+                    <div class="row-info">
+                        <div class="row-title">주문 상품</div>
+                        <button class="fold-btn-items fold">^</button>
+                    </div>
+                    <div class="item-row-container">
+                        <!-- cart에 있는 item-row와 동일 -->
+                    </div>
                 </div>
-                <div class="item-row-container">
-                    <!-- cart에 있는 item-row와 동일 -->
-                </div>
-            </div>
-            <div class="row-goods-list">
+                <div class="row-goods-list">
 
-            </div>
-            <div class="cart-page-container">
-                <button class="go-prev-page-btn">&lt;</button>
-                <span class="current-page"></span>
-                <button class="go-next-page-btn">&gt;</button>
-            </div>
-            <div class="row-price">
-                <div class="row-info">
-                    <div class="row-title">최종 결제 금액</div>
-                    <div class="row-price"></div>
-<!--                    <button class="fold-btn-price fold">^</button>-->
                 </div>
-                <div class="row-price-info">
-                    <div class="row-price-left-area">총 결제 금액</div>
-                    <div class="row-price-right-area"></div>
+                <div class="cart-page-container">
+                    <button class="go-prev-page-btn">&lt;</button>
+                    <span class="current-page"></span>
+                    <button class="go-next-page-btn">&gt;</button>
                 </div>
-            </div>
-            <div class="row-pay-way">
-                <div class="row-info">
-                    <div class="row-title">결제 수단</div>
-                    <button class="fold-btn-pay fold">^</button>
+                <div class="row-price">
+                    <div class="row-info">
+                        <div class="row-title">최종 결제 금액</div>
+                        <div class="row-price"></div>
+                        <!--                    <button class="fold-btn-price fold">^</button>-->
+                    </div>
+                    <div class="row-price-info">
+                        <div class="row-price-left-area">총 결제 금액</div>
+                        <div class="row-price-right-area"></div>
+                    </div>
                 </div>
-                <div class="row-way-list">
-                    <img class="pay-way-img">
-                    <img class="pay-way-img">
-                    <img class="pay-way-img">
+                <div class="row-pay-way">
+                    <div class="row-info">
+                        <div class="row-title">결제 수단</div>
+                        <button class="fold-btn-pay fold">^</button>
+                    </div>
+                    <div class="row-way-list">
+                        <img class="pay-way-img">
+                        <img class="pay-way-img">
+                        <img class="pay-way-img">
+                    </div>
                 </div>
             </div>
         </div>
+
         <footer>
             <div class="row-notice">
-                <span class="notice-check-btn"></span>
+                <button class="notice-check-btn"></button>
                 <p class="notice-text">
                     주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?
                 </p>
@@ -315,10 +318,10 @@
     noticeCheckBtn.addEventListener('click', () => {
         if (noticeCheckBtn.classList.contains('selected')) {
             noticeCheckBtn.classList.remove('selected');
-            noticeCheckBtn.classList.innerHTML = '';
+            noticeCheckBtn.innerHTML = '';
         } else {
             noticeCheckBtn.classList.add('selected');
-            noticeCheckBtn.classList.innerHTML = '&#10004;';
+            noticeCheckBtn.innerHTML = '&#10004;';
         }
     });
 
