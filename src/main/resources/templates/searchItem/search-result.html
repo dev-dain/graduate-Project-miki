@@ -33,8 +33,8 @@
   </div>
   <div class="sort-container">
     <button class="sort-btn-popularity">인기순</button>
-    <button class="sort-btn-order_cnt">판매수량순</button>
-    <button class="sort-btn-review_cnt">리뷰순</button>
+    <button class="sort-btn-orderCnt">판매수량순</button>
+    <button class="sort-btn-reviewCnt">리뷰순</button>
   </div>
   <div class="item-container">
     <p class="maxNum" style="display: none;" th:text="${maxNum}"></p>
@@ -113,7 +113,7 @@
     location.href = `/cartList/${localStorage.getItem('store_id')}`;
   });
 
-  let sortWay = localStorage.getItem('sort-way') || 'popularity';
+  let sortWay = localStorage.getItem('search-sort-way') || 'popularity';
   const wrapContainer = document.getElementById('wrap');
 
   const fetchData = (keyword, sortWay) => {
@@ -128,9 +128,6 @@
             wrapContainer.removeChild(wrapContainer.lastElementChild);
             wrapContainer.appendChild(itemRowContainer);
 
-//            localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
-//            console.log('category ', localStorage.getItem('categoryMax'));
-
         })
         .catch(e => console.error(e));
   }
@@ -138,8 +135,8 @@
 
   const sortContainer = document.querySelector('.sort-container');
   const sortBtnPop = document.querySelector('.sort-btn-popularity');
-  const sortBtnOrder = document.querySelector('.sort-btn-order-cnt');
-  const sortBtnReview = document.querySelector('.sort-btn-review-cnt');
+  const sortBtnOrder = document.querySelector('.sort-btn-orderCnt');
+  const sortBtnReview = document.querySelector('.sort-btn-reviewCnt');
 
   for (let i = 0; i < sortContainer.children.length; i++) {
     sortContainer.children[i].addEventListener('click', () => {
@@ -149,9 +146,9 @@
                 sortContainer.children[j].classList.remove('selected-btn');
             }
         }
-        localStorage.setItem('sort-way', sortContainer.children[i].className.split('-')
+        localStorage.setItem('search-sort-way', sortContainer.children[i].className.split('-')
             [sortContainer.children[i].className.split('-').length - 1]);
-        sortWay = localStorage.getItem('sort-way');
+        sortWay = localStorage.getItem('search-sort-way');
         sortContainer.children[i].classList.add('selected-btn');
 
         localStorage.setItem('page', 1);
