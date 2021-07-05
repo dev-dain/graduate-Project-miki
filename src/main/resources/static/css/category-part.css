@@ -52,9 +52,13 @@ h1 {
   font-size: 0;
 }
 [class^='sort-btn-'] {
+  padding: 15px 50px;
+  margin: 15px 0;
   color: #2E0A0A;
   background: none;
   font-weight: 700;
+  font-size: 1.8rem;
+  border-right: 2px solid #ddd;
 }
 .selected-btn {
   color: #E93C15;
