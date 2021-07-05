@@ -22,8 +22,8 @@ public class CartController {
     private final ItemService itemService;
     private final StoreService storeService;
 
-    @GetMapping("/cartList")
-    public String cartList(@RequestParam("store_id")Long store_id, Model model){
+    @GetMapping("/cartList/{store_id}")
+    public String cartList(@PathVariable("store_id")Long store_id, Model model){
         List<Cart> carts= cartService.findAll();
         List<Item> items = cartService.getItem();
         List<Item_option> item_options = cartService.getItemOption();

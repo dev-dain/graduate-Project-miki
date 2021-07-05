@@ -196,7 +196,7 @@
   const goCartBtn = document.querySelector('.go-cart');
 
   goPrevBtn.addEventListener('click', () => history.back());
-  goCartBtn.addEventListener('click', () => location.href = '/cartList');
+  goCartBtn.addEventListener('click', () => location.href = `/cartList/${localStorage.getItem('store_id')}`);
 
   const addItemBtn = document.querySelector('.add-item');
   const payItemBtn = document.querySelector('.pay-item');

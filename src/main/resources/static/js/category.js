@@ -1,7 +1,6 @@
 // 카테고리 받아오는 과정
 const j_list = JSON.parse(JSON.stringify(List));
 const list_num = ((window.location.href).split('/')).slice(-1)[0].split('?')[0];
-console.log(list_num);
 const j_midList = j_list[list_num].MediumCategory;
 
 // titleContainer의 title 정하기
@@ -21,8 +20,27 @@ const cart = document.querySelector('.go-cart');
 goPrevBtn.addEventListener('click', () => { history.back(); });
 mic.addEventListener('click', () => location.href = '/searchVoice');
 cart.addEventListener('click', () => {
-    location.href = '/cartList';
+    location.href = `/cartList/${localStorage.getItem('store_id')}`;
 });
+
+const fetchData = (curCategory, sortWay) => {
+    console.log(sortWay);
+    fetch(`/category/${curCategory}?sort=${sortWay}`)
+        .then(res => res.text())
+        .then(data => {
+            const itemRowContainer = document.createElement('div');
+            itemRowContainer.classList.add('item-container');
+            let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
+            itemRowContainer.innerHTML = itemContainer;
+            wrapContainer.removeChild(wrapContainer.lastElementChild);
+            wrapContainer.appendChild(itemRowContainer);
+
+            localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
+            console.log('category ', localStorage.getItem('categoryMax'));
+
+        })
+        .catch(e => console.error(e));
+}
 
 
 
@@ -37,24 +55,9 @@ j_midList.forEach(mid => {
     midBtn.textContent = mid.M_category_name;
     midBtn.addEventListener('click', () => {
         console.log(mid.category_id);
+        curCategory = mid.category_id;
         localStorage.setItem('page', 1);
-
-        fetch(`/category/${mid.category_id}`)
-            .then(res => res.text())
-            .then(data => {
-                const wrapContainer = document.getElementById('wrap');
-                const itemRowContainer = document.createElement('div');
-                itemRowContainer.classList += 'item-container';
-                let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-                itemRowContainer.innerHTML = itemContainer;
-                wrapContainer.removeChild(wrapContainer.lastElementChild);
-                wrapContainer.appendChild(itemRowContainer);
-
-                localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
-                console.log('category', localStorage.getItem('categoryMax'));
-
-            })
-            .catch(e => console.error(e));
+        fetchData(curCategory, sortWay);
     });
 
     if (mid.SmallCategory) {
@@ -100,23 +103,10 @@ for (let i = 0; i < midCatList.length; i++) {
                 smallBtn.addEventListener('click', () => {
                     console.log(small.category_id);
                     localStorage.setItem('page', 1);
+                    curCategory = small.category_id;
 
-                    fetch(`/category/${small.category_id}`)
-                        .then(res => res.text())
-                        .then(data => {
-                            const wrapContainer = document.getElementById('wrap');
-                            const itemRowContainer = document.createElement('div');
-                            itemRowContainer.classList += 'item-container';
-                            let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-                            itemRowContainer.innerHTML = itemContainer;
-                            wrapContainer.removeChild(wrapContainer.lastElementChild);
-                            wrapContainer.appendChild(itemRowContainer);
+                    fetchData(curCategory, sortWay);
 
-                            localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);
-                            console.log('category ', localStorage.getItem('categoryMax'));
-
-                        })
-                        .catch(e => console.error(e));
 
                     for (let j = 0; j < smallCatBar.children.length; j++) {
                         if (smallCatBar.children[j].classList.contains('cat-selected')) {
@@ -151,6 +141,11 @@ const smallCatList = document.querySelectorAll('.small-btn');
 const itemContainer = document.querySelector('.item-container');
 const itemCardList= document.querySelectorAll('.item-card');
 
+const sortContainer = document.querySelector('.sort-container');
+const sortBtnPop = document.querySelector('.sort-btn-popularity');
+const sortBtnOrder = document.querySelector('.sort-btn-order-cnt');
+const sortBtnReview = document.querySelector('.sort-btn-review-cnt');
+
 smallCatBar.parentNode.style.display = 'none';
 // itemContainer.style.display = 'none';
 
@@ -180,3 +175,23 @@ foldBtn.addEventListener('click', () => {
         }, 200);
     }
 });
+
+
+
+for (let i = 0; i < sortContainer.children.length; i++) {
+    sortContainer.children[i].addEventListener('click', () => {
+        for (let j = 0; j < sortContainer.children.length; j++) {
+            if (sortContainer.children[j].classList.contains('selected-btn')) {
+                if (i === j) return;
+                sortContainer.children[j].classList.remove('selected-btn');
+            }
+        }
+        localStorage.setItem('sort-way', sortContainer.children[i].className.split('-')
+            [sortContainer.children[i].className.split('-').length - 1]);
+        sortWay = localStorage.getItem('sort-way');
+        sortContainer.children[i].classList.add('selected-btn');
+
+        localStorage.setItem('page', 1);
+        fetchData(curCategory, sortWay);
+    });
+}

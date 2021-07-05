@@ -34,8 +34,7 @@ public class ItemController {
 
         List<Category> showCategory = new ArrayList<>();
         List<Category> tmp;
-        for(Category c : categories){
-            tmp = itemService.getFriendCategory(c);
+        for(Category c : categories){            tmp = itemService.getFriendCategory(c);
             showCategory.add(c);
             if(tmp.size()!=0){
                 for(Category cc : tmp){
@@ -91,7 +90,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("/item/{item_id}/item_option")
+    @GetMapping("item/{store_id}/{item_id}/item_option")
     public String ItemOption(@PathVariable("item_id") Long id, @PathVariable("store_id") Long store_id, Model model){
         Item item = itemService.findOne(id);
         Store store = storeService.findById(store_id);

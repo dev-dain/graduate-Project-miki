@@ -53,6 +53,9 @@
       <button class="go-payment-part-btn">선택 상품 결제</button>
       <button class="go-payment-all-btn">전체 상품 결제</button>
     </div>
+    <div class="modal-container">
+
+    </div>
   </div>
 
   <script th:inline="javascript">
@@ -60,6 +63,7 @@
     const item_option_obj = {};
     const item_img_obj = {};
     const cart_count_obj = {};
+    const quantity_obj = {};
 
     let item_id;
     let item_img_id;
@@ -70,6 +74,11 @@
     let isSelectAll = true;
 
     /*<![CDATA[*/
+
+    /*[# th:each="quantity : ${storeQuantity}"]*/
+    item_option_id = /*[[${quantity.item_option.id}]]*/;
+    quantity_obj[item_option_id] = /*[[${quantity.stock_quantity}]]*/;
+    /*[/]*/
 
     /*[# th:each="item : ${items}"]*/
     item_id = /*[[${item.id}]]*/
@@ -88,6 +97,7 @@
       id: item_option_id,
       parent_id: /*[[${option.item.id}]]*/,
       name: /*[[${option.item_option_name}]]*/,
+      quantity: quantity_obj[item_option_id],
       is_this_check: true
     };
     /*[/]*/
@@ -108,14 +118,45 @@
 
     /*]]>*/
 
-    console.log(item_obj);
     console.log(item_option_obj);
-    console.log(item_img_obj);
 
 
     const itemRowContainer = document.querySelector('.item-row-container');
     const itemRowList = [];
     const totalPayPrice = document.querySelector('.total-pay-price');
+    const modalContainer = document.querySelector('.modal-container');
+
+
+    const createModal = state => {
+      const modalBG = document.createElement('div');
+      modalBG.classList.add('modal-background');
+
+      const modalBox = document.createElement('div');
+      modalBox.classList.add('modal-box');
+
+      const modalCloseBtn = document.createElement('span');
+      modalCloseBtn.classList.add('modal-close-btn');
+      modalCloseBtn.innerHTML = '&times;';
+      modalCloseBtn.addEventListener('click', () => {
+        modalContainer.innerHTML = '';
+        modalContainer.classList.remove('display');
+      });
+
+      const modalContent = document.createElement('p');
+      modalContent.classList.add('modal-content');
+      if (state === 'excess') {
+        modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+      } else {
+        modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+      }
+
+      modalBox.appendChild(modalCloseBtn);
+      modalBox.appendChild(modalContent);
+
+      modalBG.appendChild(modalBox);
+
+      return modalBG;
+    }
 
 
     const createItemRow = optionId => {
@@ -258,14 +299,14 @@
       priceDiv.appendChild(discountPriceText);
 
 
-
-      ///////////// 수량 조절 즉시 서버에 fetch 요청 필요?
       subCountBtn.addEventListener('click', e => {
         e.preventDefault();
         if (!countPriceArea.parentElement.previousSibling.children[1].textContent) return;
 
         if (Number(countInput.value) < 2) {
-          alert('수량은 1개 이상이어야 합니다.');
+          // alert('수량은 1개 이상이어야 합니다.');
+          modalContainer.appendChild(createModal('lack'));
+          modalContainer.classList.add('display');
         } else {
           countInput.value = Number(countInput.value) - 1;
           cart_count_obj[optionId].count = countInput.value;
@@ -298,30 +339,37 @@
         e.preventDefault();
 
         if (!countPriceArea.parentElement.previousSibling.children[1].textContent) return;
-        countInput.value = Number(countInput.value) + 1;
-        cart_count_obj[optionId].count = countInput.value;
-        wholePrice += item_obj[item_option_obj[optionId].parent_id].discount_price;
-        totalPayPrice.textContent = `${wholePrice} 원`;
 
-        originPrice += item_obj[item_option_obj[optionId].parent_id].origin_price;
-        discountPrice += item_obj[item_option_obj[optionId].parent_id].discount_price;
-        originPriceText.textContent = `${originPrice} 원`;
-        discountPriceText.textContent = `${discountPrice} 원`;
+        if (Number(countInput.value) >= item_option_obj[optionId].quantity) {
+          modalContainer.appendChild(createModal('excess'));
+          modalContainer.classList.add('display');
+          // alert('재고 수량보다 많이 담을 수 없습니다.');
+        } else {
+          countInput.value = Number(countInput.value) + 1;
+          cart_count_obj[optionId].count = countInput.value;
+          wholePrice += item_obj[item_option_obj[optionId].parent_id].discount_price;
+          totalPayPrice.textContent = `${wholePrice} 원`;
 
-        fetch(`/cart/${cart_count_obj[optionId].id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify({
-            item_id: item_option_obj[optionId].parent_id,
-            item_option_id: optionId,
-            count: Number(countInput.value)
+          originPrice += item_obj[item_option_obj[optionId].parent_id].origin_price;
+          discountPrice += item_obj[item_option_obj[optionId].parent_id].discount_price;
+          originPriceText.textContent = `${originPrice} 원`;
+          discountPriceText.textContent = `${discountPrice} 원`;
+
+          fetch(`/cart/${cart_count_obj[optionId].id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+              item_id: item_option_obj[optionId].parent_id,
+              item_option_id: optionId,
+              count: Number(countInput.value)
+            })
           })
-        })
-                .then(res => res.json())
-                .then(data => console.log(data))
-                .catch(e => console.error(e))
+                  .then(res => res.json())
+                  .then(data => console.log(data))
+                  .catch(e => console.error(e))
+        }
       });
 
       countDiv.appendChild(subCountBtn);

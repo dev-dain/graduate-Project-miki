@@ -39,8 +39,7 @@
 
     goPrevBtn.addEventListener('click', () => { history.back(); });
     cart.addEventListener('click', () => {
-      //아직 cart.html 구현 전
-      location.href = '/cartList';
+      location.href = `/cartList/${localStorage.getItem('store_id')}`;
     });
 
     // 바코드 페이지 현재 없음
