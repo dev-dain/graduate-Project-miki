@@ -31,7 +31,7 @@ public class OrderController {
         for(Cart cart1 : cart){
             price += (cart1.getItem().getItem_price() - cart1.getItem().getDiscount_price()) * cart1.getCount();
             itemService.updateStockQuantity(cart1.getItem_option().getStockQuantity() - cart1.getCount(), cart1.getItem_option().getId());
-            itemService.updateOrderCnt(cart1.getItem().getId(), cart1.getCount() + cart1.getItem().getOrder_cnt());
+            itemService.updateOrderCnt(cart1.getItem().getId(), cart1.getCount() + cart1.getItem().getOrderCnt());
 
         }
         java.util.Date time = new java.util.Date(System.currentTimeMillis());

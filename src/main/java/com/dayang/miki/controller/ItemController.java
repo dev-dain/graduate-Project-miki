@@ -66,7 +66,7 @@ public class ItemController {
         int cnt = itemService.reviewCnt(item);
         double rate = itemService.reviewRate(item);
 
-        if(item.getReview_cnt() !=cnt )itemService.updateReviewCnt(item.getId(), cnt);
+        if(item.getReviewCnt() !=cnt )itemService.updateReviewCnt(item.getId(), cnt);
 
         model.addAttribute("item_id", item.getId());
         model.addAttribute("item_name",item.getName());
@@ -112,11 +112,11 @@ public class ItemController {
     public String searchVoicePage() { return "searchItem/voice-search"; }
 
     @GetMapping("/searchVoice/{keyword}")
-    public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value= "sort", defaultValue = "id")String sort, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+    public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value= "sort", defaultValue = "reviewCnt") String sort, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
 
 
 
-        Page<Item> items = itemService.findByItemName(keyword, pageNum, sort);
+        Page<Item> items = itemService.findByItemName(keyword, pageNum, "reviewCnt");
 
         if(items.getTotalElements()==0){
             model.addAttribute("count", items.getTotalElements());

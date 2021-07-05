@@ -54,4 +54,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(nativeQuery = true,
             value = "select * from item  order by popularity DESC Limit 10")
     List<Item> popularity();
+
 }

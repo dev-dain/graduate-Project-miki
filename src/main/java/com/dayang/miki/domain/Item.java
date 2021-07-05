@@ -29,10 +29,12 @@ public class Item {
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="brand_id")
     private Brand brand;
-
+    @Column(name="popularity")
     private int popularity = 1;
-    private int review_cnt = 1;
-    private int order_cnt = 1;
+    @Column(name="review_cnt")
+    private int reviewCnt = 1;
+    @Column(name="order_cnt")
+    private int orderCnt = 1;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
