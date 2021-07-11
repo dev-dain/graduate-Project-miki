@@ -22,8 +22,8 @@
       </div>
     </header>
     <div class="btn-container">
-      <button class="barcode-btn select-btn">
-        바코드 찍은 상품 테스트
+      <button class="cart-test-btn select-btn">
+        장바구니 상품 테스트
       </button>
       <button class="search-btn select-btn">
         검색해서 테스트
@@ -34,7 +34,7 @@
   <script>
     const goPrevBtn = document.querySelector('.go-prev');
     const cart = document.querySelector('.go-cart');
-    const barcodeBtn = document.querySelector('.barcode-btn');
+    const cartTestBtn = document.querySelector('.cart-test-btn');
     const searchBtn = document.querySelector('.search-btn');
 
     goPrevBtn.addEventListener('click', () => { history.back(); });
@@ -42,8 +42,8 @@
       location.href = `/cartList/${localStorage.getItem('store_id')}`;
     });
 
-    // 바코드 페이지 현재 없음
-    barcodeBtn.addEventListener('click', () => location.href = '/barcode');
+    // 장바구니 테스트 페이지 현재 없음
+    cartTestBtn.addEventListener('click', () => location.href = '/barcode');
     searchBtn.addEventListener('click', () => location.href = '/searchVoice');
 
   </script>
