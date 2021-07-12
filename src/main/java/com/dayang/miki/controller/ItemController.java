@@ -23,6 +23,10 @@ public class ItemController {
     private final ItemService itemService;
     private final StoreService storeService;
 
+    /* 임의로 추가함. index.html에서 '오늘의 상품' 탭을 클릭했을 때 이동 */
+    @GetMapping("/todayGoods")
+    public String todayGoods(){ return "searchItem/today-goods"; }
+
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
 
