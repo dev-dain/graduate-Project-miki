@@ -84,7 +84,6 @@ public class OrderController {
 
     @PostMapping("/orderSelectList")
     public String orderSelectList(@RequestBody List<Cart> cartList, Model model){
-        System.out.print(cartList);
         List<Item> items =  new ArrayList<>();
         List<Item_option> item_options = new ArrayList<>();
 

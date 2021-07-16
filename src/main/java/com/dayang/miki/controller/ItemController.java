@@ -171,33 +171,32 @@ public class ItemController {
         return "searchItem/popularity";
     }
 
-    @GetMapping("/bestItem")
+    @GetMapping("/goods")
     public String bestItem(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, Model model){
         java.util.Date time = new java.util.Date(System.currentTimeMillis());
         String date = "2021-";
         int month = time.getMonth();
         date +=Integer.toString(month);
         date +="-01";
-        List<Item> items = itemService.newItem(date , pageNum);
-        List<Item_img>item_imgs = new ArrayList<>();
-        for(Item item : items){
-            item_imgs.add(itemService.itemImg(item.getId()));
+        List<Item> BestItems = itemService.newItem(date , pageNum);
+        List<Item_img> BestItemImg = new ArrayList<>();
+        for(Item item : BestItems){
+            BestItemImg.add(itemService.itemImg(item.getId()));
         }
-        model.addAttribute("Item_img", item_imgs);
-        model.addAttribute("Item", items);
-        return "bestItem/bestItem";
+        model.addAttribute("BestItemImg", BestItemImg);
+        model.addAttribute("BestItems", BestItems);
+
+        List<Item> mdsPickItem = itemService.recommendItem();
+        List<Item_img> mdsPickItemImg = new ArrayList<>();
+        for(Item item : mdsPickItem){
+            mdsPickItemImg.add(itemService.itemImg(item.getId()));
+        }
+
+        model.addAttribute("item_img", mdsPickItemImg);
+        model.addAttribute("item", mdsPickItem);
+        return "searchItem/today-goods";
+
     }
 
-    @GetMapping("/mdsPick")
-    public String mdsPick(Model model){
 
-        List<Item> items = itemService.recommendItem();
-        List<Item_img> item_imgs = new ArrayList<>();
-        for(Item item : items){
-            item_imgs.add(itemService.itemImg(item.getId()));
-        }
-        model.addAttribute("item_img", item_imgs);
-        model.addAttribute("item", items);
-        return "bestItem/mdsPick";
-    }
 }

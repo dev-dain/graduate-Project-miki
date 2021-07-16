@@ -74,7 +74,7 @@ class ItemServiceTest {
 
     @Test
     void recommendItem(){
-        List<Item> items =  itemService.recommendItem(1);
+        List<Item> items =  itemService.recommendItem();
         for (Item item : items){
             System.out.println(item.getId());
         }
