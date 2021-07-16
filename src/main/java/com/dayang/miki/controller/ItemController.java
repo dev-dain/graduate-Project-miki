@@ -171,7 +171,7 @@ public class ItemController {
         return "searchItem/popularity";
     }
 
-    @GetMapping("/goods")
+    @GetMapping("/todayGood")
     public String bestItem(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, Model model){
         java.util.Date time = new java.util.Date(System.currentTimeMillis());
         String date = "2021-";
