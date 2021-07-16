@@ -2,9 +2,11 @@ package com.dayang.miki.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -35,6 +37,9 @@ public class Item {
     private int reviewCnt = 1;
     @Column(name="order_cnt")
     private int orderCnt = 1;
+
+    @Column(name ="item_date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date date;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();

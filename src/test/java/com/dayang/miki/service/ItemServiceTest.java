@@ -37,11 +37,10 @@ class ItemServiceTest {
     @Test
     @Rollback(value = false)
     void testItem(){
-       Category category = itemService.findOneCategory(47L);
+       Category category = itemService.findOneCategory(7L);
        List<Item>items = itemService.getByCategory(category.getId());
        for(Item item : items){
-           //System.out.println(item.getId()+" "+item.getName());
-           itemService.update(item.getId());
+           System.out.println(item.getId()+" "+item.getName());
        }
     }
 
@@ -61,8 +60,25 @@ class ItemServiceTest {
             System.out.println(d);
         }
     }
+    @Test
+    void newItem(){
+        String dd = "2021-";
+        String date = "08";
+        dd += date;
+        dd +="-01";
+        List<Item> items = itemService.newItem(dd, 2);
+        for(Item item : items){
+            System.out.println(item.getId());
+        }
+    }
 
-
+    @Test
+    void recommendItem(){
+        List<Item> items =  itemService.recommendItem(1);
+        for (Item item : items){
+            System.out.println(item.getId());
+        }
+    }
     @Test
     void imgTest(){
         Long id = 47L;

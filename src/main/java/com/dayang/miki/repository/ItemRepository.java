@@ -37,7 +37,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Item SET review_cnt =:review_cnt where id =:id")
+    @Query("UPDATE Item SET reviewCnt =:review_cnt where id =:id")
     void updateReview(@Param("review_cnt")int review_cnt, @Param("id")Long id);
 
     @Transactional
@@ -47,7 +47,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Item SET order_cnt =:order_cnt where id=:id")
+    @Query("UPDATE Item SET orderCnt =:order_cnt where id=:id")
     void updateOrderCnt(@Param("order_cnt")int order_cnt, @Param("id")Long id);
 
     @Transactional
@@ -55,4 +55,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             value = "select * from item  order by popularity DESC Limit 10")
     List<Item> popularity();
 
+    @Query(nativeQuery = true,
+    value = "select * from item where item_date >=(:month)")
+    List<Item> newItem(@Param("month")String month, Pageable pageable);
 }

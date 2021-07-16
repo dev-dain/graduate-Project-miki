@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Transactional(readOnly = true)
@@ -184,6 +185,23 @@ public class ItemService {
     public List<Item_img> getCartImg(List<Item> items){
         List<Item_img> item_imgs = itemImgRepository.itemImgcart(items);
         return item_imgs;
+    }
+    @Transactional
+    public List<Item> newItem(String month, int pageNum){
+        List<Item> items = itemRepo.newItem(month, PageRequest.of(pageNum-1, 3));
+        return items;
+    }
+
+    @Transactional
+    public List<Item> recommendItem(){
+        Random rd = new Random();
+        List<Item> items = new ArrayList<>();
+        int tmp =0;
+        for (int i=0; i<3; i++){
+            tmp = rd.nextInt(1000)+1;
+            items.add(itemLogicRepository.findOne((long) tmp));
+        }
+        return items;
     }
 
 /*    @Transactional
