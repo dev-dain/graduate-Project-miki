@@ -20,8 +20,15 @@ public class Orders {
     private Long id;
     private Date orderDate; //주문시간
     private int pay; //주문 가격
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문 상태
+
+
 
     @OneToMany(mappedBy = "order", cascade =CascadeType.ALL) //order를 persist하면 여기 있는 orderitem도 다 persist해준다.
     private List<OrderItem> orderItems = new ArrayList<>();

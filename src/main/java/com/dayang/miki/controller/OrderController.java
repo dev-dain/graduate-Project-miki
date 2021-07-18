@@ -5,6 +5,7 @@ import com.dayang.miki.service.CartService;
 import com.dayang.miki.service.ItemService;
 import com.dayang.miki.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,14 +83,21 @@ public class OrderController {
         return "order/orderList";
     }
 
-    @PostMapping("/orderSelectList")
-    public String orderSelectList(@RequestBody List<Cart> cartList, Model model){
-        List<Item> items =  new ArrayList<>();
-        List<Item_option> item_options = new ArrayList<>();
+    @PostMapping(value = "/orderSelectList")
+    public String orderSelectList(@RequestBody List<Long> cartList, Model model){
 
+        for(Long s : cartList){
+            System.out.println(s);
+        }
+     /*   List<Item> items =  new ArrayList<>();
+        List<Item_option> item_options = new ArrayList<>();
+        List<Cart> carts = new ArrayList<>();
         for(Cart cart : cartList){
-            items.add(cartService.getSelectItem(cart.getId()));
-            item_options.add(cartService.getSelectItemOption(cart.getId()));
+            carts.add(cart);
+        }
+        for(Cart cart : cartList){
+            items.add(cartService.getSelectItem(Long.valueOf(cart.getId())));
+            item_options.add(cartService.getSelectItemOption(Long.valueOf(cart.getId())));
         }
         List<Item_img> item_imgs = itemService.getCartImg(items);
 
@@ -98,7 +106,7 @@ public class OrderController {
         model.addAttribute("items", items);
         model.addAttribute("carts", cartList);
         model.addAttribute("imgs", item_imgs);
-
+*/
         return "order/orderList";
     }
 }

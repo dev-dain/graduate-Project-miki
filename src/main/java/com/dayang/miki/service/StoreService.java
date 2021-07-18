@@ -3,7 +3,9 @@ package com.dayang.miki.service;
 import com.dayang.miki.domain.Item_option;
 import com.dayang.miki.domain.Position;
 import com.dayang.miki.domain.Store;
+import com.dayang.miki.domain.StoreQuantity;
 import com.dayang.miki.repository.PositionRepository;
+import com.dayang.miki.repository.StoreQuantityRepository;
 import com.dayang.miki.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,8 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final PositionRepository positionRepository;
-    @Autowired
     private final LocationDistance locationDistance;
-
+    private final StoreQuantityRepository storeQuantityRepository;
     @Transactional
     public Store findById(Long id){
         Store store = storeRepository.findById(id);
@@ -57,5 +58,9 @@ public class StoreService {
         return position;
     }
 
-
+    @Transactional
+    public List<StoreQuantity> storeQuantities(Item_option item_option){
+        List<StoreQuantity> storeQuantities = storeQuantityRepository.findByItemOptions(item_option);
+        return storeQuantities;
+    }
 }

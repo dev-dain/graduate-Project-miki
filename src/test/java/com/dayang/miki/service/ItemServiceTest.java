@@ -1,5 +1,6 @@
 package com.dayang.miki.service;
 
+import com.dayang.miki.controller.NearStore;
 import com.dayang.miki.domain.*;
 import com.dayang.miki.repository.BrandRepository;
 import com.dayang.miki.repository.CategoryRepository;
@@ -14,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 @Transactional
@@ -89,6 +88,39 @@ class ItemServiceTest {
         }
     }
 
+    @Test
+    void testtt(){
+        Long id = 1L;
+        Long option_id = 464L;
+        Store store = storeService.findById(id);
+        Position position = storeService.findSinglePosition(store);
+        List<Store> stores = storeService.findAllStore();
+        List<Position> positions = storeService.findAllPosition();
+        Item_option item_option = itemService.findItemOptionById(option_id);
+        List<StoreQuantity>storeQuantities = storeService.storeQuantities(item_option);
+        List<NearStore> nearStores = new ArrayList<>();
+        for(int i=0; i<positions.size(); i++){
+            double tmp = storeService.positionDist(position.getLatitude(), positions.get(i).getLatitude(),
+                    position.getLongitude(), positions.get(i).getLongitude());
+            NearStore nearStore = new NearStore();
+            nearStore.setStore(stores.get(i));
+            nearStore.setKm(tmp);
+            if(storeQuantities.get(i).getStock_quantity()==0) continue;
+            nearStore.setStock(storeQuantities.get(i).getStock_quantity());
+            nearStores.add(nearStore);
+        }
+        Collections.sort(nearStores, new Comparator<NearStore>() {
+            @Override
+            public int compare(NearStore n1, NearStore n2) {
+                return (int) (n1.getKm() - n2.getKm());
+            }
+        });
+        List<NearStore> ans = new ArrayList<>();
+        ans.add(nearStores.get(0));
+        ans.add(nearStores.get(1));
+        ans.add(nearStores.get(2));
+
+    }
 
     @Test
     void voiceSearch(){
