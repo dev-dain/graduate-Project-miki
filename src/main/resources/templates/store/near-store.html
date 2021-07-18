@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Near store</title>
+</head>
+<body>
+    <div id="wrap">
+        <div class="store-row" th:each="s : ${nearStores}">
+            <span class="store-name" th:text="${s.store.store_name}"></span>
+            <span class="store-dist" th:text="${s.km}"></span>
+            <span class="store-stock" th:text="${s.stock}"></span>
+        </div>
+        <!-- end -->
+    </div>
+</body>
+</html>

@@ -60,7 +60,7 @@ public class StoreController {
 
             model.addAttribute("nearStores",ans); //같은 인덱스 순서대로 들어있어용
 
-        return "";
+        return "store/near-store";
 
     }
 
