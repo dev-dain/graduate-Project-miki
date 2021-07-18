@@ -78,7 +78,7 @@
 
 
 
-    const createModal = state => {
+    const createModal = (state, content='') => {
         const modalBG = document.createElement('div');
         modalBG.classList.add('modal-background');
 
@@ -97,8 +97,10 @@
         modalContent.classList.add('modal-content');
         if (state === 'excess') {
             modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
-        } else {
+        } else if (state === 'lack') {
             modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+        } else {
+            modalContent.innerHTML = content;
         }
 
         modalBox.appendChild(modalCloseBtn);
@@ -220,14 +222,27 @@
 
 
     for (let i = 0; i < tbody.children.length; i++) {
-    console.log(tbody);
         if (!quantityList[i]) {
-            tbody.children[i].children[0].children[0].disabled = true;
+            /* tbody.children[i].children[0].children[0].disabled = true; */
             tbody.children[i].children[0].children[0].style.color = 'gray';
-            const soldoutBtn = document.createElement('span');
+            const soldoutBtn = document.createElement('button');
             soldoutBtn.classList += 'soldout-btn';
-            soldoutBtn.textContent = '품절';
+
+            /* have to fix this part */
+            soldoutBtn.textContent = '다른 매장 보기';
             tbody.children[i].appendChild(soldoutBtn);
+            tbody.children[i].children[0].addEventListener('click', () => {
+                console.log('click');
+                fetch(`/soldout/${localStorage.getItem('store_id')}/${optionIDList[i]}`)
+                    .then(res => res.text())
+                    .then(data => {
+                        const storeRow = data.split('<div id="wrap">')[1].split('<!--')[0];
+                        console.log(storeRow);
+                        modalInModal.appendChild(createModal('soldout', storeRow));
+                        modalInModal.classList.add('display');
+                    })
+                    .catch(e => console.error(e));
+            });
         } else {
             tbody.children[i].children[0].addEventListener('click', () => {
                 if (!selectedList.includes(tbody.children[i].children[0].textContent.trim())) {

@@ -160,7 +160,8 @@ th {
   text-align: left;
 }
 .soldout-btn {
-  color: #E93C15;
+  background: #E93C15;
+  color: #fff;
   font-weight: 700;
 }
 .modal > *:first-child {
