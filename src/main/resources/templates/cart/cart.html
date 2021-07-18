@@ -67,6 +67,7 @@
 
   <script th:inline="javascript">
     const full_cart_obj = {};
+    const full_cart_list = {};
     const cartIdList = [];
     let selectedCartList = [];
     const item_obj = {};
@@ -75,6 +76,7 @@
     const cart_count_obj = {};
     const quantity_obj = {};
 
+    let cart_id;
     let item_id;
     let item_img_id;
     let item_option_id;
@@ -123,10 +125,12 @@
     /*[# th:each="cart : ${carts}"]*/
     item_id = /*[[${cart.item.id}]]*/;
     item_option_id = /*[[${cart.item_option.id}]]*/;
+    cart_id = /*[[${cart.id}]]*/;
     cart_count_obj[item_option_id] = {
       id: /*[[${cart.id}]]*/,
       count: /*[[${cart.count}]]*/
     };
+    full_cart_list[item_option_id] = cart_id;
     full_cart_obj[item_option_id] = {
       id: /*[[${cart.id}]]*/,
       item: {
@@ -181,7 +185,7 @@
       const selectedCart = [];
 
       selectedCartList.forEach(id => {
-        selectedCart.push(full_cart_obj[id])
+        selectedCart.push(full_cart_list[id])
       });
 
       console.log(selectedCart);
