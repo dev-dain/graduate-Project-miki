@@ -42,7 +42,7 @@ public class StoreController {
                         position.getLongitude(), positions.get(i).getLongitude());
                 NearStore nearStore = new NearStore();
                 nearStore.setStore(stores.get(i));
-                nearStore.setKm(tmp);
+                nearStore.setKm(Math.round(tmp*100)/100.0);
                 if(storeQuantities.get(i).getStock_quantity()==0) continue;
                 nearStore.setStock(storeQuantities.get(i).getStock_quantity());
                 nearStores.add(nearStore);

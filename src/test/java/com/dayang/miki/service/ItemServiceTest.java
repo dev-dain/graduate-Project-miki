@@ -104,7 +104,7 @@ class ItemServiceTest {
                     position.getLongitude(), positions.get(i).getLongitude());
             NearStore nearStore = new NearStore();
             nearStore.setStore(stores.get(i));
-            nearStore.setKm(tmp);
+            nearStore.setKm(Math.round(tmp*100.0)/100.0);
             if(storeQuantities.get(i).getStock_quantity()==0) continue;
             nearStore.setStock(storeQuantities.get(i).getStock_quantity());
             nearStores.add(nearStore);
@@ -119,7 +119,9 @@ class ItemServiceTest {
         ans.add(nearStores.get(0));
         ans.add(nearStores.get(1));
         ans.add(nearStores.get(2));
-
+        System.out.println(ans.get(0).getKm());
+        System.out.println(ans.get(1).getKm());
+        System.out.println(ans.get(2).getKm());
     }
 
     @Test
