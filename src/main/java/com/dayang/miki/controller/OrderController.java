@@ -84,9 +84,9 @@ public class OrderController {
     }
 
     @PostMapping(value = "/orderSelectList")
-    public String orderSelectList(@RequestBody List<Long> cartList, Model model){
+    public String orderSelectList(@RequestBody List<Integer> cartList, Model model){
 
-        for(Long s : cartList){
+        for(Integer s : cartList){
             System.out.println(s);
         }
      /*   List<Item> items =  new ArrayList<>();

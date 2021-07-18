@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface StoreQuantityRepository extends JpaRepository<StoreQuantity, Long> {
+
     @Query("select sq from StoreQuantity sq where sq.item_option =:item_oprion")
     List<StoreQuantity> findByItemOptions(@RequestParam("item_option") Item_option item_option);
 }
