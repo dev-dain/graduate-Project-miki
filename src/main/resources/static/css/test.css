@@ -83,6 +83,7 @@ h1 {
 .item-container {
   width: 100%;
   height: 220px;
+  float: left;
 }
 div[class^='item-div-'] {
   background: #FFFFFF;
@@ -93,6 +94,7 @@ div[class^='item-div-'] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  float: left;
 }
 button[class^='item-check-btn'] {
   width: 30px;
@@ -148,6 +150,7 @@ video {
 }
 div[class^='item-img-container'] {
   cursor: pointer;
+  float: left;
 }
 img[class^='item-img-'] {
   width: 180px;

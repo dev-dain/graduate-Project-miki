@@ -43,14 +43,19 @@ function drawKeypoints() {
         /* fill lip position */
         fill(R,G,B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
         face.lips();
+        break;
       case 'C':
-        /* fill cheek position */
-        fill(R, G, B, 10); //투명도 10
+        fill(R, G, B, alpha*10); //투명도 10
         face.leftCheeck();  //볼터치
-      case 'B':
+        face.rightCheeck();
+          break;
+       case 'B':
+        console.log("브로우 진입");
         /* fill eyebrow position */
-        fill(R, G, B, 10);
+        fill(R, G, B, alpha*100);
         face.leftEyebrow();  //눈썹
+        face.rightEyebrow();
+           break;
       default :
         return 0;
     }
