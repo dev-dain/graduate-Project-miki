@@ -50,6 +50,7 @@
 <script th:inline="javascript">
     const quantityList = [];
     const optionIDList = [];
+    const totalQuantityList = [];
     let selectedList = [];
     /*<![CDATA[*/
 
@@ -59,12 +60,14 @@
 
     /*[# th:each="option : ${item_option}"]*/
     optionIDList.push(/*[[${option.id}]]*/);
+    totalQuantityList.push(/*[[${option.stockQuantity}]]*/);
     /*[/]*/
 
 
     /*]]>*/
 
     console.log(quantityList);
+    console.log(totalQuantityList);
     /* const item_id = window.location.pathname.split('/')[2]; */
     const tbody = document.querySelector('tbody');
     const optionContainer = document.querySelector('.option-container');
@@ -223,12 +226,17 @@
 
     for (let i = 0; i < tbody.children.length; i++) {
         if (!quantityList[i]) {
-            /* tbody.children[i].children[0].children[0].disabled = true; */
             tbody.children[i].children[0].children[0].style.color = 'gray';
             const soldoutBtn = document.createElement('button');
             soldoutBtn.classList += 'soldout-btn';
 
-            /* have to fix this part */
+            if (!totalQuantityList[i]) {
+                soldoutBtn.textContent = '전체 품절';
+                tbody.children[i].children[0].children[0].disabled = true;
+                tbody.children[i].appendChild(soldoutBtn);
+                break;
+            }
+
             soldoutBtn.textContent = '다른 매장 보기';
             tbody.children[i].appendChild(soldoutBtn);
             soldoutBtn.addEventListener('click', () => tbody.children[i].children[0].click());
