@@ -142,3 +142,4 @@ footer {
 .go-pay-btn:hover {
     background: #e93c15;
 }
+.modal-background { min-width: 100vw; }

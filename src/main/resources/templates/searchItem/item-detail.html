@@ -129,7 +129,6 @@
     try {
       if (modalContainer.children[1].children[1].children[1].lastElementChild.children[0].hasChildNodes()) {
         /* 계속 쇼핑 / 장바구니 가기 모달 추가로 띄우기 필요 */
-        alert('장바구니에 담겼습니다. :)');
         //뭐야..???
         selectedOptionList.forEach(option => {
           // console.log(option);
@@ -141,7 +140,11 @@
             body: JSON.stringify(option)
           })
                   .then(res => res.json())
-                  .then(data => console.log(data))
+                  .then(data => {
+                    console.log(data);
+                    alert('장바구니에 담겼습니다.');
+                    setTimeout(() => location.reload(), 1000);
+                  })
                   .catch(e => console.error(e));
         });
 

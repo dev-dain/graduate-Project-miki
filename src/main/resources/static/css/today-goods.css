@@ -51,12 +51,12 @@ h1 {
   height: 64px;
   font-size: 0;
 }
-.md-pick-container, .new-item-container {
+.md-pick-container, .best-item-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
-.md-pick-header, .new-item-header {
+.md-pick-header, .best-item-header {
     width: 100%;
     font-size: 2rem;
     color: #2E0A0A;
@@ -65,8 +65,8 @@ h1 {
     padding: 15px;
 }
 .md-pick-header { background: #FB9070; }
-.new-item-header { background: #FFE28F; }
-.md-pick-box, .new-item-box {
+.best-item-header { background: #FFE28F; }
+.md-pick-box, .best-item-box {
     display: flex;
     flex-flow: row nowrap;
     align-items: space-between;
