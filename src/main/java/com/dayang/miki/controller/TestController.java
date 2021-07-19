@@ -79,6 +79,6 @@ public class TestController {
         model.addAttribute("item_options", item_options);
         model.addAttribute("testColors", testColors);
 
-        return "test/test-main";
+        return "test/test-cart";
     }
 }
