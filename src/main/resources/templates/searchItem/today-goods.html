@@ -76,17 +76,17 @@
               <button class="md-go-next-btn item-btn">></button>
           </div>
       </div>
-      <div class="new-item-container">
-          <div class="new-item-header">
-              <h3 class="new-title">💎 New! 금주의 신상 💎</h3>
+      <div class="best-item-container">
+          <div class="best-item-header">
+              <h3 class="best-title">💎 금주의 베스트 아이템! 💎</h3>
           </div>
-          <div class="new-item-box">
-              <button class="new-go-prev-btn item-btn"><</button>
-              <div class="new-carousel">
+          <div class="best-item-box">
+              <button class="best-go-prev-btn item-btn"><</button>
+              <div class="best-carousel">
                   <!-- item 3개씩 -->
 
 
-                  <div class="new item-card left side">
+                  <div class="best item-card left side">
                       <div style="display: flex; justify-content: center; align-items: center;" onclick="javascript:goItemPage(330)">
                           <img src="http://mimg.lalavla.com/resources/images/prdimg/20201025/10006352/10006352_D_001_550.jpg" class="thumbnail-img" alt="페리페라 잉크더에어리벨벳AD">
                       </div>
@@ -101,7 +101,7 @@
                       </div>
                   </div>
 
-                  <div class="new item-card center">
+                  <div class="best item-card center">
                       <div style="display: flex; justify-content: center; align-items: center;" onclick="javascript:goItemPage(330)">
                           <img src="http://mimg.lalavla.com/resources/images/prdimg/20190521/10003613/10003613_D_001_550.jpg" class="thumbnail-img" alt="페리페라 잉크더에어리벨벳AD">
                       </div>
@@ -116,7 +116,7 @@
                       </div>
                   </div>
 
-                  <div class="new item-card right side ">
+                  <div class="best item-card right side ">
                       <div style="display: flex; justify-content: center; align-items: center;" onclick="javascript:goItemPage(330)">
                           <img src="http://mimg.lalavla.com/resources/images/prdimg/20190920/10004184/10004184_D_001_550.jpg" class="thumbnail-img" alt="페리페라 잉크더에어리벨벳AD">
                       </div>
@@ -134,7 +134,7 @@
 
 
               </div>
-              <button class="new-go-next-btn item-btn">></button>
+              <button class="best-go-next-btn item-btn">></button>
           </div>
       </div>
   </div>
@@ -144,11 +144,11 @@
 
     const mdGoPrevBtn = document.querySelector('.md-go-prev-btn');
     const mdGoNextBtn = document.querySelector('.md-go-next-btn');
-    const newGoPrevBtn = document.querySelector('.new-go-prev-btn');
-    const newGoNextBtn = document.querySelector('.new-go-next-btn');
+    const bestGoPrevBtn = document.querySelector('.best-go-prev-btn');
+    const bestGoNextBtn = document.querySelector('.best-go-next-btn');
 
     const mdCarousel = document.querySelector('.md-carousel');
-    const newCarousel = document.querySelector('.new-carousel');
+    const bestCarousel = document.querySelector('.best-carousel');
 
     let mdLeftItem, mdCenterItem, mdRightItem;
 
@@ -194,12 +194,12 @@
         mdCarousel.appendChild(leftItem);
     });
 
-    newGoPrevBtn.addEventListener('click', () => {
-        leftItem = document.querySelector('.new.left');
-        centerItem = document.querySelector('.new.center');
-        rightItem = document.querySelector('.new.right');
+    bestGoPrevBtn.addEventListener('click', () => {
+        leftItem = document.querySelector('.best.left');
+        centerItem = document.querySelector('.best.center');
+        rightItem = document.querySelector('.best.right');
 
-        newCarousel.removeChild(rightItem);
+        bestCarousel.removeChild(rightItem);
 
         /* remove된 leftItem id는 pop되어야 함. 모든 상품 리스트들 중 dp되는 아이템들의 id만 담는 리스트가 필요 */
         leftItem.classList.remove('side');
@@ -212,15 +212,15 @@
         rightItem.classList.add('left');
 
         //주의
-        newCarousel.prepend(rightItem);
+        bestCarousel.prepend(rightItem);
     });
 
-    newGoNextBtn.addEventListener('click', () => {
-        leftItem = document.querySelector('.new.left');
-        centerItem = document.querySelector('.new.center');
-        rightItem = document.querySelector('.new.right');
+    bestGoNextBtn.addEventListener('click', () => {
+        leftItem = document.querySelector('.best.left');
+        centerItem = document.querySelector('.best.center');
+        rightItem = document.querySelector('.best.right');
 
-        newCarousel.removeChild(leftItem);
+        bestCarousel.removeChild(leftItem);
 
         /* remove된 leftItem id는 pop되어야 함. 모든 상품 리스트들 중 dp되는 아이템들의 id만 담는 리스트가 필요 */
         leftItem.classList.remove('left');
@@ -233,7 +233,7 @@
         rightItem.classList.add('center');
 
         //주의
-        newCarousel.appendChild(leftItem);
+        bestCarousel.appendChild(leftItem);
     });
 
 

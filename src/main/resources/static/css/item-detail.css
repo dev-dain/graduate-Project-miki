@@ -355,3 +355,13 @@ div[class^="s-option-"] > span {
   display: block !important;
   animation: fade-in forwards .3s;
 }
+
+.near-store {
+    width: 600px;
+    text-align: center;
+}
+td[class^="store-"] {
+    padding: 10px 0;
+    font-size: 1.7rem;
+    font-weight: 500;
+}

@@ -231,13 +231,13 @@
             /* have to fix this part */
             soldoutBtn.textContent = '다른 매장 보기';
             tbody.children[i].appendChild(soldoutBtn);
+            soldoutBtn.addEventListener('click', () => tbody.children[i].children[0].click());
             tbody.children[i].children[0].addEventListener('click', () => {
                 console.log('click');
                 fetch(`/soldout/${localStorage.getItem('store_id')}/${optionIDList[i]}`)
                     .then(res => res.text())
                     .then(data => {
                         const storeRow = data.split('<div id="wrap">')[1].split('<!--')[0];
-                        console.log(storeRow);
                         modalInModal.appendChild(createModal('soldout', storeRow));
                         modalInModal.classList.add('display');
                     })
