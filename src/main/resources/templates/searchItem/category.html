@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/category-part.css">
     <link rel="stylesheet" href="/css/animation.css">
-    <title></title>
+    <link rel="stylesheet" href="/css/modal.css">
+    <title>카테고리</title>
     <script src="/js/category_list.js"></script>
 </head>
 <body>
 
 <div id="wrap">
+    <div class="modal-container">
+
+    </div>
     <header>
         <div class="title-container">
             <button class="go-prev">&lt;</button>
@@ -91,6 +95,46 @@
 
     let sortWay = localStorage.getItem('sort-way') || 'popularity';
     const wrapContainer = document.getElementById('wrap');
+    const modalContainer = document.querySelector('.modal-container');
+
+    const createModal = state => {
+      const modalBG = document.createElement('div');
+      modalBG.classList.add('modal-background');
+
+      const modalBox = document.createElement('div');
+      modalBox.classList.add('modal-box');
+
+      const modalCloseBtn = document.createElement('span');
+      modalCloseBtn.classList.add('modal-close-btn');
+      modalCloseBtn.innerHTML = '&times;';
+      modalCloseBtn.addEventListener('click', () => {
+        modalContainer.innerHTML = '';
+        modalContainer.classList.remove('display');
+      });
+
+      const modalContent = document.createElement('p');
+      modalContent.classList.add('modal-content');
+      if (state === 'excess') {
+        modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+      } else if (state === 'lack') {
+        modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+      } else if (state === 'first') {
+        modalContent.textContent = '카테고리 첫 페이지입니다.';
+      } else if (state === 'last') {
+        modalContent.textContent = '카테고리 마지막 페이지입니다.';
+      } else if (state === 'clear') {
+        modalContent.textContent = '장바구니를 성공적으로 비웠습니다.';
+      } else {
+        modalContent.textContent = '상품을 장바구니에서 삭제했습니다.';
+      }
+
+      modalBox.appendChild(modalCloseBtn);
+      modalBox.appendChild(modalContent);
+
+      modalBG.appendChild(modalBox);
+
+      return modalBG;
+    }
 
     const goItemPage = id => location.href = `/item/${id}`;
     const goTestPage = id => location.href = `/test/${id}`;
@@ -101,7 +145,9 @@
     const goPrevPage = category => {
         if (checkFirstPage(Number(localStorage.getItem('page')))) {
             console.log('First Page!');
-            alert('제일 첫 페이지입니다.');
+            // alert('제일 첫 페이지입니다.');
+          modalContainer.appendChild(createModal('first'));
+          modalContainer.classList.add('display');
         } else {
             // location.href = `/category/${category}?page=${Number(URLSearch.get('page')) - 1}`;
             fetch(`/category/${category}?page=${Number(localStorage.getItem('page')) - 1}`)
@@ -124,7 +170,9 @@
     const goNextPage = category => {
         if (checkLastPage(Number(localStorage.getItem('page')))) {
             console.log('Last Page!');
-            alert('제일 마지막 페이지입니다.');
+            //alert('제일 마지막 페이지입니다.');
+          modalContainer.appendChild(createModal('last'));
+          modalContainer.classList.add('display');
         } else {
             fetch(`/category/${category}?page=${Number(localStorage.getItem('page')) + 1}`)
                 .then(res => res.text())

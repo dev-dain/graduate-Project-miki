@@ -226,8 +226,16 @@
       modalContent.classList.add('modal-content');
       if (state === 'excess') {
         modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
-      } else {
+      } else if (state === 'lack') {
         modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+      } else if (state === 'first') {
+        modalContent.textContent = '장바구니 첫 페이지입니다.';
+      } else if (state === 'last') {
+        modalContent.textContent = '장바구니 마지막 페이지입니다.';
+      } else if (state === 'clear') {
+        modalContent.textContent = '장바구니를 성공적으로 비웠습니다.';
+      } else {
+        modalContent.textContent = '상품을 장바구니에서 삭제했습니다.';
       }
 
       modalBox.appendChild(modalCloseBtn);
@@ -309,8 +317,11 @@
                   .then(res => res.json())
                   .then(data => console.log(data))
                   .catch(e => console.error(e));
-          alert('삭제되었습니다.');
-          location.href = `/cartList/${localStorage.getItem('store_id')}`;
+          modalContainer.appendChild(createModal('delete'));
+          modalContainer.classList.add('display');
+          setTimeout(() => {
+            location.href = `/cartList/${localStorage.getItem('store_id')}`
+          }, 2000);
         }
       });
 
@@ -387,7 +398,6 @@
         if (!countPriceArea.parentElement.previousSibling.children[1].textContent) return;
 
         if (Number(countInput.value) < 2) {
-          // alert('수량은 1개 이상이어야 합니다.');
           modalContainer.appendChild(createModal('lack'));
           modalContainer.classList.add('display');
         } else {
@@ -426,7 +436,6 @@
         if (Number(countInput.value) >= item_option_obj[optionId].quantity) {
           modalContainer.appendChild(createModal('excess'));
           modalContainer.classList.add('display');
-          // alert('재고 수량보다 많이 담을 수 없습니다.');
         } else {
           countInput.value = Number(countInput.value) + 1;
           cart_count_obj[optionId].count = countInput.value;
@@ -489,7 +498,8 @@
       goPrevPageBtn.addEventListener('click', e => {
         e.preventDefault();
         if (curCartPage === 1) {
-          alert('첫 번째 페이지입니다.');
+          modalContainer.appendChild(createModal('first'));
+          modalContainer.classList.add('display');
         } else {
           curCartPage -= 1;
           localStorage.setItem('cart_page', curCartPage);
@@ -506,7 +516,8 @@
       goNextPageBtn.addEventListener('click', e => {
         e.preventDefault();
         if (curCartPage === maxCartPage) {
-          alert('마지막 페이지입니다.');
+          modalContainer.appendChild(createModal('last'));
+          modalContainer.classList.add('display');
         } else {
           curCartPage += 1;
           localStorage.setItem('cart_page', curCartPage);
@@ -561,7 +572,8 @@
     deleteAllBtn.addEventListener('click', e => {
       e.preventDefault();
       if (window.confirm("장바구니를 완전히 비우시겠습니까?")) {
-        alert('장바구니를 비웠습니다.');
+        modalContainer.appendChild(createModal('clear'));
+        modalContainer.classList.add('display');
         fetch(`/cart/${localStorage.getItem('store_id')}`, {method: 'DELETE'})
                 .then(res => res.json())
                 .then(data => console.log(data))

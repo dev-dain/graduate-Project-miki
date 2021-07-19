@@ -97,7 +97,7 @@ h1 {
   height: 65px;
   border-radius: 50%;
   color: #ECF2FD;
-  z-index: 10;
+  z-index: 5;
 }
 .fold-btn {
   margin: -20px auto 20px auto;
