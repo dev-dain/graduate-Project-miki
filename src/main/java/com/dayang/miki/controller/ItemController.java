@@ -112,7 +112,10 @@ public class ItemController {
     }
 
     @GetMapping("/searchVoice")
-    public String searchVoicePage() { return "searchItem/voice-search"; }
+    public String searchVoicePage(Model model) {
+        List<Item> items = itemService.popularity();
+        model.addAttribute("item", items);
+        return "searchItem/voice-search"; }
 
     @GetMapping("/searchVoice/{keyword}")
     public String searchVoice(@PathVariable("keyword")String keyword, Model model, @RequestParam(value= "sort", defaultValue = "reviewCnt") String sort, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
@@ -163,13 +166,6 @@ public class ItemController {
         return "searchItem/review";
     }
 
-
-    @GetMapping("/popularity")
-    public String populart(Model model){
-        List<Item> items = itemService.popularity();
-        model.addAttribute("item", items);
-        return "searchItem/popularity";
-    }
 
     @GetMapping("/todayGood")
     public String bestItem(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, Model model){
