@@ -28,11 +28,12 @@ public class MainController {
         Store store = storeService.findSingleStore(id);
         if(store.getCode().equals(code)){
             model.addAttribute("store", store);
-            return "index";
+            return "redirect:/main";
         }
         return "login/fail";
     }
 
-
+    @GetMapping("/main") // home page
+    public String main(){ return "index";}
 
 }
