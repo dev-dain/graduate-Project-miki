@@ -1,11 +1,16 @@
 package com.dayang.miki.controller;
 
 import com.dayang.miki.domain.Item;
+import com.dayang.miki.domain.Store;
 import com.dayang.miki.service.ItemService;
+import com.dayang.miki.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -13,7 +18,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
 
+    private final StoreService storeService;
+
     @GetMapping("/") // home page
-    public String index(){ return "index";}
+    public String index(){ return "login/login";}
+
+    @GetMapping("/login")
+    public String login(@RequestParam("id")String id, @RequestParam("code")String code, Model model){
+        Store store = storeService.findSingleStore(id);
+        if(store.getCode() == code){
+            model.addAttribute("store", store);
+            return "index";
+        }
+        return "login/fail";
+    }
+
+
 
 }
