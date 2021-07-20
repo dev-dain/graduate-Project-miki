@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.NoResultException;
 import java.util.*;
 
 @Service
@@ -29,7 +31,13 @@ public class StoreService {
     }
     @Transactional
     public Store findSingleStore(String name){
-        Store store = storeRepository.getSingleStore(name);
+        Store store = new Store();
+        try{
+            store = storeRepository.getSingleStore(name);            
+        }
+        catch (NoResultException e){
+            return store;
+        }
         return store;
     }
     @Transactional

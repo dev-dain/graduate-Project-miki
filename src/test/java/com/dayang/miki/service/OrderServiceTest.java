@@ -17,12 +17,25 @@ import java.util.List;
 @SpringBootTest
 @Transactional
 public class OrderServiceTest {
+
+    @Autowired
+    StoreService storeService;
     @Autowired
     OrderService orderService;
     @Autowired
     CartService cartService;
     @Autowired
     ItemService itemService;
+
+    @Test
+    public void te(){
+        String id = "화곡점";
+        String code = "AA65484ERG";
+        Store store = storeService.findSingleStore(id);
+        if(store.getCode().equals(code)) System.out.println("yes");
+        else System.out.println(store.getCode());
+        System.out.println(code);
+    }
 
     @Test
     @Rollback(value = false)

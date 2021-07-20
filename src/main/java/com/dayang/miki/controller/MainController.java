@@ -26,7 +26,7 @@ public class MainController {
     @GetMapping("/login")
     public String login(@RequestParam("id")String id, @RequestParam("code")String code, Model model){
         Store store = storeService.findSingleStore(id);
-        if(store.getCode() == code){
+        if(store.getCode().equals(code)){
             model.addAttribute("store", store);
             return "index";
         }

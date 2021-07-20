@@ -1,5 +1,6 @@
 package com.dayang.miki.repository;
 
+import com.dayang.miki.domain.Item_option;
 import com.dayang.miki.domain.Position;
 import com.dayang.miki.domain.Store;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class StoreRepository {
 
     private final EntityManager em;
     public Position getSinglePosition(Store store){
-        return em.createQuery("select p from Position p where p.store =: store",Position.class)
+        return em.createQuery("select p from Position p where p.store =:store",Position.class)
                 .setParameter("store", store)
                 .getSingleResult();
     }
@@ -29,12 +30,13 @@ public class StoreRepository {
                 .getResultList();
     }
     public Store getSingleStore(String name){
-        return em.createQuery("select s from Store s where s.store_name =: name", Store.class)
+        return em.createQuery("select s from Store s where s.store_name =:name", Store.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }
+
     public Store findById(Long id){
-        return em.createQuery("select s from Store s where s.id =: id", Store.class)
+        return em.createQuery("select s from Store s where s.id =:id", Store.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
