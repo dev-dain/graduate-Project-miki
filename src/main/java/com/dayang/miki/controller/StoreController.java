@@ -83,11 +83,7 @@ public class StoreController {
     }
 
 
-    // 임시로 만든 login 
-    @GetMapping("/login")
-    public String store_login(){
-        return "login/login";
-    }
+
 
     @GetMapping("/admin/login")
     public String login(@PathVariable("password") String passwrd, @PathVariable("store_name") String name){
