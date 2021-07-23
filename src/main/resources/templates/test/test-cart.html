@@ -160,6 +160,8 @@
   // 해당 상품의 부위 저장
   let item_position;
 
+  let is_first = true; // 맨 처음 상품인지 확인
+
   let cur_item_id;
 
   let cnt_item;
@@ -177,7 +179,11 @@
     let isItemCheck = true;
 
     itemCheck.classList.add(`item-check-btn-${itemIdList[c]}`);
-    itemCheck.innerHTML = '&#10004;';
+    if (is_first) {
+        itemCheck.innerHTML = '&#10004;';
+        is_first = false; // 다음부터는 이 루프에 들어오지 않게
+        itemCheck.classList.add(`checked`);
+    }
     itemCheck.addEventListener('click', () => {
       if (isItemCheck) {
         itemCheck.innerHTML = '';
@@ -194,14 +200,18 @@
 
     let check_id;
     let num_id; // 현재 몇번째 인덱스까지 넣었는지 저장할 변수
+    let option_num = 0;
 
     item_id = itemIdList[c];
     const createItemOptionContainer = item_id => {
 
       const itemOptionContainer = document.createElement('div');
       itemOptionContainer.classList.add(`item-option-container-${itemIdList[c]}`);
+<!--      itemOptionContainer.classList.add(`option-${option_num}`);-->
+<!--      option_num += 1;-->
 
       let break_point = 'N';
+
       optionIdList.forEach(optionId => {
         if(item_obj[optionId].parent_id == cur_item_id){
           const option = document.createElement('button');
@@ -215,6 +225,7 @@
             set_color(split_C);
             // console.log(c_arr,R,G,B);
             // console.log(typeof position,position);
+            itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
           });
           itemOptionContainer.appendChild(option);
         }
@@ -234,13 +245,27 @@
 
     itemImgContainer.appendChild(itemImg);
 
+
+
     itemImgContainer.addEventListener('click', () => {
+
+    const checkedContainer = document.querySelector('.checked');
+
       console.log('clicked');
       if (itemOptionContainer.classList.contains('show')) {
         itemOptionContainer.classList.remove('show');
       } else {
         itemOptionContainer.classList.add('show');
-      }
+
+        if(checkedContainer){
+          checkedContainer.innerText = ' ';
+          checkedContainer.classList.remove('checked');
+          itemImgContainer.previousSibling.innerHTML = '✓';
+          itemImgContainer.previousSibling.classList.add('checked');
+        }
+        else{
+        }
+        }
     });
 
     const itemTitle = document.createElement('div');
