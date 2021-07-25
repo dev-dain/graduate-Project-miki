@@ -28,7 +28,7 @@ public class MainController {
     public String login(@RequestParam("id")String id, @RequestParam("code")String code, Model model, RedirectAttributes rttr){
         Store store = storeService.findSingleStore(id);
         if(store.getCode().equals(code)){
-            rttr.addAttribute("store", store);
+            rttr.addFlashAttribute("store", store);
 
             return "redirect:/main?";
         }
