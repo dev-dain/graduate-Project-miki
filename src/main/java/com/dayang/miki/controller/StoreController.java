@@ -104,7 +104,7 @@ public class StoreController {
         model.addAttribute("item_options", item_options);
         model.addAttribute("item_img", item_imgs);
 
-        return "";
+        return "login/admin";
     }
 
 

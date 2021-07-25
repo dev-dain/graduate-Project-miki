@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +36,13 @@
         <div class="header-container">
           <p class="title">⚡ 급상승 검색어</p>
         </div>
-        <!-- thymeleaf 쓸 자리 -->
+        <div class="word-container">
+          <div th:each="i, index : ${item}" class="word-box">
+            <div class="rank-index" th:text="${index.index + 1}"></div>
+            <div th:onclick="'javascript:goItemPage(' + ${i.id} + ')'" th:text="${i.name}">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-container">
@@ -45,7 +50,10 @@
     </div>
   </div>
   <script src="/js/speech-recognition.js"></script>
-  <script>
+  <script th:inline="javascript">
+    const goItemPage = id => location.href = `/item/${id}`;
+    //
+
     const searchInput = document.getElementById('speech');
     const goPrevBtn = document.querySelector('.go-prev');
     const retry = document.querySelector('.retry');

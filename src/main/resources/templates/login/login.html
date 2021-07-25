@@ -13,7 +13,6 @@
   <div id="wrap">
     <header>
       <div class="title-container">
-        <button class="go-prev">&lt;</button>
         <h1 class="title">지점 로그인</h1>
       </div>
     </header>
@@ -27,16 +26,16 @@
         <fieldset>
 <!--          <legend class="screen_out">지점 로그인</legend>-->
           <div class="login-box">
-            <input type="email" id="loginId" name="loginId" placeholder="ID" >
-            <input type="password" id="loginPw" name="password" placeholder="Password" >
+            <input type="text" id="loginId" name="loginId" placeholder="ID" class="login-input id-input">
+            <input type="password" id="loginPw" name="password" placeholder="Code" class="login-input">
           </div>
-          <div class="maintain-container">
-            <input type="checkbox" id="keepLogin" class="check_login"  name="keepLogin">
-            <label for="keepLogin" class="lab_g">
-              <!-- <span class="img_top ico_check"></span> -->
-              <span class="persist-login">로그인 상태 유지</span>
-            </label>
-          </div>
+<!--          <div class="maintain-container">-->
+<!--            <input type="checkbox" id="keepLogin" class="check_login"  name="keepLogin">-->
+<!--            <label for="keepLogin" class="lab_g">-->
+<!--              &lt;!&ndash; <span class="img_top ico_check"></span> &ndash;&gt;-->
+<!--              <span class="persist-login">로그인 상태 유지</span>-->
+<!--            </label>-->
+<!--          </div>-->
           <button type="submit" class="login-btn">로그인</button>
         </fieldset>
       </form>
