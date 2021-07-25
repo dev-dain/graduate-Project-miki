@@ -36,13 +36,14 @@
     <button class="item-next-btn">&gt;</button>
   </div>
 </div>
-<!--<div class="invisible-but-need" style="display: none;">-->
-<!--  <table>-->
-<!--    <tr th:each="option : ${item_options}" style="display: none">-->
-<!--      <td class="invisible-but-need" th:text="${azGame.question} +'/'+${azGame.selection} +'/'+${azGame.answer}+'/'+${azGame.year}+'/'" style="display: none"></td>-->
-<!--    </tr>-->
-<!--  </table>-->
-<!--</div>-->
+<div class="invisible-but-need" style="display: none;">
+  <table>
+    <tr th:each="item : ${items}" style="display: none">
+      <td class="invisible-but-need" th:text="${item.name} +'/'" style="display: none"></td>
+    </tr>
+
+  </table>
+</div>
 </body>
 <!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
 <script th:inline="javascript">
@@ -196,7 +197,7 @@
 
     let getClass;
     let split_C;
-    let first_c =[];
+    let first_c = [];
 
     let check_id;
     let num_id; // 현재 몇번째 인덱스까지 넣었는지 저장할 변수
@@ -280,8 +281,47 @@
     itemContainer.appendChild(itemDiv);
   }
 
+  let left_btn;
+  let right_btn;
+  let pageNum = 1;
+
+  left_btn = document.querySelector('.item-prev-btn');
+  right_btn = document.querySelector('.item-next-btn');
+
+  left_btn.addEventListener('click', () => {
+      if(pageNum != 1){
+          fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+              .then(res => res.text())
+              .then(res => {
+                  console.log(res)
+
+              });
+      }
+      else{ // 맨 처음 페이지 일 떄
+          alert('맨 처음 목록입니다!');
+          return ;
+      }
+
+  });
+
+  right_btn.addEventListener('click', () => {
+      pageNum += 1;
+      if(pageNum != 1){
+          fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+              .then(res => res.text())
+              .then(res => {
+                  console.log(res)
+
+              });
+      }
+      else{
+          return ;
+      }
+
+  });
 
   // 필요한 기능 - 1. 각 부위별로 첫번째 제품 색만 적용시키기 ( 입술, 아이브로우, 볼터치 )
+
 
 
 
