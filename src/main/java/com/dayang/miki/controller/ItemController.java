@@ -188,8 +188,11 @@ public class ItemController {
             mdsPickItemImg.add(itemService.itemImg(item.getId()));
         }
 
-        model.addAttribute("item_img", mdsPickItemImg);
-        model.addAttribute("item", mdsPickItem);
+        model.addAttribute("MdItemImg", mdsPickItemImg);
+        model.addAttribute("MdItems", mdsPickItem);
+
+        System.out.println(BestItems);
+        System.out.println(mdsPickItem);
         return "searchItem/today-goods";
 
     }

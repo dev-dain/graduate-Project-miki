@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/modal.css">
   <title>지점 로그인</title>
 </head>
 <body>
@@ -22,12 +23,12 @@
       -->
     </div>
     <div class="login-container">
-      <form method="post" id="login_form" action=" "> <!-- action 어디로 연결하는지 여쭤보기-->
+      <form method="get" id="login_form" action="/login"> <!-- action 어디로 연결하는지 여쭤보기-->
         <fieldset>
 <!--          <legend class="screen_out">지점 로그인</legend>-->
           <div class="login-box">
-            <input type="text" id="loginId" name="loginId" placeholder="ID" class="login-input id-input">
-            <input type="password" id="loginPw" name="password" placeholder="Code" class="login-input">
+            <input type="text" id="loginId" name="id" placeholder="ID" class="login-input id-input">
+            <input type="password" id="loginPw" name="code" placeholder="Code" class="login-input pw-input">
           </div>
 <!--          <div class="maintain-container">-->
 <!--            <input type="checkbox" id="keepLogin" class="check_login"  name="keepLogin">-->
@@ -41,5 +42,42 @@
       </form>
     </div>
   </div>
+  <div class="modal-container">
+
+  </div>
+
+  <script src="js/createModal.js"></script>
+<script>
+    const loginBtn = document.querySelector('.login-btn');
+    const idInput = document.querySelector('.id-input');
+    const pwInput = document.querySelector('.pw-input');
+    const modalContainer = document.querySelector('modal-container');
+
+    console.log(`/login?id=${idInput.value}&code=${pwInput.value}`);
+
+    loginBtn.addEventListener('click', () => {
+        if (!idInput.value.trim() || !pwInput.value.trim()) {
+            modalContainer.appendChild(createModal('empty'));
+            modalContainer.classList.add('display');
+        } else {
+            location.href=`/login?id=${idInput.value.trim()}&code=${pwInput.value.trim()}`;
+            // fetch(`/login?id=${idInput.value}&code=${pwInput.value}`)
+            //     .then(res => res.text())
+            //     .then(data => {
+            //         try {
+            //             const text = data.split('<div class="top-area">')[1].split('<h3 class="clock">')[0];
+            //             console.log(text);
+            //             // location.href = '/main';
+            //
+            //         } catch (e) {
+            //             const failMsg = data.split('<body>')[1].split('</body>')[0];
+            //             modalContainer.appendChild(createModal('', failMsg));
+            //             modalContainer.classList.add('display');
+            //         }
+            //     })
+            //     .catch(e => console.error(e));
+        }
+    });
+</script>
 </body>
 </html>

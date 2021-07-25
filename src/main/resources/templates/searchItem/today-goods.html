@@ -135,10 +135,67 @@
 
               </div>
               <button class="best-go-next-btn item-btn">></button>
+              <div th:each="item : ${BestItems}">
+                  <p th:text="${item.name}"></p>
+              </div>
           </div>
       </div>
   </div>
-<script>
+  <script th:inline="javascript">
+      const bestImgObj = {};
+      const bestItemObj = {};
+      const mdImgObj = {};
+      const mdItemObj = {};
+      let item_id = '';
+      /*<![CDATA[*/
+
+      /*[# th:each="item : ${BestItems}"]*/
+      console.log('yes');
+      item_id = /*[[${item.id}]]*/;
+      bestItemObj[item_id] = {
+          name: /*[[${item.name}]]*/,
+          item_img: /*[[${item.item_img}]]*/,
+          origin_price: /*[[${item.item_price}]]*/,
+          discount_price: /*[[${item.discount_price}]]*/,
+          is_testable: /*[[${item.is_testable}]]*/
+      };
+      /*[/]*/
+
+      /*[# th:each="item : ${MdItems}"]*/
+      console.log('no');
+      item_id = /*[[${item.id}]]*/;
+      mdItemObj[item_id] = {
+          name: /*[[${item.name}]]*/,
+          item_img: /*[[${item.item_img}]]*/,
+          origin_price: /*[[${item.item_price}]]*/,
+          discount_price: /*[[${item.discount_price}]]*/,
+          is_testable: /*[[${item.is_testable}]]*/
+      };
+      /*[/]*/
+
+      console.log(mdItemObj);
+      console.log(bestItemObj);
+
+
+      /*]]>*/
+
+
+    // <div class="md item-card left side">
+    //     <div style="display: flex; justify-content: center; align-items: center;" onclick="javascript:goItemPage(330)">
+    //     <img src="http://mimg.lalavla.com/resources/images/prdimg/20190521/10003613/10003613_D_001_550.jpg" class="thumbnail-img" alt="페리페라 잉크더에어리벨벳AD">
+    //     </div>
+    //     <div>
+    //     <hr class="divide-img-info">
+    //     </div>
+    //     <div class="item-title" onclick="javascript:goItemPage(330)">페리페라 잉크더에어리벨벳AD</div>
+    //
+    // <div class="discount-price" style="width: 50%; align-self: flex-end">7200원</div>
+    // <div>
+    // <button class="go-test" onclick="javascript:goTestPage(330)">테스트</button>
+    //     </div>
+    //     </div>
+
+
     const goItemPage = id => location.href = `/item/${id}`;
     const goTestPage = id => location.href = `/test/${id}`;
 
