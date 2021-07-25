@@ -188,8 +188,8 @@ public class ItemService {
         return item_imgs;
     }
     @Transactional
-    public List<Item> newItem(String month, int pageNum){
-        List<Item> items = itemRepo.newItem(month, PageRequest.of(pageNum-1, 3));
+    public List<Item> newItem(String month){
+        List<Item> items = itemRepo.newItem(month);
         return items;
     }
 

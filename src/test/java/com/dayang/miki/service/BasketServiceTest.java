@@ -29,14 +29,26 @@ class BasketServiceTest {
     @Test
     @Rollback(value = false)
     void save(){
-        //when
-        Item item = itemService.findOne(5L);
-        Item_option item_option = itemService.Single_Item_option("더랩바이블랑두 올리고 히알루론산 토너+로션 2종 기획 - 더랩바이블랑두 올리고 히알루론산 토너+로션 2종 기획");
-        //given
-        Cart cart = Cart.createCart(item, item_option, 5);
+        java.util.Date time = new java.util.Date(System.currentTimeMillis());
+        String date = "2021-";
+        int month = time.getMonth();
+        date +=Integer.toString(month);
+        date +="-01";
+        List<Item> BestItems = itemService.newItem(date);
+        List<Item_img> BestItemImg = new ArrayList<>();
+        for(Item item : BestItems){
+            BestItemImg.add(itemService.itemImg(item.getId()));
+        }
 
-        cartService.validate(cart);
-        //then
+        List<Item> mdsPickItem = itemService.recommendItem();
+        List<Item_img> mdsPickItemImg = new ArrayList<>();
+        for(Item item : mdsPickItem){
+            mdsPickItemImg.add(itemService.itemImg(item.getId()));
+        }
+
+
+        System.out.println(BestItems.get(0).getId());
+        System.out.println(mdsPickItem.get(0).getId());
 
     }
 /*    @Test

@@ -56,7 +56,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> popularity();
 
     @Query(nativeQuery = true,
-    value = "select * from item where item_date >=(:month)")
-    List<Item> newItem(@Param("month")String month, Pageable pageable);
+    value = "select * from item where item_date >=(:month) Limit 3")
+    List<Item> newItem(@Param("month")String month);
 
 }

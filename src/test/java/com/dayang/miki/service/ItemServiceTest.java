@@ -65,7 +65,7 @@ class ItemServiceTest {
         String date = "08";
         dd += date;
         dd +="-01";
-        List<Item> items = itemService.newItem(dd, 2);
+        List<Item> items = itemService.newItem(dd);
         for(Item item : items){
             System.out.println(item.getId());
         }

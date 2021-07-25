@@ -24,8 +24,6 @@ public class ItemController {
     private final StoreService storeService;
 
     /* 임의로 추가함. index.html에서 '오늘의 상품' 탭을 클릭했을 때 이동 */
-    @GetMapping("/todayGoods")
-    public String todayGoods(){ return "searchItem/today-goods"; }
 
     @GetMapping("/categoryList")
     public String searchItem(){ return "searchItem/categoryList"; }
@@ -167,14 +165,14 @@ public class ItemController {
     }
 
 
-    @GetMapping("/todayGood")
-    public String bestItem(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, Model model){
+    @GetMapping("/todayGoods")
+    public String bestItem(Model model){
         java.util.Date time = new java.util.Date(System.currentTimeMillis());
         String date = "2021-";
         int month = time.getMonth();
         date +=Integer.toString(month);
         date +="-01";
-        List<Item> BestItems = itemService.newItem(date , pageNum);
+        List<Item> BestItems = itemService.newItem(date);
         List<Item_img> BestItemImg = new ArrayList<>();
         for(Item item : BestItems){
             BestItemImg.add(itemService.itemImg(item.getId()));
@@ -191,8 +189,6 @@ public class ItemController {
         model.addAttribute("MdItemImg", mdsPickItemImg);
         model.addAttribute("MdItems", mdsPickItem);
 
-        System.out.println(BestItems);
-        System.out.println(mdsPickItem);
         return "searchItem/today-goods";
 
     }
