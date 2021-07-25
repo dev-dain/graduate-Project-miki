@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -24,16 +25,17 @@ public class MainController {
     public String index(){ return "login/login";}
 
     @GetMapping("/login")
-    public String login(@RequestParam("id")String id, @RequestParam("code")String code, Model model){
+    public String login(@RequestParam("id")String id, @RequestParam("code")String code, Model model, RedirectAttributes rttr){
         Store store = storeService.findSingleStore(id);
         if(store.getCode().equals(code)){
-            model.addAttribute("store", store);
-            return "redirect:/main";
+            rttr.addAttribute("store", store);
+
+            return "redirect:/main?";
         }
         return "login/fail";
     }
 
     @GetMapping("/main") // home page
-    public String main(){ return "index";}
+    public String main(){ return "index"; }
 
 }
