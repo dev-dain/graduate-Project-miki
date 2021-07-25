@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @SpringBootTest
@@ -26,6 +27,14 @@ public class OrderServiceTest {
     CartService cartService;
     @Autowired
     ItemService itemService;
+
+    @Test
+    void dd(){
+        Store store = storeService.findById(1L);
+        System.out.println(orderService.thisWeekSales(store));
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK) ;
+    }
 
     @Test
     public void te(){

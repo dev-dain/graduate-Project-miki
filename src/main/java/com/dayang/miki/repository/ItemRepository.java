@@ -58,4 +58,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(nativeQuery = true,
     value = "select * from item where item_date >=(:month)")
     List<Item> newItem(@Param("month")String month, Pageable pageable);
+
 }

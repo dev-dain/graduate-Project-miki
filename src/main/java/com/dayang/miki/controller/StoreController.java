@@ -1,16 +1,16 @@
 package com.dayang.miki.controller;
 
-import com.dayang.miki.domain.Item_option;
-import com.dayang.miki.domain.Position;
-import com.dayang.miki.domain.Store;
-import com.dayang.miki.domain.StoreQuantity;
+import com.dayang.miki.domain.*;
 import com.dayang.miki.service.ItemService;
+import com.dayang.miki.service.OrderService;
 import com.dayang.miki.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.*;
 
 @Controller
@@ -18,6 +18,7 @@ import java.util.*;
 public class StoreController {
     private final StoreService storeService;
     private final ItemService itemService;
+    private final OrderService orderService;
 
     @GetMapping("/stores")
     public String stores(Model model){
@@ -81,13 +82,31 @@ public class StoreController {
 
         return "store/store-content";
     }
+    @GetMapping("/admin")
+    public String admin(@RequestParam("store_id")Long id, Model model){
+        Store store = storeService.findById(id);
+        int todaySale = orderService.todaySales(store);
+        int weekSale = orderService.thisWeekSales(store);
+        List<StoreQuantity> storeQuantities = itemService.soldOutOptions(store);
+        List<Item> item = new ArrayList<>();
+        List<Item_option>item_options = new ArrayList<>();
+        List<Item_img> item_imgs = new ArrayList<>();
+        for(StoreQuantity storeQuantity : storeQuantities){
+            item.add(itemService.findOne(storeQuantity.getItem().getId()));
+            item_options.add(itemService.findItemOptionById(storeQuantity.getItem_option().getId()));
+            item_imgs.add(itemService.itemImg(storeQuantity.getItem().getId()));
+        }
 
 
+        model.addAttribute("todaySale", todaySale);
+        model.addAttribute("weekSale", weekSale);
+        model.addAttribute("item", item);
+        model.addAttribute("item_options", item_options);
+        model.addAttribute("item_img", item_imgs);
 
-
-    @GetMapping("/admin/login")
-    public String login(@PathVariable("password") String passwrd, @PathVariable("store_name") String name){
-
-        return "redirect:/";
+        return "";
     }
+
+
+
 }

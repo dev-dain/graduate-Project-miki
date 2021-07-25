@@ -32,6 +32,7 @@ public class ItemService {
     private final ItemOptionRepository itemOptionRepository;
     private final ReviewRepository reviewRepository;
     private final ReviewRepo reviewRepo;
+    private final StoreQuantityRepository storeQuantityRepository;
 
 
 
@@ -197,15 +198,16 @@ public class ItemService {
         Random rd = new Random();
         List<Item> items = new ArrayList<>();
         int tmp =0;
-        for (int i=0; i<3; i++){
+        for (int i=0; i<10; i++){
             tmp = rd.nextInt(1000)+1;
             items.add(itemLogicRepository.findOne((long) tmp));
         }
         return items;
     }
 
-/*    @Transactional
-    public void updateTestable(Long id){
-        itemRepo.updateShowCount(id);
-    }*/
+    @Transactional
+    public List<StoreQuantity> soldOutOptions(Store store){
+        List<StoreQuantity> item_options = storeQuantityRepository.soldoutItemoptions(store);
+        return item_options;
+    }
 }

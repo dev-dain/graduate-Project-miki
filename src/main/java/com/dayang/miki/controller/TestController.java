@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class TestController {
 
 
     @GetMapping("/testAll")
-    public String testItems( Model model){
+    public String testItems(@RequestParam("pageNum")int pageNum, Model model){
         List<Cart> carts = cartService.findAll();
         List<Item> items = new ArrayList<>();
 
@@ -74,10 +75,26 @@ public class TestController {
                 }
             }
         }
-        model.addAttribute("items", items);
-        model.addAttribute("item_img", item_imgs);
-        model.addAttribute("item_options", item_options);
-        model.addAttribute("testColors", testColors);
+
+        List<Item> item = new ArrayList<>();
+
+        List<Item_img> item_img = new ArrayList<>();
+
+        List<Item_option> item_option = new ArrayList<>();
+        List<TestColor> testColor = new ArrayList<>();
+
+        int page = pageNum * 4;
+        for(int i = page - 4; i < page; i++){
+            item.add(items.get(i));
+            item_img.add(item_imgs.get(i));
+            item_option.add(item_options.get(i));
+            testColor.add(testColors.get(i));
+        }
+
+        model.addAttribute("items", item);
+        model.addAttribute("item_img", item_img);
+        model.addAttribute("item_options", item_option);
+        model.addAttribute("testColors", testColor);
 
         return "test/test-cart";
     }
