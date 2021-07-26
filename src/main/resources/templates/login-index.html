@@ -2,33 +2,37 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/index.css">
-  <title>Home</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Home</title>
 </head>
 <style>
-  button#log_out {
-    display: inline;
-    font-size: 30px;
-    width: 130px;
-    height: 90px;
-    background-color: gray;
-    position: relative;
-  }
+    button#log_out {
+        display: inline;
+        font-size: 25px;
+        width: 100px;
+        height: 80px;
+        background-color: gray;
+        position: relative;
+        border: 10px;
+    }
 </style>
 
 <body>
 <div id="wrap">
-  <div class="top-area">
-        <p style="display: none;" th:text="${store.id}"></p>
-        <p class="store-name" th:text="${store.store_name}"></p>
-    <h3 class="clock"></h3>
-  </div>
-  <div class="bottom-area">
-    <a class="link-btn  order-page" href="/todayGoods">
+    <div class="top-area">
+        <span style="float: left">
+            <p style="display: none;" th:text="${store.id}"></p>
+            <p class="store-name" th:text="${store.store_name} +' 환영합니다!'" style="font-size: 30px; color:black;"></p>
+            <button id="log_out">로그아웃</button>
+        </span>
+        <h3 class="clock"></h3>
+    </div>
+    <div class="bottom-area">
+        <a class="link-btn  order-page" href="/todayGoods">
         <span class="btn">
           <h4>오늘의 추천</h4>
           <div class="icon-box">
@@ -43,8 +47,8 @@
             확인해 보세요
           </p>
         </span>
-    </a>
-    <a class="link-btn test-page" href="/test">
+        </a>
+        <a class="link-btn test-page" href="/test">
         <span class="btn">
           <h4>테스트</h4>
           <div class="icon-box">
@@ -60,8 +64,8 @@
             해보세요
           </p>
         </span>
-    </a>
-    <a class="link-btn search-page" href="/categoryList">
+        </a>
+        <a class="link-btn search-page" href="/categoryList">
         <span class="btn">
           <h4>상품 검색</h4>
           <div class="icon-box">
@@ -76,51 +80,51 @@
             <span class="bold-text">미키에게 말해주세요</span>
           </p>
         </span>
-    </a>
-  </div>
+        </a>
+    </div>
 </div>
 <script th:inline="javascript">
-  let store_id;
-  let store_name;
+    let store_id;
+    let store_name;
     /*<![CDATA[*/
     store_id = /*[[${store.id}]]*/;
     store_name = /*[[${store.store_name}]]*/;
 
     /*]]>*/
 
-  if (store_id) {
-    localStorage.setItem('store_id', store_id);
-  } else {
-    store_id = localStorage.getItem('store_id');
-  }
-  if (store_name) {
-    localStorage.setItem('store_name', store_name);
-  } else {
-    store_name = localStorage.getItem('store_name');
-  }
-  const clock = document.querySelector('.clock');
-  const clockFunc = () => {
-    let today = new Date();
-    let h = (today.getHours() > 12) ?
+    if (store_id) {
+        localStorage.setItem('store_id', store_id);
+    } else {
+        store_id = localStorage.getItem('store_id');
+    }
+    if (store_name) {
+        localStorage.setItem('store_name', store_name);
+    } else {
+        store_name = localStorage.getItem('store_name');
+    }
+    const clock = document.querySelector('.clock');
+    const clockFunc = () => {
+        let today = new Date();
+        let h = (today.getHours() > 12) ?
             today.getHours() - 12 : today.getHours();
-    h = (h < 10) ? '0' + h : h;
-    let m = (today.getMinutes() < 10) ?
+        h = (h < 10) ? '0' + h : h;
+        let m = (today.getMinutes() < 10) ?
             '0' + today.getMinutes() : today.getMinutes();
-    let amorpm = (today.getHours() < 12) ? 'AM' : 'PM';
-    clock.innerHTML = `${amorpm} ${h}:${m}`;
-  }
-  clockFunc();
-  setInterval(clockFunc, 1000);
+        let amorpm = (today.getHours() < 12) ? 'AM' : 'PM';
+        clock.innerHTML = `${amorpm} ${h}:${m}`;
+    }
+    clockFunc();
+    setInterval(clockFunc, 1000);
 
-  if (!localStorage.getItem('store_id')) {
-    localStorage.setItem('store_id', '1');
-  }
+    if (!localStorage.getItem('store_id')) {
+        localStorage.setItem('store_id', '1');
+    }
 
-  let logout_btn;
-  logout_btn = document.getElementById('log_out');
-  logout_btn.addEventListener('click', () => {
-    location.href = '/';
-  });
+    let logout_btn;
+    logout_btn = document.getElementById('log_out');
+    logout_btn.addEventListener('click', () => {
+        location.href = '/';
+    });
 </script>
 
 </body>
