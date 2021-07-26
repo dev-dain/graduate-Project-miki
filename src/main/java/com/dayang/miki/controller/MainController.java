@@ -22,6 +22,7 @@ public class MainController {
     private final StoreService storeService;
 
     @GetMapping("/") // home page
+    // 로그인이 되어 있어도 무조건 여기로 이동?
     public String index(){ return "login/login";}
 
     @GetMapping("/login")
@@ -30,12 +31,18 @@ public class MainController {
         if(store.getCode().equals(code)){
             rttr.addFlashAttribute("store", store);
 
-            return "redirect:/main?";
+            return "redirect:/login-main?";
         }
         return "login/fail";
     }
 
-    @GetMapping("/main") // home page
-    public String main(){ return "index"; }
+    @GetMapping("/login-main")
+    public String loginMain() {
+        return "login-index";
+    }
 
+    @GetMapping("/main") // home page
+    public String main(){
+        return "index";
+    }
 }

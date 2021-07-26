@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/category-part.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
     <div id="wrap">
         <header>
             <h1 class="title">매장 관리</h1>
+            <div class="button-container">
+                <button class="logout-btn btn">로그아웃</button>
+                <button class="go-home-btn btn">홈으로 가기</button>
+            </div>
         </header>
         <div class="content-container">
             <div class="store-name-container">
@@ -16,19 +23,90 @@
             <div class="sales-container">
                 <div class="today-sales-row">
                     <p class="sales-text">오늘 매출액</p>
-                    <p class="sales-today"></p>
+                    <p class="sales-today sales"></p>
                 </div>
                 <div class="late-sales-row">
                     <p class="sales-text">지난 주 매출액</p>
-                    <p class="sales-late"></p>
+                    <p class="sales-late sales"></p>
                 </div>
             </div>
             <div class="item-container">
                 <h3 class="notice-title">발주 필요 품목</h3>
-                <div class="item-row-container">
-                </div>
+                <table class="table table-striped item-row-container" style="margin: 0; width: 100%">
+                    <tbody style="display: flex; flex-flow: row wrap; justify-content: center;">
+                    <tr class="item-card" th:each="item : ${item}"
+                        style="width: 225px; margin: 10px;">
+                        <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'">
+                            <img th:src="${item.item_img}" class="thumbnail-img" th:alt="${item.name}"></img>
+                        </td>
+                        <td>
+                            <hr class="divide-img-info">
+                        </td>
+                        <td th:text="${item.name}" class="item-title" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'"></td>
+<!--                        <td-->
+<!--                                th:if="${item.item_price} != ${item.discount_price}"-->
+<!--                                th:text="${item.item_price} + '원'"-->
+<!--                                class="origin-price"-->
+<!--                                style="width: 50%; margin: 0 0 -30px 0; padding: 10px 20px;">-->
+<!--                        </td>-->
+<!--                        <td-->
+<!--                                th:text="${item.discount_price} + '원'"-->
+<!--                                class="discount-price"-->
+<!--                                style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</td>-->
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+<script th:inline="javascript">
+    let salesT;
+    let salesW;
+    /*<![CDATA[*/
+    salesT = /*[[${todaySale}]]*/;
+    salesW = /*[[${weekSale}]]*/;
+
+    let item_id;
+    let option_id;
+    const itemObj = {};
+    const imgObj = {};
+
+    /*[# th:each="img : ${item_img}"]*/
+    item_id = /*[[${img.item.id}]]*/
+    imgObj[item_id] = {
+        id: item_id,
+        img: /*[[${img.item_img}]]*/
+    };
+    /*[/]*/
+
+    /*[# th:each="option : ${item_options}"]*/
+    option_id = /*[[${option.id}]]*/;
+    item_id = /*[[${option.item.id}]]*/
+    itemObj[option_id] = {
+        name: /*[[${option.item_option_name}]]*/,
+        parent_id: item_id,
+        img: imgObj[item_id].img
+    };
+    /*[/]*/
+
+    console.log(itemObj);
+    console.log(imgObj);
+
+    /*]]>*/
+
+
+
+    const storeName = document.querySelector('.store-name');
+    // 현재 로그인한 store_id와 맞지 않는다면 밴하는 방법을 생각해 봐야 함
+    // 일단 localStorage에 기반하기로 함
+    storeName.textContent = localStorage.getItem('store_name');
+
+    const salesToday = document.querySelector('.sales-today');
+    const salesLate = document.querySelector('.sales-late');
+    salesToday.textContent = `${salesT} 원`;
+    salesLate.textContent = `${salesW} 원`;
+
+    const goItemPage = id => location.href = `/item/${id}`;
+</script>
 </body>
 </html>

@@ -23,7 +23,8 @@
 <body>
 <div id="wrap">
   <div class="top-area">
-    <p class="store-name"></p>
+        <p style="display: none;" th:text="${store.id}"></p>
+        <p class="store-name" th:text="${store.store_name}"></p>
     <h3 class="clock"></h3>
   </div>
   <div class="bottom-area">
@@ -79,12 +80,24 @@
   </div>
 </div>
 <script th:inline="javascript">
-  const store_id = localStorage.getItem('store_id');
-  const store_name = localStorage.getItem('store_name');
+  let store_id;
+  let store_name;
+    /*<![CDATA[*/
+    store_id = /*[[${store.id}]]*/;
+    store_name = /*[[${store.store_name}]]*/;
 
-  const storeName = document.querySelector('.store-name');
-  storeName.textContent = store_name;
+    /*]]>*/
 
+  if (store_id) {
+    localStorage.setItem('store_id', store_id);
+  } else {
+    store_id = localStorage.getItem('store_id');
+  }
+  if (store_name) {
+    localStorage.setItem('store_name', store_name);
+  } else {
+    store_name = localStorage.getItem('store_name');
+  }
   const clock = document.querySelector('.clock');
   const clockFunc = () => {
     let today = new Date();
