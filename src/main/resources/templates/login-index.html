@@ -124,6 +124,9 @@
     logout_btn = document.getElementById('log_out');
     logout_btn.addEventListener('click', () => {
         location.href = '/';
+
+        localStorage.removeItem('store_id');
+        localStorage.removeItem('store_name');
     });
 </script>
 
