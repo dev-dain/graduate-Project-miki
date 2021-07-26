@@ -25,8 +25,7 @@
 <div id="wrap">
     <div class="top-area">
         <span style="float: left">
-            <p style="display: none;" th:text="${store.id}"></p>
-            <p class="store-name" th:text="${store.store_name} +' 환영합니다!'" style="font-size: 30px; color:black;"></p>
+            <p class="store-name"></p>
             <button id="log_out">로그아웃</button>
         </span>
         <h3 class="clock"></h3>
@@ -102,6 +101,8 @@
     } else {
         store_name = localStorage.getItem('store_name');
     }
+
+    location.href = '/main';
     const clock = document.querySelector('.clock');
     const clockFunc = () => {
         let today = new Date();
