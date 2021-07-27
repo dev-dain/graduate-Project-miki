@@ -85,7 +85,7 @@ public class StoreController {
     @GetMapping("/admin/{store_id}")
     public String admin(@PathVariable("store_id") Long id, @RequestParam("code") String pw,  Model model){
         Store store = storeService.findById(id);
-        if(store.getCode() != pw){
+        if(!store.getCode().equals(pw)){
             return "login/fail";
         }
 

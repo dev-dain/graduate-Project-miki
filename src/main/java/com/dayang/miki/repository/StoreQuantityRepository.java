@@ -17,7 +17,7 @@ public interface StoreQuantityRepository extends JpaRepository<StoreQuantity, Lo
     List<StoreQuantity> findByItemOptions(@Param("item_option") Item_option item_option);
 
 
-    @Query("select sq from StoreQuantity sq where sq.stock_quantity=0 and sq.store =:store")
+    @Query("select sq from StoreQuantity sq where sq.stock_quantity = 0 and sq.store =:store")
     List<StoreQuantity> soldoutItemoptions(@Param("store") Store store);
 
 }
