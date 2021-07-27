@@ -35,6 +35,13 @@ public class MainController {
         }
         return "login/fail";
     }
+    @GetMapping("/admin-check")
+    public String adminCheck(@RequestParam("store_id")Long id){
+
+        return "login/admin-check";
+    }
+
+
 
     @GetMapping("/login-main")
     public String loginMain() {

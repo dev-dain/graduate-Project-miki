@@ -88,4 +88,9 @@ public class CartService {
     public void updateCartNum(int cnt, Item_option item_option){
         cartRepo.updateCnt(cnt, item_option);
     }
+
+    @Transactional
+    public List<Cart> findTestableCart(int pageNum){
+        return cartRepo.findTestableCart(PageRequest.of(pageNum-1,4 ));
+    }
 }

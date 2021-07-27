@@ -3,6 +3,7 @@ package com.dayang.miki.repository;
 import com.dayang.miki.domain.Cart;
 import com.dayang.miki.domain.Item;
 import com.dayang.miki.domain.Item_option;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -37,6 +38,9 @@ public interface CartRepo extends JpaRepository<Cart, Long> {
     List<Item_option> getItemOption();
 
     List<Cart> findAll();
+
+    @Query("select c from Cart c where c.item.is_testable ='Y' ")
+    List<Cart> findTestableCart(Pageable pageable);
 
     Optional<Cart> findById(Long id);
 
