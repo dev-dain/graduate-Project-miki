@@ -83,7 +83,7 @@ public class StoreController {
         return "store/store-content";
     }
     @GetMapping("/admin/{store_id}")
-    public String admin(@PathVariable("store_id") Long id, @RequestParam("code") String pw, @RequestParam("pageNum")int pageNum, Model model){
+    public String admin(@PathVariable("store_id") Long id, @RequestParam("code") String pw, @RequestParam(value = "pageNum", defaultValue = "1")int pageNum, Model model){
         Store store = storeService.findById(id);
         if(store.getCode() != pw){
             return "login/fail";

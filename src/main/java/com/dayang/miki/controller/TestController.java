@@ -46,7 +46,7 @@ public class TestController {
 
 
     @GetMapping("/testAll")
-    public String testItems(@RequestParam("pageNum")int pageNum, Model model){
+    public String testItems(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, Model model){
         List<Cart> carts = cartService.findTestableCart(pageNum);
         List<Item> items = new ArrayList<>();
 
