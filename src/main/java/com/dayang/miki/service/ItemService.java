@@ -206,8 +206,8 @@ public class ItemService {
     }
 
     @Transactional
-    public List<StoreQuantity> soldOutOptions(Store store, int pageNum){
-        List<StoreQuantity> item_options = storeQuantityRepository.soldoutItemoptions(store, PageRequest.of(pageNum-1, 9));
+    public List<StoreQuantity> soldOutOptions(Store store){
+        List<StoreQuantity> item_options = storeQuantityRepository.soldoutItemoptions(store);
         return item_options;
     }
 }

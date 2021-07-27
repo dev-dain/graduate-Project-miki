@@ -83,7 +83,7 @@ public class StoreController {
         return "store/store-content";
     }
     @GetMapping("/admin/{store_id}")
-    public String admin(@PathVariable("store_id") Long id, @RequestParam("code") String pw, @RequestParam(value = "pageNum", defaultValue = "1")int pageNum, Model model){
+    public String admin(@PathVariable("store_id") Long id, @RequestParam("code") String pw,  Model model){
         Store store = storeService.findById(id);
         if(store.getCode() != pw){
             return "login/fail";
@@ -91,7 +91,7 @@ public class StoreController {
 
         int todaySale = orderService.todaySales(store);
         int weekSale = orderService.thisWeekSales(store);
-        List<StoreQuantity> storeQuantities = itemService.soldOutOptions(store, pageNum);
+        List<StoreQuantity> storeQuantities = itemService.soldOutOptions(store);
         List<Item> item = new ArrayList<>();
         List<Item_option>item_options = new ArrayList<>();
         List<Item_img> item_imgs = new ArrayList<>();
