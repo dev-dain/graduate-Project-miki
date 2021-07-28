@@ -48,12 +48,12 @@
 
   <script src="js/createModal.js"></script>
 <script>
+  if (localStorage.getItem('store_id')) location.href = '/main';
+
     const loginBtn = document.querySelector('.login-btn');
     const idInput = document.querySelector('.id-input');
     const pwInput = document.querySelector('.pw-input');
     const modalContainer = document.querySelector('modal-container');
-
-    console.log(`/login?id=${idInput.value}&code=${pwInput.value}`);
 
     loginBtn.addEventListener('click', () => {
         if (!idInput.value.trim() || !pwInput.value.trim()) {
@@ -61,21 +61,6 @@
             modalContainer.classList.add('display');
         } else {
             location.href=`/login?id=${idInput.value.trim()}&code=${pwInput.value.trim()}`;
-            // fetch(`/login?id=${idInput.value}&code=${pwInput.value}`)
-            //     .then(res => res.text())
-            //     .then(data => {
-            //         try {
-            //             const text = data.split('<div class="top-area">')[1].split('<h3 class="clock">')[0];
-            //             console.log(text);
-            //             // location.href = '/main';
-            //
-            //         } catch (e) {
-            //             const failMsg = data.split('<body>')[1].split('</body>')[0];
-            //             modalContainer.appendChild(createModal('', failMsg));
-            //             modalContainer.classList.add('display');
-            //         }
-            //     })
-            //     .catch(e => console.error(e));
         }
     });
 </script>
