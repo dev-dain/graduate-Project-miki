@@ -163,61 +163,63 @@
     const mdGoNextBtn = document.querySelector('.md-go-next-btn');
     const mdCarousel = document.querySelector('.md-carousel');
 
-    mdItemCardList[0].classList.add('left');
-    mdItemCardList[0].classList.add('side');
-    mdItemCardList[1].classList.add('center');
-    mdItemCardList[2].classList.add('right');
-    mdItemCardList[2].classList.add('side');
+    const sideCard = (card, state) => {
+        if (card.classList.contains('center')) {
+            card.classList.remove('center');
+        }
+        card.classList.add(state);
+        card.classList.add('side');
+        return card;
+    };
+
+    const centerCard = card => {
+        if (card.classList.contains('left')) {
+            card.classList.remove('left');
+        } else if (card.classList.contains('right')) {
+            card.classList.remove('right');
+        }
+
+        if (card.classList.contains('side')) {
+            card.classList.remove('side');
+        }
+
+        card.classList.add('center');
+        return card;
+    }
+
+    mdItemCardList[0] = sideCard(mdItemCardList[0], 'left');
+    mdItemCardList[1] = centerCard(mdItemCardList[1]);
+    mdItemCardList[2] = sideCard(mdItemCardList[2], 'right');
 
     mdCarousel.appendChild(mdItemCardList[0]);
-      mdCarousel.appendChild(mdItemCardList[1]);
-      mdCarousel.appendChild(mdItemCardList[2]);
+    mdCarousel.appendChild(mdItemCardList[1]);
+    mdCarousel.appendChild(mdItemCardList[2]);
 
+    let displayIdx = 1;
+    let leftIdx, centerIdx, rightIdx;
 
-      let mdLeftItem, mdCenterItem, mdRightItem;
+    const moveMdCarousel = (display_idx, num) => {
+        displayIdx = (display_idx + num) % 10;
+        if (displayIdx < 0) {
+            displayIdx = displayIdx + 10;
+        }
+        console.log(displayIdx);
+        leftIdx = ((displayIdx-1)<0) ? displayIdx-1+10 : displayIdx - 1;
+        centerIdx = displayIdx;
+        rightIdx = (displayIdx + 1) % 10;
+        mdCarousel.innerHTML = '';
 
-    mdGoPrevBtn.addEventListener('click', () => {
-        leftItem = document.querySelector('.md.left');
-        centerItem = document.querySelector('.md.center');
-        rightItem = document.querySelector('.md.right');
+        mdItemCardList[leftIdx] = sideCard(mdItemCardList[leftIdx], 'left');
+        mdItemCardList[centerIdx] = centerCard(mdItemCardList[centerIdx]);
+        mdItemCardList[rightIdx] = sideCard(mdItemCardList[rightIdx], 'right');
 
-        mdCarousel.removeChild(rightItem);
+        mdCarousel.appendChild(mdItemCardList[leftIdx]);
+        mdCarousel.appendChild(mdItemCardList[centerIdx]);
+        mdCarousel.appendChild(mdItemCardList[rightIdx]);
+    };
 
-        /* remove된 leftItem id는 pop되어야 함. 모든 상품 리스트들 중 dp되는 아이템들의 id만 담는 리스트가 필요 */
-        leftItem.classList.remove('side');
-        leftItem.classList.remove('left');
-        leftItem.classList.add('center');
-        centerItem.classList.remove('center');
-        centerItem.classList.add('right');
-        centerItem.classList.add('side');
-        rightItem.classList.remove('right');
-        rightItem.classList.add('left');
-
-        //주의
-        mdCarousel.prepend(rightItem);
-    });
-
-    mdGoNextBtn.addEventListener('click', () => {
-        leftItem = document.querySelector('.md.left');
-        centerItem = document.querySelector('.md.center');
-        rightItem = document.querySelector('.md.right');
-
-        mdCarousel.removeChild(leftItem);
-
-        /* remove된 leftItem id는 pop되어야 함. 모든 상품 리스트들 중 dp되는 아이템들의 id만 담는 리스트가 필요 */
-        leftItem.classList.remove('left');
-        leftItem.classList.add('right');
-        centerItem.classList.remove('center');
-        centerItem.classList.add('left');
-        centerItem.classList.add('side');
-        rightItem.classList.remove('side');
-        rightItem.classList.remove('right');
-        rightItem.classList.add('center');
-
-        //주의
-        mdCarousel.appendChild(leftItem);
-    });
-
+    mdGoPrevBtn.addEventListener('click', () => moveMdCarousel(displayIdx, -1));
+    mdGoNextBtn.addEventListener('click', () => moveMdCarousel(displayIdx, 1));
 
 </script>
 </body>
