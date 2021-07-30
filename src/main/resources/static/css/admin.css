@@ -27,9 +27,7 @@ h1 {
 .sales-text { font-size: 2rem; }
 .notice-title {
     font-size: 3rem;
-    margin: 5rem 0;
-}
-.item-container {
+    padding: 5rem 0;
     border-top: 3px solid #FFc41e;
 }
 [class$='sales-row'] {
@@ -42,7 +40,7 @@ h1 {
     font-size: 1.8rem;
 }
 .item-container {
-    flex-flow: column;
+    flex-flow: row;
     justify-content: flex-start;
     padding: 0 2.5rem;
 }
@@ -60,4 +58,13 @@ h1 {
 }
 .go-home-btn {
     background: #ffda73;
+}
+.item-card {
+    width: 225px;
+    margin: 10px;
+}
+.img-td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
