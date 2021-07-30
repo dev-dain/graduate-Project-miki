@@ -39,10 +39,17 @@
 <div class="invisible-but-need" style="display: none;">
   <table>
     <tr th:each="item : ${items}" style="display: none">
-      <td class="invisible-but-need" th:text="${item.name} +'/'" style="display: none"></td>
+      <td class="invisible-but-need" th:text="${item.name} + '/'" style="display: none"></td>
     </tr>
-
+    <tr th:each="img : ${item_img}">
+      <td class="invisible-but-need-2" th:text="${img.item_img}"></td>
+    </tr>
+    <tr th:each="options : ${item_options}" style="display:none">
+      <td class="invisible-but-need-3" th:text="${options.id}+'/'+${options.item_option_name+'/'+${options.item.id}}"></td>
+    </tr>
   </table>
+
+
 </div>
 </body>
 <!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
@@ -243,7 +250,9 @@
 
           let break_point = 'N';
 
+
           optionIdList.forEach(optionId => {
+            try {
               if (item_obj[optionId].parent_id == cur_item_id) {
                   const option = document.createElement('button');
                   option.classList.add(`item_options`);
@@ -259,7 +268,12 @@
                       itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
                   });
                   itemOptionContainer.appendChild(option);
+              }}
+              catch(e) {
+              console.log(e);
               }
+
+
           });
 
           return itemOptionContainer;
@@ -339,6 +353,7 @@
               .then(res => {
                   console.log(res)
                   // split해서 필요한 정보만 추출하기
+                  console.log(item_ImgList);
               });
       }
       else{
