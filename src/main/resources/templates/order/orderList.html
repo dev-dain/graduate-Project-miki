@@ -213,8 +213,6 @@
       let originPrice = (item_obj[item_option_obj[optionId].parent_id].origin_price) * cart_count_obj[optionId].count;
       let discountPrice = item_obj[item_option_obj[optionId].parent_id].discount_price * cart_count_obj[optionId].count;
 
-      wholePrice += discountPrice;
-
       const countPriceArea = document.createElement('div');
       countPriceArea.classList.add('count-price-area');
 
