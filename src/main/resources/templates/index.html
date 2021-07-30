@@ -84,7 +84,7 @@
 
   const storeName = document.querySelector('.store-name');
   storeName.textContent = store_name;
-  storeName.addEventListener('click', () => location.href = '/admin-check');
+  storeName.addEventListener('click', () => location.href = `/admin-check?store_id=${store_id}`);
 
   const clock = document.querySelector('.clock');
   const clockFunc = () => {
