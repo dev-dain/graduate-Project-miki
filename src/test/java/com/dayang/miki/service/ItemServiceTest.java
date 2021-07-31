@@ -36,7 +36,7 @@ class ItemServiceTest {
     @Test
     @Rollback(value = false)
     void testItem(){
-       Category category = itemService.findOneCategory(7L);
+       Category category = itemService.findOneCategory(83L);
        List<Item>items = itemService.getByCategory(category.getId());
        for(Item item : items){
            System.out.println(item.getId()+" "+item.getName());

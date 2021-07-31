@@ -2,12 +2,10 @@ package com.dayang.miki.service;
 
 
 import com.dayang.miki.domain.*;
-import com.dayang.miki.repository.CartRepository;
-import org.assertj.core.api.Assertions;
+import com.dayang.miki.repository.CartReposit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +20,7 @@ class BasketServiceTest {
     @Autowired
     ItemService itemService;
     @Autowired
-    CartRepository cartRepository;
+    CartReposit cartRepository;
 
 
 

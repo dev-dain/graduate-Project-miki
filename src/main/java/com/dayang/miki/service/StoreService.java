@@ -33,12 +33,11 @@ public class StoreService {
     public Store findSingleStore(String name){
         Store store = new Store();
         try{
-            store = storeRepository.getSingleStore(name);            
+            return storeRepository.getSingleStore(name);
         }
         catch (NoResultException e){
             return store;
         }
-        return store;
     }
     @Transactional
     public List<Store> findAllStore(){

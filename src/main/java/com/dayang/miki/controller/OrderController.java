@@ -4,6 +4,7 @@ import com.dayang.miki.domain.*;
 import com.dayang.miki.service.CartService;
 import com.dayang.miki.service.ItemService;
 import com.dayang.miki.service.OrderService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,7 +31,24 @@ public class OrderController {
     private final CartService cartService;
 
     @PostMapping("/order")
-    public String order(@RequestBody List<Cart> cart){
+    public String order(@RequestBody String cartList, Model model) throws UnsupportedEncodingException {
+        String b = URLDecoder.decode(cartList, String.valueOf(StandardCharsets.UTF_8));
+        b = b.replaceAll("%2C", "");
+        b = b.replaceAll("%5B", "");
+        b = b.replaceAll("%5D", "");
+        b = b.substring(9);
+
+        String[] ids = b.split(",");
+
+        List<Long> longId = new ArrayList<>();
+        for(String s : ids){
+            longId.add(Long.parseLong(s));
+
+        }
+        List<Cart> cart  = new ArrayList<>();
+        for(Long l :longId){
+            cart.add(cartService.findOne(l));
+        }
 
         int price =0;
         for(Cart cart1 : cart){
@@ -61,6 +80,7 @@ public class OrderController {
             orderService.orderItem(orderItem);
         }
 
+
         return "order/order_success";
     }
 
@@ -89,30 +109,36 @@ public class OrderController {
     @PostMapping(value = "/orderSelectList")
     public String orderSelectList(@RequestBody String cartList, Model model) throws UnsupportedEncodingException {
         String b = URLDecoder.decode(cartList, String.valueOf(StandardCharsets.UTF_8));
+        b = b.replaceAll("%2C", "");
+        b = b.replaceAll("%5B", "");
+        b = b.replaceAll("%5D", "");
+        b = b.substring(9);
 
-        System.out.println(b.replaceAll("%2C", ","));
+        String[] ids = b.split(",");
 
-//        for(String s : cartList.split()){
-//            System.out.println(s);
-//        }
-     /*   List<Item> items =  new ArrayList<>();
-        List<Item_option> item_options = new ArrayList<>();
+        List<Long> longId = new ArrayList<>();
+        for(String s : ids){
+            longId.add(Long.parseLong(s));
+
+        }
         List<Cart> carts = new ArrayList<>();
-        for(Cart cart : cartList){
-            carts.add(cart);
-        }
-        for(Cart cart : cartList){
-            items.add(cartService.getSelectItem(Long.valueOf(cart.getId())));
-            item_options.add(cartService.getSelectItemOption(Long.valueOf(cart.getId())));
-        }
-        List<Item_img> item_imgs = itemService.getCartImg(items);
+        List<Item> items = new ArrayList<>();
+        List<Item_img>item_imgs = new ArrayList<>();
+        List<Item_option>item_options = new ArrayList<>();
 
-
+        for(Long l :longId){
+            carts.add(cartService.findOne(l));
+        }
+        for(Cart cart : carts){
+            items.add(itemService.findOne(cart.getItem().getId()));
+            item_imgs.add(itemService.itemImg(cart.getItem().getId()));
+            item_options.add(itemService.findItemOptionById(cart.getItem_option().getId()));
+        }
         model.addAttribute("item_options", item_options);
         model.addAttribute("items", items);
-        model.addAttribute("carts", cartList);
+        model.addAttribute("carts", carts);
         model.addAttribute("imgs", item_imgs);
-*/
+
         return "order/orderList";
     }
 }

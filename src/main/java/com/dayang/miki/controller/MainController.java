@@ -28,6 +28,7 @@ public class MainController {
     @GetMapping("/login")
     public String login(@RequestParam("id")String id, @RequestParam("code")String code, Model model, RedirectAttributes rttr){
         Store store = storeService.findSingleStore(id);
+        if(store==null) return "login/fail";
         if(store.getCode().equals(code)){
             rttr.addFlashAttribute("store", store);
 

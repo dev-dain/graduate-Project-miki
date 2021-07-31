@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.*;
 
 @Repository
@@ -30,9 +31,14 @@ public class StoreRepository {
                 .getResultList();
     }
     public Store getSingleStore(String name){
-        return em.createQuery("select s from Store s where s.store_name =:name", Store.class)
-                .setParameter("name", name)
-                .getSingleResult();
+        try{
+            return em.createQuery("select s from Store s where s.store_name =:name", Store.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
 
     public Store findById(Long id){
