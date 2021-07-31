@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>결제 바코드 인식</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+  <div class="title-container">
+    <button class="go-prev">&lt;</button>
+    <h1 class="title">주문/결제</h1>
+  </div>
+  <div class="text_container">결제 QR또는 바코드를<br><span style="color: red;">빨간색 네모</span>안에 보여주세요. </div>
+  <div class="cam-container">
+    <canvas id = "canvas"></canvas>
+    <video autoplay id="barcode-cam"></video>
+    <div id ="main">
+      내용내용
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+  let scanner = new Instascan.Scanner({ video: document.getElementById('barcode-cam') });
+  let qr_content;
+
+  scanner.addListener('scan', function (content) {
+    qr_content = content;
+    insert(qr_content);
+    alert(content);
+  });
+
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0]);
+    } else {
+      console.error('No cameras found.');
+    }
+  }).catch(function (e) {
+    console.error(e);
+  });
+
+  //html에서 content확인
+  function insert(qr_num){
+    console.log('진입');
+    let cng;
+    cng = document.getElementById('main');
+    console.log(cng);
+    cng.innerText = 'QR내용' + qr_num ;
+
+  }
+</script>
+</html>

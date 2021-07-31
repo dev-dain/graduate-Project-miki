@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/order.css">
+    <title>주문 / 결제</title>
+</head>
+<body>
+    <div id="wrap">
+        <header>
+            <div class="title-container">
+                <button class="go-prev">&lt;</button>
+                <h1 class="title">주문 / 결제</h1>
+            </div>
+        </header>
+        <div class="content">
+            <div class="content-container">
+                <div class="row-list">
+                    <div class="row-info">
+                        <div class="row-title">주문 상품</div>
+                        <button class="fold-btn-items fold">^</button>
+                    </div>
+                    <div class="item-row-container">
+                        <!-- cart에 있는 item-row와 동일 -->
+                    </div>
+                </div>
+                <div class="row-goods-list">
+
+                </div>
+                <div class="cart-page-container">
+                    <button class="go-prev-page-btn">&lt;</button>
+                    <span class="current-page"></span>
+                    <button class="go-next-page-btn">&gt;</button>
+                </div>
+                <div class="row-price">
+                    <div class="row-info">
+                        <div class="row-title">최종 결제 금액</div>
+                        <div class="row-price"></div>
+                        <!--                    <button class="fold-btn-price fold">^</button>-->
+                    </div>
+                    <div class="row-price-info">
+                        <div class="row-price-left-area">총 결제 금액</div>
+                        <div class="row-price-right-area"></div>
+                    </div>
+                </div>
+                <div class="row-pay-way">
+                    <div class="row-info">
+                        <div class="row-title">결제 수단</div>
+                        <button class="fold-btn-pay fold">^</button>
+                    </div>
+                    <div class="row-way-list">
+                        <img class="pay-way-img">
+                        <img class="pay-way-img">
+                        <img class="pay-way-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="row-notice">
+                <button class="notice-check-btn"></button>
+                <p class="notice-text">
+                    주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?
+                </p>
+            </div>
+            <button class="go-pay-btn"></button>
+        </footer>
+    </div>
+
+<script th:inline="javascript">
+    const item_obj = {};
+    const item_option_obj = {};
+    const item_img_obj = {};
+    const cart_count_obj = {};
+
+    let item_id;
+    let item_img_id;
+    let item_option_id;
+    let wholePrice = 0;
+    const pageViewCount = 4;
+
+    /*<![CDATA[*/
+
+    /*[# th:each="item : ${items}"]*/
+    item_id = /*[[${item.id}]]*/
+    item_obj[item_id] = {
+      name: /*[[${item.name}]]*/,
+      origin_price: /*[[${item.item_price}]]*/,
+      discount_price: /*[[${item.discount_price}]]*/,
+      is_optional: /*[[${item.is_optional}]]*/,
+      is_testable: /*[[${item.is_testable}]]*/,
+    };
+    /*[/]*/
+
+    /*[# th:each="option : ${item_options}"]*/
+    item_option_id =  /*[[${option.id}]]*/;
+    item_option_obj[item_option_id] = {
+      id: item_option_id,
+      parent_id: /*[[${option.item.id}]]*/,
+      name: /*[[${option.item_option_name}]]*/
+    };
+    /*[/]*/
+
+    /*[# th:each="img : ${imgs}"]*/
+    item_img_id = /*[[${img.item.id}]]*/;
+    item_img_obj[item_img_id] = /*[[${img.item_img}]]*/;
+    /*[/]*/
+
+    /*[# th:each="cart : ${carts}"]*/
+    item_option_id = /*[[${cart.item_option.id}]]*/;
+    cart_count_obj[item_option_id] = {
+      id: /*[[${cart.id}]]*/,
+      count: /*[[${cart.count}]]*/
+    };
+    /*[/]*/
+
+
+    /*]]>*/
+
+
+    const rowGoodsList = document.querySelector('.row-goods-list');
+    const cartPageContainer = document.querySelector('.cart-page-container');
+    const itemRowList = [];
+
+    const goPrevBtn = document.querySelector('.go-prev');
+    goPrevBtn.addEventListener('click', () => history.back());
+
+    const itemFoldBtn = document.querySelector('.fold-btn-items');
+    itemFoldBtn.addEventListener('click', () => {
+        if (itemFoldBtn.classList.contains('fold')) {
+            itemFoldBtn.classList.remove('fold');
+            itemFoldBtn.classList.add('unfold');
+            rowGoodsList.classList.add('show');
+            cartPageContainer.classList.add('display');
+        } else {
+            itemFoldBtn.classList.remove('unfold');
+            itemFoldBtn.classList.add('fold');
+            rowGoodsList.classList.remove('show');
+            cartPageContainer.classList.remove('display');
+        }
+    });
+
+
+    const createItemRow = optionId => {
+      const itemRow = document.createElement('div');
+      itemRow.classList.add('item-row');
+
+      const rowLeftArea = createLeftArea(optionId);
+      const rowRightArea = createRightArea(optionId);
+
+      itemRow.appendChild(rowLeftArea);
+      itemRow.appendChild(rowRightArea);
+
+      return itemRow;
+    }
+
+    const createLeftArea = optionId => {
+      const price = item_obj[item_option_obj[optionId].parent_id].discount_price * cart_count_obj[optionId].count;
+      wholePrice += price;
+
+      const rowLeftArea = document.createElement('div');
+      rowLeftArea.classList.add('row-left-area');
+
+      const itemImg = document.createElement('img');
+      itemImg.classList.add('item-thumbnail-img');
+      itemImg.src = item_img_obj[item_option_obj[optionId].parent_id];
+
+      rowLeftArea.appendChild(itemImg);
+
+      return rowLeftArea;
+    }
+
+    const createRightArea = optionId => {
+      const rowRightArea = document.createElement('div');
+      rowRightArea.classList.add('row-right-area');
+
+      const nameArea = document.createElement('div');
+      nameArea.classList.add('name-area');
+
+      const nameText = document.createElement('p');
+      nameText.classList.add('name-text');
+      nameText.textContent = item_obj[item_option_obj[optionId].parent_id].name;
+
+      nameArea.appendChild(nameText);
+
+      rowRightArea.appendChild(nameArea);
+
+      const countPriceArea = createCountPriceArea(optionId);
+
+      if (item_obj[item_option_obj[optionId].parent_id].is_optional === 'Y') {
+        const optionArea = document.createElement('div');
+        optionArea.classList.add('option-area');
+
+        const optionText = document.createElement('p');
+        optionText.classList.add('option-text');
+        optionText.textContent = `선택 옵션 : ${item_option_obj[optionId].name}`;
+
+        optionArea.appendChild(optionText);
+        rowRightArea.appendChild(optionArea);
+      }
+
+      rowRightArea.appendChild(countPriceArea);
+
+      return rowRightArea;
+    }
+
+    const createCountPriceArea = optionId => {
+      let originPrice = (item_obj[item_option_obj[optionId].parent_id].origin_price) * cart_count_obj[optionId].count;
+      let discountPrice = item_obj[item_option_obj[optionId].parent_id].discount_price * cart_count_obj[optionId].count;
+
+      const countPriceArea = document.createElement('div');
+      countPriceArea.classList.add('count-price-area');
+
+      const countDiv = document.createElement('div');
+      countDiv.classList.add('count-area');
+
+      const countNotice = document.createElement('div');
+      const countInput = document.createElement('input');
+
+      countNotice.classList.add('count-notice');
+      countNotice.textContent = '수량 ';
+      countInput.classList.add(`m-count-${optionId}`);
+      countInput.value = cart_count_obj[optionId].count;
+
+      const priceDiv = document.createElement('div');
+      priceDiv.classList.add('price-area');
+
+      const originPriceText = document.createElement('span');
+      originPriceText.classList.add('origin-price');
+      originPriceText.textContent = `${originPrice} 원`;
+
+      const discountPriceText = document.createElement('span');
+      discountPriceText.classList.add('discount-price');
+      discountPriceText.textContent = `${discountPrice} 원`;
+
+      if (originPrice === discountPrice) {
+        originPriceText.style.display = 'none';
+      }
+
+      priceDiv.appendChild(originPriceText);
+      priceDiv.appendChild(discountPriceText);
+
+      countDiv.appendChild(countNotice);
+      countDiv.appendChild(countInput);
+
+
+      countPriceArea.appendChild(countDiv);
+      countPriceArea.appendChild(priceDiv);
+
+      return countPriceArea;
+    }
+
+
+    for (const [k, v] of Object.entries(item_option_obj)) {
+      itemRowList.push(createItemRow(k));
+    }
+
+        localStorage.setItem('cart_page', 1);
+    let curCartPage = 1;
+    const maxCartPage = Math.ceil(itemRowList.length / pageViewCount);
+
+    const currentPage = document.querySelector('.current-page');
+    const goPrevPageBtn = document.querySelector('.go-prev-page-btn');
+    const goNextPageBtn = document.querySelector('.go-next-page-btn');
+
+    for (let i = 0; i < pageViewCount; i++) {
+      rowGoodsList.appendChild(itemRowList[i]);
+    }
+
+    currentPage.textContent = `${curCartPage} / ${maxCartPage}`;
+
+      goPrevPageBtn.addEventListener('click', e => {
+        e.preventDefault();
+        if (curCartPage === 1) {
+          alert('첫 번째 페이지입니다.');
+        } else {
+          curCartPage -= 1;
+          localStorage.setItem('cart_page', curCartPage);
+          currentPage.textContent = `${curCartPage} / ${maxCartPage}`;
+
+          rowGoodsList.innerHTML = '';
+          let startIndex = (curCartPage - 1) * 4;
+          for (let i = startIndex; i < (startIndex + pageViewCount); i++) {
+            rowGoodsList.appendChild(itemRowList[i]);
+          }
+        }
+      });
+
+      goNextPageBtn.addEventListener('click', e => {
+        e.preventDefault();
+        if (curCartPage === maxCartPage) {
+          alert('마지막 페이지입니다.');
+        } else {
+          curCartPage += 1;
+          localStorage.setItem('cart_page', curCartPage);
+          currentPage.textContent = `${curCartPage} / ${maxCartPage}`;
+
+          rowGoodsList.innerHTML = '';
+          let startIndex = (curCartPage - 1) * 4;
+          for (let i = startIndex; i < (startIndex + pageViewCount); i++) {
+            rowGoodsList.appendChild(itemRowList[i]);
+          }
+        }
+      });
+
+
+    const rowPriceRightArea = document.querySelector('.row-price-right-area');
+    rowPriceRightArea.textContent = `${wholePrice} 원`;
+
+    const noticeCheckBtn = document.querySelector('.notice-check-btn');
+    noticeCheckBtn.addEventListener('click', () => {
+        if (noticeCheckBtn.classList.contains('selected')) {
+            noticeCheckBtn.classList.remove('selected');
+            noticeCheckBtn.innerHTML = '';
+        } else {
+            noticeCheckBtn.classList.add('selected');
+            noticeCheckBtn.innerHTML = '&#10004;';
+        }
+    });
+
+    const goPayBtn = document.querySelector('.go-pay-btn');
+    goPayBtn.textContent = `${wholePrice} 원 결제하기`;
+
+</script>
+</body>
+</html>

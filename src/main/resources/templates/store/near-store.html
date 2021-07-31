@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Near store</title>
+</head>
+<body>
+    <div id="wrap">
+        <table class="near-store">
+            <thead>
+                <th>점포명</th>
+                <th>거리</th>
+                <th>재고수량</th>
+            </thead>
+            <tbody>
+                <tr class="store-row" th:each="s : ${nearStores}">
+                    <td class="store-name" th:text="${s.store.store_name}"></td>
+                    <td class="store-dist" th:text="${s.km} + 'km'"></td>
+                    <td class="store-stock" th:text="${s.stock} + '개'"></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- end -->
+    </div>
+</body>
+</html>

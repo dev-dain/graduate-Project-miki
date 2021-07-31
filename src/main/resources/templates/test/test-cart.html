@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/p5.min.js"></script>
+  <script src="/js/p5.dom.min.js"></script>
+  <script src="/js/ml5.min.js" type="text/javascript"></script>
+  <script src="/js/face.js"></script>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/test.css">
+  <title>테스트</title>
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <div class="title-container">
+      <button class="go-prev">&lt;</button>
+      <h1 class="title">테스트</h1>
+    </div>
+    <div class="top-button-container">
+      <button class="go-cart" title="https://www.freepik.com"></button>
+    </div>
+  </header>
+  <div class="btn-container">
+    <button class="add-item btn">상품 추가</button>
+    <button class="pay-item btn">결제</button>
+  </div>
+  <div class="item-row">
+    <button class="item-prev-btn">&lt;</button>
+    <div class="item-container">
+
+    </div>
+    <button class="item-next-btn">&gt;</button>
+  </div>
+</div>
+<div class="invisible-but-need" style="display: none;">
+  <table>
+    <tr th:each="item : ${items}" style="display: none">
+      <td class="invisible-but-need" th:text="${item.name} + '/'" style="display: none"></td>
+    </tr>
+    <tr th:each="img : ${item_img}">
+      <td class="invisible-but-need-2" th:text="${img.item_img}"></td>
+    </tr>
+    <tr th:each="options : ${item_options}" style="display:none">
+      <td class="invisible-but-need-3" th:text="${options.id}+'/'+${options.item_option_name+'/'+${options.item.id}}"></td>
+    </tr>
+  </table>
+
+
+</div>
+</body>
+<!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
+<script th:inline="javascript">
+  const item_obj = {};
+  const option_obj = {};
+  const optionIdList = [];
+  const itemIdList = [];
+  const itemImgList = [];
+  const itemNameList = [];
+  const item_id_list = [];
+
+  const idList = [];
+
+  let img_src;
+  let item_name;
+  let item_id;
+  let item_option_id;
+  let option_name;
+  let textNode;
+
+  let position = -1;
+  let alpha = 0;
+  let h_color;
+
+  /*<![CDATA[*/
+
+  /*[# th:each="item : ${items}"]*/
+  itemIdList.push(/*[[${item.id}]]*/);
+  itemNameList.push(/*[[${item.name}]]*/);
+
+  /*[/]*/
+
+  /*[# th:each="item_img : ${item_img}"]*/
+  itemImgList.push(/*[[${item_img.item_img}]]*/);
+  /*[/]*/
+
+  /*[# th:each="option : ${item_options}"]*/
+  item_option_id = /*[[${option.id}]]*/;
+  item_ids = /*[[${option.item.id}]]*/;
+  item_id_list.push(item_ids);
+  optionIdList.push(item_option_id);
+  option_obj[item_option_id] = {
+   name : /*[[${option.item_option_name}]]*/,
+   parent_id : item_ids
+  };
+  /*[/]*/
+
+  /*[# th:each="t_color : ${testColors}"]*/
+  item_option_id = /*[[${t_color.item_option.id}]]*/;
+  item_obj[item_option_id] = {
+    parent_id: option_obj[item_option_id].parent_id,
+    id: item_option_id,
+    name: option_obj[item_option_id].name,
+    face_location: /*[[${t_color.face_location}]]*/,
+    c_code: /*[[${t_color.colorCode}]]*/,
+    alpha: /*[[${t_color.alpha}]]*/
+  }
+  /*[/]*/
+
+  // console.log(itemIdList,itemNameList,itemImgList);
+  console.log(item_obj);
+  /*]]>*/
+  // 맨 처음 로딩시 -> 0번 옵션 색상으로 자동 설정
+  window.onload = function(){
+    getClass = document.getElementsByClassName(`item_options`);
+    console.log(getClass);
+    first_c = getClass[0].classList[1];
+    // console.log(first_c)
+    split_C = split(first_c,'-');
+    set_color(split_C);
+  };
+  // hex to RGB
+  let R,G,B;
+  const pos = 'N'; // 어느 부위인지 확인할 변수
+  let c_arr = [0,0,0]; // R,G,B 값 담아두는 배열
+
+  function hexToRgb ( hex ){
+    var values = hex.split(''), r, g, b;
+
+    r = parseInt(values[0].toString() + values[1].toString(), 16);
+    g = parseInt(values[2].toString() + values[3].toString(), 16);
+    b = parseInt(values[4].toString() + values[5].toString(), 16);
+
+    return [r, g, b];
+
+  }
+  function set_color(split_C){
+    position = item_obj[split_C[3]].face_location;
+    <!--        alpha = item_obj[split_C[3]].alpha;-->
+    alpha = 1.0;
+    h_color = item_obj[split_C[3]].c_code;
+    c_arr = hexToRgb(h_color);
+    R = c_arr[0];
+    G = c_arr[1];
+    B = c_arr[2];
+  }
+  const goPrevBtn = document.querySelector('.go-prev');
+  const goCartBtn = document.querySelector('.go-cart');
+
+  goPrevBtn.addEventListener('click', () => history.back());
+  goCartBtn.addEventListener('click', () => location.href = `/cartList/${localStorage.getItem('store_id')}`);
+
+  const addItemBtn = document.querySelector('.add-item');
+  const payItemBtn = document.querySelector('.pay-item');
+
+  addItemBtn.addEventListener('click', () => location.href = '/categoryList');
+  payItemBtn.addEventListener('click', () => location.href = '/cartList');
+
+  /////// item개수만큼 for 문 돌리기! // item개수만큼 for문을 돌리면 div가 아이템 갯수만큼 만들어지지 않을까? -> 성공
+  /* 각 부위별로 존재하는지 확인하는 변수 ex) Y,N */
+  let exist_L = 'N';  // 입술 Lip
+  let exist_C = 'N';  // 볼 Cheek
+  let exist_B = 'N';  // 눈썹 Brow
+
+  // 해당 상품의 부위 저장
+  let item_position;
+
+  let is_first = true; // 맨 처음 상품인지 확인
+
+  let cur_item_id;
+
+  let cnt_item;
+  cnt_item = itemIdList.length;
+
+  for (let c=0; c<cnt_item; c++) {
+      const itemOptionCount = optionIdList.length;
+      cur_item_id = itemIdList[c];
+      // item_position = item_obj[]
+      console.log(optionIdList[c]);
+
+      const itemContainer = document.querySelector('.item-container');
+      const itemDiv = document.createElement('div');
+      itemDiv.classList.add(`item-div-${itemIdList[c]}`);
+
+      const itemCheck = document.createElement('button');
+      let isFirstItem_L = true;
+      let isFirstItem_C = true;
+      let isFirstItem_B = true;
+
+      itemCheck.classList.add(`item-check-btn-${itemIdList[c]}`);
+      console.log(optionIdList)
+      // switch 문에서 확인해야할 것 -> 현재 생성되는 버튼의 제품의 face_location이 어딘지 확인하고, 맨 처음요소만 checkbox 생성
+      switch (item_obj[optionIdList[c].face_location]) {
+          case "L":
+              if (isFirstItem_L == true) {
+                  isFirstItem_L = false;
+                  itemCheck.innerHTML = '&#10004;';
+                  itemCheck.classList.add(`checked`);
+                  break;
+              } else
+                  break;
+          case "C":
+              if (isFirstItem_C == true) {
+                  isFirstItem_C = false;
+                  itemCheck.innerHTML = '&#10004;';
+                  itemCheck.classList.add(`checked`);
+                  break;
+              } else
+                  break;
+          case "B":
+              if (isFirstItem_B == true) {
+                  isFirstItem_B = false;
+                  itemCheck.innerHTML = '&#10004;';
+                  itemCheck.classList.add(`checked`);
+                  break;
+              }
+          default:
+              break;
+      }
+
+
+      itemCheck.addEventListener('click', () => {
+          if (isItemCheck) {
+              itemCheck.innerHTML = '';
+              isItemCheck = false;
+          } else {
+              itemCheck.innerHTML = '&#10004;';
+              isItemCheck = true;
+          }
+      });
+
+      let getClass;
+      let split_C;
+      let first_c = [];
+
+      let check_id;
+      let num_id; // 현재 몇번째 인덱스까지 넣었는지 저장할 변수
+      let option_num = 0;
+
+      item_id = itemIdList[c];
+      const createItemOptionContainer = item_id => {
+
+          const itemOptionContainer = document.createElement('div');
+          itemOptionContainer.classList.add(`item-option-container-${itemIdList[c]}`);
+          <!--      itemOptionContainer.classList.add(`option-${option_num}`);-->
+          <!--      option_num += 1;-->
+
+          let break_point = 'N';
+
+
+          optionIdList.forEach(optionId => {
+            try {
+              if (item_obj[optionId].parent_id == cur_item_id) {
+                  const option = document.createElement('button');
+                  option.classList.add(`item_options`);
+                  option.classList.add(`item-option-${itemIdList[c]}-${optionId}`);
+                  option.textContent = item_obj[optionId].name;
+                  option.addEventListener('click', () => {
+                      getClass = option.getAttribute('class');
+                      split_C = split(getClass, '-'); // split_C[3] : optionId
+                      // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
+                      set_color(split_C);
+                      // console.log(c_arr,R,G,B);
+                      // console.log(typeof position,position);
+                      itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
+                  });
+                  itemOptionContainer.appendChild(option);
+              }}
+              catch(e) {
+              console.log(e);
+              }
+
+
+          });
+
+          return itemOptionContainer;
+      };
+
+
+      const itemOptionContainer = createItemOptionContainer(itemIdList[c]);
+
+      const itemImgContainer = document.createElement('div');
+      itemImgContainer.classList.add(`item-img-container-${itemIdList[c]}`);
+      const itemImg = document.createElement('img');
+      itemImg.classList.add(`item-img-${itemIdList[c]}`);
+      itemImg.src = itemImgList[c];
+
+      itemImgContainer.appendChild(itemImg);
+
+
+      itemImgContainer.addEventListener('click', () => {
+
+          const checkedContainer = document.querySelector('.checked');
+
+          console.log('clicked');
+          if (itemOptionContainer.classList.contains('show')) {
+              itemOptionContainer.classList.remove('show');
+          } else {
+              itemOptionContainer.classList.add('show');
+
+              if (checkedContainer) {
+                  checkedContainer.innerText = ' ';
+                  checkedContainer.classList.remove('checked');
+                  itemImgContainer.previousSibling.innerHTML = '✓';
+                  itemImgContainer.previousSibling.classList.add('checked');
+              } else {
+              }
+          }
+      });
+
+      const itemTitle = document.createElement('div');
+      itemTitle.classList.add(`item-title-${itemIdList[c]}`);
+      itemTitle.textContent = itemNameList[c];
+
+      itemDiv.appendChild(itemCheck);
+      itemDiv.appendChild(itemImgContainer);
+      itemDiv.appendChild(itemTitle);
+      itemDiv.appendChild(itemOptionContainer);
+
+      itemContainer.appendChild(itemDiv);
+  }
+  let left_btn;
+  let right_btn;
+  let pageNum = 1;
+
+  left_btn = document.querySelector('.item-prev-btn');
+  right_btn = document.querySelector('.item-next-btn');
+
+  left_btn.addEventListener('click', () => {
+      if(pageNum != 1){
+          fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+              .then(res => res.text())
+              .then(res => {
+                  console.log(res)
+
+              });
+      }
+      else{ // 맨 처음 페이지 일 떄
+          alert('맨 처음 목록입니다!');
+          return ;
+      }
+
+  });
+
+  right_btn.addEventListener('click', () => {
+      pageNum += 1;
+      if(pageNum != 1){
+          fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+              .then(res => res.text())
+              .then(res => {
+                  console.log(res)
+                  // split해서 필요한 정보만 추출하기
+                  console.log(item_ImgList);
+              });
+      }
+      else{
+          return ;
+      }
+
+  });
+
+  // 필요한 기능 - 1. 각 부위별로 첫번째 제품 색만 적용시키기 ( 입술, 아이브로우, 볼터치 )
+
+
+
+
+</script>
+<script src="/js/sketch.js"></script>
+</html>
+

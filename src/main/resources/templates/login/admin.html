@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/category-part.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/modal.css">
+</head>
+<body>
+    <div id="wrap">
+        <header>
+            <h1 class="title">매장 관리</h1>
+            <div class="button-container">
+                <button class="logout-btn btn">로그아웃</button>
+                <button class="go-home-btn btn">홈으로 가기</button>
+            </div>
+        </header>
+        <div class="content-container">
+            <div class="store-name-container">
+                <h3 class="store-name"></h3>
+            </div>
+            <div class="sales-container">
+                <div class="today-sales-row">
+                    <p class="sales-text">오늘 매출액</p>
+                    <p class="sales-today sales"></p>
+                </div>
+                <div class="late-sales-row">
+                    <p class="sales-text">지난 주 매출액</p>
+                    <p class="sales-late sales"></p>
+                </div>
+            </div>
+            <h3 class="notice-title">발주 필요 품목</h3>
+            <div class="item-container">
+                <button class="item-btn item-prev-btn">
+                    &lt;
+                </button>
+                <table class="table table-striped item-row-container" style="margin: 0; width: 100%">
+                    <tbody style="display: flex; flex-flow: row wrap; justify-content: center;" class="tbody">
+<!--                    <tr class="item-card" th:each="option : ${item_options}"-->
+<!--                        style="width: 225px; margin: 10px;">-->
+<!--                        <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:goItemPage(' + ${option.item.id} + ')'">-->
+<!--                            <img class="thumbnail-img" th:alt="${option.item.id}"></img>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <hr class="divide-img-info">-->
+<!--                        </td>-->
+<!--                        <td th:text="${option.item_option_name}" class="item-title"-->
+<!--                            th:onclick="'javascript:goItemPage(' + ${option.item.id} + ')'"></td>-->
+<!--                    </tr>-->
+                    </tbody>
+                </table>
+                <button class="item-btn item-next-btn">&gt;</button>
+            </div>
+        </div>
+        <div class="modal-container">
+
+        </div>
+    </div>
+<script th:inline="javascript">
+    let salesT;
+    let salesW;
+    /*<![CDATA[*/
+    salesT = /*[[${todaySale}]]*/;
+    salesW = /*[[${weekSale}]]*/;
+
+    let item_id;
+    let option_id;
+    const optionIdList = [];
+    const itemObj = {};
+    const imgObj = {};
+
+    /*[# th:each="img : ${item_img}"]*/
+    item_id = /*[[${img.item.id}]]*/
+    imgObj[item_id] = {
+        id: item_id,
+        img: /*[[${img.item_img}]]*/
+    };
+    /*[/]*/
+
+    /*[# th:each="option : ${item_options}"]*/
+    option_id = /*[[${option.id}]]*/;
+    item_id = /*[[${option.item.id}]]*/;
+    optionIdList.push(option_id);
+    itemObj[option_id] = {
+        name: /*[[${option.item_option_name}]]*/,
+        parent_id: item_id,
+        img: imgObj[item_id].img
+    };
+    /*[/]*/
+
+    console.log(itemObj);
+    console.log(imgObj);
+
+    /*]]>*/
+
+
+    const imgElList = document.querySelectorAll('.thumbnail-img');
+    imgElList.forEach(el => {
+       el.src = imgObj[Number(el.alt)].img;
+    });
+
+    const createItemCard = option_id => {
+        const itemCardTr = document.createElement('tr');
+        itemCardTr.classList.add('item-card');
+
+        const imgTd = document.createElement('td');
+        imgTd.classList.add('img-td');
+        imgTd.addEventListener('click', () => location.href = `/item/${itemObj[option_id].parent_id}`);
+        const thumbnailImg = document.createElement('img');
+        thumbnailImg.classList.add('thumbnail-img');
+        thumbnailImg.alt = itemObj[option_id].name;
+        thumbnailImg.src = itemObj[option_id].img;
+        imgTd.appendChild(thumbnailImg);
+
+        const hrTd = document.createElement('td');
+        const divideHr = document.createElement('hr');
+        divideHr.classList.add('divide-img-info');
+        hrTd.appendChild(divideHr);
+
+        const itemTitleTd = document.createElement('td');
+        itemTitleTd.classList.add('item-title');
+        itemTitleTd.addEventListener('click', () => location.href = `/item/${itemObj[option_id].parent_id}`);
+        itemTitleTd.textContent = itemObj[option_id].name;
+
+        itemCardTr.appendChild(imgTd);
+        itemCardTr.appendChild(hrTd);
+        itemCardTr.appendChild(itemTitleTd);
+
+        return itemCardTr;
+    }
+
+    const cardList = [];
+    const tbody = document.querySelector('.tbody');
+    let pageIdx = 1;
+
+    Object.keys(itemObj).forEach(id => cardList.push(createItemCard(id)));
+
+    localStorage.setItem('page', 1);
+    localStorage.setItem('categoryMax', Math.round(Object.keys(itemObj).length / 9) );
+    console.log(localStorage.getItem('categoryMax'));
+
+    for (let i = 0; i < cardList.length; i++) {
+        if (i === 9) break;
+        tbody.appendChild(cardList[i]);
+    }
+
+    const itemPrevBtn = document.querySelector('.item-prev-btn');
+    const itemNextBtn = document.querySelector('.item-next-btn');
+
+    const modalContainer = document.querySelector('.modal-container');
+
+    const createModal = state => {
+        const modalBG = document.createElement('div');
+        modalBG.classList.add('modal-background');
+
+        const modalBox = document.createElement('div');
+        modalBox.classList.add('modal-box');
+
+        const modalCloseBtn = document.createElement('span');
+        modalCloseBtn.classList.add('modal-close-btn');
+        modalCloseBtn.innerHTML = '&times;';
+        modalCloseBtn.addEventListener('click', () => {
+            modalContainer.innerHTML = '';
+            modalContainer.classList.remove('display');
+        });
+
+        const modalContent = document.createElement('p');
+        modalContent.classList.add('modal-content');
+        if (state === 'excess') {
+            modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+        } else if (state === 'lack') {
+            modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+        } else if (state === 'first') {
+            modalContent.textContent = '카테고리 첫 페이지입니다.';
+        } else if (state === 'last') {
+            modalContent.textContent = '카테고리 마지막 페이지입니다.';
+        } else if (state === 'clear') {
+            modalContent.textContent = '장바구니를 성공적으로 비웠습니다.';
+        } else {
+            modalContent.textContent = '상품을 장바구니에서 삭제했습니다.';
+        }
+
+        modalBox.appendChild(modalCloseBtn);
+        modalBox.appendChild(modalContent);
+
+        modalBG.appendChild(modalBox);
+
+        return modalBG;
+    }
+
+    const checkFirstPage = page => (page <= 1);
+    const checkLastPage = page => page >= Number(localStorage.getItem('categoryMax'));
+
+    itemPrevBtn.addEventListener('click', () => {
+        if (checkFirstPage(Number(localStorage.getItem('page')))) {
+            console.log('First Page!');
+            // alert('제일 첫 페이지입니다.');
+            modalContainer.appendChild(createModal('first'));
+            modalContainer.classList.add('display');
+        } else {
+            tbody.innerHTML = '';
+            for (let i = pageIdx-- * 9; i < Object.keys(cardList).length; i++) {
+                if (i === (pageIdx * 9)) break;
+                tbody.appendChild(cardList[i]);
+            }
+
+            localStorage.setItem('page', Number(localStorage.getItem('page')) - 1);
+        }
+    });
+
+    itemNextBtn.addEventListener('click', () => {
+        if (checkLastPage(Number(localStorage.getItem('page')))) {
+            console.log('Last Page!');
+            //alert('제일 마지막 페이지입니다.');
+            modalContainer.appendChild(createModal('last'));
+            modalContainer.classList.add('display');
+        } else {
+            tbody.innerHTML = '';
+            for (let i = pageIdx++ * 9; i < Object.keys(cardList).length; i++) {
+                if (i === (pageIdx * 9)) break;
+                tbody.appendChild(cardList[i]);
+            }
+
+            localStorage.setItem('page', Number(localStorage.getItem('page')) + 1);
+        }
+    });
+
+
+    const storeName = document.querySelector('.store-name');
+    // 현재 로그인한 store_id와 맞지 않는다면 밴하는 방법을 생각해 봐야 함
+    // 일단 localStorage에 기반하기로 함
+    storeName.textContent = localStorage.getItem('store_name');
+
+    const salesToday = document.querySelector('.sales-today');
+    const salesLate = document.querySelector('.sales-late');
+    salesToday.textContent = `${salesT} 원`;
+    salesLate.textContent = `${salesW} 원`;
+
+    const goItemPage = id => location.href = `/item/${id}`;
+
+    const goHomeBtn = document.querySelector('.go-home-btn');
+    const logoutBtn = document.querySelector('.logout-btn');
+
+    goHomeBtn.addEventListener('click', () => location.href = '/main' );
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('store_id');
+        localStorage.removeItem('store_name');
+        location.href = '/';
+    })
+</script>
+</body>
+</html>

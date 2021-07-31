@@ -1,0 +1,118 @@
+#wrap {
+    background-color: #FFF8E5;
+    flex-flow: column nowrap;
+}
+.top-area {
+  width: 100%;
+  height: 33%;
+  display: flex;
+  flex-flow: column wrap;
+  padding-top: 2rem;  
+}
+header {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  color: #2E0A0A;
+}
+.go-prev {
+  width: 120px;
+  height: 120px;
+  font-size: 4.5rem;
+  color: #2E0A0A;
+  text-align: center;
+  line-height: 70px;
+  background-color: rgba(0, 0, 0, 0);
+}
+h1 {
+  margin: 0;
+  font-size: 4.5rem;
+}
+.search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+}
+.search-input {
+  border: 2px solid #2678D9;
+  border-radius: 15px 0 0 15px;
+  width: 550px;
+  height: 90px;
+  padding: 25px;
+  font-size: 1.25rem;
+}
+.search-btn {
+  background: #2678D9;
+  width: 75px;
+  height: 90px;
+  border-radius: 0 15px 15px 0;
+  color: #fff;
+  font-size: 1.2rem;
+}
+.turn-on-mic {
+  margin-left: 25px;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url('../img/microphone-black-shape.png');
+  background-size: cover;
+  width: 65px;
+  height: 65px;
+  font-size: 0;
+}
+.bottom-area {
+  width: 100%;
+  height: 67%;
+  background-color: rgba(255, 218, 115, 0.7);
+  border-radius: 70px 70px 0 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 25px 0;
+}
+.row {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: 15px 0; */
+}
+.row > * {
+  margin: 0 15px;
+}
+.category-btn {
+  display: inline-block;
+  width: 20%;
+  border-radius: 30px;
+  width: 200px;
+  height: 250px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+}
+.category-btn p {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+}
+.beauty-category {
+  background-color: #FF8569;
+  color: #381111;
+}
+.food-health-category {
+  background-color: #FFC41E;
+  color: #322E0C;
+}
+.etc-category {
+  background-color: #44A4FE;
+  color: #163D78;
+}
+.category-btn-img {
+  width: 128px;
+  height: 128px;
+}

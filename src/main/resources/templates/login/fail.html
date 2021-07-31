@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 실패</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/fail.css">
+</head>
+<body>
+<div id="wrap">
+    <p class="notice">ID / 코드를 다시 확인해주세요.</p>
+    <div class="btn-container">
+        <button class="btn go-login-btn">로그인 재시도</button>
+        <button class="btn go-home-btn">홈으로</button>
+    </div>
+</div>
+<script>
+    const goLoginBtn = document.querySelector('.go-login-btn');
+    goLoginBtn.addEventListener('click', () => history.back());
+    const goHomeBtn = document.querySelector('.go-home-btn');
+    goHomeBtn.addEventListener('click', () => '/main');
+</script>
+</body>
+</html>

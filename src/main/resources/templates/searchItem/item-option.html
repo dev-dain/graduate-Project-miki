@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- item-detail에서 '장바구니 담기' 버튼을 선택했을 때 나올 옵션 선택 코드 조각 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 보기</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/item-detail.css">
+</head>
+<body>
+    <div class="modal-in-modal">
+
+    </div>
+    <div class="table-container">
+        <button class="fold-option-btn rotate">^</button>
+        <table class="option-container">
+            <thead>
+            <tr>
+                <th colspan="2" class="close">
+                    <span class="cancel">&times;</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">옵션 선택</th>
+            </tr>
+            <tr class="option-select-tr">
+                <td>
+                    <div class="option-select">옵션 선택</div>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="option-row" th:each="option : ${item_option}">
+                <!--            <td th:text="${option.id}"></td>-->
+                <td>
+                    <button class="td-option"th:text="${option.item_option_name}"></button>
+                </td>
+                <!--            <td th:text="${option.item.name}"></td>-->
+            </tr>
+            <tr class="selected-option">
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+<script th:inline="javascript">
+    const quantityList = [];
+    const optionIDList = [];
+    const totalQuantityList = [];
+    let selectedList = [];
+    /*<![CDATA[*/
+
+    /*[# th:each="quantity : ${store_Quantity}"]*/
+    quantityList.push(/*[[${quantity.stock_quantity}]]*/);
+    /*[/]*/
+
+    /*[# th:each="option : ${item_option}"]*/
+    optionIDList.push(/*[[${option.id}]]*/);
+    totalQuantityList.push(/*[[${option.stockQuantity}]]*/);
+    /*[/]*/
+
+
+    /*]]>*/
+
+    console.log(quantityList);
+    console.log(totalQuantityList);
+    /* const item_id = window.location.pathname.split('/')[2]; */
+    const tbody = document.querySelector('tbody');
+    const optionContainer = document.querySelector('.option-container');
+    const optionRows = document.querySelectorAll('.option-row');
+    const selectedOption = document.querySelector('.selected-option > td'); /* 선택된 옵션 */
+    const optionSelectTr = document.querySelector('.option-select-tr'); /* 옵션 */
+    const optionSelect = document.querySelector('.option-select-tr > td');
+    const foldOptionBtn = document.querySelector('.fold-option-btn');
+    const cancelSpan = document.querySelector('.cancel');
+    const modalInModal = document.querySelector('.modal-in-modal');
+
+
+
+    const createModal = (state, content='') => {
+        const modalBG = document.createElement('div');
+        modalBG.classList.add('modal-background');
+
+        const modalBox = document.createElement('div');
+        modalBox.classList.add('modal-box');
+
+        const modalCloseBtn = document.createElement('span');
+        modalCloseBtn.classList.add('modal-close-btn');
+        modalCloseBtn.innerHTML = '&times;';
+        modalCloseBtn.addEventListener('click', () => {
+            modalInModal.innerHTML = '';
+            modalInModal.classList.remove('display');
+        });
+
+        const modalContent = document.createElement('p');
+        modalContent.classList.add('modal-content');
+        if (state === 'excess') {
+            modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+        } else if (state === 'lack') {
+            modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+        } else {
+            modalContent.innerHTML = content;
+        }
+
+        modalBox.appendChild(modalCloseBtn);
+        modalBox.appendChild(modalContent);
+
+        modalBG.appendChild(modalBox);
+
+        return modalBG;
+    }
+
+
+    /* 개별 옵션을 클릭했을 때 선택된 상품으로 등록하는 함수 */
+    const addOption = (id, option_id, quantity, name) => {
+        const sOptionDiv = document.createElement('div');
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
+        sOptionDiv.classList.add(`s-option-${id}-${option_id}`);
+
+        const countDiv = document.createElement('div');
+        const subCountBtn = document.createElement('button');
+        const countInput = document.createElement('input');
+        const addCountBtn = document.createElement('button');
+        const cancelSpan = document.createElement('span');
+        cancelSpan.classList.add('cancel-s');
+        cancelSpan.innerHTML = '&times;';
+
+        subCountBtn.classList.add(`m-sub-count-${option_id}`);
+        countInput.classList.add(`m-count-${option_id}`);
+        addCountBtn.classList.add(`m-add-count-${option_id}`);
+        countInput.value = 1;
+
+        subCountBtn.textContent = '-';
+        addCountBtn.textContent = '+';
+
+        selectedOptionList.push({item_id: id, item_option_id: option_id, count: 1});
+
+        subCountBtn.addEventListener('click', () => {
+            if (Number(countInput.value) < 2) {
+                /* alert('수량은 1개 이상이어야 합니다.'); */
+                modalInModal.appendChild(createModal('lack'));
+                modalInModal.classList.add('display');
+            } else {
+                countInput.value = Number(countInput.value) - 1;
+                for (let i = 0; i < selectedOptionList.length; i++) {
+                    if (selectedOptionList[i].item_option_id === option_id) {
+                        selectedOptionList[i].count = Number(countInput.value);
+                    }
+                }
+            }
+        });
+        addCountBtn.addEventListener('click', () => {
+            if (Number(countInput.value) >= quantity) {
+                modalInModal.appendChild(createModal('excess'));
+                modalInModal.classList.add('display');
+                /* alert('재고 상품보다 많이 담을 수 없습니다.'); */
+            } else {
+                countInput.value = Number(countInput.value) + 1;
+                for (let i = 0; i < selectedOptionList.length; i++) {
+                    if (selectedOptionList[i].item_option_id === option_id) {
+                        selectedOptionList[i].count = Number(countInput.value);
+                    }
+                }
+            }
+        });
+        cancelSpan.addEventListener('click', () => {
+            countInput.value = 0;
+            selectedOption.childNodes.forEach(option => {
+                if (option === sOptionDiv) {
+                    selectedOption.removeChild(option);
+                }
+            });
+            for (let i = 0; i < selectedOptionList.length; i++) {
+                if (selectedOptionList[i].item_option_id === option_id) {
+                    selectedOptionList.splice(i, 1);
+                }
+            }
+        });
+
+        countDiv.appendChild(subCountBtn);
+        countDiv.appendChild(countInput);
+        countDiv.appendChild(addCountBtn);
+        countDiv.appendChild(cancelSpan);
+
+        sOptionDiv.appendChild(nameSpan);
+        sOptionDiv.appendChild(countDiv);
+
+        selectedOption.appendChild(sOptionDiv);
+    }
+
+    cancelSpan.addEventListener('click', () => {
+        const modalContainer = document.querySelector('.modal-container');
+        modalContainer.style.display = 'none';
+        selectedList = [];
+        selectedOptionList = [];
+        selectedOption.innerHTML = '';
+    });
+
+    optionSelect.addEventListener('click', () => {
+        optionRows.forEach(row => row.style.display = 'block');
+        selectedOption.style.display = 'none';
+        optionSelectTr.style.opacity = 0;
+    });
+
+    foldOptionBtn.addEventListener('click', () => {
+        if (foldOptionBtn.classList.contains('rotate')) {
+            optionContainer.classList.add('fold-bar');
+            optionContainer.classList.remove('unfold-bar');
+            setTimeout(() => {
+                foldOptionBtn.classList.remove('rotate');
+                optionContainer.style.display = 'none';
+            }, 200);
+        } else {
+            optionContainer.classList.add('unfold-bar');
+            optionContainer.style.display = 'table';
+            optionContainer.classList.remove('fold-bar');
+            foldOptionBtn.classList.add('rotate');
+        }
+    });
+
+
+    for (let i = 0; i < tbody.children.length; i++) {
+        if (!quantityList[i]) {
+            tbody.children[i].children[0].children[0].style.color = 'gray';
+            const soldoutBtn = document.createElement('button');
+            soldoutBtn.classList += 'soldout-btn';
+
+            if (!totalQuantityList[i]) {
+                soldoutBtn.textContent = '전체 품절';
+                tbody.children[i].children[0].children[0].disabled = true;
+                tbody.children[i].appendChild(soldoutBtn);
+            } else {
+                soldoutBtn.textContent = '다른 매장 보기';
+                tbody.children[i].appendChild(soldoutBtn);
+                soldoutBtn.addEventListener('click', () => tbody.children[i].children[0].click());
+                tbody.children[i].children[0].addEventListener('click', () => {
+                    console.log('click');
+                    fetch(`/soldout/${localStorage.getItem('store_id')}/${optionIDList[i]}`)
+                        .then(res => res.text())
+                        .then(data => {
+                            const storeRow = data.split('<div id="wrap">')[1].split('<!--')[0];
+                            modalInModal.appendChild(createModal('soldout', storeRow));
+                            modalInModal.classList.add('display');
+                        })
+                        .catch(e => console.error(e));
+                });
+            }
+        } else {
+            tbody.children[i].children[0].addEventListener('click', () => {
+                if (!selectedList.includes(tbody.children[i].children[0].textContent.trim())) {
+                    const item_name = tbody.children[i].children[0].textContent.trim();
+                    selectedList.push(item_name);
+                    addOption(item_id, optionIDList[i], quantityList[i], item_name);
+                }
+
+                optionRows.forEach(row => row.style.display = 'none');
+                optionSelectTr.style.opacity = 1;
+                selectedOption.style.display = 'block';
+            });
+        }
+    }
+
+
+
+    // fetch에서 잘라오는 데 쓰이는 용도임 dummy
+
+</script>
+</body>
+</html>

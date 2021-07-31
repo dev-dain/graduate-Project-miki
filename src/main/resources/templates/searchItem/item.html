@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- 카테고리 페이지에서 상품을 선택했을 때 표시되는 상품 페이지 -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/item.css">
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <div class="title-container">
+      <button class="go-prev">&lt;</button>
+      <h1 class="title">상품</h1>
+    </div>
+    <div class="top-button-container">
+      <button class="go-cart" title="https://www.freepik.com"></button>
+    </div>
+  </header>
+  <div class="img-container">
+    <img th:src="${item_img.item_img}" th:alt="${item_name}" class="item-img">
+  </div>
+  <div class="info-container">
+    <h3 th:text="${item_name}" class="item-title"></h3>
+    <div class="price-container">
+      <p
+              th:if="${item_price} != ${item_discountPrice}"
+              th:text="${item_price} + '원'"
+              class="origin-price"
+      ></p>
+      <p th:text="${item_discountPrice} + '원'" class="discount-price"></p>
+    </div>
+    <div class="rate-container">
+      <span th:text="'⭐' + ${review_count} + ' '" class="review-rate"></span>
+      <span class="review-rate review"></span>
+    </div>
+  </div>
+  <footer>
+    <p class="go-info">상품 상세 설명 보기</p>
+  </footer>
+</div>
+<script src="/js/createBtnContainer.js"></script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const item_id = /*[[ ${item_id} ]]*/;
+  const item_isTestable = /*[[ ${item_isTestable} ]]*/;
+  const review_rate = /*[[ ${review_rate} ]]*/;
+  /*]]*/
+  const reviewSpan = document.querySelector('.review');
+  reviewSpan.textContent = (review_rate === 'NaN') ? `(0)` : `(${review_rate.toFixed(1)})`;
+
+  const footer = document.querySelector('footer');
+  footer.addEventListener('click', () => location.href = `/item/${item_id}/detail`);
+
+  const getItemInfoElList = (item_id, item_isTestable) => {
+    const btnContainer = document.createElement('div');
+    btnContainer.classList += 'btn-container';
+    createBtnContainer(item_id, item_isTestable).forEach(el =>
+            btnContainer.appendChild(el));
+
+    return btnContainer;
+  }
+
+  const infoContainer = document.querySelector('.info-container');
+  infoContainer.appendChild(getItemInfoElList(item_id, item_isTestable));
+
+</script>
+<script src="/js/item.js"></script>
+</body>
+</html>

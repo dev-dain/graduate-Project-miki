@@ -1,0 +1,70 @@
+#wrap {
+    flex-flow: column nowrap;
+    background-color: #FFF8E5;
+    color: #2E0A0A;
+    padding: 0 3rem;
+}
+header {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 0;
+}
+h1 {
+    margin: 0;
+    font-size: 4rem;
+}
+.store-name { font-size: 3rem; }
+.sales-container {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+.sales-text { font-size: 2rem; }
+.notice-title {
+    font-size: 3rem;
+    padding: 5rem 0;
+    border-top: 3px solid #FFc41e;
+}
+[class$='sales-row'] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sales {
+    color: #E93C15;
+    font-size: 1.8rem;
+}
+.item-container {
+    flex-flow: row;
+    justify-content: flex-start;
+    padding: 0 2.5rem;
+}
+.btn {
+    width: 130px;
+    height: 60px;
+    color: #fff;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 20px;
+}
+.logout-btn {
+    background: #f66657;
+}
+.go-home-btn {
+    background: #ffda73;
+}
+.item-card {
+    width: 225px;
+    margin: 10px;
+}
+.img-td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
