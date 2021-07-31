@@ -192,7 +192,7 @@
 
       const form = document.querySelector('.cart-form');
       const selectInput = document.querySelector('.selectInput');
-      selectInput.setAttribute('value', JSON.stringify(selectedCart));
+      selectInput.setAttribute('value', encodeURI(JSON.stringify(selectedCart)));
       form.submit();
       // fetch(`/orderSelectList`, {
       //   method: 'POST',

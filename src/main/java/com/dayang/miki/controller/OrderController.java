@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,11 +87,14 @@ public class OrderController {
     }
 
     @PostMapping(value = "/orderSelectList")
-    public String orderSelectList(@RequestBody List<Integer> cartList, Model model){
+    public String orderSelectList(@RequestBody String cartList, Model model) throws UnsupportedEncodingException {
+        String b = URLDecoder.decode(cartList, String.valueOf(StandardCharsets.UTF_8));
 
-        for(Integer s : cartList){
-            System.out.println(s);
-        }
+        System.out.println(b.replaceAll("%2C", ","));
+
+//        for(String s : cartList.split()){
+//            System.out.println(s);
+//        }
      /*   List<Item> items =  new ArrayList<>();
         List<Item_option> item_options = new ArrayList<>();
         List<Cart> carts = new ArrayList<>();
