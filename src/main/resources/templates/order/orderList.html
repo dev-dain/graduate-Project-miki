@@ -10,6 +10,15 @@
     <title>주문 / 결제</title>
 </head>
 <body>
+<form
+        class="order-form"
+        method="POST"
+        action="/order"
+        id="orderForm"
+        enctype="application/json"
+>
+    <input type="hidden" name="cartList" value="" class="orderInput">
+</form>
     <div id="wrap">
         <header>
             <div class="title-container">
@@ -70,6 +79,9 @@
             </div>
             <button class="go-pay-btn"></button>
         </footer>
+        <div class="modal-container">
+
+        </div>
     </div>
 
 <script th:inline="javascript">
@@ -77,7 +89,9 @@
     const item_option_obj = {};
     const item_img_obj = {};
     const cart_count_obj = {};
+    const cartIdList = [];
 
+    let cart_id;
     let item_id;
     let item_img_id;
     let item_option_id;
@@ -113,6 +127,8 @@
 
     /*[# th:each="cart : ${carts}"]*/
     item_option_id = /*[[${cart.item_option.id}]]*/;
+    cart_id = /*[[${cart.id}]]*/;
+    cartIdList.push(cart_id);
     cart_count_obj[item_option_id] = {
       id: /*[[${cart.id}]]*/,
       count: /*[[${cart.count}]]*/
@@ -121,6 +137,53 @@
 
 
     /*]]>*/
+
+    console.log(cartIdList);
+
+    const modalContainer = document.querySelector('.modal-container');
+
+    const createModal = state => {
+        const modalBG = document.createElement('div');
+        modalBG.classList.add('modal-background');
+
+        const modalBox = document.createElement('div');
+        modalBox.classList.add('modal-box');
+
+        const modalCloseBtn = document.createElement('span');
+        modalCloseBtn.classList.add('modal-close-btn');
+        modalCloseBtn.innerHTML = '&times;';
+        modalCloseBtn.addEventListener('click', () => {
+            modalContainer.innerHTML = '';
+            modalContainer.classList.remove('display');
+        });
+
+        const modalContent = document.createElement('p');
+        modalContent.classList.add('modal-content');
+        if (state === 'excess') {
+            modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
+        } else if (state === 'lack') {
+            modalContent.textContent = '수량은 1개 이상이어야 합니다.';
+        } else if (state === 'first') {
+            modalContent.textContent = '장바구니 첫 페이지입니다.';
+        } else if (state === 'last') {
+            modalContent.textContent = '장바구니 마지막 페이지입니다.';
+        } else if (state === 'clear') {
+            modalContent.textContent = '장바구니를 성공적으로 비웠습니다.';
+        } else if (state === 'check') {
+            modalContent.textContent = '이용약관에 동의해주세요.';
+        } else {
+            modalContent.textContent = '상품을 장바구니에서 삭제했습니다.';
+        }
+
+        modalBox.appendChild(modalCloseBtn);
+        modalBox.appendChild(modalContent);
+
+        modalBG.appendChild(modalBox);
+
+        return modalBG;
+    }
+
+
 
 
     const rowGoodsList = document.querySelector('.row-goods-list');
@@ -263,13 +326,18 @@
         localStorage.setItem('cart_page', 1);
     let curCartPage = 1;
     const maxCartPage = Math.ceil(itemRowList.length / pageViewCount);
+    console.log(maxCartPage);
 
     const currentPage = document.querySelector('.current-page');
     const goPrevPageBtn = document.querySelector('.go-prev-page-btn');
     const goNextPageBtn = document.querySelector('.go-next-page-btn');
 
     for (let i = 0; i < pageViewCount; i++) {
-      rowGoodsList.appendChild(itemRowList[i]);
+        if (itemRowList[i]) {
+            rowGoodsList.appendChild(itemRowList[i]);
+        } else {
+            break;
+        }
     }
 
     currentPage.textContent = `${curCartPage} / ${maxCartPage}`;
@@ -325,6 +393,18 @@
 
     const goPayBtn = document.querySelector('.go-pay-btn');
     goPayBtn.textContent = `${wholePrice} 원 결제하기`;
+    goPayBtn.addEventListener('click', () => {
+        if (noticeCheckBtn.classList.contains('selected')) {
+            console.log('OK');
+            const form = document.querySelector('.order-form');
+            const selectInput = document.querySelector('.orderInput');
+            selectInput.setAttribute('value', encodeURI(JSON.stringify(cartIdList)));
+            form.submit();
+        } else {
+            modalContainer.appendChild(createModal('check'));
+            modalContainer.classList.add('display');
+        }
+    })
 
 </script>
 </body>
