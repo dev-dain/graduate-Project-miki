@@ -13,7 +13,6 @@
 <form
         class="order-form"
         method="POST"
-        action="/order"
         id="orderForm"
         enctype="application/json"
 >
@@ -391,13 +390,16 @@
         }
     });
 
+    const form = document.querySelector('.order-form');
+    form.action = `/order?store_id=${localStorage.getItem('store_id')}`;
+    const selectInput = document.querySelector('.orderInput');
+
+
     const goPayBtn = document.querySelector('.go-pay-btn');
     goPayBtn.textContent = `${wholePrice} 원 결제하기`;
     goPayBtn.addEventListener('click', () => {
         if (noticeCheckBtn.classList.contains('selected')) {
             console.log('OK');
-            const form = document.querySelector('.order-form');
-            const selectInput = document.querySelector('.orderInput');
             selectInput.setAttribute('value', encodeURI(JSON.stringify(cartIdList)));
             form.submit();
         } else {
