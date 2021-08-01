@@ -4,14 +4,17 @@ import com.dayang.miki.domain.*;
 import com.dayang.miki.service.CartService;
 import com.dayang.miki.service.ItemService;
 import com.dayang.miki.service.OrderService;
+import com.dayang.miki.service.StoreService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -29,9 +32,11 @@ public class OrderController {
     private final OrderService orderService;
     private final ItemService itemService;
     private final CartService cartService;
+    private final StoreService storeService;
 
+    @Transactional
     @PostMapping("/order")
-    public String order(@RequestBody String cartList, Model model) throws UnsupportedEncodingException {
+    public String order(@RequestParam("store_id")Long id,  @RequestBody String cartList, Model model) throws UnsupportedEncodingException {
         String b = URLDecoder.decode(cartList, String.valueOf(StandardCharsets.UTF_8));
         b = b.replaceAll("%2C", "");
         b = b.replaceAll("%5B", "");
@@ -49,7 +54,7 @@ public class OrderController {
         for(Long l :longId){
             cart.add(cartService.findOne(l));
         }
-
+        Store store = storeService.findById(id);
         int price =0;
         for(Cart cart1 : cart){
             price += (cart1.getItem().getItem_price() - cart1.getItem().getDiscount_price()) * cart1.getCount();
@@ -63,6 +68,7 @@ public class OrderController {
         orders.setPay(price);
         orders.setOrderDate(time);
         orders.setStatus(OrderStatus.ORDER);
+        orders.setStore(store);
         Long order_id = orderService.order(orders);
 
 
