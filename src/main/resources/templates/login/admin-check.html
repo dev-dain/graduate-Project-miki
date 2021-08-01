@@ -2,9 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/modal.css">
     <title>관리자 확인</title>
 </head>
-<body>
-    <!-- 다은아 부탁한다 -->
+<div id="wrap">
+    <header>
+        <div class="title-container">
+            <h1 class="title" id="login_title">지점 로그인</h1>
+        </div>
+    </header>
+    <div class="logo-container" style="display: none;">
+        <!--
+          <img src="">
+        -->
+    </div>
+    <div class="login-container">
+        <form method="get" id="login_form" action="/admin"> <!-- action 어디로 연결하는지 여쭤보기-->
+            <fieldset>
+                <div class="login-box">
+                    <input type="password" id="loginPw" name="code" placeholder="Code" class="login-input pw-input">
+                </div>
+                <button type="submit" class="login-btn">확인</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="modal-container">
+
+</div>
+
+<script src="js/createModal.js"></script>
+<script th:inline="javascript">
+    const loginBtn = document.querySelector('.login-btn');
+    const idInput = localStorage.getItem('store_id');
+    const pwInput = document.querySelector('.pw-input');
+    const modalContainer = document.querySelector('modal-container');
+
+    let store_name;
+    let store_code;
+
+    store_name = localStorage.getItem('store_name');
+    document.getElementById('login_title').innerText = store_name + ' 로그인';
+
+    loginBtn.addEventListener('click', () => {
+        // 지점과 코드가 맞는지 확인
+        console.log(pwInput.value.trim());
+        if (!idInput.value.trim() || !pwInput.value.trim()) {
+            modalContainer.appendChild(createModal('empty'));
+            modalContainer.classList.add('display');
+        } else {
+            location.href=`/admin?id=${idInput}&code=${pwInput.value.trim()}`;
+        }
+    });
+</script>
 </body>
 </html>
