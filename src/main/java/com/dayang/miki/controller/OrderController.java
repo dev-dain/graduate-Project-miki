@@ -41,9 +41,11 @@ public class OrderController {
         b = b.replaceAll("%2C", "");
         b = b.replaceAll("%5B", "");
         b = b.replaceAll("%5D", "");
-        b = b.substring(9);
+        b = b.substring(20);
 
         String[] ids = b.split(",");
+
+
 
         List<Long> longId = new ArrayList<>();
         for(String s : ids){
@@ -86,7 +88,7 @@ public class OrderController {
             orderService.orderItem(orderItem);
         }
 
-
+        cartService.truncateCart();
         return "order/order_success";
     }
 
