@@ -223,8 +223,6 @@
   for (let c=0; c<cnt_item; c++) {
       const itemOptionCount = optionIdList.length;
       cur_item_id = itemIdList[c];
-      // item_position = item_obj[]
-      // console.log(optionIdList[c]);
 
       const itemContainer = document.querySelector('.item-container');
       const itemDiv = document.createElement('div');
@@ -255,16 +253,14 @@
       let num_id; // 현재 몇번째 인덱스까지 넣었는지 저장할 변수
       let option_num = 0;
 
+      let is_option_show = false; // 다른 상품의 옵션창이 열려있는지 확인하기 위한 변수
       item_id = itemIdList[c];
       const createItemOptionContainer = item_id => {
 
           const itemOptionContainer = document.createElement('div');
           itemOptionContainer.classList.add(`item-option-container-${itemIdList[c]}`);
-          <!--      itemOptionContainer.classList.add(`option-${option_num}`);-->
-          <!--      option_num += 1;-->
 
           let break_point = true;
-
 
           optionIdList.forEach(optionId => {
             try {
@@ -280,6 +276,7 @@
                   option.classList.add(`item-option-${itemIdList[c]}-${optionId}`);
                   option.textContent = item_obj[optionId].name;
                   option.addEventListener('click', () => {
+
                     getClass = option.getAttribute('class');
                     split_C = split(getClass, '-'); // split_C[3] : optionId
                     // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
@@ -287,6 +284,7 @@
                     // console.log(c_arr,R,G,B);
                     // console.log(typeof position,position);
                     itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
+                    is_option_show = false;
                   });
                   itemOptionContainer.appendChild(option);
                 }
@@ -313,7 +311,6 @@
 
 
       itemImgContainer.addEventListener('click', () => {
-
           const checkedContainer = document.querySelector('.checked');
 
           console.log('clicked');
@@ -321,7 +318,7 @@
               itemOptionContainer.classList.remove('show');
           } else {
               itemOptionContainer.classList.add('show');
-
+              is_option_show = true;
               if (checkedContainer) {
                   checkedContainer.innerText = ' ';
                   checkedContainer.classList.remove('checked');
