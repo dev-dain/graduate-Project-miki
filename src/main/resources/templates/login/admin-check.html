@@ -42,21 +42,23 @@
     const idInput = localStorage.getItem('store_id');
     const pwInput = document.querySelector('.pw-input');
     const modalContainer = document.querySelector('modal-container');
+    const action_value = document.querySelector('#login_form');
 
     let store_name;
     let store_code;
 
+    action_value.action = `/admin/${idInput}`;
     store_name = localStorage.getItem('store_name');
     document.getElementById('login_title').innerText = store_name + ' 로그인';
 
     loginBtn.addEventListener('click', () => {
         // 지점과 코드가 맞는지 확인
         console.log(pwInput.value.trim());
-        if (!idInput.value.trim() || !pwInput.value.trim()) {
+        if (!pwInput.value.trim()) {
             modalContainer.appendChild(createModal('empty'));
             modalContainer.classList.add('display');
         } else {
-            location.href=`/admin?id=${idInput}&code=${pwInput.value.trim()}`;
+            location.href=`/admin/${idInput}?code=${pwInput.value}`;
         }
     });
 </script>
