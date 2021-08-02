@@ -34,6 +34,13 @@ class ItemServiceTest {
     StoreService storeService;
 
     @Test
+    void tt(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        System.out.println(calendar.getTime());
+    }
+
+    @Test
     @Rollback(value = false)
     void testItem(){
        Category category = itemService.findOneCategory(83L);

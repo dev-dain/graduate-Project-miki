@@ -21,9 +21,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -66,11 +64,12 @@ public class OrderController {
             itemService.updateOrderCnt(cart1.getItem().getId(), cart1.getCount() + cart1.getItem().getOrderCnt());
 
         }
-        java.util.Date time = new java.util.Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
 
         Orders orders = new Orders();
         orders.setPay(price);
-        orders.setOrderDate(time);
+        orders.setOrderDate(calendar.getTime());
         orders.setStatus(OrderStatus.ORDER);
         orders.setStore(store);
         Long order_id = orderService.order(orders);
