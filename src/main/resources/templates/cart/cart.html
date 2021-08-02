@@ -174,6 +174,7 @@
 
     const goPaymentPartBtn = document.querySelector('.go-payment-part-btn');
     const goPaymentAllBtn = document.querySelector('.go-payment-all-btn');
+    const deleteAllBtn = document.querySelector('.delete-all-btn');
 
     goPaymentAllBtn.addEventListener('click', e => {
       e.preventDefault();
@@ -531,6 +532,9 @@
         }
       });
     } else {
+        goPaymentAllBtn.disabled = true;
+        goPaymentPartBtn.disabled = true;
+        deleteAllBtn.disabled = true;
       itemRowContainer.textContent = '장바구니가 비어 있습니다';
       itemRowContainer.style.textAlign = 'center';
       itemRowContainer.style.padding = '50px';
@@ -554,6 +558,7 @@
     selectAllBtn.addEventListener('click', e => {
       // e.preventDefault();
       itemRowList.forEach(row => {
+          console.log(row.children[0].children[1]);
         row.children[0].children[1].click();
       });
       if (isSelectAll) {
@@ -569,7 +574,6 @@
       isSelectAll = !isSelectAll;
     });
 
-    const deleteAllBtn = document.querySelector('.delete-all-btn');
     deleteAllBtn.addEventListener('click', e => {
       // e.preventDefault();
       if (window.confirm("장바구니를 완전히 비우시겠습니까?")) {
