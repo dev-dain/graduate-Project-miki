@@ -61,7 +61,7 @@ public class OrderController {
         Store store = storeService.findById(id);
         int price =0;
         for(Cart cart1 : cart){
-            price += (cart1.getItem().getItem_price() - cart1.getItem().getDiscount_price()) * cart1.getCount();
+            price += (cart1.getItem().getDiscount_price()) * cart1.getCount();
             itemService.updateStockQuantity(cart1.getItem_option().getStockQuantity() - cart1.getCount(), cart1.getItem_option().getId());
             itemService.updateOrderCnt(cart1.getItem().getId(), cart1.getCount() + cart1.getItem().getOrderCnt());
 
@@ -85,7 +85,7 @@ public class OrderController {
             orderItem.setItem_option(cart1.getItem_option());
             orderItem.setOrder(order);
             orderItem.setCount(cart1.getCount());
-            price += (cart1.getItem().getItem_price() - cart1.getItem().getDiscount_price()) * cart1.getCount();
+            price = (cart1.getItem().getDiscount_price()) * cart1.getCount();
             orderItem.setOrderPrice(price);
             orderService.orderItem(orderItem);
         }
