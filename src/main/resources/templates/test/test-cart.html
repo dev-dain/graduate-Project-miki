@@ -36,23 +36,33 @@
     <button class="item-next-btn">&gt;</button>
   </div>
 </div>
-<div class="invisible-but-need" style="display: none;">
-<!--  <table>-->
-<!--    <tr th:each="item : ${items}" style="display: none">-->
-<!--      <td class="invisible-but-need" th:text="${item.name} + '/'" style="display: none"></td>-->
-<!--    </tr>-->
-<!--    <tr th:each="img : ${item_img}">-->
-<!--      <td class="invisible-but-need-2" th:text="${img.item_img}"></td>-->
-<!--    </tr>-->
-<!--    <tr th:each="options : ${item_options}" style="display:none">-->
-<!--      <td class="invisible-but-need-3" th:text="${options.id}+'/'+${options.item_option_name+'/'+${options.item.id}}"></td>-->
-<!--    </tr>-->
-<!--  </table>-->
+<div style="display: none">
+  <table class="first_table">
+    <tr th:each="item : ${items}" style="display: none">
+      <td class="invisible-but-need" th:text="${item.name}" style="display: none"></td>
+    </tr>
+  </table>
 
+  <table class="second_table" >
+    <tr th:each="img : ${item_img}">
+      <td class="invisible-but-need-2" th:text="${img.item_img}"></td>
+    </tr>
+  </table>
 
+  <table class="third_table">
+    <tr th:each="options : ${item_options}" style="display:none">
+      <td class="invisible-but-need-3" th:text="${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}"></td>
+    </tr>
+  </table>
+
+  <table class="four_table">
+    <tr th:each="t_color : ${testColors}" style="display:none">
+      <td class="invisible-but-need-4" th:text="${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}"></td>
+    </tr>
+  </table>
 </div>
+
 </body>
-<!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
 <script th:inline="javascript">
   const item_obj = {};
   const option_obj = {};
@@ -115,12 +125,12 @@
   /*]]>*/
   // 맨 처음 로딩시 -> 0번 옵션 색상으로 자동 설정
   window.onload = function(){
-    getClass = document.getElementsByClassName(`item_options`);
-    // console.log(getClass);
-    first_c = getClass[0].classList[1];
-    // console.log(first_c)
-    split_C = split(first_c,'-');
-    set_color(split_C);
+    // getClass = document.getElementsByClassName(`item_options`);
+    // // console.log(getClass);
+    // first_c = getClass[0].classList[1];
+    // // console.log(first_c)
+    // split_C = split(first_c,'-');
+    // set_color(split_C);
   };
   // hex to RGB
   let R,G,B;
@@ -219,6 +229,7 @@
       const itemContainer = document.querySelector('.item-container');
       const itemDiv = document.createElement('div');
       itemDiv.classList.add(`item-div-${itemIdList[c]}`);
+      itemDiv.classList.add(`item-div`);
 
       const itemCheck = document.createElement('button');
       itemCheck.classList.add(`item-check-btn-${itemIdList[c]}`);
@@ -385,16 +396,29 @@
   let right_btn;
   let pageNum = 1;
 
+
   left_btn = document.querySelector('.item-prev-btn');
   right_btn = document.querySelector('.item-next-btn');
 
   left_btn.addEventListener('click', () => {
-      if(pageNum != 1){
+      if(pageNum >= 0){
+        pageNum -= 1;
           fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
               .then(res => res.text())
               .then(res => {
                   console.log(res)
-
+                  if(document.getElementsByClassName(`${pageNum}_page`) != undefined){
+                    const elements = document.getElementsByClassName(`${pageNum}_page`);
+                    console.log(elements);
+                    try{
+                      for(let i=0; i<elements.length; i++){
+                        elements[i].style.display = 'block';
+                      }
+                    }
+                    catch(e) {
+                      console.log(e);
+                    }
+                  }
               });
       }
       else{ // 맨 처음 페이지 일 떄
@@ -404,15 +428,45 @@
 
   });
 
+  let arr_1 = [];
+  let arr_2 = [];
+  let arr_3 = [];
+  let arr_4 = [];
+  let arr_5 = [];
+
   right_btn.addEventListener('click', () => {
-      pageNum += 1;
+    console.log(pageNum);
+    // 아이템 정보 지우기
+    const cell = document.getElementsByClassName("item-div");
+
+    try{
+      for(let i=0; i<cell.length; i++){
+        cell[i].style.display = 'none';
+        cell[i].classList.add(`${pageNum}_page`);
+      }
+    }
+    catch(e) {
+      console.log(e);
+    }
+
+    pageNum += 1;
+
       if(pageNum != 1){
-          fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
-              .then(res => res.text())
-              .then(res => {
-                  console.log(res)
-                  // split해서 필요한 정보만 추출하기
-                  console.log(item_ImgList);
+        fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+            .then(res => res.text())
+            .then(res => {
+                console.log(res);
+                arr_1 = res.split('<td class=\"invisible-but-need\" style=\"display: none\">');
+                arr_2 = res.split('<td class=\"invisible-but-need-2\">');
+                arr_3 = res.split('<td class=\"invisible-but-need-3\">');
+                arr_4 = res.split('<table class="four_table">');
+                arr_5 = (arr_4[1].split('</table>'))[0].split('<td class=\\"invisible-but-need-4\\">');
+
+                // console.log(`arr_1 : ${arr_1}`);
+                // console.log(`arr_2 : ${arr_2}`);
+                // console.log(`arr_3 : ${arr_3}`);
+                console.log(`arr_5 : ${arr_5}`);
+
               });
       }
       else{
