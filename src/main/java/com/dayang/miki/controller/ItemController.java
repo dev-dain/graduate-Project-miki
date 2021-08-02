@@ -12,10 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -167,7 +165,10 @@ public class ItemController {
 
     @GetMapping("/todayGoods")
     public String bestItem(Model model){
-        java.util.Date time = new java.util.Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        Date time = calendar.getTime();
+
         String date = "2021-";
         int month = time.getMonth();
         date +=Integer.toString(month);
