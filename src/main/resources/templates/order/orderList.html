@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>g
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -344,7 +344,8 @@
       goPrevPageBtn.addEventListener('click', e => {
         e.preventDefault();
         if (curCartPage === 1) {
-          alert('첫 번째 페이지입니다.');
+            modalContainer.appendChild(createModal('first'));
+            modalContainer.classList.add('display');
         } else {
           curCartPage -= 1;
           localStorage.setItem('cart_page', curCartPage);
@@ -361,7 +362,8 @@
       goNextPageBtn.addEventListener('click', e => {
         e.preventDefault();
         if (curCartPage === maxCartPage) {
-          alert('마지막 페이지입니다.');
+            modalContainer.appendChild(createModal('last'));
+            modalContainer.classList.add('display');
         } else {
           curCartPage += 1;
           localStorage.setItem('cart_page', curCartPage);

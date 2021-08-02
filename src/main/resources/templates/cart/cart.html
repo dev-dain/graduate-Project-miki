@@ -17,16 +17,17 @@
 <!--        <h1 class="cart-count" th:text="' (' + ${carts.size} + ')'"></h1>-->
       </div>
     </header>
+    <form
+            class="cart-form"
+            method="POST"
+            action="/orderSelectList"
+            id="selectForm"
+            enctype="application/json"
+    >
+      <input type="hidden" name="cartList" value="" class="selectInput">
+    </form>
     <hr class="divide-line">
     <div class="cart-container">
-      <form
-              class="cart-form"
-              method="POST"
-              action="/orderSelectList"
-              id="selectForm"
-              enctype="application/json"
-      >
-        <input type="hidden" name="cartList" value="" class="selectInput">
         <div class="select-all-container">
           <button class="select-all-btn">&#10004;</button>
           <span class="select-all-span">전체 선택</span>
@@ -43,7 +44,6 @@
           <span class="current-page"></span>
           <button class="go-next-page-btn">&gt;</button>
         </div>
-      </form>
     </div>
     <div class="total-price-container">
 <!--      <div class="total-discount">-->
@@ -540,18 +540,19 @@
     }
 
 
-
-
-
     for (let i = 0; i < pageViewCount; i++) {
-      itemRowContainer.appendChild(itemRowList[i]);
+        if (itemRowList[i]) {
+            itemRowContainer.appendChild(itemRowList[i]);
+        } else {
+            break;
+        }
     }
 
     totalPayPrice.textContent = `${wholePrice} 원`;
 
     const selectAllBtn = document.querySelector('.select-all-btn');
     selectAllBtn.addEventListener('click', e => {
-      e.preventDefault();
+      // e.preventDefault();
       itemRowList.forEach(row => {
         row.children[0].children[1].click();
       });
@@ -570,13 +571,17 @@
 
     const deleteAllBtn = document.querySelector('.delete-all-btn');
     deleteAllBtn.addEventListener('click', e => {
-      e.preventDefault();
+      // e.preventDefault();
       if (window.confirm("장바구니를 완전히 비우시겠습니까?")) {
-        modalContainer.appendChild(createModal('clear'));
-        modalContainer.classList.add('display');
-        fetch(`/cart/${localStorage.getItem('store_id')}`, {method: 'DELETE'})
+        // fetch(`/cart/${localStorage.getItem('store_id')}`, {method: 'DELETE'})
+          fetch(`/cart/`, {method: 'DELETE'})
                 .then(res => res.json())
-                .then(data => console.log(data))
+                .then(data => {
+                    console.log(data);
+                    modalContainer.appendChild(createModal('clear'));
+                    modalContainer.classList.add('display');
+                    setTimeout(() => location.reload(), 1500);
+              })
                 .catch(e => console.error(e));
       }
     });
