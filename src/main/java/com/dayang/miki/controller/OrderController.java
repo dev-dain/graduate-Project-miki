@@ -52,6 +52,8 @@ public class OrderController {
             longId.add(Long.parseLong(s));
 
         }
+        List<Cart> allCart = cartService.findAll();
+
         List<Cart> cart  = new ArrayList<>();
         for(Long l :longId){
             cart.add(cartService.findOne(l));
@@ -88,7 +90,14 @@ public class OrderController {
             orderService.orderItem(orderItem);
         }
 
-        cartService.truncateCart();
+        if(allCart.size()==longId.size()){
+            cartService.truncateCart();
+        }
+        else{
+            for (Cart cart1 : cart){
+                cartService.deleteOne(cart1.getId());
+            }
+        }
         return "order/order_success";
     }
 

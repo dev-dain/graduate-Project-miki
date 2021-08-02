@@ -29,8 +29,8 @@ public class CartService {
         return cart.getId();
     }
     @Transactional
-    public void deleteOne(Long basket_id){
-        cartReposit.deleteById(basket_id);
+    public void deleteOne(Long id){
+        cartReposit.deleteById(id);
     }
     @Transactional
     public List<Cart> findAll(){
@@ -88,4 +88,5 @@ public class CartService {
     public List<Cart> findTestableCart(int pageNum){
         return cartReposit.findTestableCart(PageRequest.of(pageNum-1,4 ));
     }
+
 }
