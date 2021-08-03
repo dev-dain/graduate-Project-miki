@@ -25,6 +25,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+
     @Transactional
     public Long order(Orders orders){
         orderRepository.save(orders);
@@ -110,7 +111,12 @@ public class OrderService {
 
     @Transactional
     public Integer todaySales(Store store){
-        Date date = new Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        Date date = calendar.getTime();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
         List<Orders> orders = orderRepository.todaySales(date, OrderStatus.ORDER, store);
         int todaySales =0;
         for(Orders order : orders){

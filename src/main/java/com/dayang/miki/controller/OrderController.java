@@ -77,15 +77,15 @@ public class OrderController {
 
         Orders order = orderService.findOne(order_id);
 
-
+        int p =0;
         for(Cart cart1 : cart){
             OrderItem orderItem = new OrderItem();
             orderItem.setItem(cart1.getItem());
             orderItem.setItem_option(cart1.getItem_option());
             orderItem.setOrder(order);
             orderItem.setCount(cart1.getCount());
-            price = (cart1.getItem().getDiscount_price()) * cart1.getCount();
-            orderItem.setOrderPrice(price);
+            p = (cart1.getItem().getDiscount_price()) * cart1.getCount();
+            orderItem.setOrderPrice(p);
             orderService.orderItem(orderItem);
         }
 
@@ -97,6 +97,7 @@ public class OrderController {
                 cartService.deleteOne(cart1.getId());
             }
         }
+        model.addAttribute("price", price);
         return "order/order_success";
     }
 
