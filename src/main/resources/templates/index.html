@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
@@ -9,17 +9,6 @@
   <link rel="stylesheet" href="/css/index.css">
   <title>Home</title>
 </head>
-<style>
-  button#log_out {
-    display: inline;
-    font-size: 30px;
-    width: 130px;
-    height: 90px;
-    background-color: gray;
-    position: relative;
-  }
-</style>
-
 <body>
 <div id="wrap">
   <div class="top-area">
@@ -27,7 +16,7 @@
     <h3 class="clock"></h3>
   </div>
   <div class="bottom-area">
-    <a class="link-btn  order-page" href="/todayGoods">
+    <a class="link-btn order-page" href="/todayGoods">
         <span class="btn">
           <h4>오늘의 추천</h4>
           <div class="icon-box">
@@ -78,42 +67,7 @@
     </a>
   </div>
 </div>
-<script th:inline="javascript">
-  const store_id = localStorage.getItem('store_id');
-  const store_name = localStorage.getItem('store_name');
-
-  const storeName = document.querySelector('.store-name');
-  storeName.textContent = store_name;
-  storeName.addEventListener('click', () => location.href = `/admin-check?store_id=${store_id}`);
-
-  const clock = document.querySelector('.clock');
-  const clockFunc = () => {
-    let today = new Date();
-    let h = (today.getHours() > 12) ?
-            today.getHours() - 12 : today.getHours();
-    h = (h < 10) ? '0' + h : h;
-    let m = (today.getMinutes() < 10) ?
-            '0' + today.getMinutes() : today.getMinutes();
-    let amorpm = (today.getHours() < 12) ? 'AM' : 'PM';
-    clock.innerHTML = `${amorpm} ${h}:${m}`;
-  }
-  clockFunc();
-  setInterval(clockFunc, 1000);
-
-  if (!localStorage.getItem('store_id')) {
-    localStorage.setItem('store_id', '1');
-  }
-
-  let logout_btn;
-  logout_btn = document.getElementById('log_out');
-  logout_btn.addEventListener('click', () => {
-    location.href = '/';
-
-    localStorage.removeItem('store_id');
-    localStorage.removeItem('store_name');
-  });
-</script>
-
+<script src="/js/index.js"></script>
 </body>
 
 </html>
