@@ -63,7 +63,7 @@
   <script th:inline="javascript">
     const fullCartList = {};
     const cartIdList = [];
-    let selectedCartList = [];
+    let selectedCartList = new Set();
     const itemObj = {};
     const itemOptionObj = {};
     const itemImgObj = {};
@@ -105,7 +105,7 @@
       quantity: quantityObj[itemOptionId],
       isThisCheck: true
     };
-    selectedCartList.push(itemOptionId);
+    selectedCartList.add(itemOptionId);
     cartIdList.push(itemOptionId);
     /*[/]*/
 

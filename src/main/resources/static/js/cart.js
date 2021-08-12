@@ -67,7 +67,7 @@ const createLeftArea = (optionId) => {
             itemCheckBtn.innerHTML = '';
             wholePrice -= price;
             totalPayPrice.textContent = `${wholePrice} 원`;
-            selectedCartList = selectedCartList.filter(id => id !== Number(optionId));
+            selectedCartList = [...selectedCartList].filter(id => id !== Number(optionId));
         }
         else {
             itemOptionObj[optionId].isThisCheck = true;
@@ -77,7 +77,7 @@ const createLeftArea = (optionId) => {
             itemCheckBtn.innerHTML = '&#10004;';
             wholePrice += price;
             totalPayPrice.textContent = `${wholePrice} 원`;
-            selectedCartList.push(Number(optionId));
+            selectedCartList.add(Number(optionId));
         }
         console.log(selectedCartList);
     });
@@ -292,22 +292,39 @@ const selectAllBtn = document.querySelector('.select-all-btn');
 let isSelectAll = true;
 selectAllBtn.addEventListener('click', () => {
     /* warning */
-    isSelectAll = !isSelectAll;
+    isSelectAll = isSelectAll ? false : true;
+    console.log(isSelectAll);
     selectAllBtn.innerHTML = isSelectAll ? '&#10004;' : '';
     itemRowList.forEach(row => {
-        console.log(row.children[0].children[1]);
-        row.children[0].children[1].click();
+        if (isSelectAll) {
+            if (!row.children[0].children[1].classList.contains('checked')) {
+                row.children[0].children[1].classList.add('checked');
+            }
+            for (let id of Object.keys(itemOptionObj)) {
+                itemOptionObj[id].isThisCheck = true;
+            }
+            row.children[0].children[1].innerHTML = '&#10004';
+        }
+        else {
+            if (row.children[0].children[1].classList.contains('checked')) {
+                row.children[0].children[1].classList.remove('checked');
+            }
+            for (let id of Object.keys(itemOptionObj)) {
+                itemOptionObj[id].isThisCheck = false;
+            }
+            row.children[0].children[1].innerHTML = '';
+        }
     });
-    if (isSelectAll) {
+    if (!isSelectAll) {
+        wholePrice = 0;
         totalPayPrice.textContent = `0 원`;
         selectAllBtn.innerHTML = '';
-        selectedCartList = [];
+        selectedCartList.clear();
     }
     else {
         totalPayPrice.textContent = `${wholePrice} 원`;
         selectAllBtn.innerHTML = '&#10004;';
-        selectedCartList = cartIdList;
+        selectedCartList = new Set(cartIdList);
     }
     console.log(selectedCartList);
-    isSelectAll = !isSelectAll;
 });
