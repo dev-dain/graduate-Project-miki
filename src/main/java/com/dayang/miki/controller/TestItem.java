@@ -1,7 +1,8 @@
 package com.dayang.miki.controller;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 
+@Getter
 public class TestItem {
     private Long itemId;
 
