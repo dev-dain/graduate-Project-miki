@@ -51,13 +51,13 @@
 
   <table class="third_table">
     <tr th:each="options : ${item_options}" style="display:none">
-      <td class="invisible-but-need-3" th:text="${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}"></td>
+      <td class="invisible-but-need-3" th:text="'/'+${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}+'/'"></td>
     </tr>
   </table>
 
   <table class="four_table">
     <tr th:each="t_color : ${testColors}" style="display:none">
-      <td class="invisible-but-need-4" th:text="${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}"></td>
+      <td class="invisible-but-need-4" th:text="'/'+${t_color.item.id}+'/'+${t_color.item_option.id}+'/'+${t_color.item.name}+'/'+${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}+'/'"></td>
     </tr>
   </table>
 </div>
@@ -322,6 +322,7 @@
               if (checkedContainer) {
                   checkedContainer.innerText = ' ';
                   checkedContainer.classList.remove('checked');
+
                   itemImgContainer.previousSibling.innerHTML = '✓';
                   itemImgContainer.previousSibling.classList.add('checked');
               } else {
@@ -430,6 +431,7 @@
   let arr_3 = [];
   let arr_4 = [];
   let arr_5 = [];
+  let arr_6 = [];
 
   right_btn.addEventListener('click', () => {
     console.log(pageNum);
@@ -448,21 +450,23 @@
 
     pageNum += 1;
 
+
       if(pageNum != 1){
         fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
             .then(res => res.text())
             .then(res => {
                 console.log(res);
+
                 arr_1 = res.split('<td class=\"invisible-but-need\" style=\"display: none\">');
                 arr_2 = res.split('<td class=\"invisible-but-need-2\">');
                 arr_3 = res.split('<td class=\"invisible-but-need-3\">');
                 arr_4 = res.split('<table class="four_table">');
-                arr_5 = (arr_4[1].split('</table>'))[0].split('<td class=\\"invisible-but-need-4\\">');
+                arr_5 = (arr_4[1].split('</table>'))[0].split('<td class="invisible-but-need-4">');
 
                 // console.log(`arr_1 : ${arr_1}`);
                 // console.log(`arr_2 : ${arr_2}`);
                 // console.log(`arr_3 : ${arr_3}`);
-                console.log(`arr_5 : ${arr_5}`);
+                console.log(`arr : ${arr_5}`);
 
               });
       }
