@@ -51,29 +51,29 @@
 
   <table class="third_table">
     <tr th:each="options : ${item_options}" style="display:none">
-      <td class="invisible-but-need-3" th:text="${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}"></td>
+      <td class="invisible-but-need-3" th:text="'/'+${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}+'/'"></td>
     </tr>
   </table>
 
   <table class="four_table">
     <tr th:each="t_color : ${testColors}" style="display:none">
-      <td class="invisible-but-need-4" th:text="${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}"></td>
+      <td class="invisible-but-need-4" th:text="'/'+${t_color.item.id}+'/'+${t_color.item_option.id}+'/'+${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}+'/'"></td>
     </tr>
   </table>
 </div>
 
 </body>
 <script th:inline="javascript">
-  const item_obj = {};
-  const option_obj = {};
-  const optionIdList = [];
-  const itemIdList = [];
-  const itemImgList = [];
-  const itemNameList = [];
-  const item_id_list = [];
+  let item_obj = {};
+  let option_obj = {};
+  let optionIdList = [];
+  let itemIdList = [];
+  let itemImgList = [];
+  let itemNameList = [];
+  let item_id_list = [];
 
-  const idList = [];
-
+  let idList = [];
+// 위에 원래 다 const였음
   let img_src;
   let item_name;
   let item_id;
@@ -183,8 +183,6 @@
         console.log('B 진입');
         break;
     }
-    <!--        alpha = item_obj[split_C[3]].alpha;-->
-
   }
   const goPrevBtn = document.querySelector('.go-prev');
   const goCartBtn = document.querySelector('.go-cart');
@@ -204,23 +202,15 @@
   let exist_C = 'N';  // 볼 Cheek
   let exist_B = 'N';  // 눈썹 Brow
 
-  // 해당 상품의 부위 저장
-  let item_position;
-
-  let is_first = true; // 맨 처음 상품인지 확인
-
   let cur_item_id;
-
   let cnt_item;
   cnt_item = itemIdList.length;
 
-  let first_item_L;
-  let first_item_C;
-  let first_item_E;
-
   const arr_first_id = [];  // 상품별 맨 처음 옵션번호 저장
 
-  for (let c=0; c<cnt_item; c++) {
+  var set_items = function (){
+    console.log('set_items진입');
+    for (let c=0; c<cnt_item; c++) {
       const itemOptionCount = optionIdList.length;
       cur_item_id = itemIdList[c];
 
@@ -236,66 +226,61 @@
       // console.log(item_obj[optionIdList[c]].face_location);
 
       itemCheck.addEventListener('click', () => {
-          if (isItemCheck) {
-              itemCheck.innerHTML = '';
-              isItemCheck = false;
-          } else {
-              itemCheck.innerHTML = '&#10004;';
-              isItemCheck = true;
-          }
+        if (isItemCheck) {
+          itemCheck.innerHTML = '';
+          isItemCheck = false;
+        } else {
+          itemCheck.innerHTML = '&#10004;';
+          isItemCheck = true;
+        }
       });
 
       let getClass;
       let split_C;
-      let first_c = [];
-
-      let check_id;
-      let num_id; // 현재 몇번째 인덱스까지 넣었는지 저장할 변수
-      let option_num = 0;
 
       let is_option_show = false; // 다른 상품의 옵션창이 열려있는지 확인하기 위한 변수
       item_id = itemIdList[c];
       const createItemOptionContainer = item_id => {
 
-          const itemOptionContainer = document.createElement('div');
-          itemOptionContainer.classList.add(`item-option-container-${itemIdList[c]}`);
+        const itemOptionContainer = document.createElement('div');
+        itemOptionContainer.classList.add(`item-option-container-${itemIdList[c]}`);
 
-          let break_point = true;
+        let break_point = true;
 
-          optionIdList.forEach(optionId => {
-            try {
-              if (item_obj[optionId].parent_id == cur_item_id) {
+        optionIdList.forEach(optionId => {
+          try {
+            if (item_obj[optionId].parent_id == cur_item_id) {
 
-                if(break_point == true){
-                  arr_first_id.push(optionId);
-                  break_point = false;
-                }
-                else{
-                  const option = document.createElement('button');
-                  option.classList.add(`item_options`);
-                  option.classList.add(`item-option-${itemIdList[c]}-${optionId}`);
-                  option.textContent = item_obj[optionId].name;
-                  option.addEventListener('click', () => {
-
-                    getClass = option.getAttribute('class');
-                    split_C = split(getClass, '-'); // split_C[3] : optionId
-                    // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
-                    set_color(split_C);
-                    // console.log(c_arr,R,G,B);
-                    // console.log(typeof position,position);
-                    itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
-                    is_option_show = false;
-                  });
-                  itemOptionContainer.appendChild(option);
-                }
-
-              }}
-              catch(e) {
-              console.log(e);
+              if(break_point == true){
+                arr_first_id.push(optionId);
+                break_point = false;
               }
-          });
+              else{
+                const option = document.createElement('button');
+                option.classList.add(`item_options`);
+                option.classList.add(`item-option-${itemIdList[c]}-${optionId}`);
+                option.textContent = item_obj[optionId].name;
+                option.addEventListener('click', () => {
 
-          return itemOptionContainer;
+                  getClass = option.getAttribute('class');
+                  split_C = split(getClass, '-'); // split_C[3] : optionId
+                  // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
+                  set_color(split_C);
+                  // console.log(c_arr,R,G,B);
+                  // console.log(typeof position,position);
+                  itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
+                  is_option_show = false;
+                });
+                itemOptionContainer.appendChild(option);
+              }
+
+            }}
+          catch(e) {
+            console.log(e);
+          }
+        });
+
+        return itemOptionContainer;
       };
 
 
@@ -311,22 +296,23 @@
 
 
       itemImgContainer.addEventListener('click', () => {
-          const checkedContainer = document.querySelector('.checked');
+        const checkedContainer = document.querySelector('.checked');
 
-          console.log('clicked');
-          if (itemOptionContainer.classList.contains('show')) {
-              itemOptionContainer.classList.remove('show');
+        console.log('clicked');
+        if (itemOptionContainer.classList.contains('show')) {
+          itemOptionContainer.classList.remove('show');
+        } else {
+          itemOptionContainer.classList.add('show');
+          is_option_show = true;
+          if (checkedContainer) {
+            checkedContainer.innerText = ' ';
+            checkedContainer.classList.remove('checked');
+
+            itemImgContainer.previousSibling.innerHTML = '✓';
+            itemImgContainer.previousSibling.classList.add('checked');
           } else {
-              itemOptionContainer.classList.add('show');
-              is_option_show = true;
-              if (checkedContainer) {
-                  checkedContainer.innerText = ' ';
-                  checkedContainer.classList.remove('checked');
-                  itemImgContainer.previousSibling.innerHTML = '✓';
-                  itemImgContainer.previousSibling.classList.add('checked');
-              } else {
-              }
           }
+        }
       });
 
       const itemTitle = document.createElement('div');
@@ -339,55 +325,67 @@
       itemDiv.appendChild(itemOptionContainer);
 
       itemContainer.appendChild(itemDiv);
+    }
   }
+  console.log('set_items진입');
+
+  set_items();
   let isFirstItem_L = true;
   let isFirstItem_C = true;
   let isFirstItem_B = true;
 
-  for(let k=0; k<itemIdList.length; k++){
-    let item_check = document.querySelector(`.item-option-${itemIdList[k]}-${String(parseInt(arr_first_id[k]) + 1)}`);  // 아이템 정보
-    let item_checkbox = document.querySelector(`.item-check-btn-${itemIdList[k]}`); // 체크상자
-    console.log(item_check);
-    console.log(itemIdList[k],arr_first_id[k]);
+  var set_checkbox = function (){
+    console.log('set_checkbox 진입');
+    isFirstItem_L = true;
+    isFirstItem_C = true;
+    isFirstItem_B = true;
 
-    getClass = item_check.getAttribute('class');
-    // console.log(getClass);
-    split_C = getClass.split("-"); // split_C[3] : optionId
-    // // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
-    // set_color(split_C);
+    for(let k=0; k<itemIdList.length; k++){
+      let item_check = document.querySelector(`.item-option-${itemIdList[k]}-${String(parseInt(arr_first_id[k]) + 1)}`);  // 아이템 정보
+      let item_checkbox = document.querySelector(`.item-check-btn-${itemIdList[k]}`); // 체크상자
+      console.log(item_check);
+      console.log(itemIdList[k],arr_first_id[k]);
+
+      getClass = item_check.getAttribute('class');
+      // console.log(getClass);
+      split_C = getClass.split("-"); // split_C[3] : optionId
+      // // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
+      // set_color(split_C);
 
 
-    switch (item_obj[arr_first_id[k]].face_location) {
-      case "L":
-        if (isFirstItem_L == true) {
-          isFirstItem_L = false;
-          item_checkbox.innerHTML = '&#10004;';
-          item_checkbox.classList.add(`checked`);
-          set_color(split_C);
+      switch (item_obj[arr_first_id[k]].face_location) {
+        case "L":
+          if (isFirstItem_L == true) {
+            isFirstItem_L = false;
+            item_checkbox.innerHTML = '&#10004;';
+            item_checkbox.classList.add(`checked`);
+            set_color(split_C);
+            break;
+          } else
+            break;
+        case "C":
+          if (isFirstItem_C == true) {
+            isFirstItem_C = false;
+            item_checkbox.innerHTML = '&#10004;';
+            item_checkbox.classList.add(`checked`);
+            set_color(split_C);
+            break;
+          } else
+            break;
+        case "B":
+          if (isFirstItem_B == true) {
+            isFirstItem_B = false;
+            item_checkbox.innerHTML = '&#10004;';
+            item_checkbox.classList.add(`checked`);
+            set_color(split_C);
+            break;
+          }
+        default:
           break;
-        } else
-          break;
-      case "C":
-        if (isFirstItem_C == true) {
-          isFirstItem_C = false;
-          item_checkbox.innerHTML = '&#10004;';
-          item_checkbox.classList.add(`checked`);
-          set_color(split_C);
-          break;
-        } else
-          break;
-      case "B":
-        if (isFirstItem_B == true) {
-          isFirstItem_B = false;
-          item_checkbox.innerHTML = '&#10004;';
-          item_checkbox.classList.add(`checked`);
-          set_color(split_C);
-          break;
-        }
-      default:
-        break;
+      }
     }
   }
+  set_checkbox();
 
   let left_btn;
   let right_btn;
@@ -448,21 +446,40 @@
 
     pageNum += 1;
 
+
       if(pageNum != 1){
         fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
             .then(res => res.text())
             .then(res => {
                 console.log(res);
+                 item_obj = {};
+                 option_obj = {};
+                 optionIdList = [];
+                 itemIdList = [];
+                 itemImgList = [];
+                 itemNameList = [];
+                 item_id_list = [];
+
                 arr_1 = res.split('<td class=\"invisible-but-need\" style=\"display: none\">');
                 arr_2 = res.split('<td class=\"invisible-but-need-2\">');
                 arr_3 = res.split('<td class=\"invisible-but-need-3\">');
                 arr_4 = res.split('<table class="four_table">');
-                arr_5 = (arr_4[1].split('</table>'))[0].split('<td class=\\"invisible-but-need-4\\">');
+                arr_5 = (arr_4[1].split('</table>'))[0].split('<td class="invisible-but-need-4">');
 
                 // console.log(`arr_1 : ${arr_1}`);
                 // console.log(`arr_2 : ${arr_2}`);
                 // console.log(`arr_3 : ${arr_3}`);
-                console.log(`arr_5 : ${arr_5}`);
+                console.log(`arr : ${arr_5}`);  // 잘 넘어온다면 item_id / item_option_id / name / option_name / face_location / colorCode / alpha  순으로 넘어옴
+
+
+
+
+              const idList = [];
+                for(let i; i<arr_5.length;i++){
+                  itemIdList.push();
+                  itemNameList.push();
+                  itemImgList.push();
+                }
 
               });
       }
