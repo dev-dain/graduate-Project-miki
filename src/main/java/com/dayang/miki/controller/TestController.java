@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,37 +50,22 @@ public class TestController {
     @GetMapping("/testAll")
     public String testItems(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, Model model){
         List<Cart> carts = cartService.findTestableCart(pageNum);
-        List<Item> items = new ArrayList<>();
 
-        List<Item_img> item_imgs = new ArrayList<>();
-
-        List<Item_option> item_options = new ArrayList<>();
-        List<Item_option> tmpItemOption = new ArrayList<>();
-        List<TestColor> testColors = new ArrayList<>();
-        List<TestColor> tmpTestColor = new ArrayList<>();
+        List<TestItem> testItems = new ArrayList<>();
 
         for(Cart c : carts){
-            items.add(itemService.findOne(c.getItem().getId()));
-            item_imgs.add(itemService.itemImg(c.getItem().getId()));
-
-            tmpItemOption = itemService.itemOptionList(c.getItem());
-            for(Item_option item_option : tmpItemOption){
-                item_options.add(item_option);
-            }
-
-            tmpTestColor = testService.findByItem(c.getItem());
-            for(TestColor testColor : tmpTestColor){
-                testColors.add(testColor);
+            Item item = itemService.findOne(c.getItem().getId());
+            Item_img item_img = itemService.itemImg(item.getId());
+            List<Item_option> item_options = itemService.itemOptionList(item);
+            List<TestColor> testColors = testService.findByItem(item);
+            for(int i=0; i<item_options.size(); i++){
+                TestItem testItem = new TestItem(item.getId(), item.getName(), item_img.getItem_img(), item_options.get(i).getId(), item_options.get(i).getItem_option_name(),
+                        testColors.get(i).getColorCode(), testColors.get(i).getAlpha(), testColors.get(i).getFace_location());
+                testItems.add(testItem);
             }
         }
 
-
-
-        model.addAttribute("items", items);
-        model.addAttribute("item_img", item_imgs);
-        model.addAttribute("item_options", item_options);
-        model.addAttribute("testColors", testColors);
-
+        model.addAttribute(testItems);
         return "test/test-cart";
     }
 }
