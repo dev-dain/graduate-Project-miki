@@ -65,7 +65,7 @@ public class TestController {
             }
         }
 
-        model.addAttribute(testItems);
+        model.addAttribute("testItems", testItems);
         return "test/test-cart";
     }
 }

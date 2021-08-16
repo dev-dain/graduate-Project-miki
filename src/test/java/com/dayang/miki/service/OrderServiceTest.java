@@ -1,5 +1,6 @@
 package com.dayang.miki.service;
 
+import com.dayang.miki.controller.TestItem;
 import com.dayang.miki.domain.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,30 @@ public class OrderServiceTest {
     CartService cartService;
     @Autowired
     ItemService itemService;
+    @Autowired
+    TestService testService;
+    @Test
+    void d(){
+        int pageNum = 1;
+        List<Cart> carts = cartService.findTestableCart(pageNum);
 
+        List<TestItem> testItems = new ArrayList<>();
+
+        for(Cart c : carts){
+            Item item = itemService.findOne(c.getItem().getId());
+            Item_img item_img = itemService.itemImg(item.getId());
+            List<Item_option> item_options = itemService.itemOptionList(item);
+            List<TestColor> testColors = testService.findByItem(item);
+            for(int i=0; i<item_options.size(); i++){
+                TestItem testItem = new TestItem(item.getId(), item.getName(), item_img.getItem_img(), item_options.get(i).getId(), item_options.get(i).getItem_option_name(),
+                        testColors.get(i).getColorCode(), testColors.get(i).getAlpha(), testColors.get(i).getFace_location());
+                testItems.add(testItem);
+            }
+        }
+        for(TestItem testItem : testItems){
+            System.out.println("testItem = " + testItem);
+        }
+    }
     @Test
     void dd(){
         Store store = storeService.findById(1L);
