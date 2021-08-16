@@ -38,28 +38,28 @@
 </div>
 <div style="display: none">
   <table class="first_table">
-    <tr th:each="item : ${items}" style="display: none">
-      <td class="invisible-but-need" th:text="${item.name}" style="display: none"></td>
+    <tr th:each="item : ${testItems}" style="display: none">
+      <td class="invisible-but-need" th:text="${item.itemId}" style="display: none"></td>
     </tr>
   </table>
 
-  <table class="second_table" >
-    <tr th:each="img : ${item_img}">
-      <td class="invisible-but-need-2" th:text="${img.item_img}"></td>
-    </tr>
-  </table>
+<!--  <table class="second_table" >-->
+<!--    <tr th:each="img : ${item_img}">-->
+<!--      <td class="invisible-but-need-2" th:text="${img.item_img}"></td>-->
+<!--    </tr>-->
+<!--  </table>-->
 
-  <table class="third_table">
-    <tr th:each="options : ${item_options}" style="display:none">
-      <td class="invisible-but-need-3" th:text="'/'+${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}+'/'"></td>
-    </tr>
-  </table>
+<!--  <table class="third_table">-->
+<!--    <tr th:each="options : ${item_options}" style="display:none">-->
+<!--      <td class="invisible-but-need-3" th:text="'/'+${options.id}+'/'+${options.item_option_name}+'/'+${options.item.id}+'/'"></td>-->
+<!--    </tr>-->
+<!--  </table>-->
 
-  <table class="four_table">
-    <tr th:each="t_color : ${testColors}" style="display:none">
-      <td class="invisible-but-need-4" th:text="'/'+${t_color.item.id}+'/'+${t_color.item_option.id}+'/'+${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}+'/'"></td>
-    </tr>
-  </table>
+<!--  <table class="four_table">-->
+<!--    <tr th:each="t_color : ${testColors}" style="display:none">-->
+<!--      <td class="invisible-but-need-4" th:text="'/'+${t_color.item.id}+'/'+${t_color.item_option.id}+'/'+${t_color.face_location}+'/'+${t_color.colorCode}+'/'+${t_color.alpha}+'/'"></td>-->
+<!--    </tr>-->
+<!--  </table>-->
 </div>
 
 </body>
@@ -87,42 +87,15 @@
 
   /*<![CDATA[*/
 
-  /*[# th:each="item : ${items}"]*/
-  itemIdList.push(/*[[${item.id}]]*/);
-  itemNameList.push(/*[[${item.name}]]*/);
-
+  // 윤희언니 이부분 보시면됩니다! testItems 를 item 으로 받아온거에요!
+  /*[# th:each="item : ${testItems}"]*/
+  itemIdList.push(/*[[${item.itemId}]]*/);
+  console.log(itemIdList);
   /*[/]*/
 
-  /*[# th:each="item_img : ${item_img}"]*/
-  itemImgList.push(/*[[${item_img.item_img}]]*/);
-  /*[/]*/
-
-  /*[# th:each="option : ${item_options}"]*/
-  item_option_id = /*[[${option.id}]]*/;
-  item_ids = /*[[${option.item.id}]]*/;
-  item_id_list.push(item_ids);
-  optionIdList.push(item_option_id);
-  option_obj[item_option_id] = {
-   name : /*[[${option.item_option_name}]]*/,
-   parent_id : item_ids
-  };
-  /*[/]*/
-
-  /*[# th:each="t_color : ${testColors}"]*/
-  item_option_id = /*[[${t_color.item_option.id}]]*/;
-  item_obj[item_option_id] = {
-    parent_id: option_obj[item_option_id].parent_id,
-    id: item_option_id,
-    name: option_obj[item_option_id].name,
-    face_location: /*[[${t_color.face_location}]]*/,
-    c_code: /*[[${t_color.colorCode}]]*/,
-    alpha: /*[[${t_color.alpha}]]*/
-  }
-  /*[/]*/
-
-  // console.log(itemIdList,itemNameList,itemImgList);
-  console.log(item_obj);
   /*]]>*/
+
+
   // 맨 처음 로딩시 -> 0번 옵션 색상으로 자동 설정
   window.onload = function(){
     // getClass = document.getElementsByClassName(`item_options`);
