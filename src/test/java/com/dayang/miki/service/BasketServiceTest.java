@@ -1,6 +1,7 @@
 package com.dayang.miki.service;
 
 
+import com.dayang.miki.category.DevCategoryService;
 import com.dayang.miki.domain.*;
 import com.dayang.miki.repository.CartReposit;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,8 @@ class BasketServiceTest {
     @Autowired
     CartReposit cartRepository;
 
-
+@Autowired
+    DevCategoryService service;
 
     @Test
     @Rollback(value = false)
@@ -80,12 +82,7 @@ class BasketServiceTest {
     TestService testService;
     @Test
     void ddd(){
-        Item item = itemService.findOne(324L);
-        List<TestColor> testColors = testService.findByItem(item);
-        List<Item_option> item_options = itemService.itemOptionList(item);
-        for(Item_option item_option : item_options){
-            System.out.println(item_option.getId());
-        }
+        service.bigCategory();
     }
     @Test
     void deleteOne(){
