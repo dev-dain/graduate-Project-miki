@@ -1,33 +1,45 @@
 package com.dayang.miki.category;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
-@RestController("/dev")
+@RestController
+@RequestMapping("dev/category")
 @RequiredArgsConstructor
 public class DevCartController {
     private final DevCategoryService devCategoryService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/category")
+    @GetMapping("/")
     public List<CategoryDTO> bigCategory(){
         List<CategoryDTO> category = devCategoryService.bigCategory();
         return category;
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/category/{categoryId}")
-    public JSONObject categories(){
+    @GetMapping("/{categoryId}")
+    public JSONObject categories(@PathVariable("categoryId")String id){
         JSONObject jsonObject = new JSONObject();
-        return null;
+        Map<Long, List<CategoryDTO>> map = new HashMap<>();
+
+        Long categoryId = Long.parseLong(id);
+        List<CategoryDTO> firstCategoryList = devCategoryService.firstCategory(categoryId);
+
+
+        map.put(categoryId, firstCategoryList);
+        for(CategoryDTO c : firstCategoryList){
+            map.put(c.getCategoryId(), devCategoryService.secondCategory(c.getCategoryId()));
+        }
+        jsonObject.putAll(map);
+        return jsonObject;
     }
 }

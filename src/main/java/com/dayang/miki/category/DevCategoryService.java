@@ -59,20 +59,19 @@ public class DevCategoryService {
         return categoryDTOList;
     }
 
-    public List<CategoryDTO.CategoryParent> secondCategory(Long id){
+    public List<CategoryDTO> secondCategory(Long id){
 
         Category category = findById(id);
 
-        List<CategoryDTO.CategoryParent> categoryDTOList = new ArrayList<>();
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<Category> categories = findByParent(category);
-        CategoryDTO categoryDTO = new CategoryDTO();
 
-/*        for(Category c : categories){
-            CategoryDTO.CategoryParent categoryDTO = categoryDTO.cate;
+        for(Category c : categories){
+            CategoryDTO categoryDTO = new CategoryDTO();
             categoryDTO.setCategoryId(c.getId());
             categoryDTO.setCategoryName(c.getName());
             categoryDTOList.add(categoryDTO);
-        }*/
+        }
 
         return categoryDTOList;
     }
