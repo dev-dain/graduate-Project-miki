@@ -5,12 +5,8 @@ let face;
 let sil;
 
 function setup() {
-  // createCanvas(640, 480);
   createCanvas(1000, 1200);
-  // createCanvas(640, 480);
   video = createCapture(VIDEO);
-  // video.size(1024, 768);
-  // video.size(windowWidth, windowHeight);
   facemesh = ml5.facemesh(video, modelReady);
 
   facemesh.on("predict", (results) => {
@@ -25,8 +21,6 @@ function modelReady() {
 }
 
 function draw() {
-  // background(0);
-  // scale(1.5);
   image(video, 0, 0, width, height);
 
   drawKeypoints();
@@ -78,29 +72,6 @@ function drawKeypoints() {
         face.leftEyebrow();  //눈썹
         face.rightEyebrow();
     }
-    // Lip Cheek Brow 가 이미 적용되어있는지 사전 확인이 필요함
-
-    //  switch (position) {
-    //   case 'L':
-    //     /* fill lip position */
-    //     fill(R,G,B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
-    //     face.lips();
-    //     break;
-    //   case 'C':
-    //     fill(R, G, B, alpha*100); //투명도 10
-    //     face.leftCheeck();  //볼터치
-    //     face.rightCheeck();
-    //       break;
-    //    case 'B':
-    //     console.log("브로우 진입");
-    //     /* fill eyebrow position */
-    //     fill(R, G, B, alpha*100);
-    //     face.leftEyebrow();  //눈썹
-    //     face.rightEyebrow();
-    //        break;
-    //   default :
-    //     return 0;
-    // }
 
   }
 }
