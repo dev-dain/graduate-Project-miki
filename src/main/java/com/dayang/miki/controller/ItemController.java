@@ -28,7 +28,9 @@ public class ItemController {
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET, value ="/category/{list}")
-    public String categoryItem(@PathVariable("list") Long category_id, @RequestParam(value = "sort", defaultValue = "item_id") String sort, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+    public String categoryItem(@PathVariable("list") Long category_id,
+                               @RequestParam(value = "sort", defaultValue = "item_id") String sort, Model model,
+                               @RequestParam(value="page", defaultValue = "1") Integer pageNum){
         Category category = itemService.findOneCategory(category_id);
         List<Category> categories = itemService.getFriendCategory(category);
 

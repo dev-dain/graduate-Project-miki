@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DevItemImageRepository extends JpaRepository<Item_img, Long> {
 
-    Item_img findDistinctByItem (Item item);
+    Item_img findTop1ByItem (Item item);
 }

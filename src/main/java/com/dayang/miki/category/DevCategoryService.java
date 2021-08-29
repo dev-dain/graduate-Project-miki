@@ -33,6 +33,13 @@ public class DevCategoryService {
         return category.get();
     }
 
+    public CategoryDTO categoryDTO(Category category){
+        CategoryDTO categoryDTO = new CategoryDTO();
+
+        categoryDTO.setCategoryName(category.getName());
+        categoryDTO.setCategoryId(category.getId());
+        return categoryDTO;
+    }
     public List<Category> findByParent(Category category){
         List<Category> categories = new ArrayList<>();
         try{
@@ -48,14 +55,11 @@ public class DevCategoryService {
 
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<Category> categories = findByParent(category);
-
-        for(Category c : categories){
-            CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setCategoryId(c.getId());
-            categoryDTO.setCategoryName(c.getName());
-            categoryDTOList.add(categoryDTO);
+        if(categories!=null) {
+            for (Category c : categories) {
+                categoryDTOList.add(categoryDTO(c));
+            }
         }
-
         return categoryDTOList;
     }
 
@@ -65,14 +69,13 @@ public class DevCategoryService {
 
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<Category> categories = findByParent(category);
+        if(categories!=null){
+            for(Category c : categories){
+                categoryDTOList.add(categoryDTO(c));
+            }
 
-        for(Category c : categories){
-            CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setCategoryId(c.getId());
-            categoryDTO.setCategoryName(c.getName());
-            categoryDTOList.add(categoryDTO);
         }
-
+        else return null;
         return categoryDTOList;
     }
 
