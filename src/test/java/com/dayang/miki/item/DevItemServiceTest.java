@@ -4,9 +4,7 @@ import com.dayang.miki.Item.DevItemService;
 import com.dayang.miki.Item.ItemDTO;
 import com.dayang.miki.category.CategoryDTO;
 import com.dayang.miki.category.DevCategoryService;
-import com.dayang.miki.domain.Category;
-import com.dayang.miki.domain.Item;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

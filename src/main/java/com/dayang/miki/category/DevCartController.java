@@ -19,10 +19,12 @@ public class DevCartController {
     private final DevCategoryService devCategoryService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/")
-    public List<CategoryDTO> bigCategory(){
+    @GetMapping("")
+    public JSONObject bigCategory(){
+        JSONObject jsonObject = new JSONObject();
         List<CategoryDTO> category = devCategoryService.bigCategory();
-        return category;
+        jsonObject.put("Category", category);
+        return jsonObject;
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,19 @@ public class DevItemService {
         return devItemImageRepository.findTop1ByItem(item);
     }
 
+    public ItemDTO itemDTO(Item item, Item_img itemImg){
+
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setItemId(item.getId());
+        itemDTO.setItemName(item.getName());
+        itemDTO.setItemPrice(item.getItem_price());
+        itemDTO.setItemDiscountPrice(item.getDiscount_price());
+        itemDTO.setItemTestable(item.getIs_testable());
+        itemDTO.setItemImage(itemImg.getItem_img());
+
+        return itemDTO;
+    }
+
     public List<ItemDTO> findByCategory(List<CategoryDTO> categories, int pageNum, String sort){
         List<Category> category = new ArrayList<>();
         for(CategoryDTO c: categories) category.add(devCategoryService.findById(c.getCategoryId()));
@@ -36,17 +50,26 @@ public class DevItemService {
 
         for(Item i : items){
             Item_img itemImage = findItemImageByItem(i);
-
-            ItemDTO itemDTO = new ItemDTO();
-            itemDTO.setItemId(i.getId());
-            itemDTO.setItemName(i.getName());
-            itemDTO.setItemPrice(i.getItem_price());
-            itemDTO.setItemDiscountPrice(i.getDiscount_price());
-            itemDTO.setItemTestable(i.getIs_testable());
-            itemDTO.setItemImage(itemImage.getItem_img());
+            ItemDTO itemDTO = itemDTO(i, itemImage);
             itemDTOList.add(itemDTO);
         }
 
         return itemDTOList;
+    }
+    public ItemDTO findById(Long id){
+        Item item = new Item();
+        Item_img itemImg = new Item_img();
+        try {
+            item = (devItemRepository.findById(id)).get();
+            itemImg = devItemImageRepository.findTop1ByItem(item);
+
+        }
+        catch (NoSuchElementException e){
+            item = null;
+            itemImg = null;
+        }
+        if(item==null) return null;
+        ItemDTO itemDTO = itemDTO(item, itemImg);
+        return itemDTO;
     }
 }
