@@ -97,7 +97,7 @@ public class StoreController {
         List<Item_img> item_imgs = new ArrayList<>();
         for(StoreQuantity storeQuantity : storeQuantities){
             item.add(itemService.findOne(storeQuantity.getItem().getId()));
-            item_options.add(itemService.findItemOptionById(storeQuantity.getItem_option().getId()));
+            item_options.add(itemService.findItemOptionById(storeQuantity.getItemOption().getId()));
             item_imgs.add(itemService.itemImg(storeQuantity.getItem().getId()));
         }
 

@@ -1,7 +1,8 @@
 package com.dayang.miki.item;
 
+import com.dayang.miki.Item.DTO.ItemPopularDTO;
 import com.dayang.miki.Item.DevItemService;
-import com.dayang.miki.Item.ItemDTO;
+import com.dayang.miki.Item.DTO.ItemDTO;
 import com.dayang.miki.category.CategoryDTO;
 import com.dayang.miki.category.DevCategoryService;
 
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -53,6 +53,15 @@ class DevItemServiceTest {
         //then
         assertThat(itemDTOList.size()).isEqualTo(9);
         assertThat(itemDTOList.get(0).getItemId()).isEqualTo(1);
+    }
+
+    @Test
+    void popularity(){
+        //given
+        //when
+        List<ItemPopularDTO> itemPopularDTOList = devItemService.popularity();
+        //then
+        assertThat(itemPopularDTOList.size()).isEqualTo(10);
     }
 
 }

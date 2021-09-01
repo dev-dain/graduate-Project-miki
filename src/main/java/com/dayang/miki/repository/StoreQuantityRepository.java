@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface StoreQuantityRepository extends JpaRepository<StoreQuantity, Long> {
 
-    @Query("select sq from StoreQuantity sq where sq.item_option =:item_option")
+    @Query("select sq from StoreQuantity sq where sq.itemOption =:item_option")
     List<StoreQuantity> findByItemOptions(@Param("item_option") Item_option item_option);
 
 

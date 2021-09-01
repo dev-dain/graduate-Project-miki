@@ -1,4 +1,4 @@
-package com.dayang.miki.Item;
+package com.dayang.miki.Item.reository;
 
 import com.dayang.miki.domain.Item;
 import com.dayang.miki.domain.Item_img;

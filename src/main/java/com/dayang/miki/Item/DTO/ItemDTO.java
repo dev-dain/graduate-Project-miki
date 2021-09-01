@@ -1,4 +1,4 @@
-package com.dayang.miki.Item;
+package com.dayang.miki.Item.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
