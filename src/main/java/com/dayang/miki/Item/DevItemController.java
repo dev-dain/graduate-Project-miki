@@ -57,6 +57,7 @@ public class DevItemController {
         if(itemDTO==null){
             jsonObject.put("no such item", null);
         }
+
         else jsonObject.put("Item", itemDTO);
 
        return  jsonObject;
@@ -72,8 +73,9 @@ public class DevItemController {
         return jsonObject;
     }
     @GetMapping("/item/{itemId}/option")
-    public JSONObject itemOption(@PathVariable("itemId")Long itemId, @RequestParam("storeId")Long storeId){
+    public JSONObject itemOption(@PathVariable("itemId")String id, @RequestParam("storeId")Long storeId){
         JSONObject jsonObject = new JSONObject();
+        Long itemId = Long.parseLong(id);
         List<OptionDTO> optionDTOList = devItemService.itemOption(itemId, storeId);
         jsonObject.put("ItemOption", optionDTOList);
 

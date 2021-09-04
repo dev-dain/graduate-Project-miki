@@ -101,7 +101,7 @@ public class ItemLogicRepository {
 
     //해당 매장 아이템 수량 가져오기
     public StoreQuantity storeQuantityList(Item_option item_option, Store store){
-        return em.createQuery("select sq from StoreQuantity sq where sq.store =:store and sq.item_option =:item_option", StoreQuantity.class)
+        return em.createQuery("select sq from StoreQuantity sq where sq.store =:store and sq.itemOption =:item_option", StoreQuantity.class)
                 .setParameter("store", store)
                 .setParameter("item_option", item_option)
                 .getSingleResult();
