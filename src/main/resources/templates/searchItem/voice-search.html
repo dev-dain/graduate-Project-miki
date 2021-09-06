@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/voice-search.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
+  <script src="/js/p5.speech.js"></script>
+  <title>Voice search page</title>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="top-area">
+      <header>
+        <div class="title-container">
+          <button class="go-prev">&lt;</button>
+          <h1 class="title">검색 결과</h1>
+        </div>
+      </header>
+      <div class="mic-area">
+        <button class="mic"></button>
+      </div>
+      <input class="search-input" type="text" id="speech">
+      <div class="button-box">
+        <button class="positive">맞아요</button>
+        <button class="retry">다시 하기</button>
+      </div>
+    </div>
+    <div class="bottom-area">
+      <div class="search-word-container">
+        <div class="header-container">
+          <p class="title">⚡ 급상승 검색어</p>
+        </div>
+        <div class="word-container">
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-container">
+
+    </div>
+  </div>
+  <script src="/js/speech-recognition.js"></script>
+  <script src="/js/createModal.js"></script>
+  <script src="/js/voiceSearch.js"></script>
+</body>
+
+</html>
