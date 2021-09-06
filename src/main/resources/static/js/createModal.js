@@ -1,4 +1,4 @@
-const createModal = (state, msg) => {
+const createModal = (modalContainer, state, msg) => {
     const modalBG = document.createElement('div');
     modalBG.classList.add('modal-background');
     const modalBox = document.createElement('div');
@@ -29,6 +29,9 @@ const createModal = (state, msg) => {
     }
     else if (state === 'empty') {
         modalContent.textContent = 'ID / 코드를 입력해 주세요.';
+    }
+    else if (state === 'voice') {
+        modalContent.textContent = '검색어를 말씀해 주세요. :)';
     }
     else {
         modalContent.textContent = '상품을 장바구니에서 삭제했습니다.';
