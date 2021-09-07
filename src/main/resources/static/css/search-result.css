@@ -26,6 +26,34 @@
   color: #E93C15;
   font-weight: 900;
 }
+.item-row-container {
+  margin: 0;
+  width: 100%;
+}
+tbody {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.item-card {
+  width: 225px;
+  margin: 10px;
+}
+.item-img-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.origin-price {
+  width: 50%;
+  margin: 0 0 -30px 0;
+  padding: 10px 20px;
+}
+.discount-price {
+  width: 50%;
+  margin: 0 0 20px 20px;
+  align-self: flex-end;
+}
 .no-result {
   display: flex;
   flex-direction: column;

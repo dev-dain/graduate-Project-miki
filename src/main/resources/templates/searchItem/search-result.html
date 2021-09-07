@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <!-- 상품 검색 결과로 상품 목록들이 카드 형식으로 나오는 페이지 (category와 유사한 페이지) -->
 <head>
   <meta charset="UTF-8">
@@ -29,9 +29,9 @@
   </header>
   <div class="result-container">
     <p class="result-text">
-      <span class="highlight" th:text="${keyword}"></span>
+      <span class="highlight result-item-title"></span>
       <span> 의 검색 결과는 </span>
-      <span class="highlight" th:text="${count}"></span>
+      <span class="highlight result-item-count"></span>
       <span> 건입니다.</span>
     </p>
   </div>
@@ -41,226 +41,17 @@
     <button class="sort-btn-reviewCnt">리뷰순</button>
   </div>
   <div class="item-container">
-    <p class="maxNum" style="display: none;" th:text="${maxNum}"></p>
-    <button th:onclick="'javascript:goPrevPage(' + ${count} + ')'" th:if="${count} != 0"
-            class="item-btn item-prev-btn">
-      &lt;
-    </button>
     <!--        <div class="item-row-container">-->
-    <table class="table table-striped item-row-container" style="margin: 0; width: 100%;" th:if="${count} != 0">
-      <tbody style="display: flex; flex-flow: row wrap; justify-content: center;">
-      <tr class="item-card" th:each="item : ${item}"
-          style="width: 225px; margin: 10px;">
-        <td style="display: flex; justify-content: center; align-items: center;" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'">
-          <img th:src="${item.item_img}" class="thumbnail-img" th:alt="${item.name}"></img>
-        </td>
-        <td>
-          <hr class="divide-img-info">
-        </td>
-        <td th:text="${item.name}" class="item-title" th:onclick="'javascript:goItemPage(' + ${item.id} + ')'"></td>
-        <td
-                th:if="${item.item_price} != ${item.discount_price}"
-                th:text="${item.item_price} + '원'"
-                class="origin-price"
-                style="width: 50%; margin: 0 0 -30px 0; padding: 10px 20px;">
-        </td>
-        <td
-                th:text="${item.discount_price} + '원'"
-                class="discount-price"
-                style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</td>
-        <td th:if="${item.is_testable} == 'Y'">
-          <button class="go-test" th:onclick="'javascript:goTestPage(' + ${item.id} + ')'">테스트</button>
-        </td>
-      </tr>
+    <table class="table table-striped item-row-container">
+      <tbody>
+
       </tbody>
     </table>
-    <div class="no-result" th:if="${count} == 0">
-      <img class="no-result-pic" src="/img/information.png"></img>
-      <p class="no-result-caution">현재 취급하지 않는 상품입니다. :(</p>
-      <div class="no-result-btn-container">
-        <button class="no-result-btn go-search">다시 검색하기</button>
-        <button class="no-result-btn go-home">홈으로 가기</button>
-      </div>
-    </div>
-    <button th:onclick="'javascript:goNextPage(' + ${count} + ')'" th:if="${count} != 0"
-            class="item-btn item-next-btn">&gt;</button>
   </div>
 </div>
 
-<script th:inline="javascript">
-  /*<![CDATA[*/
-
-  const keyword = /*[[ ${keyword} ]]*/;
-
-  /*[# th:each="tmp : ${item}"]*/
-  noti(/*[[${tmp.name}]]*/, /*[[${tmp.item_price}]]*/);
-  /*[/]*/
-
-  /*]]>*/
-
-  function noti(testValue, tmpValue) {
-    console.log(testValue, tmpValue);
-  }
-
-  const mic = document.querySelector('.turn-on-mic');
-  const cart = document.querySelector('.go-cart');
-  const goPrevBtn = document.querySelector('.go-prev');
-  const goSearchBtn = document.querySelector('.go-search');
-  const goHomeBtn = document.querySelector('.go-home');
-  const itemPrevBtn = document.querySelector('.item-prev-btn');
-  const itemNextBtn = document.querySelector('.item-next-btn');
-  const modalContainer = document.querySelector('.modal-container');
-
-  goPrevBtn.addEventListener('click', () => { history.back(); });
-
-  mic.addEventListener('click', () => location.href = '/searchVoice');
-  cart.addEventListener('click', () => {
-    location.href = `/cartList/${localStorage.getItem('store_id')}`;
-  });
-
-  const createModal = state => {
-      const modalBG = document.createElement('div');
-      modalBG.classList.add('modal-background');
-
-      const modalBox = document.createElement('div');
-      modalBox.classList.add('modal-box');
-
-      const modalCloseBtn = document.createElement('span');
-      modalCloseBtn.classList.add('modal-close-btn');
-      modalCloseBtn.innerHTML = '&times;';
-      modalCloseBtn.addEventListener('click', () => {
-        modalContainer.innerHTML = '';
-        modalContainer.classList.remove('display');
-      });
-
-      const modalContent = document.createElement('p');
-      modalContent.classList.add('modal-content');
-      if (state === 'excess') {
-        modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
-      } else if (state === 'lack') {
-        modalContent.textContent = '수량은 1개 이상이어야 합니다.';
-      } else if (state === 'first') {
-        modalContent.textContent = '검색 첫 페이지입니다.';
-      } else if (state === 'last') {
-        modalContent.textContent = '검색 마지막 페이지입니다.';
-      } else if (state === 'clear') {
-        modalContent.textContent = '장바구니를 성공적으로 비웠습니다.';
-      } else {
-        modalContent.textContent = '상품을 장바구니에서 삭제했습니다.';
-      }
-
-      modalBox.appendChild(modalCloseBtn);
-      modalBox.appendChild(modalContent);
-
-      modalBG.appendChild(modalBox);
-
-      return modalBG;
-    }
-
-  let sortWay = localStorage.getItem('search-sort-way') || 'popularity';
-  const wrapContainer = document.getElementById('wrap');
-
-  const fetchData = (keyword, sortWay) => {
-    console.log(sortWay);
-    fetch(`/searchVoice/${keyword}?sort=${sortWay}`)
-        .then(res => res.text())
-        .then(data => {
-            const itemRowContainer = document.createElement('div');
-            itemRowContainer.classList.add('item-container');
-            let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-            itemRowContainer.innerHTML = itemContainer;
-            wrapContainer.removeChild(wrapContainer.lastElementChild);
-            wrapContainer.appendChild(itemRowContainer);
-
-        })
-        .catch(e => console.error(e));
-  }
-
-
-  const sortContainer = document.querySelector('.sort-container');
-  const sortBtnPop = document.querySelector('.sort-btn-popularity');
-  const sortBtnOrder = document.querySelector('.sort-btn-orderCnt');
-  const sortBtnReview = document.querySelector('.sort-btn-reviewCnt');
-
-  for (let i = 0; i < sortContainer.children.length; i++) {
-    sortContainer.children[i].addEventListener('click', () => {
-        for (let j = 0; j < sortContainer.children.length; j++) {
-            if (sortContainer.children[j].classList.contains('selected-btn')) {
-                if (i === j) return;
-                sortContainer.children[j].classList.remove('selected-btn');
-            }
-        }
-        localStorage.setItem('search-sort-way', sortContainer.children[i].className.split('-')
-            [sortContainer.children[i].className.split('-').length - 1]);
-        sortWay = localStorage.getItem('search-sort-way');
-        sortContainer.children[i].classList.add('selected-btn');
-
-        localStorage.setItem('page', 1);
-        fetchData(keyword, sortWay);
-    });
-}
-
-  localStorage.setItem('searchMax', document.querySelector('.maxNum').textContent);
-  console.log(localStorage.getItem('searchMax'));
-  localStorage.setItem('page', 1);
-
-
-  const goItemPage = id => location.href = `/item/${id}`;
-  const goTestPage = id => location.href = `/test/${id}`;
-
-  const checkFirstPage = page => (page <= 1);
-  const checkLastPage = page => page >= Number(localStorage.getItem('searchMax'));
-
-  const goPrevPage = count => {
-    if (checkFirstPage(Number(localStorage.getItem('page')))) {
-      console.log('First Page!');
-          modalContainer.appendChild(createModal('first'));
-          modalContainer.classList.add('display');
-    } else {
-      // location.href = `/category/${category}?page=${Number(URLSearch.get('page')) - 1}`;
-      fetch(`/searchVoice/${keyword}?page=${Number(localStorage.getItem('page')) - 1}`)
-              .then(res => res.text())
-              .then(data => {
-                const wrapContainer = document.getElementById('wrap');
-                const itemRowContainer = document.createElement('div');
-                itemRowContainer.classList += 'item-container';
-                let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-                itemRowContainer.innerHTML = itemContainer;
-                wrapContainer.removeChild(wrapContainer.lastElementChild);
-                wrapContainer.appendChild(itemRowContainer);
-              })
-              .catch(e => console.error(e));
-
-      localStorage.setItem('page', Number(localStorage.getItem('page')) - 1);
-    }
-  }
-
-  const goNextPage = count => {
-    if (checkLastPage(Number(localStorage.getItem('page')))) {
-      console.log('Last Page!');
-          modalContainer.appendChild(createModal('last'));
-          modalContainer.classList.add('display');
-    } else {
-      fetch(`/searchVoice/${keyword}?page=${Number(localStorage.getItem('page')) + 1}`)
-              .then(res => res.text())
-              .then(data => {
-                const wrapContainer = document.getElementById('wrap');
-                const itemRowContainer = document.createElement('div');
-                itemRowContainer.classList += 'item-container';
-                let itemContainer = data.split('<div class="item-container">')[1].split('<script>')[0];
-                itemRowContainer.innerHTML = itemContainer;
-                wrapContainer.removeChild(wrapContainer.lastElementChild);
-                wrapContainer.appendChild(itemRowContainer);
-
-              })
-              .catch(e => console.error(e));
-      localStorage.setItem('page', Number(localStorage.getItem('page')) + 1);
-    }
-  }
-
-  goSearchBtn.addEventListener('click', () => location.href = '/searchVoice');
-  goHomeBtn.addEventListener('click', () => location.href = '/');
-</script>
+<script src="/js/createModal.js"></script>
+<script src="/js/preSearch.js"></script>
 </body>
 
 </html>
