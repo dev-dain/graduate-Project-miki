@@ -23,10 +23,11 @@ public class ReviewController {
     }
 
     @GetMapping("/item/{itemId}/reviewCnt")
-    public JSONObject ReviewCnt(@PathVariable("itemId")Long id){
+    public JSONObject ReviewCnt(@PathVariable("itemId")String id){
         JSONObject jsonObject = new JSONObject();
 
-        Map<String, Double> map = devReviewService.reviewSizeRate(id);
+        Map<String, Double> map = devReviewService.reviewSizeRate(Long.parseLong(id));
+
         int size = (int) Math.round((map.get("size")));
         double rate = map.get("rate");
 

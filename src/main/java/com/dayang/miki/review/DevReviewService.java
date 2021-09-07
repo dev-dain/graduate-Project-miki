@@ -63,8 +63,8 @@ public class DevReviewService {
 
         for(Review review : reviewList) rate += review.getRate();
 
-        map.put("reviewSize", (double) reviewList.size());
-        map.put("reviewRate", rate / reviewList.size());
+        map.put("size", (double) reviewList.size());
+        map.put("rate", rate / reviewList.size());
         return map;
     }
 
