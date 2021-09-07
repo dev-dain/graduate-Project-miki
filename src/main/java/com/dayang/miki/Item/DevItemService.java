@@ -141,6 +141,10 @@ public class DevItemService {
         }
         return itemDTOList;
     }
+    public int searchItemSize(String keyword){
+        int size = devItemRepository.findByNameContaining(keyword).size();
+        return size;
+    }
 
     public List<ItemPopularDTO> popularity(){
         List<Item> itemList = devItemRepository.findTop10ByIdGreaterThanOrderByPopularityDesc(1L);

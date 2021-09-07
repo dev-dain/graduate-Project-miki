@@ -95,6 +95,15 @@ public class DevItemController {
         return jsonObject;
     }
 
+    @GetMapping("/searchResult")
+    public JSONObject searchResult(@RequestParam("keyword")String keyword){
+        JSONObject jsonObject = new JSONObject();
+        int size = devItemService.searchItemSize(keyword);
+        jsonObject.put("size", size);
+        jsonObject.put("keyword", keyword);
+        return jsonObject;
+    }
+
     @GetMapping("/popularity")
     public JSONObject popularity(){
         JSONObject jsonObject = new JSONObject();
