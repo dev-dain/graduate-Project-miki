@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,5 +35,22 @@ class DevReviewServiceTest {
         assertThat(reviewDTOList.size()).isEqualTo(10);
         assertThat(reviewDTOList.get(0).getImage()).isEqualTo("http://www.bbia.co.kr/shopimages/bbia/0070010000623.jpg?1605499285");
         assertThat(reviewDTOList.get(1).getImage()).isNull();
+    }
+
+    @Test
+    void reviewCnt(){
+        //given
+        Long itemId = 324L;
+        Map<String, Double> map1 = new HashMap<>();
+        Map<String, Double> map2 = new HashMap<>();
+        //when
+        map1 = devReviewService.reviewSizeRate(itemId); // 리뷰가 있는 아이템
+        map2 = devReviewService.reviewSizeRate(1L); //리뷰가 없는 아이템
+        //then
+        assertThat(map1.get("size")).isEqualTo(10.0);
+        assertThat(map1.get("rate")).isEqualTo(3.25);
+
+        assertThat(map2.get("size")).isEqualTo(0.0);
+        assertThat(map2.get("rate")).isNaN();
     }
 }

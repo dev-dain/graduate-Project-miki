@@ -31,6 +31,7 @@ public class ReviewController {
         int size = (int) Math.round((map.get("size")));
         double rate = map.get("rate");
 
+
         jsonObject.put("size", size);
         jsonObject.put("rate", rate);
 
