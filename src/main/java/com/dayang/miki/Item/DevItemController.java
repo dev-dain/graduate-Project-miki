@@ -22,6 +22,7 @@ import java.util.List;
 public class DevItemController {
     private final DevItemService devItemService;
     private final DevCategoryService devCategoryService;
+    List<Long> randomNumber = DevItemService.rand();
 
     @GetMapping("/category/{categoryId}/itemList")
     public JSONObject itemList(@PathVariable("categoryId") String id,
@@ -105,7 +106,6 @@ public class DevItemController {
     @GetMapping("/mdItem")
     public JSONObject mdsItem(){
         JSONObject jsonObject = new JSONObject();
-        List<Long> randomNumber = devItemService.rand();
         List<ItemDTO> itemDTOList = devItemService.mdsItem(randomNumber);
         jsonObject.put("Item", itemDTOList);
         return jsonObject;
