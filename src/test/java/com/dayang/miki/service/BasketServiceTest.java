@@ -23,8 +23,6 @@ class BasketServiceTest {
     @Autowired
     CartReposit cartRepository;
 
-@Autowired
-    DevCategoryService service;
 
     @Test
     @Rollback(value = false)
@@ -80,10 +78,7 @@ class BasketServiceTest {
 
     @Autowired
     TestService testService;
-    @Test
-    void ddd(){
-        service.bigCategory();
-    }
+
     @Test
     void deleteOne(){
         cartService.deleteOne(1L);

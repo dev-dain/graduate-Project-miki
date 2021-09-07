@@ -22,15 +22,7 @@ class DevCategoryServiceTest {
     @Autowired
     DevCategoryService service;
 
-    @Test
-    public void BigCategoryTest(){
-        //given
-        //when
-        List<CategoryDTO> categoryDTOList = service.bigCategory();
-        //then
-        assertThat(categoryDTOList.size()).isEqualTo(11);
-        assertThat(categoryDTOList.get(0).getCategoryId()).isEqualTo(1L);
-    }
+
     @Test
     public void findByIdTest(){
         //given

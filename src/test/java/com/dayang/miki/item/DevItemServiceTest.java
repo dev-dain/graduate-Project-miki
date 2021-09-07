@@ -42,7 +42,7 @@ class DevItemServiceTest {
 
         for(CategoryDTO c : firstCategoryList){
             List<CategoryDTO> secondCategoryList = devCategoryService.secondCategory(c.getCategoryId());
-            if(secondCategoryList!=null) categories.addAll(secondCategoryList);
+            if(secondCategoryList.size() != 0) categories.addAll(secondCategoryList);
         }
 
         ////////////////아이템//////////////////////////
@@ -62,6 +62,21 @@ class DevItemServiceTest {
         List<ItemPopularDTO> itemPopularDTOList = devItemService.popularity();
         //then
         assertThat(itemPopularDTOList.size()).isEqualTo(10);
+    }
+
+    @Test
+    void randomNumberItem(){
+        //given
+        List<Long> list = devItemService.randomNumber();
+        //when
+        List<ItemDTO> itemDTOList = devItemService.mdsItem(list);
+        //then
+        assertThat(itemDTOList.size()).isEqualTo(5);
+        assertThat(itemDTOList.get(0).getItemId()).isNotEqualTo(itemDTOList.get(1).getItemId());
+        assertThat(itemDTOList.get(1).getItemId()).isNotEqualTo(itemDTOList.get(2).getItemId());
+        assertThat(itemDTOList.get(2).getItemId()).isNotEqualTo(itemDTOList.get(3).getItemId());
+        assertThat(itemDTOList.get(3).getItemId()).isNotEqualTo(itemDTOList.get(4).getItemId());
+
     }
 
 }

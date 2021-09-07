@@ -9,6 +9,7 @@ import com.dayang.miki.category.DevCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -100,4 +101,14 @@ public class DevItemController {
         jsonObject.put("Item", itemPopularDTOList);
         return jsonObject;
     }
+
+    @GetMapping("/mdItem")
+    public JSONObject mdsItem(){
+        JSONObject jsonObject = new JSONObject();
+        List<Long> randomNumber = devItemService.rand();
+        List<ItemDTO> itemDTOList = devItemService.mdsItem(randomNumber);
+        jsonObject.put("Item", itemDTOList);
+        return jsonObject;
+    }
+
 }

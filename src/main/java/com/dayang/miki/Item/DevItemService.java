@@ -13,6 +13,7 @@ import com.dayang.miki.category.DevCategoryService;
 import com.dayang.miki.domain.*;
 import com.dayang.miki.store.DevStoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +35,13 @@ public class DevItemService {
     private final DevProductImageRepository devProductImageRepository;
     private final DevStoreService devStoreService;
 
+    private  static List<Long> random  = new ArrayList<>();
+
 
     public Item_img findItemImageByItem(Item item){
         return devItemImageRepository.findTop1ByItem(item);
     }
+
 
     public ItemDTO itemDTO(Item item, Item_img itemImg){
 
@@ -149,5 +154,41 @@ public class DevItemService {
             itemPopularDTOList.add(itemPopularDTO);
         }
         return itemPopularDTOList;
+    }
+    public static List<Long> randomNumber(){
+        Random random = new Random();
+        List<Long> list = new ArrayList<>();
+        list.add((long) random.nextInt(1458));
+        for(int i = 1 ; i < 5 ; i++) {
+            int num = random.nextInt(1458);
+            for (int j = 0; j < i; j++){
+                if(list.get(j) == (long) num){
+                    i--;
+                    break;
+                }
+            }
+            list.add((long) num);
+        }
+        return list;
+    }
+
+    public static List<Long> rand(){
+        random = randomNumber();
+
+        return random;
+    }
+
+    public List<ItemDTO> mdsItem(List<Long> list){
+        List<Item> itemList = new ArrayList<>();
+        for(Long l : list){
+            itemList.add(findById(l));
+        }
+        List<ItemDTO> itemDTOList = new ArrayList<>();
+        for(Item item : itemList){
+            Item_img itemImg = findItemImage(item);
+            ItemDTO itemDTO = itemDTO(item, itemImg);
+            itemDTOList.add(itemDTO);
+        }
+        return itemDTOList;
     }
 }
