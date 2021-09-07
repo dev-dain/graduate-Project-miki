@@ -110,5 +110,12 @@ public class DevItemController {
         jsonObject.put("Item", itemDTOList);
         return jsonObject;
     }
+    @GetMapping("/bestSeller")
+    public JSONObject bestSeller(){
+        JSONObject jsonObject = new JSONObject();
+        List<ItemDTO> itemDTOList = devItemService.bestSeller();
+        jsonObject.put("Item", itemDTOList);
+        return jsonObject;
+    }
 
 }

@@ -174,7 +174,6 @@ public class DevItemService {
 
     public static List<Long> rand(){
         random = randomNumber();
-
         return random;
     }
 
@@ -183,6 +182,17 @@ public class DevItemService {
         for(Long l : list){
             itemList.add(findById(l));
         }
+        List<ItemDTO> itemDTOList = new ArrayList<>();
+        for(Item item : itemList){
+            Item_img itemImg = findItemImage(item);
+            ItemDTO itemDTO = itemDTO(item, itemImg);
+            itemDTOList.add(itemDTO);
+        }
+        return itemDTOList;
+    }
+
+    public List<ItemDTO> bestSeller(){
+        List<Item> itemList = devItemRepository.findTop3ByIdGreaterThanOrderByOrderCnt(1L);
         List<ItemDTO> itemDTOList = new ArrayList<>();
         for(Item item : itemList){
             Item_img itemImg = findItemImage(item);

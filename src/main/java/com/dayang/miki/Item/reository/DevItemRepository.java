@@ -19,4 +19,6 @@ public interface DevItemRepository extends JpaRepository<Item, Long> {
     List<Item> findByNameContaining(String keyword, Pageable pageable);
 
     List<Item> findTop10ByIdGreaterThanOrderByPopularityDesc(Long id);
+
+    List<Item> findTop3ByIdGreaterThanOrderByOrderCnt(Long id);
 }
