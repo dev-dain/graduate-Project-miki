@@ -18,29 +18,24 @@ import java.util.Map;
 public class DevCartController {
     private final DevCategoryService devCategoryService;
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("")
-    public JSONObject bigCategory(){
-        JSONObject jsonObject = new JSONObject();
-        List<CategoryDTO> category = devCategoryService.bigCategory();
-        jsonObject.put("Category", category);
-        return jsonObject;
-    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{categoryId}")
     public JSONObject categories(@PathVariable("categoryId")String id){
         JSONObject jsonObject = new JSONObject();
-        Map<Long, List<CategoryDTO>> map = new HashMap<>();
+        Map<String, List<CategoryDTO>> map = new HashMap<>();
 
         Long categoryId = Long.parseLong(id);
         List<CategoryDTO> firstCategoryList = devCategoryService.firstCategory(categoryId);
 
 
-        map.put(categoryId, firstCategoryList);
+        map.put("parent " + Long.toString(categoryId), firstCategoryList);
+
         for(CategoryDTO c : firstCategoryList){
-            map.put(c.getCategoryId(), devCategoryService.secondCategory(c.getCategoryId()));
+            List<CategoryDTO> list = devCategoryService.secondCategory(c.getCategoryId());
+            if(list.size() != 0) map.put( "child " + Long.toString(c.getCategoryId()), list);
         }
+
         jsonObject.putAll(map);
         return jsonObject;
     }

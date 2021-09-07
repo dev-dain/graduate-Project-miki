@@ -13,20 +13,6 @@ public class DevCategoryService {
 
     private final DevCategoryRepository repository;
 
-    public List<CategoryDTO> bigCategory(){
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
-
-        List<Category> category = repository.findByParentIsNull();
-
-        for(Category c : category){
-            CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setCategoryId(c.getId());
-            categoryDTO.setCategoryName(c.getName());
-            categoryDTOList.add(categoryDTO);
-        }
-
-        return categoryDTOList;
-    }
 
     public Category findById(Long id){
         Optional<Category> category = repository.findById(id);
@@ -40,6 +26,7 @@ public class DevCategoryService {
         categoryDTO.setCategoryId(category.getId());
         return categoryDTO;
     }
+
     public List<Category> findByParent(Category category){
         List<Category> categories = new ArrayList<>();
         try{
@@ -73,7 +60,6 @@ public class DevCategoryService {
             for(Category c : categories){
                 categoryDTOList.add(categoryDTO(c));
             }
-
         }
         else return null;
         return categoryDTOList;
