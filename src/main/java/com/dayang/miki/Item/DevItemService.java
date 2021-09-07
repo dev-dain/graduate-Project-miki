@@ -102,6 +102,8 @@ public class DevItemService {
         ItemDTO itemDTO = itemDTO(item, itemImg);
         return itemDTO;
     }
+    public List<Item_option> findItemOptionByItem(Item item){ return devItemOptionRepository.findByItem(item);}
+
     public List<ImageDTO> productImage(Long id){
         Item item = findById(id);
         List<Product_img> productImgs = devProductImageRepository.findByItem(item);
@@ -113,10 +115,11 @@ public class DevItemService {
         }
         return imageDTOList;
     }
+
     public List<OptionDTO> itemOption(Long itemId, Long storeId){
         Store store = devStoreService.findById(storeId);
         Item item = findById(itemId);
-        List<Item_option> item_options = devItemOptionRepository.findByItem(item);
+        List<Item_option> item_options = findItemOptionByItem(item);
         List<OptionDTO> optionDTOList = new ArrayList<>();
 
         for(Item_option i : item_options){

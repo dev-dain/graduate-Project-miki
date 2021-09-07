@@ -21,7 +21,7 @@ public class TestColor {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_option_id")
-    private Item_option item_option;
+    private Item_option itemOption;
 
     private String colorCode;
     private double alpha;
