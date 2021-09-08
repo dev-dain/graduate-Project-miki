@@ -87,6 +87,33 @@
 
     /*]]>*/
 
+    fetch(`/dev/category/30`)
+        .then(res => res.text())
+        .then(data => {
+            data = JSON.parse(data);
+            categoryList = data.category;
+            console.log(categoryList);
+        })
+        .catch(e => console.error(e));
+    fetch(`/dev/category/31`)
+        .then(res => res.text())
+        .then(data => {
+            data = JSON.parse(data);
+            categoryList = data.category;
+            console.log(categoryList);
+        })
+        .catch(e => console.error(e));
+
+    fetch(`/dev/category/37`)
+        .then(res => res.text())
+        .then(data => {
+            data = JSON.parse(data);
+            categoryList = data.category;
+            console.log(categoryList);
+        })
+        .catch(e => console.error(e));
+
+
     console.log(`category: ${curCategory}`);
 
     localStorage.setItem('categoryMax', document.querySelector('.maxNum').textContent);

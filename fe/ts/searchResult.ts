@@ -1,20 +1,7 @@
-// const keyword: string = decodeURI(location.pathname.split('/')[2]);
-// let count: string = '';
-
 interface searchResult {
   size: string,
   keyword: string
 };
-
-// fetch(`/dev/searchResult?keyword=${keyword}`)
-//   .then(res => res.text())
-//   .then(data => {
-//     const searchRes: searchResult = (JSON.parse(data));
-//     count = searchRes['size'];
-//     const resultItemCount: HTMLSpanElement = document.querySelector('.result-item-count') as HTMLSpanElement;
-//     resultItemCount.textContent = count;
-//   })
-//   .catch(e => console.error(e));
 
 const resultItemTitle: HTMLSpanElement = document.querySelector('.result-item-title') as HTMLSpanElement;
 resultItemTitle.textContent = keyword;
@@ -168,30 +155,8 @@ if (count === '0') {
   itemContainer.appendChild(noResultBox);
 
 } else {
-  let itemObjList: itemInfo[] = [];
-
   const sortContainer: HTMLDivElement = document.querySelector('.sort-container') as HTMLDivElement;
-
-  for (let i = 0; i < sortContainer.children.length; i++) {
-    sortContainer.children[i].addEventListener('click', () => {
-      for (let j = 0; j < sortContainer.children.length; j++) {
-        if (sortContainer.children[j].classList.contains('selected-btn')) {
-          if (i === j) return;
-          sortContainer.children[j].classList.remove('selected-btn');
-        }
-      }
-      localStorage.setItem('search-sort-way', sortContainer.children[i].className.split('-')
-        [sortContainer.children[i].className.split('-').length - 1]);
-      sortWay = localStorage.getItem('search-sort-way') as string;
-      sortContainer.children[i].classList.add('selected-btn');
-
-      localStorage.setItem('page', '1');
-
-      tbody.innerHTML = '';
-      fetchData('1', keyword, sortWay);
-    
-    });
-  }
+  sortContainerFunc(sortContainer);
 
   fetchData('1', keyword, sortWay);
 

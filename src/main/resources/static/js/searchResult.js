@@ -1,15 +1,4 @@
-// const keyword: string = decodeURI(location.pathname.split('/')[2]);
-// let count: string = '';
 ;
-// fetch(`/dev/searchResult?keyword=${keyword}`)
-//   .then(res => res.text())
-//   .then(data => {
-//     const searchRes: searchResult = (JSON.parse(data));
-//     count = searchRes['size'];
-//     const resultItemCount: HTMLSpanElement = document.querySelector('.result-item-count') as HTMLSpanElement;
-//     resultItemCount.textContent = count;
-//   })
-//   .catch(e => console.error(e));
 const resultItemTitle = document.querySelector('.result-item-title');
 resultItemTitle.textContent = keyword;
 ;
@@ -123,25 +112,8 @@ if (count === '0') {
     itemContainer.appendChild(noResultBox);
 }
 else {
-    let itemObjList = [];
     const sortContainer = document.querySelector('.sort-container');
-    for (let i = 0; i < sortContainer.children.length; i++) {
-        sortContainer.children[i].addEventListener('click', () => {
-            for (let j = 0; j < sortContainer.children.length; j++) {
-                if (sortContainer.children[j].classList.contains('selected-btn')) {
-                    if (i === j)
-                        return;
-                    sortContainer.children[j].classList.remove('selected-btn');
-                }
-            }
-            localStorage.setItem('search-sort-way', sortContainer.children[i].className.split('-')[sortContainer.children[i].className.split('-').length - 1]);
-            sortWay = localStorage.getItem('search-sort-way');
-            sortContainer.children[i].classList.add('selected-btn');
-            localStorage.setItem('page', '1');
-            tbody.innerHTML = '';
-            fetchData('1', keyword, sortWay);
-        });
-    }
+    sortContainerFunc(sortContainer);
     fetchData('1', keyword, sortWay);
     const maxNum = (Math.ceil(Number(count) / 9)).toString();
     console.log('maxNum ', maxNum);
