@@ -21,20 +21,18 @@
     </div>
   </header>
   <div class="img-container">
-    <img th:src="${item_img.item_img}" th:alt="${item_name}" class="item-img">
+    <img class="item-img">
   </div>
   <div class="info-container">
-    <h3 th:text="${item_name}" class="item-title"></h3>
+    <h3 class="item-title"></h3>
     <div class="price-container">
       <p
-              th:if="${item_price} != ${item_discountPrice}"
-              th:text="${item_price} + '원'"
               class="origin-price"
       ></p>
-      <p th:text="${item_discountPrice} + '원'" class="discount-price"></p>
+      <p class="discount-price"></p>
     </div>
     <div class="rate-container">
-      <span th:text="'⭐' + ${review_count} + ' '" class="review-rate"></span>
+      <span class="review-rate" id="review-rate-text"></span>
       <span class="review-rate review"></span>
     </div>
   </div>
@@ -43,29 +41,65 @@
   </footer>
 </div>
 <script src="/js/createBtnContainer.js"></script>
-<script th:inline="javascript">
-  /*<![CDATA[*/
-  const item_id = /*[[ ${item_id} ]]*/;
-  const item_isTestable = /*[[ ${item_isTestable} ]]*/;
-  const review_rate = /*[[ ${review_rate} ]]*/;
-  /*]]*/
-  const reviewSpan = document.querySelector('.review');
-  reviewSpan.textContent = (review_rate === 'NaN') ? `(0)` : `(${review_rate.toFixed(1)})`;
+<script>
 
-  const footer = document.querySelector('footer');
-  footer.addEventListener('click', () => location.href = `/item/${item_id}/detail`);
+  // const item_isTestable;
+  // const review_rate;
 
-  const getItemInfoElList = (item_id, item_isTestable) => {
-    const btnContainer = document.createElement('div');
-    btnContainer.classList += 'btn-container';
-    createBtnContainer(item_id, item_isTestable).forEach(el =>
-            btnContainer.appendChild(el));
+  // 추후에 선택한 버튼 아이디 값옮겨오는건지?(카테고리에서 클릭시 id값 localstorage에 저장하게하면될가요) + 실제 배포 이후에 경로를 다 바꿔줘야 하는거죠?
+  fetch(`http://localhost:8080/dev/item/30`)
+          .then(res => res.text())
+          .then(data => {
+            console.log(data);
+            data = JSON.parse(data);
 
-    return btnContainer;
-  }
+            const item_id = data.Item.itemId;
+            const item_isTestable = data.Item.itemTestable;
+            // 추가해달라고 요청해야함 const review_rate;  // 추가 후 수정필요한부분
+            const item_name = data.Item.itemName;
+            const item_price = data.Item.itemPrice;
+            const item_discountPrice = data.Item.itemDiscountPrice;
+            const item_img = data.Item.itemImage;
+            console.log(item_img);
 
-  const infoContainer = document.querySelector('.info-container');
-  infoContainer.appendChild(getItemInfoElList(item_id, item_isTestable));
+            const img_src = document.querySelector('.item-img');
+            img_src.src = item_img;
+            const title = document.querySelector('.item-title');
+            title.textContent = item_name;
+
+            if(item_price != item_discountPrice){
+              document.querySelector('.origin-price').textContent = `${item_price} 원`;
+            }
+            document.querySelector('.discount-price').textContent = `${item_discountPrice} 원`;
+
+            // 추가 후 수정필요한부분
+            // document.querySelector('.review-rate-text').textContent = `'⭐' + ${review_count} + ' '`;
+
+            localStorage.setItem('c_item_id',item_id);
+            localStorage.setItem('c_item_name',item_name);
+            localStorage.setItem('c_item_isTestable',item_isTestable);
+
+            // 추가 후 수정필요한부분
+            // const reviewSpan = document.querySelector('.review');
+            // reviewSpan.textContent = (review_rate === 'NaN') ? `(0)` : `(${review_rate.toFixed(1)})`;
+
+            const footer = document.querySelector('footer');
+            footer.addEventListener('click', () => location.href = `/item/${item_id}/detail`);
+
+            const getItemInfoElList = (item_id, item_isTestable) => {
+              const btnContainer = document.createElement('div');
+              btnContainer.classList += 'btn-container';
+              createBtnContainer(item_id, item_isTestable).forEach(el =>
+                      btnContainer.appendChild(el));
+
+              return btnContainer;
+            }
+
+            const infoContainer = document.querySelector('.info-container');
+            infoContainer.appendChild(getItemInfoElList(item_id, item_isTestable));
+          })
+
+
 
 </script>
 <script src="/js/item.js"></script>
