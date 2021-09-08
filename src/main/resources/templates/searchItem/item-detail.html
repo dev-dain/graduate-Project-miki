@@ -38,9 +38,10 @@
   </div>
 </div>
 <script src="/js/createBtnContainer.js"></script>
-<script th:inline="javascript">
+<script>
+  const url = location.pathname.split('/')[2];
   const productImgList = [];
-  fetch(`http://localhost:8080/dev/item/30/detail`)
+  fetch(`/dev/item/${url}/detail`)
           .then(res => res.text())
           .then(data => {
             console.log(data);
@@ -166,8 +167,6 @@
             });
 
           })
-
-
 
 </script>
 <script src="/js/itemDetailModal.js"></script>
