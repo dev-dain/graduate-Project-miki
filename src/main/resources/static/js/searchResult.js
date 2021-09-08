@@ -113,7 +113,7 @@ if (count === '0') {
 }
 else {
     const sortContainer = document.querySelector('.sort-container');
-    sortContainerFunc(sortContainer);
+    sortContainerFunc(sortContainer, 'search');
     fetchData('1', keyword, sortWay);
     const maxNum = (Math.ceil(Number(count) / 9)).toString();
     console.log('maxNum ', maxNum);

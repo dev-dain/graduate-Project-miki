@@ -156,7 +156,7 @@ if (count === '0') {
 
 } else {
   const sortContainer: HTMLDivElement = document.querySelector('.sort-container') as HTMLDivElement;
-  sortContainerFunc(sortContainer);
+  sortContainerFunc(sortContainer, 'search');
 
   fetchData('1', keyword, sortWay);
 

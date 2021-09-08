@@ -1,4 +1,7 @@
-const sortContainerFunc = (sortContainer: HTMLDivElement): void => {
+// searchResult에서 보내는지, category에서 보내는지에 따라 
+// 어떻게 fetch를 해야할지가 구분됨.
+// state 추가가 필요
+const sortContainerFunc = (sortContainer: HTMLDivElement, state: string): void => {
   for (let i = 0; i < sortContainer.children.length; i++) {
     sortContainer.children[i].addEventListener('click', () => {
       for (let j = 0; j < sortContainer.children.length; j++) {
@@ -15,8 +18,11 @@ const sortContainerFunc = (sortContainer: HTMLDivElement): void => {
       localStorage.setItem('page', '1');
 
       tbody.innerHTML = '';
-      fetchData('1', keyword, sortWay);
-
+      if (state === 'search') {
+        fetchData('1', keyword, sortWay);
+      } else {
+        fetchData('1', category, sortWay);
+      }
     });
   }
 }

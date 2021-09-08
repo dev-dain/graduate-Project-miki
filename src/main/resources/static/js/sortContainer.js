@@ -1,4 +1,4 @@
-const sortContainerFunc = (sortContainer) => {
+const sortContainerFunc = (sortContainer, state) => {
     for (let i = 0; i < sortContainer.children.length; i++) {
         sortContainer.children[i].addEventListener('click', () => {
             for (let j = 0; j < sortContainer.children.length; j++) {
@@ -13,7 +13,12 @@ const sortContainerFunc = (sortContainer) => {
             sortContainer.children[i].classList.add('selected-btn');
             localStorage.setItem('page', '1');
             tbody.innerHTML = '';
-            fetchData('1', keyword, sortWay);
+            if (state === 'search') {
+                fetchData('1', keyword, sortWay);
+            }
+            else {
+                fetchData('1', category, sortWay);
+            }
         });
     }
 };
