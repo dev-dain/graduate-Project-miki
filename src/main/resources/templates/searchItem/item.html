@@ -43,11 +43,8 @@
 <script src="/js/createBtnContainer.js"></script>
 <script>
 
-  // const item_isTestable;
-  // const review_rate;
-
   // 추후에 선택한 버튼 아이디 값옮겨오는건지?(카테고리에서 클릭시 id값 localstorage에 저장하게하면될가요) + 실제 배포 이후에 경로를 다 바꿔줘야 하는거죠?
-  fetch(`http://localhost:8080/dev/item/30`)
+  fetch(`/dev/item/30`)
           .then(res => res.text())
           .then(data => {
             console.log(data);
@@ -72,16 +69,13 @@
             }
             document.querySelector('.discount-price').textContent = `${item_discountPrice} 원`;
 
-            // 추가 후 수정필요한부분
-            // document.querySelector('.review-rate-text').textContent = `'⭐' + ${review_count} + ' '`;
+
 
             localStorage.setItem('c_item_id',item_id);
             localStorage.setItem('c_item_name',item_name);
             localStorage.setItem('c_item_isTestable',item_isTestable);
 
-            // 추가 후 수정필요한부분
-            // const reviewSpan = document.querySelector('.review');
-            // reviewSpan.textContent = (review_rate === 'NaN') ? `(0)` : `(${review_rate.toFixed(1)})`;
+
 
             const footer = document.querySelector('footer');
             footer.addEventListener('click', () => location.href = `/item/${item_id}/detail`);
@@ -99,7 +93,20 @@
             infoContainer.appendChild(getItemInfoElList(item_id, item_isTestable));
           })
 
+  fetch(`/dev/item/30/reviewCnt`)
+          .then(res => res.text())
+          .then(data => {
+            console.log(data);
+            r_data = JSON.parse(data);
 
+            const review_count = r_data.size;
+            const review_rate = r_data.rate;
+            // 추가 후 수정필요한부분
+            document.querySelector('#review-rate-text').textContent = `⭐${review_count}  `;
+            // 추가 후 수정필요한부분
+            const reviewSpan = document.querySelector('.review');
+            reviewSpan.textContent = (review_rate === 'NaN') ? `(0)` : `(${review_rate.toFixed(1)})`;
+          })
 
 </script>
 <script src="/js/item.js"></script>
