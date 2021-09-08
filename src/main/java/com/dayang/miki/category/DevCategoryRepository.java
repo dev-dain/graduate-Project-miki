@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface DevCategoryRepository extends JpaRepository<Category, Long> {
 
-    List<Category> findByParentIsNull();
 
     List<Category> findByParent(Category category);
 

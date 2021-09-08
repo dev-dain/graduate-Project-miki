@@ -32,30 +32,21 @@ class DevCategoryServiceTest {
         //then
         assertThat(category.getParent()).isNull();
     }
-    @Test
-    public void firstCategoryTest(){
-        //given
-        Long id = 1L;
-        //when
-        List<CategoryDTO> firstCategoryList = service.firstCategory(id);
-        //then
-        assertThat(firstCategoryList.size()).isEqualTo(4);
 
-    }
     @Test
-    public void secondCategoryTest(){
+    public void findChildCategory(){
         //given
-        List<CategoryDTO> firstCategoryList = service.firstCategory(1L);
-        List<CategoryDTO> secondCategoryList = new ArrayList<>();
-        Map<Long, List<CategoryDTO>>map = new HashMap<>();
-        //when
-        for(CategoryDTO c : firstCategoryList){
-            map.put(c.getCategoryId(), service.secondCategory(c.getCategoryId()));
-        }
-        //then
-        assertThat(map.size()).isEqualTo(4);
-        assertThat(map.get(2L).size()).isEqualTo(8);
-        assertThat(map.get(2L).get(0).getCategoryId()).isEqualTo(6L);
+        Long categoryId1 = 1L;
+        Long categoryId2 = 2L;
+        Long categoryId3 = 6L;
 
+        //when
+        List<CategoryDTO> categoryDTOList1 = service.categoryChild(categoryId1);
+        List<CategoryDTO> categoryDTOList2 = service.categoryChild(categoryId2);
+        List<CategoryDTO> categoryDTOList3 = service.categoryChild(categoryId3);
+        //then
+        assertThat(categoryDTOList1.size()).isEqualTo(4);
+        assertThat(categoryDTOList2.size()).isEqualTo(8);
+        assertThat(categoryDTOList3.size()).isEqualTo(0);
     }
 }
