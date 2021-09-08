@@ -2,7 +2,7 @@ let keyword, searchRes, count;
 const fetchAPI = async () => {
     keyword = decodeURI(location.pathname.split('/')[2]);
 
-    const res = await fetch(`/dev/searchResult?keyword=삐아`);
+    const res = await fetch(`/dev/searchResult?keyword=${keyword}`);
     const data = await res.text();
     searchRes = (JSON.parse(data));
     count = searchRes['size'];
