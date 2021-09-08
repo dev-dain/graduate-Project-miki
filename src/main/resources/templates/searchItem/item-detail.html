@@ -51,9 +51,14 @@
             const item_isTestable = localStorage.getItem("c_item_isTestable");
             const item_name = localStorage.getItem("c_item_name");
 
-            for (let i=0; i<=(Object.keys(data).length);i++){
-              console.log(data.ItemDetail[i].image);
-              productImgList.push(data.ItemDetail[i].image);
+            try {
+              for (let i=0; i<=(Object.keys(data).length);i++){
+                console.log(data.ItemDetail[i].image);
+                productImgList.push(data.ItemDetail[i].image);
+              }
+            } catch (error) {
+              console.error(error);
+
             }
 
             /* 수정중 */
