@@ -1,6 +1,3 @@
-// searchResult에서 보내는지, category에서 보내는지에 따라 
-// 어떻게 fetch를 해야할지가 구분됨.
-// state 추가가 필요
 const sortContainerFunc = (sortContainer: HTMLDivElement, state: string): void => {
   for (let i = 0; i < sortContainer.children.length; i++) {
     sortContainer.children[i].addEventListener('click', () => {
@@ -10,18 +7,18 @@ const sortContainerFunc = (sortContainer: HTMLDivElement, state: string): void =
           sortContainer.children[j].classList.remove('selected-btn');
         }
       }
-      localStorage.setItem('search-sort-way', sortContainer.children[i].className.split('-')
+      localStorage.setItem(`${sortWay}sort-way`, sortContainer.children[i].className.split('-')
       [sortContainer.children[i].className.split('-').length - 1]);
-      sortWay = localStorage.getItem('search-sort-way') as string;
+      sortWay = localStorage.getItem(`${sortWay}sort-way`) as string;
       sortContainer.children[i].classList.add('selected-btn');
 
       localStorage.setItem('page', '1');
 
       tbody.innerHTML = '';
-      if (state === 'search') {
+      if (state === 'search-') {
         fetchData('1', keyword, sortWay);
       } else {
-        fetchData('1', category, sortWay);
+        fetchData('1', num, sortWay);
       }
     });
   }

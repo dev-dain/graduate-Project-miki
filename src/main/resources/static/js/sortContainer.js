@@ -8,16 +8,16 @@ const sortContainerFunc = (sortContainer, state) => {
                     sortContainer.children[j].classList.remove('selected-btn');
                 }
             }
-            localStorage.setItem('search-sort-way', sortContainer.children[i].className.split('-')[sortContainer.children[i].className.split('-').length - 1]);
-            sortWay = localStorage.getItem('search-sort-way');
+            localStorage.setItem(`${sortWay}sort-way`, sortContainer.children[i].className.split('-')[sortContainer.children[i].className.split('-').length - 1]);
+            sortWay = localStorage.getItem(`${sortWay}sort-way`);
             sortContainer.children[i].classList.add('selected-btn');
             localStorage.setItem('page', '1');
             tbody.innerHTML = '';
-            if (state === 'search') {
+            if (state === 'search-') {
                 fetchData('1', keyword, sortWay);
             }
             else {
-                fetchData('1', category, sortWay);
+                fetchData('1', num, sortWay);
             }
         });
     }

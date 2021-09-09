@@ -7,20 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-let keyword, searchRes, count;
-const fetchAPI = async () => {
-    keyword = decodeURI(location.pathname.split('/')[2]);
-
-    const res = await fetch(`/dev/searchResult?keyword=${keyword}`);
-    const data = await res.text();
+let curCategory, searchRes, count, bigName;
+let num = decodeURI(location.pathname.split('/')[2]);
+const fetchAPI = () => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield fetch(`/dev/category/${num}`);
+    const data = yield res.text();
     searchRes = (JSON.parse(data));
+    bigName = searchRes['name'];
     count = searchRes['size'];
-    const resultItemCount = document.querySelector('.result-item-count');
-    resultItemCount.textContent = count;
+    curCategory = searchRes['category'];
+    console.log(count, curCategory);
     const script = document.createElement('script');
-    script.src = '/js/searchResult.js';
+    script.src = '/js/category.js';
     document.body.appendChild(script);
-};
-
+});
 fetchAPI()
     .catch(e => console.error(e));
