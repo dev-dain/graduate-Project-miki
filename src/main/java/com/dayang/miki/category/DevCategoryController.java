@@ -25,6 +25,8 @@ public class DevCategoryController {
         JSONObject jsonObject = new JSONObject();
         List<CategoryDTO> categoryDTOList = devCategoryService.categoryChild(Long.parseLong(categoryId));
         jsonObject.put("category", categoryDTOList);
+        jsonObject.put("size", categoryDTOList.size());
+
         return jsonObject;
     }
 }
