@@ -32,132 +32,139 @@
 </div>
 
 <script src="/js/createBtnContainer.js"></script>
-<script th:inline="javascript">
+<script>
   const rateList = [];
   const rateObject = {};
   let totalRateCount = 0;
+  const url = location.pathname.split('/')[2];
 
-  /*<![CDATA[*/
-  const item_id = /*[[ ${item.id} ]]*/;
-  const item_name = /*[[ ${item.name} ]]*/;
-  const item_isTestable = /*[[ ${item.is_testable} ]]*/;
-  let id = '';
-  let i = 0;
+  fetch(`/dev/item/${url}/review`)
+          .then(res => res.text())
+          .then(data => {
+            console.log(data);
+            data = JSON.parse(data);
 
-  /*[# th:each="r : ${review}"]*/
-  rateList.push(/*[[${r.rate}]]*/);
-  id = /*[[${r.id}]]*/;
-  rateObject[id] = {
-    index: i++,
-    rate: /*[[${r.rate}]]*/,
-    text: /*[[${r.review_content}]]*/,
-    date: /*[[${r.created_at}]]*/
-  };
-  totalRateCount++;
-  /*[/]*/
+            /* 상품 정보 넘어온 다음에 수정 필요한 부분! */
+            // const item_id = /*[[ ${item.id} ]]*/;
+            // const item_name = /*[[ ${item.name} ]]*/;
+            // const item_isTestable = /*[[ ${item.is_testable} ]]*/;
+            // document.querySelector('.title').textContent = item_name;
+            let id = '';
+            let j = 0;
+            let k = 0;
+            const imgList = [];
 
-  i = 0;
-  const imgList = [];
-  // imgList.fill('', totalRateCount);
+            for (let i=0; i<=(Object.keys(data).length +1);i++) {
+              rateList.push(data.Review[i].rate);
+              id = data.Review[i].reviewId;
 
-  /*[# th:each="img : ${review_img}"]*/
-  imgList[i++] = /*[[${img.review_img}]]*/;
+              rateObject[id] = {
+                index: j++,
+                rate: data.Review[i].rate,
+                text: data.Review[i].content,
+                date: data.Review[i].date
+              };
+              totalRateCount++;
 
-  /*[/]*/
+              imgList[k++] = data.Review[i].image;
+            }
 
-  /*]]>*/
+            const avgRate = (rateList.reduce((a, x) => a += x)) / totalRateCount;
+            const goPrevBtn = document.querySelector('.go-prev');
+            goPrevBtn.addEventListener('click', () => history.back());
 
+            // const btnContainer = document.querySelector('.btn-container');
+            // createBtnContainer(item_id, item_isTestable).forEach(el =>
+            //         btnContainer.appendChild(el));
 
-  const avgRate = (rateList.reduce((a, x) => a += x)) / totalRateCount;
-  const goPrevBtn = document.querySelector('.go-prev');
-  goPrevBtn.addEventListener('click', () => history.back());
+            const starMaker = rate => {
+              if (rate < 2) return '⭐';
+              else if (rate < 3) return '⭐⭐';
+              else if (rate < 4) return '⭐⭐⭐';
+              else if (rate < 5) return '⭐⭐⭐⭐';
+              else return '⭐⭐⭐⭐⭐';
+            }
 
-  const btnContainer = document.querySelector('.btn-container');
-  createBtnContainer(item_id, item_isTestable).forEach(el =>
-          btnContainer.appendChild(el));
+            const rateRowStarRate = document.querySelector('.rate-row > .star-rate');
+            rateRowStarRate.textContent = starMaker(avgRate);
+            const rateRowNumRate = document.querySelector('.rate-row > .num-rate');
+            rateRowNumRate.innerHTML = `${avgRate.toFixed(1)} <span class="light-color"> / 5<sub class="little-size">점</sub></span>`;
 
-  const starMaker = rate => {
-    if (rate < 2) return '⭐';
-    else if (rate < 3) return '⭐⭐';
-    else if (rate < 4) return '⭐⭐⭐';
-    else if (rate < 5) return '⭐⭐⭐⭐';
-    else return '⭐⭐⭐⭐⭐';
-  }
-
-  const rateRowStarRate = document.querySelector('.rate-row > .star-rate');
-  rateRowStarRate.textContent = starMaker(avgRate);
-  const rateRowNumRate = document.querySelector('.rate-row > .num-rate');
-  rateRowNumRate.innerHTML = `${avgRate.toFixed(1)} <span class="light-color"> / 5<sub class="little-size">점</sub></span>`;
-
-  const rateCount = document.querySelector('.rate-count');
-  rateCount.textContent = `총 ${rateList.length} 건`;
+            const rateCount = document.querySelector('.rate-count');
+            rateCount.textContent = `총 ${rateList.length} 건`;
 
 
-  console.log(imgList);
+            console.log(imgList);
 
-  const createRateRow = review_id => {
-    const reviewRow = document.createElement('div');
-    reviewRow.classList.add('review-row');
+            const createRateRow = review_id => {
+              const reviewRow = document.createElement('div');
+              reviewRow.classList.add('review-row');
 
-    const reviewInfo = document.createElement('div');
-    reviewInfo.classList.add('review-info');
+              const reviewInfo = document.createElement('div');
+              reviewInfo.classList.add('review-info');
 
-    const starRate = document.createElement('div');
-    starRate.classList.add('star-rate');
-    /* 나중에 별 넣기 */
-    starRate.textContent = starMaker(rateObject[review_id].rate);
-    const numRate = document.createElement('div');
-    numRate.classList.add('num-rate');
-    numRate.textContent = `${rateObject[review_id].rate}점`;
+              const starRate = document.createElement('div');
+              starRate.classList.add('star-rate');
+              /* 나중에 별 넣기 */
+              starRate.textContent = starMaker(rateObject[review_id].rate);
+              const numRate = document.createElement('div');
+              numRate.classList.add('num-rate');
+              numRate.textContent = `${rateObject[review_id].rate}점`;
 
-    reviewInfo.appendChild(starRate);
-    reviewInfo.appendChild(numRate);
+              reviewInfo.appendChild(starRate);
+              reviewInfo.appendChild(numRate);
 
-    const reviewContent = document.createElement('div');
-    reviewContent.classList.add('review-content');
+              const reviewContent = document.createElement('div');
+              reviewContent.classList.add('review-content');
 
-    const reviewText = document.createElement('p');
-    reviewText.classList.add('review-text');
-    reviewText.textContent = rateObject[review_id].text;
+              const reviewText = document.createElement('p');
+              reviewText.classList.add('review-text');
+              reviewText.textContent = rateObject[review_id].text;
 
-    reviewContent.appendChild(reviewText);
+              reviewContent.appendChild(reviewText);
 
-    if (imgList[rateObject[review_id].index]) {
-      const reviewImgContainer = document.createElement('div');
-      reviewImgContainer.classList.add('review-img-container');
+              if (imgList[rateObject[review_id].index]) {
+                const reviewImgContainer = document.createElement('div');
+                reviewImgContainer.classList.add('review-img-container');
 
-      const reviewImg = document.createElement('img');
-      reviewImg.classList.add('review-img');
-      reviewImg.src = imgList[rateObject[review_id].index];
+                const reviewImg = document.createElement('img');
+                reviewImg.classList.add('review-img');
+                reviewImg.src = imgList[rateObject[review_id].index];
 
-      reviewImgContainer.appendChild(reviewImg);
+                reviewImgContainer.appendChild(reviewImg);
 
-      reviewContent.appendChild(reviewImgContainer);
-    }
+                reviewContent.appendChild(reviewImgContainer);
+              }
 
-    const reviewDate = document.createElement('p');
-    reviewDate.classList.add('review-date');
+              const reviewDate = document.createElement('p');
+              reviewDate.classList.add('review-date');
 
-    const dateText = rateObject[review_id].date.split('T')[0].replace(/-/gi, '. ');
-    reviewDate.textContent = dateText;
+              const dateText = rateObject[review_id].date.split('T')[0].replace(/-/gi, '. ');
+              reviewDate.textContent = dateText;
 
-    reviewContent.appendChild(reviewDate);
+              reviewContent.appendChild(reviewDate);
 
-    reviewRow.appendChild(reviewInfo);
-    reviewRow.appendChild(reviewContent);
+              reviewRow.appendChild(reviewInfo);
+              reviewRow.appendChild(reviewContent);
 
-    return reviewRow;
-  };
+              return reviewRow;
+            };
 
-  const reviewElList = [];
-  for (const [k, v] of Object.entries(rateObject)) {
-    reviewElList.push(createRateRow(k));
-  }
+            const reviewElList = [];
+            for (const [k, v] of Object.entries(rateObject)) {
+              reviewElList.push(createRateRow(k));
+            }
 
-  const reviewContainer = document.querySelector('.review-container');
-  reviewElList.forEach(review => {
-    reviewContainer.appendChild(review);
-  });
+            const reviewContainer = document.querySelector('.review-container');
+            reviewElList.forEach(review => {
+              reviewContainer.appendChild(review);
+            });
+
+
+          })
+
+
+
 
 </script>
 </body>

@@ -38,28 +38,69 @@
             <!--              <button class="best-go-prev-btn item-btn"><</button>-->
             <div class="best-carousel">
                 <!-- item 3개씩 -->
-                <div class="best item-card" th:each="item : ${BestItems}">
-                    <div style="display: flex; justify-content: center; align-items: center;"
-                         th:onclick="'javascript:goItemPage(' + ${item.id} + ')'">
-                        <img th:src="${item.item_img}" class="thumbnail-img" th:alt="${item.name}">
+                <div class="best item-card">
+                    <div style="display: flex; justify-content: center; align-items: center;" id="0-name">
+                        <img class="thumbnail-img" id="0-img">
                     </div>
                     <div>
                         <hr class="divide-img-info">
                     </div>
-                    <div class="item-title" th:text="${item.name}"
-                         th:onclick="'javascript:goItemPage(' + ${item.id} + ')'"></div>
+                    <div class="item-title" id="0-title" ></div>
                     <div
-                            th:if="${item.item_price} != ${item.discount_price}"
-                            th:text="${item.item_price} + '원'"
                             class="origin-price"
+                            id="0-origin-price"
                             style="width: 50%; margin: 0 0 -30px 0; padding: 10px 20px;">
                     </div>
                     <div
-                            th:text="${item.discount_price} + '원'"
                             class="discount-price"
+                            id="0-discount-price"
                             style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</div>
-                    <div th:if="${item.is_testable} == 'Y'">
-                        <button class="go-test" th:onclick="'javascript:goTestPage(' + ${item.id} + ')'">테스트</button>
+                    <div>
+                        <button class="go-test" id="0-go-test">테스트</button>
+                    </div>
+                </div>
+
+                <div class="best item-card">
+                    <div style="display: flex; justify-content: center; align-items: center;" id="1-name">
+                        <img class="thumbnail-img" id="1-img">
+                    </div>
+                    <div>
+                        <hr class="divide-img-info">
+                    </div>
+                    <div class="item-title" id="1-title" ></div>
+                    <div
+                            class="origin-price"
+                            id="1-origin-price"
+                            style="width: 50%; margin: 0 0 -30px 0; padding: 10px 20px;">
+                    </div>
+                    <div
+                            class="discount-price"
+                            id="1-discount-price"
+                            style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</div>
+                    <div>
+                        <button class="go-test" id="1-go-test">테스트</button>
+                    </div>
+                </div>
+
+                <div class="best item-card">
+                    <div style="display: flex; justify-content: center; align-items: center;" id="2-name">
+                        <img class="thumbnail-img" id="2-img">
+                    </div>
+                    <div>
+                        <hr class="divide-img-info">
+                    </div>
+                    <div class="item-title" id="2-title" ></div>
+                    <div
+                            class="origin-price"
+                            id="2-origin-price"
+                            style="width: 50%; margin: 0 0 -30px 0; padding: 10px 20px;">
+                    </div>
+                    <div
+                            class="discount-price"
+                            id="2-discount-price"
+                            style="width: 50%; margin: 0 0 20px 20px; align-self: flex-end">원</div>
+                    <div>
+                        <button class="go-test" id="2-go-test">테스트</button>
                     </div>
                 </div>
 
@@ -69,165 +110,233 @@
         </div>
     </div>
 </div>
-<script th:inline="javascript">
+<script>
     // best가 3개, md가 10개
+    const BestItemObj = {};
+    const BestItemList = [];
+    let b_item_id = '';
+    const ItemIdList = [];
+
+    fetch(`/dev/bestSeller`)
+        .then(res => res.text())
+        .then(data => {
+            console.log(data);
+            data = JSON.parse(data);
+            try {
+                for (let i=0; i<=(Object.keys(data).length +1);i++){
+                    b_item_id = data.Item[i].itemId;
+                    ItemIdList.push(b_item_id);
+                    BestItemObj[b_item_id] = {
+                        name: data.Item[i].itemName,
+                        item_img : data.Item[i].itemImage,
+                        origin_price : data.Item[i].itemPrice,
+                        discount_price : data.Item[i].itemDiscountPrice,
+                        is_testable:  data.Item[i].itemTestable
+                    };
+
+                    document.getElementById(`${i}-img`).src = BestItemObj[b_item_id].item_img;
+                    document.getElementById(`${i}-img`).alt = BestItemObj[b_item_id].name;
+
+                    document.getElementById(`${i}-name`).addEventListener('click', function () {
+                        goItemPage(ItemIdList[i]);
+                    });
+
+                    document.getElementById(`${i}-title`).textContent = BestItemObj[b_item_id].name;
+                    document.getElementById(`${i}-title`).addEventListener('click', function () {
+                        goItemPage(ItemIdList[i]);
+                    });
+
+                    if(BestItemObj[b_item_id].origin_price != BestItemObj[b_item_id].discount_price){
+                        document.getElementById(`${i}-origin-price`).textContent = BestItemObj[b_item_id].origin_price;
+                    }
+                    document.getElementById(`${i}-discount-price`).textContent = `${BestItemObj[b_item_id].discount_price} 원`;
+
+                    if(BestItemObj[b_item_id].is_testable == 'Y'){
+                        document.getElementById(`${i}-go-title`).addEventListener('click', function () {
+                            goItemPage(ItemIdList[i]);
+                        });
+                    }
+                    else{
+                        document.getElementById(`${i}-go-test`).style.display = "none";
+                    }
+
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+        })
+    const goItemPage = id => location.href = `/item/${id}`;
+
+
     const mdItemObj = {};
     const mdItemList = [];
     let item_id = '';
-    /*<![CDATA[*/
 
-    /*[# th:each="item : ${MdItems}"]*/
-    item_id = /*[[${item.id}]]*/;
-    mdItemList.push(item_id);
-    mdItemObj[item_id] = {
-        name: /*[[${item.name}]]*/,
-        item_img: /*[[${item.item_img}]]*/,
-        origin_price: /*[[${item.item_price}]]*/,
-        discount_price: /*[[${item.discount_price}]]*/,
-        is_testable: /*[[${item.is_testable}]]*/
-    };
-    /*[/]*/
-    /*]]>*/
+    fetch(`/dev/mdItem`)
+        .then(res => res.text())
+        .then(data => {
+            console.log(data);
+            r_data = JSON.parse(data);
+
+            for (let i=0; i<=(Object.keys(r_data).length +1);i++) {
+                item_id = r_data.Item[i].itemId;
+                mdItemList.push(item_id);
+                mdItemObj[item_id] = {
+                    name: r_data.Item[i].itemName,
+                    item_img: r_data.Item[i].itemImage,
+                    origin_price: r_data.Item[i].itemPrice,
+                    discount_price: r_data.Item[i].itemDiscountPrice,
+                    is_testable: r_data.Item[i].itemTestable
+                };
+            }
+
+            /* (다인언니....) 페이징 처리 부분을 어떻게 해결해야할지 모르겠씸다.. help...*/
+            const goPrevBtn = document.querySelector('.go-prev');
+            const turnOnMicBtn = document.querySelector('.turn-on-mic');
+            const goCartBtn = document.querySelector('.go-cart');
+            goPrevBtn.addEventListener('click', () => history.back());
+            turnOnMicBtn.addEventListener('click', () => location.href = '/searchVoice' );
+            goCartBtn.addEventListener('click', () => location.href = `/cartList/${localStorage.getItem('store_id')}` );
+
+            const createMdItemCard = (item_id, state) => {
+                const itemCard = document.createElement('div');
+                itemCard.classList.add('md');
+                itemCard.classList.add('item-card');
+                // if (state !== 'hidden') {
+                //     itemCard.classList.add(state);
+                // }
+
+                const cardImg = document.createElement('div');
+                cardImg.classList.add('card-img');
+                cardImg.addEventListener('click', item_id => goItemPage(item_id));
+                const thumbnailImg = document.createElement('img');
+                thumbnailImg.classList.add('thumbnail-img');
+                thumbnailImg.src = mdItemObj[item_id].item_img;
+                thumbnailImg.alt = mdItemObj[item_id].name;
+                cardImg.appendChild(thumbnailImg);
+                itemCard.appendChild(cardImg);
+
+                const hrDiv = document.createElement('div');
+                const divideImgInfoHr = document.createElement('hr');
+                divideImgInfoHr.classList.add('divide-img-info');
+                hrDiv.appendChild(divideImgInfoHr);
+                itemCard.appendChild(hrDiv);
+
+                const itemTitle = document.createElement('div');
+                itemTitle.classList.add('item-title');
+                itemTitle.addEventListener('click', item_id => goItemPage(item_id));
+                itemTitle.textContent = mdItemObj[item_id].name;
+                itemCard.appendChild(itemTitle);
+
+                if (mdItemObj[item_id].discount_price !== mdItemObj[item_id].origin_price) {
+                    const originPrice = document.createElement('div');
+                    originPrice.classList.add('origin-price');
+                    originPrice.textContent = `${mdItemObj[item_id].origin_price} 원`;
+                    itemCard.appendChild(originPrice);
+                }
+
+                const discountPrice = document.createElement('div');
+                discountPrice.classList.add('discount-price');
+                discountPrice.textContent = `${mdItemObj[item_id].discount_price} 원`;
+                itemCard.appendChild(discountPrice);
+
+                if (mdItemObj[item_id].is_testable === 'Y') {
+                    const goTestDiv = document.createElement('div');
+                    const goTestBtn = document.createElement('button');
+                    goTestBtn.classList.add('go-test');
+                    goTestBtn.addEventListener('click', item_id => goItemPage(id));
+                    goTestBtn.textContent = '테스트';
+                    goTestDiv.appendChild(goTestBtn);
+                    itemCard.appendChild(goTestDiv);
+                }
+
+                return itemCard;
+            }
 
 
-    const goPrevBtn = document.querySelector('.go-prev');
-    const turnOnMicBtn = document.querySelector('.turn-on-mic');
-    const goCartBtn = document.querySelector('.go-cart');
-    goPrevBtn.addEventListener('click', () => history.back());
-    turnOnMicBtn.addEventListener('click', () => location.href = '/searchVoice' );
-    goCartBtn.addEventListener('click', () => location.href = `/cartList/${localStorage.getItem('store_id')}` );
+            const mdItemCardObj = {};
+            const mdItemCardList = [];
+            for (let i = 0; i < mdItemList.length; i++) {
+                mdItemCardObj[mdItemList[i]] = {
+                    card: createMdItemCard(mdItemList[i], 'hidden'),
+                    index: i,
+                    state: 'hidden'
+                };
+                mdItemCardList.push(createMdItemCard(mdItemList[i], 'hidden'));
+            }
+            console.log(mdItemCardObj);
 
-    const createMdItemCard = (item_id, state) => {
-        const itemCard = document.createElement('div');
-        itemCard.classList.add('md');
-        itemCard.classList.add('item-card');
-        // if (state !== 'hidden') {
-        //     itemCard.classList.add(state);
-        // }
+            const goItemPage = id => location.href = `/item/${id}`;
 
-        const cardImg = document.createElement('div');
-        cardImg.classList.add('card-img');
-        cardImg.addEventListener('click', item_id => goItemPage(item_id));
-        const thumbnailImg = document.createElement('img');
-        thumbnailImg.classList.add('thumbnail-img');
-        thumbnailImg.src = mdItemObj[item_id].item_img;
-        thumbnailImg.alt = mdItemObj[item_id].name;
-        cardImg.appendChild(thumbnailImg);
-        itemCard.appendChild(cardImg);
+            const mdGoPrevBtn = document.querySelector('.md-go-prev-btn');
+            const mdGoNextBtn = document.querySelector('.md-go-next-btn');
+            const mdCarousel = document.querySelector('.md-carousel');
 
-        const hrDiv = document.createElement('div');
-        const divideImgInfoHr = document.createElement('hr');
-        divideImgInfoHr.classList.add('divide-img-info');
-        hrDiv.appendChild(divideImgInfoHr);
-        itemCard.appendChild(hrDiv);
+            const sideCard = (card, state) => {
+                if (card.classList.contains('center')) {
+                    card.classList.remove('center');
+                }
+                card.classList.add(state);
+                card.classList.add('side');
+                return card;
+            };
 
-        const itemTitle = document.createElement('div');
-        itemTitle.classList.add('item-title');
-        itemTitle.addEventListener('click', item_id => goItemPage(item_id));
-        itemTitle.textContent = mdItemObj[item_id].name;
-        itemCard.appendChild(itemTitle);
+            const centerCard = card => {
+                if (card.classList.contains('left')) {
+                    card.classList.remove('left');
+                } else if (card.classList.contains('right')) {
+                    card.classList.remove('right');
+                }
 
-        if (mdItemObj[item_id].discount_price !== mdItemObj[item_id].origin_price) {
-            const originPrice = document.createElement('div');
-            originPrice.classList.add('origin-price');
-            originPrice.textContent = `${mdItemObj[item_id].origin_price} 원`;
-            itemCard.appendChild(originPrice);
-        }
+                if (card.classList.contains('side')) {
+                    card.classList.remove('side');
+                }
 
-        const discountPrice = document.createElement('div');
-        discountPrice.classList.add('discount-price');
-        discountPrice.textContent = `${mdItemObj[item_id].discount_price} 원`;
-        itemCard.appendChild(discountPrice);
+                card.classList.add('center');
+                return card;
+            }
 
-        if (mdItemObj[item_id].is_testable === 'Y') {
-            const goTestDiv = document.createElement('div');
-            const goTestBtn = document.createElement('button');
-            goTestBtn.classList.add('go-test');
-            goTestBtn.addEventListener('click', item_id => goItemPage(id));
-            goTestBtn.textContent = '테스트';
-            goTestDiv.appendChild(goTestBtn);
-            itemCard.appendChild(goTestDiv);
-        }
+            mdItemCardList[0] = sideCard(mdItemCardList[0], 'left');
+            mdItemCardList[1] = centerCard(mdItemCardList[1]);
+            mdItemCardList[2] = sideCard(mdItemCardList[2], 'right');
 
-        return itemCard;
-    }
+            mdCarousel.appendChild(mdItemCardList[0]);
+            mdCarousel.appendChild(mdItemCardList[1]);
+            mdCarousel.appendChild(mdItemCardList[2]);
+
+            let displayIdx = 1;
+            let leftIdx, centerIdx, rightIdx;
+
+            const moveMdCarousel = (display_idx, num) => {
+                displayIdx = (display_idx + num) % 10;
+                if (displayIdx < 0) {
+                    displayIdx = displayIdx + 10;
+                }
+                console.log(displayIdx);
+                leftIdx = ((displayIdx-1)<0) ? displayIdx-1+10 : displayIdx - 1;
+                centerIdx = displayIdx;
+                rightIdx = (displayIdx + 1) % 10;
+                mdCarousel.innerHTML = '';
+
+                mdItemCardList[leftIdx] = sideCard(mdItemCardList[leftIdx], 'left');
+                mdItemCardList[centerIdx] = centerCard(mdItemCardList[centerIdx]);
+                mdItemCardList[rightIdx] = sideCard(mdItemCardList[rightIdx], 'right');
+
+                mdCarousel.appendChild(mdItemCardList[leftIdx]);
+                mdCarousel.appendChild(mdItemCardList[centerIdx]);
+                mdCarousel.appendChild(mdItemCardList[rightIdx]);
+            };
+
+            mdGoPrevBtn.addEventListener('click', () => moveMdCarousel(displayIdx, -1));
+            mdGoNextBtn.addEventListener('click', () => moveMdCarousel(displayIdx, 1));
 
 
-    const mdItemCardObj = {};
-    const mdItemCardList = [];
-    for (let i = 0; i < mdItemList.length; i++) {
-        mdItemCardObj[mdItemList[i]] = {
-            card: createMdItemCard(mdItemList[i], 'hidden'),
-            index: i,
-            state: 'hidden'
-        };
-        mdItemCardList.push(createMdItemCard(mdItemList[i], 'hidden'));
-    }
-    console.log(mdItemCardObj);
+        })
 
-    const goItemPage = id => location.href = `/item/${id}`;
 
-    const mdGoPrevBtn = document.querySelector('.md-go-prev-btn');
-    const mdGoNextBtn = document.querySelector('.md-go-next-btn');
-    const mdCarousel = document.querySelector('.md-carousel');
 
-    const sideCard = (card, state) => {
-        if (card.classList.contains('center')) {
-            card.classList.remove('center');
-        }
-        card.classList.add(state);
-        card.classList.add('side');
-        return card;
-    };
 
-    const centerCard = card => {
-        if (card.classList.contains('left')) {
-            card.classList.remove('left');
-        } else if (card.classList.contains('right')) {
-            card.classList.remove('right');
-        }
-
-        if (card.classList.contains('side')) {
-            card.classList.remove('side');
-        }
-
-        card.classList.add('center');
-        return card;
-    }
-
-    mdItemCardList[0] = sideCard(mdItemCardList[0], 'left');
-    mdItemCardList[1] = centerCard(mdItemCardList[1]);
-    mdItemCardList[2] = sideCard(mdItemCardList[2], 'right');
-
-    mdCarousel.appendChild(mdItemCardList[0]);
-    mdCarousel.appendChild(mdItemCardList[1]);
-    mdCarousel.appendChild(mdItemCardList[2]);
-
-    let displayIdx = 1;
-    let leftIdx, centerIdx, rightIdx;
-
-    const moveMdCarousel = (display_idx, num) => {
-        displayIdx = (display_idx + num) % 10;
-        if (displayIdx < 0) {
-            displayIdx = displayIdx + 10;
-        }
-        console.log(displayIdx);
-        leftIdx = ((displayIdx-1)<0) ? displayIdx-1+10 : displayIdx - 1;
-        centerIdx = displayIdx;
-        rightIdx = (displayIdx + 1) % 10;
-        mdCarousel.innerHTML = '';
-
-        mdItemCardList[leftIdx] = sideCard(mdItemCardList[leftIdx], 'left');
-        mdItemCardList[centerIdx] = centerCard(mdItemCardList[centerIdx]);
-        mdItemCardList[rightIdx] = sideCard(mdItemCardList[rightIdx], 'right');
-
-        mdCarousel.appendChild(mdItemCardList[leftIdx]);
-        mdCarousel.appendChild(mdItemCardList[centerIdx]);
-        mdCarousel.appendChild(mdItemCardList[rightIdx]);
-    };
-
-    mdGoPrevBtn.addEventListener('click', () => moveMdCarousel(displayIdx, -1));
-    mdGoNextBtn.addEventListener('click', () => moveMdCarousel(displayIdx, 1));
 
 </script>
 </body>
