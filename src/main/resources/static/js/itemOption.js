@@ -1,76 +1,55 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- item-detail에서 '장바구니 담기' 버튼을 선택했을 때 나올 옵션 선택 코드 조각 -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상품 보기</title>
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/item-detail.css">
-</head>
-<body>
-    <div class="modal-in-modal">
+const itemOption = async () => {
+    const res = await fetch(`/dev/item/${url}/option?storeId=${localStorage.getItem('store_id')}`);
+    const opt = await res.text();
+    const options = (JSON.parse(opt))['ItemOption'];
 
-    </div>
-    <div class="table-container">
-        <button class="fold-option-btn rotate">^</button>
-        <table class="option-container">
-            <thead>
-            <tr>
-                <th colspan="2" class="close">
-                    <span class="cancel">&times;</span>
-                </th>
-            </tr>
-            <tr>
-                <th colspan="2">옵션 선택</th>
-            </tr>
-            <tr class="option-select-tr">
-                <td>
-                    <div class="option-select">옵션 선택</div>
-                </td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="option-row" th:each="option : ${item_option}">
-                <!--            <td th:text="${option.id}"></td>-->
-                <td>
-                    <button class="td-option"th:text="${option.item_option_name}"></button>
-                </td>
-                <!--            <td th:text="${option.item.name}"></td>-->
-            </tr>
-            <tr class="selected-option">
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    console.log(options);
 
-
-<script th:inline="javascript">
     const quantityList = [];
     const optionIDList = [];
+    const optionNameList = [];
     const totalQuantityList = [];
     let selectedList = [];
-    /*<![CDATA[*/
 
-    /*[# th:each="quantity : ${store_Quantity}"]*/
-    quantityList.push(/*[[${quantity.stock_quantity}]]*/);
-    /*[/]*/
-
-    /*[# th:each="option : ${item_option}"]*/
-    optionIDList.push(/*[[${option.id}]]*/);
-    totalQuantityList.push(/*[[${option.stockQuantity}]]*/);
-    /*[/]*/
+    options.forEach(option => {
+        quantityList.push(option.storeCnt);
+        optionIDList.push(option.optionId);
+        totalQuantityList.push(option.totalCnt);
+        optionNameList.push(option.optionName);
+    });
 
 
-    /*]]>*/
-
-    console.log(quantityList);
-    console.log(totalQuantityList);
-    /* const item_id = window.location.pathname.split('/')[2]; */
     const tbody = document.querySelector('tbody');
     const optionContainer = document.querySelector('.option-container');
+
+    const addOptionRow = i => {
+        const optionRow = document.createElement('tr');
+        optionRow.classList.add('option-row');
+
+        const td = document.createElement('td');
+        const tdOptionBtn = document.createElement('button');
+        tdOptionBtn.classList.add('td-option');
+        tdOptionBtn.textContent = optionNameList[i];
+        tdOptionBtn.setAttribute('data-optionId', optionIDList[i]);
+
+        td.appendChild(tdOptionBtn);
+        optionRow.appendChild(td);
+
+        return optionRow;
+    }
+
+    console.log(optionIDList);
+    for (let i = 0; i < optionIDList.length; i++) {
+        tbody.appendChild(addOptionRow(i));
+    }
+
+    const selectedOptionTr = document.createElement('tr');
+    selectedOptionTr.classList.add('selected-option');
+    const td = document.createElement('td');
+    selectedOptionTr.appendChild(td);
+    tbody.appendChild(selectedOptionTr);
+
+
     const optionRows = document.querySelectorAll('.option-row');
     const selectedOption = document.querySelector('.selected-option > td'); /* 선택된 옵션 */
     const optionSelectTr = document.querySelector('.option-select-tr'); /* 옵션 */
@@ -80,42 +59,6 @@
     const modalInModal = document.querySelector('.modal-in-modal');
 
 
-
-    const createModal = (state, content='') => {
-        const modalBG = document.createElement('div');
-        modalBG.classList.add('modal-background');
-
-        const modalBox = document.createElement('div');
-        modalBox.classList.add('modal-box');
-
-        const modalCloseBtn = document.createElement('span');
-        modalCloseBtn.classList.add('modal-close-btn');
-        modalCloseBtn.innerHTML = '&times;';
-        modalCloseBtn.addEventListener('click', () => {
-            modalInModal.innerHTML = '';
-            modalInModal.classList.remove('display');
-        });
-
-        const modalContent = document.createElement('p');
-        modalContent.classList.add('modal-content');
-        if (state === 'excess') {
-            modalContent.textContent = '재고 수량보다 많이 담을 수 없습니다.';
-        } else if (state === 'lack') {
-            modalContent.textContent = '수량은 1개 이상이어야 합니다.';
-        } else {
-            modalContent.innerHTML = content;
-        }
-
-        modalBox.appendChild(modalCloseBtn);
-        modalBox.appendChild(modalContent);
-
-        modalBG.appendChild(modalBox);
-
-        return modalBG;
-    }
-
-
-    /* 개별 옵션을 클릭했을 때 선택된 상품으로 등록하는 함수 */
     const addOption = (id, option_id, quantity, name) => {
         const sOptionDiv = document.createElement('div');
         const nameSpan = document.createElement('span');
@@ -138,7 +81,7 @@
         subCountBtn.textContent = '-';
         addCountBtn.textContent = '+';
 
-        selectedOptionList.push({item_id: id, item_option_id: option_id, count: 1});
+        selectedOptionList.push({ item_id: id, item_option_id: option_id, count: 1 });
 
         subCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) < 2) {
@@ -224,11 +167,12 @@
     });
 
 
-    for (let i = 0; i < tbody.children.length; i++) {
+    for (let i = 0; i < quantityList.length; i++) {
         if (!quantityList[i]) {
+            console.log(tbody.children[i].children[0], i);
             tbody.children[i].children[0].children[0].style.color = 'gray';
             const soldoutBtn = document.createElement('button');
-            soldoutBtn.classList += 'soldout-btn';
+            soldoutBtn.classList.add('soldout-btn');
 
             if (!totalQuantityList[i]) {
                 soldoutBtn.textContent = '전체 품절';
@@ -264,11 +208,7 @@
             });
         }
     }
+}
 
-
-
-    // fetch에서 잘라오는 데 쓰이는 용도임 dummy
-
-</script>
-</body>
-</html>
+itemOption()
+    .catch(e => console.error(e));
