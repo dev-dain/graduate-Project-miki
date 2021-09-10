@@ -90,6 +90,7 @@ fetch(`/dev/mdItem`)
         const createMdItemCard = (item_id, state) => {
             const itemCard = document.createElement('div');
             itemCard.classList.add('md');
+            itemCard.classList.add('md-cards');
             itemCard.classList.add('item-card');
             // if (state !== 'hidden') {
             //     itemCard.classList.add(state);
@@ -185,6 +186,7 @@ fetch(`/dev/mdItem`)
             return card;
         }
 
+
         mdItemCardList[0] = sideCard(mdItemCardList[0], 'left');
         mdItemCardList[1] = centerCard(mdItemCardList[1]);
         mdItemCardList[2] = sideCard(mdItemCardList[2], 'right');
@@ -218,4 +220,5 @@ fetch(`/dev/mdItem`)
 
         mdGoPrevBtn.addEventListener('click', () => moveMdCarousel(displayIdx, -1));
         mdGoNextBtn.addEventListener('click', () => moveMdCarousel(displayIdx, 1));
+
     })
