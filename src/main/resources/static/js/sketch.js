@@ -40,7 +40,7 @@ function drawKeypoints() {
         /* fill lip position */
         fill(L_R,L_G,L_B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
         face.lips();
-        if (is_C == true){
+        if(is_C == true){
             fill(C_R, C_G, C_B, alpha*20); //투명도 10
             face.leftCheeck();  //볼터치
             face.rightCheeck();
