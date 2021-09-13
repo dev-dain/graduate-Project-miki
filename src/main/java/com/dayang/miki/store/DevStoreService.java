@@ -27,7 +27,7 @@ public class DevStoreService {
     public Position storePosition(Store store){
         return devPositionRepository.findByStore(store);
     }
-    public StoreDTO storeDTO(Store store, Double distance){
+    public StoreDTO storeDTO(Store store, Double distance, Position position){
         StoreDTO storeDTO = new StoreDTO();
         storeDTO.setStoreId(store.getId());
         storeDTO.setStoreName(store.getStore_name());
@@ -35,6 +35,8 @@ public class DevStoreService {
         storeDTO.setStoreTime("10:00 - 22:00");
         storeDTO.setStoreNumber(store.getNumber());
         storeDTO.setStoreDistance(distance);
+        storeDTO.setLatitude(position.getLatitude());
+        storeDTO.setLongitude(position.getLongitude());
         return storeDTO;
     }
     public List<Store> findAllStore(){
@@ -68,7 +70,7 @@ public class DevStoreService {
         for(Store s : storeList){
             Position p = storePosition(s);
             double distance = distance(position.getLatitude(), position.getLongitude(), p.getLatitude(), p.getLongitude());
-            StoreDTO storeDTO = storeDTO(s, distance);
+            StoreDTO storeDTO = storeDTO(s, distance, p);
             storeDTOList.add(storeDTO);
         }
         Collections.sort(storeDTOList,

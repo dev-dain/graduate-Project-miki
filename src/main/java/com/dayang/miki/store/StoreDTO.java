@@ -11,5 +11,7 @@ public class StoreDTO {
     private String storeTime;
     private String storeNumber;
     private Double storeDistance;
+    private Double latitude;
+    private Double longitude;
 
 }
