@@ -1,23 +1,22 @@
+.store-name { display: none; }
 .top-area {
-  background-image: linear-gradient(168deg, #44a4fe 33%, #FFF8E5 33% 67%, #fde7a9 67%);
+  background-image: linear-gradient(168deg, #FFBC00 50%, #FFF8E5 50%);
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 50%;
 }
 .top-area h3 {
-  font-size: 5rem;
+  font-size: 2rem;
+  margin: 10px;
 }
 .bottom-area {
-  background: linear-gradient(to bottom, #fde7a9 30%, #fb9070 30% 60%, #a4d0f9 60%);
+  background: linear-gradient(to bottom, #FFCC00 50%, #a4d0f9 50%);
   width: 100%;
-  height: 50%;
   display: flex;
   flex-flow: row wrap;
 }
 .link-btn {
-  display: block;
   display: flex;
   align-items: center;
   width: 100%;
@@ -27,7 +26,6 @@
   color: #000;
 }
 .btn {
-  display: block;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -40,22 +38,25 @@
 .search-page { background-color: #A4D0F9; }
 .btn > h4 {
   display: inline-block;
-  font-size: 3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   width: 25%;
+  word-break: keep-all;
+  margin: 0 0 0 5px;
 }
 .btn-icon {
-  width: 128px;
-  height: 128px;
+  width: 48px;
+  height: 48px;
 }
 .btn > p {
   display: inline-block;
   text-align: right;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-weight: 500;
+  width: 165px;
 }
 .bold-text {
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 .order-page h4, .order-page p { color: #322E0C; }
@@ -70,4 +71,35 @@
     color: #fff;
     font-size: 1.5rem;
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .store-name { display: block; }
+  .top-area {
+    background-image: linear-gradient(168deg, #44a4fe 33%, #FFF8E5 33% 67%, #fde7a9 67%);
+    height: 50%;
+  }
+  .top-area h3 {
+    font-size: 5rem;
+    margin: 25px;
+  }
+  .bottom-area {
+    background: linear-gradient(to bottom, #fde7a9 30%, #fb9070 30% 60%, #a4d0f9 60%);
+    height: 50%;
+  }
+  .btn > h4 {
+    font-size: 3rem;
+    margin: 20px;
+  }
+  .btn-icon {
+    width: 128px;
+    height: 128px;
+  }
+  .btn > p {
+    font-size: 1.5rem;
+    width: auto;
+  }
+  .bold-text {
+    font-size: 2rem;
+  }
 }
