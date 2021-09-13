@@ -31,6 +31,7 @@ class DevCategoryServiceTest {
         Category category = service.findById(id);
         //then
         assertThat(category.getParent()).isNull();
+
     }
 
     @Test

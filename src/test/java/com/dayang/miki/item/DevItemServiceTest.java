@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -46,8 +47,8 @@ class DevItemServiceTest {
         }
 
         ////////////////아이템//////////////////////////
-
-        itemDTOList = devItemService.findByCategory(categories, 1, "id");
+        Map<String, Object> map  = devItemService.findByCategory(categories, 1, "id");
+        itemDTOList  = (List<ItemDTO>) map.get("item");
 
 
         //then

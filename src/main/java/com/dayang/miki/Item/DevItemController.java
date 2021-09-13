@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -46,9 +47,11 @@ public class DevItemController {
         }
 
         ////////////////아이템//////////////////////////
-        itemDTOList = devItemService.findByCategory(categories, pageNum, sort);
-
+        Map<String, Object> map  = devItemService.findByCategory(categories, 1, "id");
+        itemDTOList  = (List<ItemDTO>) map.get("item");
+        Long size = (Long) map.get("size");
         jsonObject.put("ItemList", itemDTOList);
+        jsonObject.put("size", size);
         return jsonObject;
     }
 
