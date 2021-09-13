@@ -14,14 +14,12 @@ import com.dayang.miki.domain.*;
 import com.dayang.miki.store.DevStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -63,10 +61,11 @@ public class DevItemService {
 
         return imageDTO;
     }
-    public List<ItemDTO> findByCategory(List<CategoryDTO> categories, int pageNum, String sort){
+    public Map<String, Object> findByCategory(List<CategoryDTO> categories, int pageNum, String sort){
         List<Category> category = new ArrayList<>();
         for(CategoryDTO c: categories) category.add(devCategoryService.findById(c.getCategoryId()));
-        List<Item> items =  devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum-1, 9, Sort.by(sort)));
+        Page<Item> items = getByCategoriesIn(pageNum, sort, category);
+        Map<String, Object> map = new HashMap<>();
         List<ItemDTO> itemDTOList = new ArrayList<>();
 
         for(Item i : items){
@@ -74,8 +73,13 @@ public class DevItemService {
             ItemDTO itemDTO = itemDTO(i, itemImage);
             itemDTOList.add(itemDTO);
         }
+        map.put("item", itemDTOList);
+        map.put("size", items.getTotalElements());
+        return map;
+    }
 
-        return itemDTOList;
+    private Page<Item> getByCategoriesIn(int pageNum, String sort, List<Category> category) {
+        return devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum - 1, 9, Sort.by(sort)));
     }
 
     public Item findById(Long id){
