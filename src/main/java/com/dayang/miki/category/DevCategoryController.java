@@ -23,9 +23,12 @@ public class DevCategoryController {
     @GetMapping("/{categoryId}")
     public JSONObject categories(@PathVariable("categoryId")String categoryId){
         JSONObject jsonObject = new JSONObject();
-        List<CategoryDTO> categoryDTOList = devCategoryService.categoryChild(Long.parseLong(categoryId));
+        Long id = Long.parseLong(categoryId);
+        CategoryDTO categoryDTO = devCategoryService.categoryDTO(devCategoryService.findById(id));
+        List<CategoryDTO> categoryDTOList = devCategoryService.categoryChild(id);
         jsonObject.put("category", categoryDTOList);
         jsonObject.put("size", categoryDTOList.size());
+        jsonObject.put("name", categoryDTO.getCategoryName());
 
         return jsonObject;
     }
