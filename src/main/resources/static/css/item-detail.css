@@ -428,8 +428,8 @@ div[class^="s-option-"] > span {
 }
 
 .near-store {
-    width: 600px;
-    text-align: center;
+  width: 600px;
+  text-align: center;
 }
 
 td[class^="store-"] {
