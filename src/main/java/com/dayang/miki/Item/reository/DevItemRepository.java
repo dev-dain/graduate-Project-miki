@@ -15,7 +15,6 @@ public interface DevItemRepository extends JpaRepository<Item, Long> {
 
     Page<Item> findByCategoriesIn(List<Category> category, Pageable pageable);
 
-
     Optional<Item> findById(Long id);
 
     List<Item> findByNameContaining(String keyword, Pageable pageable);

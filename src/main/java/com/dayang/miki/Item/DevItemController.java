@@ -47,7 +47,7 @@ public class DevItemController {
         }
 
         ////////////////아이템//////////////////////////
-        Map<String, Object> map  = devItemService.findByCategory(categories, pageNum, "id");
+        Map<String, Object> map  = devItemService.findByCategory(categories, pageNum,  sort);
         itemDTOList  = (List<ItemDTO>) map.get("item");
         Long size = (Long) map.get("size");
         jsonObject.put("ItemList", itemDTOList);
