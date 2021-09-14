@@ -43,7 +43,6 @@
 <script src="/js/createBtnContainer.js"></script>
 <script>
   const url = location.pathname.split('/')[2];
-  // 추후에 선택한 버튼 아이디 값옮겨오는건지?(카테고리에서 클릭시 id값 localstorage에 저장하게하면될가요) + 실제 배포 이후에 경로를 다 바꿔줘야 하는거죠?
   fetch(`/dev/item/${url}`)
           .then(res => res.text())
           .then(data => {

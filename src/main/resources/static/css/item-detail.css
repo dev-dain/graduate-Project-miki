@@ -14,14 +14,16 @@ header {
   color: #FFFAF9;
   display: flex;
   align-items: center;
-  height: 150px;
+  height: 80px;
   width: 100%;
 }
 header > * { margin: 0 10px;}
+
+
 .go-prev {
-  width: 100px;
-  height: 100px;
-  font-size: 3rem;
+  width: 80px;
+  height: 80px;
+  font-size: 1.5rem;
   color: #FFFAF9;
   text-align: center;
   line-height: 70px;
@@ -29,21 +31,21 @@ header > * { margin: 0 10px;}
 }
 h1 {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   text-overflow: ellipsis;
   word-break: keep-all;
 }
+/*height: 28.4%;*/
 .detail-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 83.4%;
+  height: 28.4%;
 }
 .item-btn {
-  width: 65px;
-  height: 65px;
+  width: 45px;
   margin: 0 15px;
-  font-size: 2rem;
+  font-size: 1rem;
   background: #3E4247;
   font-weight: 900;
   border-radius: 50%;
@@ -68,21 +70,24 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
 }
 .btn-container > * {
   margin: 5px 0;
 }
+
+
 .cont-btn {
-  width: 64px;
-  height: 64px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 36px 36px;
+  background-size: 24px 24px;
 }
 .btn-container > .put-in-cart {
+  display: none;
   background-color: #FFC41E;
   background-image: url('../img/shopping-cart.png');
 }
@@ -95,7 +100,7 @@ h1 {
   background-image: url('../img/loupe.png');
 }
 footer {
-  height: 150px;
+  height: 110px;
   background-color: rgba(46, 10, 10, 1);
   color: #FFFAF9;
   display: flex;
@@ -104,7 +109,7 @@ footer {
   cursor: pointer;
 }
 footer > p {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 900;
 }
 
@@ -142,7 +147,7 @@ footer > p {
   padding: 40px;
 }
 th {
-  font-size: 2.5rem;
+  font-size: 2rem;
   padding-bottom: 20px;
 }
 .option-row {
@@ -156,7 +161,7 @@ th {
   cursor: pointer;
   background: #fff;
   width: 100%;
-  font-size: 1.3rem;
+  font-size: 1rem;
   text-align: left;
 }
 .soldout-btn {
@@ -195,8 +200,8 @@ th {
   background-color: #FFC41E;
   color: #fff;
   border: none;
-  width: 40px;
-  height: 45px;
+  width: 30px;
+  height: 35px;
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -206,14 +211,16 @@ th {
 [class^='m-add-count'] {
   border-radius: 0 10px 10px 0;
 }
+
+
 [class^='m-count'] {
   text-align: center;
   color: #2E0A0A;
   background-color: #fff;
   border: none;
-  width: 80px;
-  height: 45px;
-  font-size: 1.2rem;
+  width: 20px;
+  height: 28px;
+  font-size: 1rem;
   font-weight: 700;
 }
 .m-sub-count, .m-add-count {
@@ -259,12 +266,12 @@ th {
   font-size: 2.5rem;
 }
 .cancel-s {
-  margin-left: 30px;
+  margin-left: 20px;
   color: #E93C15;
   border-top: none;
   text-align: right;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 900;
 }
 .close { text-align: right; }
@@ -273,11 +280,12 @@ th {
   display: flex;
   flex-direction: column;
 }
+
 .fold-option-btn {
   align-items: center;
   margin: 0 auto;
-  width: 100px;
-  height: 60px;
+  width: 80px;
+  height: 50px;
   background: #FFC41E;
   color: #fff;
   font-weight: 700;
@@ -288,7 +296,7 @@ th {
   border: 3px solid #2E0A0A;
   border-radius: 20px;
   padding: 20px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: #444;
   cursor: pointer;
 }
@@ -304,7 +312,7 @@ div[class^="s-option-"] {
   align-items: center;
 }
 div[class^="s-option-"] > span {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
 }
 
 .modal-in-modal {
@@ -365,3 +373,69 @@ td[class^="store-"] {
     font-size: 1.7rem;
     font-weight: 500;
 }
+
+
+@media (min-width: 768px) {
+  header {  height: 150px;  }
+
+  .go-prev {
+    width: 100px;
+    height: 100px;
+    font-size: 3rem;
+  }
+
+  h1 { font-size: 2.5rem; }
+
+  .cont-btn {
+    width: 64px;
+    height: 64px;
+    background-size: 36px 36px;
+  }
+
+  .btn-container > .put-in-cart { display: block; }
+  .detail-container {
+    height: 83.4%;
+  }
+
+  .item-btn {
+    width: 65px;
+    height: 65px;
+    font-size: 2rem;
+  }
+
+  .btn-container {  padding: 20px;  }
+
+  footer {  height: 150px;  }
+
+  footer > p {  font-size: 2.5rem;  }
+
+  [class^='m-count'] {
+    width: 80px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  [class^='m-sub-count'], [class^='m-add-count'] {
+    width: 40px;
+    height: 45px;
+  }
+
+  th {  font-size: 2.5rem;  }
+
+  .option-select {  font-size: 1.5rem;  }
+
+  .td-option {  font-size: 1.3rem;  }
+
+  .cancel-s {
+    margin-left: 30px;
+    font-size: 2rem;
+  }
+
+  .fold-option-btn {
+    width: 100px;
+    height: 60px;
+  }
+  div[class^="s-option-"] > span {  font-size: 1.2rem;  }
+
+}
+
