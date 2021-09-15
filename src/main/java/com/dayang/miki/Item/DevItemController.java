@@ -7,7 +7,7 @@ import com.dayang.miki.Item.DTO.OptionDTO;
 import com.dayang.miki.category.CategoryDTO;
 import com.dayang.miki.category.DevCategoryService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Slf4j
+//@Slf4j
 @RequestMapping("dev")
 @RequiredArgsConstructor
 public class DevItemController {
