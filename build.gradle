@@ -8,7 +8,7 @@ plugins {
 
 group = 'com.dayang'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 apply plugin: 'war'
 
 configurations {
@@ -32,6 +32,8 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.16'
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 	implementation 'com.google.code.gson:gson:2.8.5'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	compile 'org.slf4j:slf4j-api:1.7.5'
 
