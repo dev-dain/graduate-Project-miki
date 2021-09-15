@@ -58,7 +58,31 @@ public class DevStoreService {
 
         return Math.round(dist * 100) / 100.0;
     }
+    public List<StoreDTO> nearStores(double latitude, double longitude){
 
+
+        List<Store> storeList = findAllStore();
+        List<StoreDTO> storeDTOList = new ArrayList<>();
+
+        for(Store s : storeList){
+            Position p = storePosition(s);
+            double distance = distance(latitude, longitude, p.getLatitude(), p.getLongitude());
+            StoreDTO storeDTO = storeDTO(s, distance, p);
+            storeDTOList.add(storeDTO);
+        }
+        Collections.sort(storeDTOList,
+                new Comparator<StoreDTO>() {
+                    @Override
+                    public int compare(StoreDTO s1, StoreDTO s2) {
+                        if( s1.getStoreDistance() < s2.getStoreDistance())  return -1;
+                        else if(s1.getStoreDistance() > s2.getStoreDistance()) return 1;
+                        return 0;
+                    }
+                }
+        );
+        storeDTOList.remove(0);
+        return storeDTOList;
+    }
     public List<StoreDTO> nearStore(Long storeId){
 
         Store store = findById(storeId);

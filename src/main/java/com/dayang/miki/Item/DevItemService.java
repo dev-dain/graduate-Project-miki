@@ -122,6 +122,20 @@ public class DevItemService {
         return imageDTOList;
     }
 
+    public List<OptionDTO> itemOptions(Long itemId){
+        Item item = findById(itemId);
+        List<Item_option> item_options = findItemOptionByItem(item);
+        List<OptionDTO> optionDTOList = new ArrayList<>();
+        for(Item_option i : item_options){
+            OptionDTO optionDTO = new OptionDTO();
+            optionDTO.setOptionId(i.getId());
+            optionDTO.setOptionName(i.getItem_option_name());
+            optionDTO.setTotalCnt(i.getStockQuantity());
+            optionDTOList.add(optionDTO);
+        }
+        return optionDTOList;
+    }
+
     public List<OptionDTO> itemOption(Long itemId, Long storeId){
         Store store = devStoreService.findById(storeId);
         Item item = findById(itemId);
@@ -134,7 +148,7 @@ public class DevItemService {
             optionDTO.setOptionId(i.getId());
             optionDTO.setOptionName(i.getItem_option_name());
             optionDTO.setTotalCnt(i.getStockQuantity());
-            optionDTO.setStoreCnt(storeQuantity.getStock_quantity());
+ //           optionDTO.setStoreCnt(storeQuantity.getStock_quantity());
             optionDTOList.add(optionDTO);
         }
         return optionDTOList;

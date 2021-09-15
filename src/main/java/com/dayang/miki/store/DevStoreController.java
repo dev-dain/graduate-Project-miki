@@ -18,9 +18,9 @@ public class DevStoreController {
     private final DevStoreService devStoreService;
 
     @GetMapping("/stores")
-    public JSONObject stores(@RequestParam("storeId")String id){
+    public JSONObject stores(@RequestParam("latitude")String latitude, @RequestParam("longitude")String longitude){
         JSONObject jsonObject = new JSONObject();
-        List<StoreDTO> storeDTOList = devStoreService.nearStore(Long.parseLong(id));
+        List<StoreDTO> storeDTOList = devStoreService.nearStores(Double.parseDouble(latitude),Double.parseDouble(longitude) );
         jsonObject.put("Store", storeDTOList);
         return jsonObject;
     }

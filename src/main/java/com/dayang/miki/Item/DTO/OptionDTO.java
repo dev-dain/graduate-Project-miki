@@ -8,5 +8,5 @@ public class OptionDTO {
     public Long optionId;
     public String optionName;
     public int totalCnt;
-    public int storeCnt;
+//    public int storeCnt;
 }

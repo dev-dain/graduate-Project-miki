@@ -318,18 +318,14 @@ class ItemServiceTest {
         System.out.println(brand.getId());
     }
     @Test
+    @Rollback(value = false)
     void reviewTest(){
-        Item item = itemService.findOne(338L);
-        List<Review> reviews = itemService.findReviewByItem(item);
-        List<Review_img> review_imgs = new ArrayList<>();
-        for(Review review : reviews){
-                review_imgs.add(itemService.getReviewImg(review));
-           System.out.println(review.getReview_content());
-       }
-       for(Review_img review_img: review_imgs) {
-           if(review_img==null) System.out.println("null");
-          else System.out.println(review_img.getReview_img());
-       }
 
+        List<Item>items = itemService.getByCategory(37L);
+
+
+        for(Item item : items){
+            itemService.update(item.getId());
+        }
     }
 }

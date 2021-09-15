@@ -78,10 +78,10 @@ public class DevItemController {
         return jsonObject;
     }
     @GetMapping("/item/{itemId}/option")
-    public JSONObject itemOption(@PathVariable("itemId")String id, @RequestParam("storeId")Long storeId){
+    public JSONObject itemOption(@PathVariable("itemId")String id){
         JSONObject jsonObject = new JSONObject();
         Long itemId = Long.parseLong(id);
-        List<OptionDTO> optionDTOList = devItemService.itemOption(itemId, storeId);
+        List<OptionDTO> optionDTOList = devItemService.itemOptions(itemId);
         jsonObject.put("ItemOption", optionDTOList);
 
         return jsonObject;
