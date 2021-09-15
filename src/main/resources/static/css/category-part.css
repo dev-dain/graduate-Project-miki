@@ -108,15 +108,17 @@ h1 {
   width: 40px;
   height: 40px;
   margin: 0 10px;
-  position: fixed;
-  top: 50%;
+/*  position: fixed;
+  top: 50%;*/
 }
+/*
 .item-prev-btn {
   left: 0;
 }
 .item-next-btn {
   right: 0;
 }
+*/
 .item-row {
   margin: 35px 0;
   width: 100%;
