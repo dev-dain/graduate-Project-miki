@@ -37,7 +37,8 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
         img_src = data.Item.itemImage;
         item_name = data.Item.itemName;
 
-        for (let i = 0; i <= (Object.keys(data.Item).length + 1); i++) {
+        for (let i = 0; i < (data.Item.testOption).length; i++) {
+            console.log(data.Item.testOption[i].optionId);
             item_option_id = data.Item.testOption[i].optionId;
             optionIdList.push(item_option_id);
             option_obj[item_option_id] = data.Item.testOption[i].optionName;
