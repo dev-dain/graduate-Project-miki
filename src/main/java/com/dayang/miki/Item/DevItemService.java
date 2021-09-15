@@ -61,10 +61,11 @@ public class DevItemService {
 
         return imageDTO;
     }
+
     public Map<String, Object> findByCategory(List<CategoryDTO> categories, int pageNum, String sort){
         List<Category> category = new ArrayList<>();
         for(CategoryDTO c: categories) category.add(devCategoryService.findById(c.getCategoryId()));
-        Page<Item> items = getByCategoriesIn(pageNum, sort, category);
+        Page<Item> items = categoryItem(pageNum, sort, category);
         Map<String, Object> map = new HashMap<>();
         List<ItemDTO> itemDTOList = new ArrayList<>();
 
@@ -78,9 +79,10 @@ public class DevItemService {
         return map;
     }
 
-    private Page<Item> getByCategoriesIn(int pageNum, String sort, List<Category> category) {
+    private Page<Item> categoryItem(int pageNum, String sort, List<Category> category) {
         return devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum - 1, 9, Sort.by(sort)));
     }
+
 
     public Item findById(Long id){
         return devItemRepository.findById(id).get();
