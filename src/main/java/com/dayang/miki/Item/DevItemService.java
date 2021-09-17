@@ -40,6 +40,9 @@ public class DevItemService {
         return devItemImageRepository.findTop1ByItem(item);
     }
 
+    public Page<Item> findByVegan(){
+        return devItemRepository.findByIsVegan("N");
+    }
 
     public ItemDTO itemDTO(Item item, Item_img itemImg){
 
