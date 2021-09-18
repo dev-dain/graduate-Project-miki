@@ -132,8 +132,11 @@ public class DevItemController {
     }
 
     @GetMapping("/vegan")
-    public JSONObject veagnItem(){
+    public JSONObject veagnItem(@RequestParam("pageNum")int pageNum, @RequestParam("sort")String sort){
         JSONObject jsonObject = new JSONObject();
+        Map<String, Object> map = devItemService.vegan(pageNum, sort);
+        jsonObject.put("Item", map.get("item"));
+        jsonObject.put("size", map.get("size"));
         return  jsonObject;
     }
 
