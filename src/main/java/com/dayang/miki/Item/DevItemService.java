@@ -83,7 +83,7 @@ public class DevItemService {
     }
 
     private Page<Item> categoryItem(int pageNum, String sort, List<Category> category) {
-        return devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum - 1, 9, Sort.by(sort)));
+        return devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum - 1, 9, Sort.by(sort).descending()));
     }
 
 
@@ -158,7 +158,7 @@ public class DevItemService {
     }
 
     public List<ItemDTO> searchItem(String keyword, int pageNum, String sort){
-        List<Item> itemList = devItemRepository.findByNameContaining(keyword, PageRequest.of(pageNum-1, 9, Sort.by(sort)));
+        List<Item> itemList = devItemRepository.findByNameContaining(keyword, PageRequest.of(pageNum-1, 9, Sort.by(sort).descending()));
         List<ItemDTO> itemDTOList = new ArrayList<>();
         for(Item item : itemList){
             Item_img item_img = devItemImageRepository.findTop1ByItem(item);
