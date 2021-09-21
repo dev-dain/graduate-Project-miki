@@ -122,12 +122,22 @@ public class DevItemController {
         jsonObject.put("Item", itemDTOList);
         return jsonObject;
     }
+
     @GetMapping("/bestSeller")
     public JSONObject bestSeller(){
         JSONObject jsonObject = new JSONObject();
         List<ItemDTO> itemDTOList = devItemService.bestSeller();
         jsonObject.put("Item", itemDTOList);
         return jsonObject;
+    }
+
+    @GetMapping("/vegan")
+    public JSONObject veagnItem(@RequestParam("pageNum")int pageNum, @RequestParam("sort")String sort){
+        JSONObject jsonObject = new JSONObject();
+        Map<String, Object> map = devItemService.vegan(pageNum, sort);
+        jsonObject.put("Item", map.get("item"));
+        jsonObject.put("size", map.get("size"));
+        return  jsonObject;
     }
 
 }

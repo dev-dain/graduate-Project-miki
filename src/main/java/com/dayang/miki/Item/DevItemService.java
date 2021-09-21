@@ -40,6 +40,23 @@ public class DevItemService {
         return devItemImageRepository.findTop1ByItem(item);
     }
 
+    public Page<Item> findByVegan(int pageNum, String sort){
+        return devItemRepository.findByIsVegan("Y", PageRequest.of(pageNum-1, 9,Sort.by(sort)));
+    }
+
+    public Map<String, Object> vegan(int pageNum, String sort){
+        Page<Item> itemList = findByVegan(pageNum, sort);
+        List<ItemDTO> itemDTOList = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        for(Item item : itemList){
+            Item_img itemImg = findItemImage(item);
+            itemDTOList.add(itemDTO(item, itemImg));
+        }
+        map.put("item", itemDTOList);
+        map.put("size", itemList.getTotalElements());
+
+        return map;
+    }
 
     public ItemDTO itemDTO(Item item, Item_img itemImg){
 
@@ -50,7 +67,7 @@ public class DevItemService {
         itemDTO.setItemDiscountPrice(item.getDiscount_price());
         itemDTO.setItemTestable(item.getIs_testable());
         itemDTO.setItemImage(itemImg.getItem_img());
-
+        itemDTO.setIsVegan(item.getIsVegan());
         return itemDTO;
     }
     public ImageDTO imageDTO(Product_img productImg, Item item){
@@ -80,7 +97,7 @@ public class DevItemService {
     }
 
     private Page<Item> categoryItem(int pageNum, String sort, List<Category> category) {
-        return devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum - 1, 9, Sort.by(sort)));
+        return devItemRepository.findByCategoriesIn(category, PageRequest.of(pageNum - 1, 9, Sort.by(sort).descending()));
     }
 
 
@@ -155,7 +172,7 @@ public class DevItemService {
     }
 
     public List<ItemDTO> searchItem(String keyword, int pageNum, String sort){
-        List<Item> itemList = devItemRepository.findByNameContaining(keyword, PageRequest.of(pageNum-1, 9, Sort.by(sort)));
+        List<Item> itemList = findByNameContaining(keyword, pageNum, sort);
         List<ItemDTO> itemDTOList = new ArrayList<>();
         for(Item item : itemList){
             Item_img item_img = devItemImageRepository.findTop1ByItem(item);
@@ -164,6 +181,11 @@ public class DevItemService {
         }
         return itemDTOList;
     }
+
+    private List<Item> findByNameContaining(String keyword, int pageNum, String sort) {
+        return devItemRepository.findByNameContaining(keyword, PageRequest.of(pageNum - 1, 9, Sort.by(sort).descending()));
+    }
+
     public int searchItemSize(String keyword){
         int size = devItemRepository.findByNameContaining(keyword).size();
         return size;

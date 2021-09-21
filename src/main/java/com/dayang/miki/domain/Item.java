@@ -43,6 +43,10 @@ public class Item {
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
+    @Column(name ="is_vegan")
+    @ColumnDefault("'N'")
+    private String isVegan;
+
     /**
      * STOCK 감소
      **/

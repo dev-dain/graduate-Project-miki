@@ -12,5 +12,6 @@ public class ItemDTO {
     private int itemPrice;
     private int itemDiscountPrice;
     private char itemTestable;
+    private String isVegan;
 
 }
