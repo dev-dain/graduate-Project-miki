@@ -28,8 +28,6 @@ const checkPage = (state) => {
                 fetchData((Number(localStorage.getItem('page')) - 1).toString(), num, sortWay);
             }
             localStorage.setItem('page', (Number(localStorage.getItem('page')) - 1).toString());
-            console.log(localStorage.getItem('page'));
-
         }
     });
     itemContainer.insertBefore(itemPrevBtn, itemContainer.firstElementChild);
@@ -41,7 +39,6 @@ const checkPage = (state) => {
         }
         else {
             tbody.innerHTML = '';
-            console.log((Number(localStorage.getItem('page')) + 1).toString());
             if (state === 'search') {
                 fetchData((Number(localStorage.getItem('page')) + 1).toString(), keyword, sortWay);
             }
@@ -49,8 +46,6 @@ const checkPage = (state) => {
                 fetchData((Number(localStorage.getItem('page')) + 1).toString(), num, sortWay);
             }
             localStorage.setItem('page', (Number(localStorage.getItem('page')) + 1).toString());
-            console.log(localStorage.getItem('page'));
-
         }
     });
     itemContainer.appendChild(itemNextBtn);

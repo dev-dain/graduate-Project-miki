@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 let curCategory, searchRes, count, bigName;
 let num = decodeURI(location.pathname.split('/')[2]);
 const fetchAPI = () => __awaiter(this, void 0, void 0, function* () {
-    localStorage.setItem('page', '1');
     const res = yield fetch(`/dev/category/${num}`);
     const data = yield res.text();
     searchRes = (JSON.parse(data));

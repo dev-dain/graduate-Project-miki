@@ -7,33 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-
-
-fetch(`/dev/category/30/itemList?page=1&sort=orderCnt`)
-    .then(res => res.text())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(e => console.error(e));
-fetch(`/dev/category/30/itemList?page=2&sort=orderCnt`)
-    .then(res => res.text())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(e => console.error(e));
-fetch(`/dev/category/30/itemList?page=3&sort=orderCnt`)
-    .then(res => res.text())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(e => console.error(e));
-
 // titleContainer의 title 정하기
-const h1Title = document.querySelector('.title-header');
-h1Title.textContent = bigName;
+const h1Title = document.querySelector('title-header');
+// h1Title.textContent = bigName;
 // 문서의 title 정하기
 const docTitle = document.getElementsByTagName('title')[0];
-docTitle.textContent = `카테고리 : ${bigName}`;
+// docTitle.textContent = `카테고리 : ${bigName}`;
 let sortWay = localStorage.getItem('sort-way') || 'id';
 const goPrevBtn = document.querySelector('.go-prev');
 const micBtn = document.querySelector('.turn-on-mic');
@@ -58,16 +37,16 @@ const fetchData = (pageNum, category, sortWay) => {
     fetch(`/dev/category/${category}/itemList?page=${pageNum}&sort=${sortWay}`)
         .then(res => res.text())
         .then(data => {
-            console.log(data);
-            itemObjList = (JSON.parse(data))['ItemList'];
-            maxNum = (Math.ceil(Number((JSON.parse(data))['size']) / 9)).toString();
-            console.log(maxNum);
-            tbody.innerHTML = '';
-            itemObjList.forEach(function (item) {
-                tbody.appendChild(createItemCard(item));
-            });
-            console.log(itemObjList);
-        })
+        console.log(data);
+        itemObjList = (JSON.parse(data))['ItemList'];
+        maxNum = (Math.ceil(Number((JSON.parse(data))['size']) / 9)).toString();
+        console.log(maxNum);
+        tbody.innerHTML = '';
+        itemObjList.forEach(function (item) {
+            tbody.appendChild(createItemCard(item));
+        });
+        console.log(itemObjList);
+    })
         .catch(e => console.error(e));
 };
 const fetchCategory = (pageNum, category, sortWay) => {
@@ -76,10 +55,10 @@ const fetchCategory = (pageNum, category, sortWay) => {
     fetch(`/dev/category/${category}`)
         .then(res => res.text())
         .then(data => {
-            categoryList = (JSON.parse(data))['category'];
-            console.log(categoryList);
-            fetchData(pageNum, category, sortWay);
-        })
+        categoryList = (JSON.parse(data))['category'];
+        console.log(categoryList);
+        fetchData(pageNum, category, sortWay);
+    })
         .catch(e => console.error(e));
 };
 fetchCategory('1', num, localStorage.getItem('sort-way'));

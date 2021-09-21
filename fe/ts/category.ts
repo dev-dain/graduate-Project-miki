@@ -1,15 +1,30 @@
+fetch(`/dev/category/30/itemList?page=1&sort=orderCnt`)
+      .then(res => res.text())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(e => console.error(e));
+fetch(`/dev/category/30/itemList?page=2&sort=orderCnt`)
+      .then(res => res.text())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(e => console.error(e));
+fetch(`/dev/category/30/itemList?page=3&sort=orderCnt`)
+      .then(res => res.text())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(e => console.error(e));
+
+
 // titleContainer의 title 정하기
-const h1Title: HTMLHeadingElement = document.querySelector('title-header') as HTMLHeadingElement;
-// h1Title.textContent = bigName;
+const h1Title: HTMLHeadingElement = document.querySelector('.title-header') as HTMLHeadingElement;
+h1Title.textContent = bigName;
 
 // 문서의 title 정하기
 const docTitle: HTMLTitleElement = document.getElementsByTagName('title')[0];
-// docTitle.textContent = `카테고리 : ${bigName}`;
-
-const maxNum: string = (Math.ceil(Number(count) / 9)).toString();
-
-localStorage.setItem('categoryMax', maxNum);
-console.log(localStorage.getItem('categoryMax'));
+docTitle.textContent = `카테고리 : ${bigName}`;
 
 let sortWay: string = localStorage.getItem('sort-way') || 'id';
 
@@ -51,8 +66,10 @@ const fetchData = (pageNum: string, category: string, sortWay: string): Void => 
     fetch(`/dev/category/${category}/itemList?page=${pageNum}&sort=${sortWay}`)
       .then(res => res.text())
       .then(data => {
-          console.log(data);
+        console.log(data);
         itemObjList = (JSON.parse(data))['ItemList'];
+        maxNum = (Math.ceil(Number((JSON.parse(data))['size']) / 9)).toString();
+        console.log(maxNum);
         tbody.innerHTML = '';
         itemObjList.forEach(function (item) {
           tbody.appendChild(createItemCard(item));
@@ -77,6 +94,11 @@ const fetchCategory = (pageNum: string, category: string, sortWay: string): void
 }
 
 fetchCategory('1', num, localStorage.getItem('sort-way') as string);
+
+let maxNum: string = (Math.ceil(Number(count) / 9)).toString();
+
+localStorage.setItem('categoryMax', maxNum);
+console.log(localStorage.getItem('categoryMax'));
 
 
 

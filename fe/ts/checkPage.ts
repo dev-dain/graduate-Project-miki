@@ -1,6 +1,11 @@
 const checkPage = (state: string): void => {
   const checkFirstPage = (page: number): boolean => (page <= 1);
-  const checkLastPage = (page: number): boolean => page >= Number(localStorage.getItem('searchMax'));
+  const checkLastPage = (page: number): boolean => {
+    if (state === 'search') {
+      return page >= Number(localStorage.getItem('searchMax'));
+    }
+    return page >= Number(localStorage.getItem('categoryMax'));
+  }
 
   const modalContainer: HTMLDivElement = document.querySelector('.modal-container') as HTMLDivElement;
 
@@ -24,6 +29,7 @@ const checkPage = (state: string): void => {
         fetchData((Number(localStorage.getItem('page')) - 1).toString(), num, sortWay);
       }
       localStorage.setItem('page', (Number(localStorage.getItem('page')) - 1).toString());
+      console.log(localStorage.getItem('page'));
     }
   });
 
@@ -36,12 +42,15 @@ const checkPage = (state: string): void => {
       modalContainer.classList.add('display');
     } else {
       tbody.innerHTML = '';
+      console.log((Number(localStorage.getItem('page')) + 1).toString());
       if (state === 'search') {
         fetchData((Number(localStorage.getItem('page')) + 1).toString(), keyword, sortWay);
       } else {
         fetchData((Number(localStorage.getItem('page')) + 1).toString(), num, sortWay);
       }
       localStorage.setItem('page', (Number(localStorage.getItem('page')) + 1).toString());
+      console.log(localStorage.getItem('page'));
+
     }
   });
 
