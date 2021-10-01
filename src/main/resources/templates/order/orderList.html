@@ -60,11 +60,11 @@
                         <div class="row-title">결제 수단</div>
                         <button class="fold-btn-pay fold">^</button>
                     </div>
-                    <div class="row-way-list">
-                        <img class="pay-way-img">
-                        <img class="pay-way-img">
-                        <img class="pay-way-img">
-                    </div>
+                </div>
+                <div class="row-pay-way-container">
+                        <button class="pay-way-btn">인기 작품 투표하기💙</button>
+                        <button class="pay-way-btn">인사하기🖐</button>
+                        <button class="pay-way-btn">방명록 남기기🎈</button>
                 </div>
             </div>
         </div>
@@ -204,6 +204,20 @@
             itemFoldBtn.classList.add('fold');
             rowGoodsList.classList.remove('show');
             cartPageContainer.classList.remove('display');
+        }
+    });
+
+    const payBtnContainer = document.querySelector('.row-pay-way-container');
+    const payFoldBtn = document.querySelector('.fold-btn-pay');
+    payFoldBtn.addEventListener('click', () => {
+        if (payFoldBtn.classList.contains('fold')) {
+            payFoldBtn.classList.remove('fold');
+            payFoldBtn.classList.add('unfold');
+            payBtnContainer.classList.add('show');
+        } else {
+            payFoldBtn.classList.remove('unfold');
+            payFoldBtn.classList.add('fold');
+            payBtnContainer.classList.remove('show');
         }
     });
 

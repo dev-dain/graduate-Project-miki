@@ -201,8 +201,11 @@
             modalContainer.classList.add('display');
         } else {
             tbody.innerHTML = '';
-            for (let i = pageIdx-- * 9; i < Object.keys(cardList).length; i++) {
-                if (i === (pageIdx * 9)) break;
+            let cnt = 0;
+            for (let i = (--pageIdx-1) * 9; i < Object.keys(cardList).length; i++) {
+                console.log(i, pageIdx);
+                if (cnt === 9) break;
+                cnt++;
                 tbody.appendChild(cardList[i]);
             }
 

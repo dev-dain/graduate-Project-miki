@@ -69,19 +69,6 @@ h1 {
 .cart-page-container {
     display: none;
 }
-@keyframes fade-in {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-.show, .display {
-  animation: fade-in forwards .3s;
-}
-.show {
-    display: block !important;
-}
-.display {
-    display: flex !important;
-}
 .count-area {
     display: flex;
     align-items: center;
@@ -143,3 +130,29 @@ footer {
     background: #e93c15;
 }
 .modal-background { min-width: 100vw; }
+.pay-way-btn {
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: #A4D0F9;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+}
+.row-pay-way-container {
+    display: none;
+    background: #FFF8E5;
+}
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.show, .display {
+  animation: fade-in forwards .3s;
+}
+.show {
+    display: block !important;
+}
+.display {
+    display: flex !important;
+}

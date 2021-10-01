@@ -254,14 +254,14 @@ h1 {
   margin: 0 15px;
   width: 200px;
   height: 80px;
-  background: #FFC41E;
+  background: #F66657;
   color: #fff;
   font-size: 1.6rem;
   font-weight: 700;
   border-radius: 20px;
 }
 .test-all-btn {
-  background: #F66657 !important;
+  background: #FFC41E !important;
 }
 .delete-all-btn {
     position: absolute;
