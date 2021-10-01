@@ -29,7 +29,6 @@ const checkPage = (state) => {
             }
             localStorage.setItem('page', (Number(localStorage.getItem('page')) - 1).toString());
             console.log(localStorage.getItem('page'));
-
         }
     });
     itemContainer.insertBefore(itemPrevBtn, itemContainer.firstElementChild);
@@ -50,7 +49,6 @@ const checkPage = (state) => {
             }
             localStorage.setItem('page', (Number(localStorage.getItem('page')) + 1).toString());
             console.log(localStorage.getItem('page'));
-
         }
     });
     itemContainer.appendChild(itemNextBtn);

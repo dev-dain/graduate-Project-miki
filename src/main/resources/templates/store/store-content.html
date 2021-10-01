@@ -33,48 +33,32 @@
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
     const storeList = [];
     // const distList = [];
     let counter = 1;
-    const url = location.pathname.split('/')[2];
 
     const storePush = (store_id, store_name, store_location, store_number) =>
         storeList.push({store_id, store_name, store_location, store_number});
     const distPush = (id, store_dist) => storeList[id - 1].store_dist = store_dist;
-    // const posPush = (id, longitude, latitude) => {
-    //     storeList[id - 1].store_latitude = latitude;
-    //     storeList[id - 1].store_longitude = longitude;
-    // }
-    fetch(`/dev/stores?storeId=${url}`)
-        .then(res => res.text())
-        .then(data => {
-            console.log(data);
-            data = JSON.parse(data);
+    const posPush = (id, longitude, latitude) => {
+        storeList[id - 1].store_latitude = latitude;
+        storeList[id - 1].store_longitude = longitude;
+    }
+    /*<![CDATA[*/
 
-            for (let i=0; i<=(Object.keys(data).length +1);i++) {
-                storePush(data.Store[i].storeId,data.Store[i].storeName, data.Store[i].storeAddress, data.Store[i].storeNumber);
-                distPush(counter++, data.Store[i].storeDistance);
-                posPush()
+    /*[# th:each="s : ${store}"]*/
+    storePush(/*[[${s.id}]]*/, /*[[${s.store_name}]]*/, /*[[${s.address}]]*/, /*[[${s.number}]]*/);
+    /*[/]*/
 
-            }
-            /*<![CDATA[*/
+    /*[# th:each="dist : ${distance}"]*/
+    distPush(counter++, /*[[${dist}]]*/);
+    /*[/]*/
 
-            /*[# th:each="s : ${store}"]*/
-            storePush(/*[[${s.id}]]*/, /*[[${s.store_name}]]*/, /*[[${s.address}]]*/, /*[[${s.number}]]*/);
-            /*[/]*/
-
-            /*[# th:each="dist : ${distance}"]*/
-            distPush(counter++, /*[[${dist}]]*/);
-            /*[/]*/
-
-            /*[# th:each="pos : ${positions}"]*/
-            posPush(/*[[${pos.id}]]*/, /*[[${pos.longitude}]]*/, /*[[${pos.latitude}]]*/);
-            /*[/]*/
-            /*]]>*/
-        })
-
-
+    /*[# th:each="pos : ${positions}"]*/
+    posPush(/*[[${pos.id}]]*/, /*[[${pos.longitude}]]*/, /*[[${pos.latitude}]]*/);
+    /*[/]*/
+    /*]]>*/
 
     console.log(storeList);
 

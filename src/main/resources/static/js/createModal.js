@@ -7,7 +7,7 @@ const createModal = (modalContainer, state, msg) => {
     modalCloseBtn.classList.add('modal-close-btn');
     modalCloseBtn.innerHTML = '&times;';
     modalCloseBtn.addEventListener('click', () => {
-        modalContainer.innerHTML = '';
+        modalContainer.removeChild(document.querySelector('.modal-background'));
         modalContainer.classList.remove('display');
     });
     const modalContent = document.createElement('p');

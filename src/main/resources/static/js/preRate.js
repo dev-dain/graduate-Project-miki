@@ -7,20 +7,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-let curCategory, searchRes, bigName;
-let num = decodeURI(location.pathname.split('/')[2]);
+;
+let reviewData;
+let itemId = decodeURI(location.pathname.split('/')[2]);
+let rateCnt;
+let itemName;
+let isTestable;
 const fetchAPI = () => __awaiter(this, void 0, void 0, function* () {
-    localStorage.setItem('page', '1');
-    if (!localStorage.getItem('sort-way')) {
-        localStorage.setItem('sort-way', 'id');
-    }
-    const res = yield fetch(`/dev/category/${num}`);
-    const data = yield res.text();
-    searchRes = (JSON.parse(data));
-    bigName = searchRes['name'];
-    curCategory = searchRes['category'];
+    let res = yield fetch(`/dev/item/${itemId}/review`);
+    let data = yield res.text();
+    reviewData = (JSON.parse(data))['Review'];
+    rateCnt = reviewData.length;
+    console.log(reviewData);
+    res = yield fetch(`/dev/item/${itemId}`);
+    data = yield res.text();
+    itemName = (JSON.parse(data))['Item'].itemName;
+    isTestable = (JSON.parse(data))['Item'].itemTestable;
+    const titleH1 = document.querySelector('.title');
+    titleH1.textContent = itemName;
+    const rateCountP = document.querySelector('.rate-count');
+    rateCountP.textContent = `총 ${rateCnt} 건`;
     const script = document.createElement('script');
-    script.src = '/js/category.js';
+    script.src = '/js/review.js';
     document.body.appendChild(script);
 });
 fetchAPI()

@@ -2,19 +2,18 @@ const itemOption = async () => {
     const res = await fetch(`/dev/item/${url}/option?storeId=${localStorage.getItem('store_id')}`);
     const opt = await res.text();
     const options = (JSON.parse(opt))['ItemOption'];
+    const modalContainer = document.querySelector('.modal-container');
 
     console.log(options);
 
     const quantityList = [];
     const optionIDList = [];
     const optionNameList = [];
-    const totalQuantityList = [];
     let selectedList = [];
 
     options.forEach(option => {
-        quantityList.push(option.storeCnt);
+        quantityList.push(option.totalCnt);
         optionIDList.push(option.optionId);
-        totalQuantityList.push(option.totalCnt);
         optionNameList.push(option.optionName);
     });
 
@@ -56,7 +55,6 @@ const itemOption = async () => {
     const optionSelect = document.querySelector('.option-select-tr > td');
     const foldOptionBtn = document.querySelector('.fold-option-btn');
     const cancelSpan = document.querySelector('.cancel');
-    const modalInModal = document.querySelector('.modal-in-modal');
 
 
     const addOption = (id, option_id, quantity, name) => {
@@ -65,6 +63,7 @@ const itemOption = async () => {
         nameSpan.textContent = name;
         sOptionDiv.classList.add(`s-option-${id}-${option_id}`);
 
+        const modalInModal = document.querySelector('.modal-in-modal');
         const countDiv = document.createElement('div');
         const subCountBtn = document.createElement('button');
         const countInput = document.createElement('input');
@@ -86,7 +85,7 @@ const itemOption = async () => {
         subCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) < 2) {
                 /* alert('수량은 1개 이상이어야 합니다.'); */
-                modalInModal.appendChild(createModal('lack'));
+                modalInModal.appendChild(createModal(modalInModal, 'lack'));
                 modalInModal.classList.add('display');
             } else {
                 countInput.value = Number(countInput.value) - 1;
@@ -99,7 +98,7 @@ const itemOption = async () => {
         });
         addCountBtn.addEventListener('click', () => {
             if (Number(countInput.value) >= quantity) {
-                modalInModal.appendChild(createModal('excess'));
+                modalInModal.appendChild(createModal(modalInModal, 'excess'));
                 modalInModal.classList.add('display');
                 /* alert('재고 상품보다 많이 담을 수 없습니다.'); */
             } else {
@@ -137,8 +136,11 @@ const itemOption = async () => {
     }
 
     cancelSpan.addEventListener('click', () => {
-        const modalContainer = document.querySelector('.modal-container');
+        const wrapContainer = document.getElementById('wrap');
         modalContainer.style.display = 'none';
+        const tbody = document.querySelector('tbody');
+        // wrapContainer.removeChild(document.getElementById('optionScript'));
+        tbody.innerHTML = '';
         selectedList = [];
         selectedOptionList = [];
         selectedOption.innerHTML = '';
@@ -151,6 +153,7 @@ const itemOption = async () => {
     });
 
     foldOptionBtn.addEventListener('click', () => {
+        console.log('twice?');
         if (foldOptionBtn.classList.contains('rotate')) {
             optionContainer.classList.add('fold-bar');
             optionContainer.classList.remove('unfold-bar');
@@ -173,27 +176,8 @@ const itemOption = async () => {
             tbody.children[i].children[0].children[0].style.color = 'gray';
             const soldoutBtn = document.createElement('button');
             soldoutBtn.classList.add('soldout-btn');
-
-            if (!totalQuantityList[i]) {
-                soldoutBtn.textContent = '전체 품절';
-                tbody.children[i].children[0].children[0].disabled = true;
-                tbody.children[i].appendChild(soldoutBtn);
-            } else {
-                soldoutBtn.textContent = '다른 매장 보기';
-                tbody.children[i].appendChild(soldoutBtn);
-                soldoutBtn.addEventListener('click', () => tbody.children[i].children[0].click());
-                tbody.children[i].children[0].addEventListener('click', () => {
-                    console.log('click');
-                    fetch(`/soldout/${localStorage.getItem('store_id')}/${optionIDList[i]}`)
-                        .then(res => res.text())
-                        .then(data => {
-                            const storeRow = data.split('<div id="wrap">')[1].split('<!--')[0];
-                            modalInModal.appendChild(createModal('soldout', storeRow));
-                            modalInModal.classList.add('display');
-                        })
-                        .catch(e => console.error(e));
-                });
-            }
+            soldoutBtn.textContent = '품절';
+            tbody.children[i].appendChild(soldoutBtn);
         } else {
             tbody.children[i].children[0].addEventListener('click', () => {
                 if (!selectedList.includes(tbody.children[i].children[0].textContent.trim())) {
@@ -209,6 +193,3 @@ const itemOption = async () => {
         }
     }
 }
-
-itemOption()
-    .catch(e => console.error(e));

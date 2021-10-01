@@ -15,10 +15,8 @@ fetch(`/dev/item/${url}/detail`)
         const item_isTestable = localStorage.getItem("c_item_isTestable");
         const item_name = localStorage.getItem("c_item_name");
 
-        // (Object.keys(data))
         try {
-            for (let i = 0; i <= data.ItemDetail.length; i++) {
-                console.log(data.ItemDetail[i].image);
+            for (let i = 0; i < data.ItemDetail.length; i++) {
                 productImgList.push(data.ItemDetail[i].image);
             }
         } catch (error) {
@@ -40,8 +38,9 @@ fetch(`/dev/item/${url}/detail`)
         const footer = document.querySelector('footer');
         const imgContainer = document.querySelector('.img-container');
         const modalContainer = document.querySelector('.modal-container');
+        const modalInModal = document.querySelector('.modal-in-modal');
         const wrapContainer = document.getElementById('wrap');
-        const storeId = localStorage.getItem('store_id');
+        const tbody = document.querySelector('tbody');
 
         const checkFirstPage = page => (page <= 0);
         const checkLastPage = (page, length) => (Number(page) + 1 >= length);
@@ -61,7 +60,8 @@ fetch(`/dev/item/${url}/detail`)
         goItemPrevBtn.addEventListener('click', () => {
             if (checkFirstPage(Number(localStorage.getItem(`item-id-${item_id}`)))) {
                 console.log('First Page!');
-                alert('제일 첫 페이지입니다.');
+                modalContainer.appendChild(createModal(modalContainer, 'first'));
+                modalContainer.classList.add('display');
             } else {
                 localStorage.setItem(`item-id-${item_id}`, Number((localStorage.getItem(`item-id-${item_id}`))) - 1);
                 console.log(localStorage.getItem(`item-id-${item_id}`));
@@ -73,7 +73,8 @@ fetch(`/dev/item/${url}/detail`)
         goItemNextBtn.addEventListener('click', () => {
             if (checkLastPage(localStorage.getItem(`item-id-${item_id}`), productImgLen)) {
                 console.log('Last Page');
-                alert('제일 마지막 페이지입니다.');
+                modalContainer.appendChild(createModal(modalContainer, 'last'));
+                modalContainer.classList.add('display');
             } else {
                 localStorage.setItem(`item-id-${item_id}`, Number(localStorage.getItem(`item-id-${item_id}`)) + 1);
                 console.log(localStorage.getItem(`item-id-${item_id}`));
@@ -82,22 +83,14 @@ fetch(`/dev/item/${url}/detail`)
             }
         });
 
-
-        const script = document.createElement('script');
-        script.src = '/js/itemOption.js';
         footer.addEventListener('click', () => {
             modalContainer.style.display = 'flex';
 
-            // 옵션 선택 창이 나와 있지 않은 상태라면 script 추가
-            if (wrapContainer.lastElementChild.tagName !== 'SCRIPT') {
-                wrapContainer.appendChild(script);
-            }
             try {
                 if (modalContainer.children[1].children[1].children[1].lastElementChild.children[0].hasChildNodes()) {
-                    /* 계속 쇼핑 / 장바구니 가기 모달 추가로 띄우기 필요 */
-                    //뭐야..???
+                    console.log('here');
                     selectedOptionList.forEach(option => {
-                        // console.log(option);
+                        console.log(option);
                         fetch(`/cart`, {
                             method: 'POST',
                             headers: {
@@ -108,8 +101,9 @@ fetch(`/dev/item/${url}/detail`)
                             .then(res => res.json())
                             .then(data => {
                                 console.log(data);
-                                alert('장바구니에 담겼습니다.');
-                                setTimeout(() => location.reload(), 0);
+                                modalContainer.appendChild(createModal(modalContainer, '', '장바구니에 담겼습니다.'));
+                                modalContainer.classList.add('display');
+                                setTimeout(() => location.reload(), 1000);
                             })
                             .catch(e => console.error(e));
                     });
@@ -117,10 +111,11 @@ fetch(`/dev/item/${url}/detail`)
 
                 modalContainer.style.display = 'none';
                 modalContainer.innerHTML = '';
-                wrapContainer.lastElementChild.remove();
-                script.innerHTML = '';
             } catch (e) {
                 console.error(e);
+                itemOption()
+                    .catch(e => console.error(e));
+
             }
         });
 

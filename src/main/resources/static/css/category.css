@@ -110,8 +110,6 @@ h1 {
   color: #163D78;
 }
 
-
-@media (min-width: 768px) {
   .top-area {
     height: 33%;
     padding-top: 2rem;
@@ -170,4 +168,3 @@ h1 {
   .category-btn p {
     font-size: 1.5rem;
   }
-}

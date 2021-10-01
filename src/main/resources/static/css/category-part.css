@@ -133,7 +133,7 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   border: 3px rgba(255, 218, 115, 0.7) solid;
-  border-radius: 10px; 
+  border-radius: 10px;
   background-color: #fff;
   width: 140px;
   margin: 10px 5px;
@@ -196,7 +196,6 @@ h1 {
   justify-self: flex-end !important;
 }
 
-@media (min-width: 768px) {
   header {
     height: 15%;
     padding: 2rem 0;
@@ -216,8 +215,8 @@ h1 {
   }
   .top-button-container button {
     margin-left: 30px;
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
   }
   [class^='sort-btn-'] {
     padding: 15px 50px;
@@ -274,4 +273,3 @@ h1 {
     font-size: 1rem;
     font-weight: 900;
   }
-}
