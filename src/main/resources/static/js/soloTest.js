@@ -18,6 +18,10 @@ let h_color;
 let is_L = false;
 let is_C = false;
 let is_B = false;
+let is_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+let is_L_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+let is_C_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+let is_B_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
 
 let L_R, L_G, L_B;
 let C_R, C_G, C_B;
@@ -85,17 +89,49 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
         const itemDiv = document.createElement('div');
         itemDiv.classList.add(`item-div-${item_id}`);
 
+        let btn_pos ;
         const itemCheck = document.createElement('button');
         let isItemCheck = true;
+        console.log(is_checked);
         itemCheck.classList.add(`item-check-btn-${item_id}`);
+        itemCheck.classList.add(`${item_obj[item_option_id].face_location}`); // 전체 테스트에도 적용해야하는 부분 1
         itemCheck.innerHTML = '&#10004;';
         itemCheck.addEventListener('click', () => {
+            // 전체 테스트에도 적용해야하는 부분 2
             if (isItemCheck) {
                 itemCheck.innerHTML = '';
                 isItemCheck = false;
+                is_checked = 0;
+                if(itemCheck.classList.contains("L")){
+                    console.log('L포함');
+                    is_L_checked = 0;
+                }
+                else if(itemCheck.classList.contains("C")){
+                    console.log('C포함');
+                    is_C_checked = 0;
+                }
+                else if(itemCheck.classList.contains("B")){
+                    console.log('B포함');
+                    is_B_checked = 0;
+                }
             } else {
                 itemCheck.innerHTML = '&#10004;';
                 isItemCheck = true;
+                is_checked = 1;
+
+                if(itemCheck.classList.contains("L")){
+                    console.log('L포함');
+                    is_L_checked = 1;
+                }
+                else if(itemCheck.classList.contains("C")){
+                    console.log('C포함');
+                    is_C_checked = 1;
+                }
+                else if(itemCheck.classList.contains("B")){
+                    console.log('B포함');
+                    is_B_checked = 1;
+                }
+
             }
         });
 
@@ -117,6 +153,7 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
         let split_C;
         let first_c = [];
 
+
         const createItemOptionContainer = item_id => {
             const itemOptionContainer = document.createElement('div');
             itemOptionContainer.classList.add(`item-option-container-${item_id}`);
@@ -131,13 +168,17 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
                     split_C = split(getClass, '-'); // split_C[3] : optionId
                     // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
                     set_color(split_C);
-                    // console.log(c_arr,R,G,B);
                 });
                 itemOptionContainer.appendChild(option);
             });
 
+            itemOptionContainer.addEventListener('click',()=>{
+                itemOptionContainer.classList.remove('show');
+            })  // 옵션 클릭 시 옵션창 닫히게 설정 , 전체 테스트에도 적용해야하는 부분 3
+
             return itemOptionContainer;
         };
+
 
 
         $(document).ready(function () {
@@ -152,6 +193,8 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
 
 
         function set_color(split_C) {
+            is_checked = 1;
+
             position = item_obj[split_C[3]].face_location;
             console.log(position);
             <!--        alpha = item_obj[split_C[3]].alpha;-->
@@ -165,6 +208,7 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
 
             switch (position) {
                 case 'L':
+                    is_L_checked = 1;
                     is_L = true;
                     L_R = c_arr[0];
                     L_G = c_arr[1];
@@ -172,6 +216,7 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
                     console.log('L 진입');
                     break;
                 case 'C':
+                    is_C_checked = 1;
                     is_C = true;
                     C_R = c_arr[0];
                     C_G = c_arr[1];
@@ -179,6 +224,7 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
                     console.log('C 진입');
                     break;
                 case 'B':
+                    is_B_checked = 1;
                     is_B = true;
                     B_R = c_arr[0];
                     B_G = c_arr[1];
@@ -207,6 +253,8 @@ fetch(`/dev/testSingleColor?itemId=${url}`)
                 itemOptionContainer.classList.add('show');
             }
         });
+
+
 
         const itemTitle = document.createElement('div');
         itemTitle.classList.add(`item-title-${item_id}`);

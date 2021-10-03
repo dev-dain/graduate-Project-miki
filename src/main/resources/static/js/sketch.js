@@ -3,16 +3,10 @@ let video;
 let predictions = [];
 let face;
 let sil;
-// const R = 123;
-// const G = 0;
-// const B = 0;
-// const A = 50;
-// const pos = N; // 어느 부위인지 확인할 변수
 
 function setup() {
-  createCanvas(1080,1330);
+  createCanvas(1000, 1200);
   video = createCapture(VIDEO);
-  video.size(width, height);
   facemesh = ml5.facemesh(video, modelReady);
 
   facemesh.on("predict", (results) => {
@@ -28,48 +22,92 @@ function modelReady() {
 
 function draw() {
   image(video, 0, 0, width, height);
+
   drawKeypoints();
 }
 
+let Lip = false;
+let cheek = false;
+let brow = false;
 
 function drawKeypoints() {
-  for (let i = 0; i < predictions.length; i += 1) {
-    sil = predictions[i].annotations;
-    noStroke();
+  // background(0, 0, 0, 150);
 
-    switch (position) {
-      case 'L':
-        fill(R,G,B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
+  if(is_checked == 0){  // 체크 풀린 경우
+    // image(video, 0, 0, width, height);
+    for (let i = 0; i < predictions.length; i += 1) {
+      sil = predictions[i].annotations;
+      noStroke();
+      if(is_L_checked == 0){
+        fill(L_R,L_G,L_B,0);
+      }
+      else{
+        fill(L_R,L_G,L_B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
+      }
+      face.lips();
+
+      if(is_C_checked == 0){
+        fill(C_R, C_G, C_B, 0); //투명도 10
+      }
+      else{
+        fill(C_R, C_G, C_B, alpha*20); //투명도 10
+      }
+      face.leftCheeck();  //볼터치
+      face.rightCheeck();
+
+      if(is_B_checked == 0){
+        fill(B_R, B_G, B_B, 0);
+      }
+      else{
+        fill(B_R, B_G, B_B, alpha*100);
+      }
+      face.leftEyebrow();  //눈썹
+      face.rightEyebrow();
+    }
+  }
+  else{
+    for (let i = 0; i < predictions.length; i += 1) {
+      sil = predictions[i].annotations;
+      noStroke();
+
+      if(is_L == true){
+        /* fill lip position */
+        fill(L_R,L_G,L_B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
         face.lips();
-        // case 'C':
-        //     /* fill cåheek position */
-        // case 'B':
-        //   /* fill eyebrow position */
-      default :
-        return 0;
+        if(is_C == true){
+          fill(C_R, C_G, C_B, alpha*20); //투명도 10
+          face.leftCheeck();  //볼터치
+          face.rightCheeck();
+          if (is_B == true){
+            fill(B_R, B_G, B_B, alpha*100);
+            face.leftEyebrow();  //눈썹
+            face.rightEyebrow();
+          }
+        }
+        else if (is_B == true){
+          fill(B_R, B_G, B_B, alpha*100);
+          face.leftEyebrow();  //눈썹
+          face.rightEyebrow();
+        }
+
+      }
+      else if (is_C == true){
+        fill(C_R, C_G, C_B, alpha*20); //투명도 10
+        face.leftCheeck();  //볼터치
+        face.rightCheeck();
+        if (is_B == true){
+          fill(B_R, B_G, B_B, alpha*100);
+          face.leftEyebrow();  //눈썹
+          face.rightEyebrow();
+        }
+      }
+      else if (is_B == true){
+        fill(B_R, B_G, B_B, alpha*100);
+        face.leftEyebrow();  //눈썹
+        face.rightEyebrow();
+      }
+
     }
   }
 
 }
-// fill(255, 255, 255, 50); //얼굴 윤곽 rgb+투명도
-// face.silhouette();
-
-//     fill(255,0,0, 50); //입술 rgb+투명도
-//     fill(R,G,B,A);
-//     face.lips();
-
-//     fill(0,0,255, 50); //오른쪽 눈 꺼풀 rgb+투명도
-//     face.rightEyeUpper();
-
-//     fill(0,0,0, 50); //오른쪽 눈 아래 rgb+투명도
-//     face.rightEyeLower();
-
-//     fill(0,0,255, 50); //왼쪽 눈 꺼풀 rgb+투명도
-//     face.leftEyeUpper();
-
-//     fill(0,0,0, 50); //왼쪽 눈 아래 rgb+투명도
-//     face.leftEyeLower();
-
-  //볼 좌우 연지곤지(수정필요)
-  // ellipse(sil.rightCheek[0][0], sil.rightCheek[0][1], 20 , 20);
-  // ellipse(sil.leftCheek[0][0], sil.leftCheek[0][1], 20 , 20);
