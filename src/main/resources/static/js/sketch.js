@@ -45,7 +45,6 @@ function drawKeypoints() {
         fill(L_R,L_G,L_B,alpha*100); // alpha 값이 0.x로 넘어오기때문에 * 100 필요
       }
       face.lips();
-
       if(is_C_checked == 0){
         fill(C_R, C_G, C_B, 0); //투명도 10
       }
@@ -59,7 +58,7 @@ function drawKeypoints() {
         fill(B_R, B_G, B_B, 0);
       }
       else{
-        fill(B_R, B_G, B_B, alpha*100);
+        fill(B_R, B_G, B_B, alpha*70);
       }
       face.leftEyebrow();  //눈썹
       face.rightEyebrow();
@@ -79,7 +78,7 @@ function drawKeypoints() {
           face.leftCheeck();  //볼터치
           face.rightCheeck();
           if (is_B == true){
-            fill(B_R, B_G, B_B, alpha*100);
+            fill(B_R, B_G, B_B, alpha*80);
             face.leftEyebrow();  //눈썹
             face.rightEyebrow();
           }

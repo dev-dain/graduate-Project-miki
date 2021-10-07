@@ -8,7 +8,7 @@ const deleteAllBtn = document.querySelector('.delete-all-btn');
 const goTestAllBtn = document.querySelector('.test-all-btn');
 goTestAllBtn.addEventListener('click', e => {
     e.preventDefault();
-    location.href = '/testAll';
+    location.href = '/testAll?pageNum=1';
 });
 goPaymentPartBtn.addEventListener('click', e => {
     e.preventDefault();

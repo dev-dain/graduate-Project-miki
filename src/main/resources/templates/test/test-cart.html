@@ -1,47 +1,64 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="/js/p5.min.js"></script>
-  <script src="/js/p5.dom.min.js"></script>
-  <script src="/js/ml5.min.js" type="text/javascript"></script>
-  <script src="/js/face.js"></script>
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/test.css">
-  <title>테스트</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/p5.min.js"></script>
+    <script src="/js/p5.dom.min.js"></script>
+    <script src="/js/ml5.min.js" type="text/javascript"></script>
+    <script src="/js/face.js"></script>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/test.css">
+    <title>테스트</title>
 </head>
 <body>
 <div id="wrap">
-  <header>
-    <div class="title-container">
-      <button class="go-prev">&lt;</button>
-      <h1 class="title">테스트</h1>
+    <header>
+        <div class="title-container">
+            <button class="go-prev">&lt;</button>
+            <h1 class="title">테스트</h1>
+        </div>
+        <div class="top-button-container">
+            <button class="go-cart" title="https://www.freepik.com"></button>
+        </div>
+    </header>
+    <div class="btn-container">
+        <button class="add-item btn">상품 추가</button>
+        <button class="pay-item btn">결제</button>
     </div>
-    <div class="top-button-container">
-      <button class="go-cart" title="https://www.freepik.com"></button>
-    </div>
-  </header>
-  <div class="btn-container">
-    <button class="add-item btn">상품 추가</button>
-    <button class="pay-item btn">결제</button>
-  </div>
-  <div class="item-row">
-    <button class="item-prev-btn">&lt;</button>
-    <div class="item-container">
+    <div class="item-row">
+        <button class="item-prev-btn">&lt;</button>
+        <div class="item-container">
 
+        </div>
+        <button class="item-next-btn">&gt;</button>
     </div>
-    <button class="item-next-btn">&gt;</button>
-  </div>
 </div>
+<div style="display: none">
+    <table class="first_table">
+        <tr th:each="item : ${testItems}" style="display: none">
+            <td class="invisible-but-need"
+                th:text="'+'+${item.itemId}+'+'+${item.itemName}+'+'+${item.itemImage}+'+'+${item.itemOptionId}+'+'+${item.itemOptionName}+'+'+${item.color}+'+'+${item.alpah}+'+'+${item.testLocation}+'+'"
+                style="display: none"></td>
+        </tr>
+    </table>
+</div>
+
 </body>
-<!-- thymleaf 같은 경우에 넣기만하면 페이지가 안열려서 따로 저장해둠 -->
 <script th:inline="javascript">
-    const item_obj = {};
-    const option_obj = {};
-    const optionIdList = [];
+    let item_obj = {};
+    let option_obj = {};
+    let optionIdList = [];
+    let itemIdList = [];
+    let itemImgList = [];
+    let itemNameList = [];
+    let item_id_list = [];
+
+    let idList = [];
+    // 위에 원래 다 const였음
+    let total_prd_cnt = 0; // 상품 개수 몇개인지 확인하는 변수
 
     let img_src;
     let item_name;
@@ -54,56 +71,69 @@
     let alpha = 0;
     let h_color;
 
+    let is_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+    let is_L_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+    let is_C_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+    let is_B_checked = 1; // ㅊㅔ크되어있는지 확인하는 변수
+
+    let real_item_obj = {};
     /*<![CDATA[*/
-    item_id = /*[[${item.id}]]*/;
-    img_src = /*[[${item_img.item_img}]]*/;
-    item_name = /*[[${item.name}]]*/;
 
-    /*[# th:each="option : ${item_options}"]*/
-    item_option_id = /*[[${option.id}]]*/;
+    // 윤희언니 이부분 보시면됩니다! testItems 를 item 으로 받아온거에요!
+    /*[# th:each="item : ${testItems}"]*/
+    itemIdList.push(/*[[${item.itemId}]]*/);
+    itemNameList.push(/*[[${item.itemName}]]*/);
+    itemImgList.push(/*[[${item.itemImage}]]*/);
+
+    item_option_id = /*[[${item.itemOptionId}]]*/;
+    item_ids = /*[[${item.itemId}]]*/;
+    item_id_list.push(item_ids);
     optionIdList.push(item_option_id);
-    option_obj[item_option_id] = /*[[${option.item_option_name}]]*/;
-    /*[/]*/
+    option_obj[item_option_id] = {
+        p_name: /*[[${item.itemName}]]*/,
+        name: /*[[${item.itemOptionName}]]*/,
+        parent_id: item_ids
+    };
 
-
-    /*[# th:each="t_color : ${testColor}"]*/
-    item_option_id = /*[[${t_color.item_option.id}]]*/;
+    item_option_id = /*[[${item.itemOptionId}]]*/;
     item_obj[item_option_id] = {
-        parent_id: item_id,
+        parent_id: option_obj[item_option_id].parent_id,
         id: item_option_id,
-        name: option_obj[item_option_id],
-        face_location: /*[[${t_color.face_location}]]*/,
-        c_code: /*[[${t_color.colorCode}]]*/,
-        alpha: /*[[${t_color.alpha}]]*/
+        p_name: option_obj[item_option_id].p_name,
+
+        name: option_obj[item_option_id].name,
+        face_location: /*[[${item.testLocation}]]*/,
+        c_code: /*[[${item.color}]]*/,
+        alpha: /*[[${item.alpah}]]*/
     }
     /*[/]*/
-
+    console.log(optionIdList);
     /*]]>*/
 
-    const itemOptionCount = optionIdList.length;
 
-    const itemContainer = document.querySelector('.item-container');
-    const itemDiv = document.createElement('div');
-    itemDiv.classList.add(`item-div-${item_id}`);
-
-    const itemCheck = document.createElement('button');
-    let isItemCheck = true;
-    itemCheck.classList.add(`item-check-btn-${item_id}`);
-    itemCheck.innerHTML = '&#10004;';
-    itemCheck.addEventListener('click', () => {
-        if (isItemCheck) {
-            itemCheck.innerHTML = '';
-        } else {
-            itemCheck.innerHTML = '&#10004;';
-        }
-    });
-
+    // 맨 처음 로딩시 -> 0번 옵션 색상으로 자동 설정
+    window.onload = function () {
+        // getClass = document.getElementsByClassName(`item_options`);
+        // // console.log(getClass);
+        // first_c = getClass[0].classList[1];
+        // // console.log(first_c)
+        // split_C = split(first_c,'-');
+        // set_color(split_C);
+    };
     // hex to RGB
-    let R,G,B;
-    const pos = 'N'; // 어느 부위인지 확인할 변수
-    let c_arr = [0,0,0]; // R,G,B 값 담아두는 배열
+    let R, G, B;
+    let L_R, L_G, L_B;
+    let C_R, C_G, C_B;
+    let B_R, B_G, B_B;
 
-    function hexToRgb ( hex ){
+    let is_L = false;
+    let is_C = false;
+    let is_B = false;
+
+    const pos = 'N'; // 어느 부위인지 확인할 변수
+    let c_arr = [0, 0, 0]; // R,G,B 값 담아두는 배열
+
+    function hexToRgb(hex) {
         var values = hex.split(''), r, g, b;
 
         r = parseInt(values[0].toString() + values[1].toString(), 16);
@@ -114,80 +144,448 @@
 
     }
 
-    let getClass;
-    let split_C;
-    let first_c =[];
+    function set_color(split_C) {
+        is_checked = 1;
 
-    const createItemOptionContainer = item_id => {
-        const itemOptionContainer = document.createElement('div');
-        itemOptionContainer.classList.add(`item-option-container-${item_id}`);
-
-        optionIdList.forEach(optionId => {
-            const option = document.createElement('button');
-            option.classList.add(`item_options`);
-            option.classList.add(`item-option-${item_id}-${optionId}`);
-            option.textContent = item_obj[optionId].name;
-            option.addEventListener('click', () => {
-                getClass = option.getAttribute('class');
-                split_C = split(getClass,'-'); // split_C[3] : optionId
-                // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
-                set_color(split_C);
-                // console.log(c_arr,R,G,B);
-                // console.log(typeof position,position);
-            });
-            itemOptionContainer.appendChild(option);
-        });
-
-        return itemOptionContainer;
-    };
-
-    // 맨 처음 로딩시 -> 0번 옵션 색상으로 자동 설정
-    window.onload = function(){
-        getClass = document.getElementsByClassName(`item_options`);
-        first_c = getClass[0].classList[1];
-        console.log(first_c)
-        split_C = split(first_c,'-');
-        set_color(split_C);
-    };
-
-    function set_color(split_C){
         position = item_obj[split_C[3]].face_location;
-        alpha = item_obj[split_C[3]].alpha;
+        alpha = 1.0;
         h_color = item_obj[split_C[3]].c_code;
         c_arr = hexToRgb(h_color);
-        R = c_arr[0];
-        G = c_arr[1];
-        B = c_arr[2];
-    }
-    const itemOptionContainer = createItemOptionContainer(item_id);
-
-    const itemImgContainer = document.createElement('div');
-    itemImgContainer.classList.add(`item-img-container-${item_id}`);
-    const itemImg = document.createElement('img');
-    itemImg.classList.add(`item-img-${item_id}`);
-    itemImg.src = img_src;
-
-    itemImgContainer.appendChild(itemImg);
-
-    itemImgContainer.addEventListener('click', () => {
-        console.log('clicked');
-        if (itemOptionContainer.classList.contains('show')) {
-            itemOptionContainer.classList.remove('show');
-        } else {
-            itemOptionContainer.classList.add('show');
+        switch (position) {
+            case 'L':
+                is_L_checked = 1;
+                is_L = true;
+                L_R = c_arr[0];
+                L_G = c_arr[1];
+                L_B = c_arr[2];
+                console.log('L 진입');
+                break;
+            case 'C':
+                is_C_checked = 1;
+                is_C = true;
+                C_R = c_arr[0];
+                C_G = c_arr[1];
+                C_B = c_arr[2];
+                console.log('C 진입');
+                break;
+            case 'B':
+                is_B_checked = 1;
+                is_B = true;
+                B_R = c_arr[0];
+                B_G = c_arr[1];
+                B_B = c_arr[2];
+                console.log('B 진입');
+                break;
         }
+    }
+
+    const goPrevBtn = document.querySelector('.go-prev');
+    const goCartBtn = document.querySelector('.go-cart');
+
+    goPrevBtn.addEventListener('click', () => history.back());
+    goCartBtn.addEventListener('click', () => location.href = `/cartList/${localStorage.getItem('store_id')}`);
+
+    const addItemBtn = document.querySelector('.add-item');
+    const payItemBtn = document.querySelector('.pay-item');
+
+    addItemBtn.addEventListener('click', () => location.href = '/categoryList');
+    payItemBtn.addEventListener('click', () => location.href = '/cartList');
+
+    /////// item개수만큼 for 문 돌리기! // item개수만큼 for문을 돌리면 div가 아이템 갯수만큼 만들어지지 않을까? -> 성공
+    /* 각 부위별로 존재하는지 확인하는 변수 ex) Y,N */
+    let exist_L = 'N';  // 입술 Lip
+    let exist_C = 'N';  // 볼 Cheek
+    let exist_B = 'N';  // 눈썹 Brow
+
+    let cur_item_id;
+    let cnt_item;
+
+    let arr_first_id = [];  // 상품별 맨 처음 옵션번호 저장
+    let arr_first_id_box = [];  // 상품별 맨 처음 옵션번호 저장
+
+
+    var set_items = function (pgNum) {
+        // console.log('set_items진입');
+        arr_first_id = [];
+
+        itemIdList = new Set(itemIdList); // Set() : 중복값 제거 (return type : Set)
+        cnt_item = itemIdList.size;
+        itemIdList = [...itemIdList];
+
+        itemImgList = [...new Set(itemImgList)];
+        itemNameList = [...new Set(itemNameList)];
+
+
+        for (let c = 0; c < cnt_item; c++) {
+            const itemOptionCount = optionIdList.length;
+            cur_item_id = itemIdList[c];
+            console.log(itemIdList[c]);
+
+            let b_point = true;
+            optionIdList.forEach(optionId => {
+                try {
+                    if (item_obj[optionId].parent_id == cur_item_id) {
+
+                        if (b_point == true) {
+                            arr_first_id_box.push(optionId);
+                            b_point = false;
+                        } else {
+                        }
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            });
+            console.log(arr_first_id_box);
+
+            const itemContainer = document.querySelector('.item-container');
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add(`item-div-${itemIdList[c]}`);
+            itemDiv.classList.add(`item-div`);
+            itemDiv.classList.add(`${pgNum}-page`);
+
+            const itemCheck = document.createElement('button');
+            itemCheck.classList.add(`item-check-btn-${itemIdList[c]}`);
+            itemCheck.classList.add(`${item_obj[arr_first_id_box[c]].face_location}`); // 전체 테스트에도 적용해야하는 부분 1
+            console.log(`${arr_first_id_box[c]} - 첫 옵션아이디값`);
+            // console.log(optionIdList)
+            // switch 문에서 확인해야할 것 -> 현재 생성되는 버튼의 제품의 face_location 이 어딘지 확인하고, 맨 처음요소만 checkbox 생성
+            // console.log(item_obj[optionIdList[c]].face_location);
+            let isItemCheck = true;
+            console.log(`isItemCheck: ${isItemCheck}`);
+
+
+            itemCheck.addEventListener('click', () => {
+                // 전체 테스트에도 적용해야하는 부분 2
+                if (isItemCheck) {
+                    itemCheck.innerHTML = '';
+                    isItemCheck = false;
+                    is_checked = 0;
+                    if (itemCheck.classList.contains("L")) {
+                        console.log('L포함');
+                        is_L_checked = 0;
+                    } else if (itemCheck.classList.contains("C")) {
+                        console.log('C포함');
+                        is_C_checked = 0;
+                    } else if (itemCheck.classList.contains("B")) {
+                        console.log('B포함');
+                        is_B_checked = 0;
+                    }
+                } else {
+                    itemCheck.innerHTML = '&#10004;';
+                    isItemCheck = true;
+                    is_checked = 1;
+
+                    if (itemCheck.classList.contains("L")) {
+                        console.log('L포함');
+                        is_L_checked = 1;
+                    } else if (itemCheck.classList.contains("C")) {
+                        console.log('C포함');
+                        is_C_checked = 1;
+                    } else if (itemCheck.classList.contains("B")) {
+                        console.log('B포함');
+                        is_B_checked = 1;
+                    }
+
+                }
+            });
+            let getClass;
+            let split_C;
+
+            let is_option_show = false; // 다른 상품의 옵션창이 열려있는지 확인하기 위한 변수
+            item_id = itemIdList[c];
+            const createItemOptionContainer = item_id => {
+
+                const itemOptionContainer = document.createElement('div');
+                itemOptionContainer.classList.add(`item-option-container-${itemIdList[c]}`);
+
+                let break_point = true;
+
+                optionIdList.forEach(optionId => {
+                    try {
+                        if (item_obj[optionId].parent_id == cur_item_id) {
+
+                            if (break_point == true) {
+                                arr_first_id.push(optionId);
+                                break_point = false;
+                            } else {
+                                const option = document.createElement('button');
+                                option.classList.add(`item_options`);
+                                option.classList.add(`item-option-${itemIdList[c]}-${optionId}`);
+                                option.textContent = item_obj[optionId].name;
+                                option.addEventListener('click', () => {
+
+                                    getClass = option.getAttribute('class');
+                                    split_C = split(getClass, '-'); // split_C[3] : optionId
+                                    // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
+                                    set_color(split_C);
+                                    // console.log(c_arr,R,G,B);
+                                    // console.log(typeof position,position);
+                                    itemOptionContainer.classList.remove('show'); // option 선택 시 옵션창 사라지게
+                                    is_option_show = false;
+                                });
+                                itemOptionContainer.appendChild(option);
+                            }
+                            itemOptionContainer.addEventListener('click', () => {
+                                itemOptionContainer.classList.remove('show');
+                            })  // 옵션 클릭 시 옵션창 닫히게 설정 , 전체 테스트에도 적용해야하는 부분 3
+
+                        }
+                    } catch (e) {
+                        console.log(e);
+                    }
+                });
+
+                return itemOptionContainer;
+            };
+
+
+            const itemOptionContainer = createItemOptionContainer(itemIdList[c]);
+
+            const itemImgContainer = document.createElement('div');
+            itemImgContainer.classList.add(`item-img-container-${itemIdList[c]}`);
+            const itemImg = document.createElement('img');
+            itemImg.classList.add(`item-img-${itemIdList[c]}`);
+            itemImg.src = itemImgList[c];
+
+            itemImgContainer.appendChild(itemImg);
+
+
+            itemImgContainer.addEventListener('click', () => {
+                const checkedContainer = document.querySelector('.checked');
+
+                console.log('clicked');
+                if (itemOptionContainer.classList.contains('show')) {
+                    itemOptionContainer.classList.remove('show');
+                } else {
+                    itemOptionContainer.classList.add('show');
+                    is_option_show = true;
+                    if (checkedContainer) {
+                        checkedContainer.innerText = ' ';
+                        checkedContainer.classList.remove('checked');
+
+                        itemImgContainer.previousSibling.innerHTML = '✓';
+                        console.log(itemImgContainer.previousSibling);
+                        itemImgContainer.previousSibling.classList.add('checked');
+                    } else {
+                    }
+                }
+            });
+
+            const itemTitle = document.createElement('div');
+            itemTitle.classList.add(`item-title-${itemIdList[c]}`);
+            itemTitle.textContent = itemNameList[c];
+
+            itemDiv.appendChild(itemCheck);
+            itemDiv.appendChild(itemImgContainer);
+            itemDiv.appendChild(itemTitle);
+            itemDiv.appendChild(itemOptionContainer);
+
+            itemContainer.appendChild(itemDiv);
+        }
+    }
+    console.log('set_items진입');
+
+    set_items(1);
+    let isFirstItem_L = true;
+    let isFirstItem_C = true;
+    let isFirstItem_B = true;
+
+    var set_checkbox = function () {
+        console.log('set_checkbox 진입');
+        isFirstItem_L = true;
+        isFirstItem_C = true;
+        isFirstItem_B = true;
+
+        for (let k = 0; k < itemIdList.length; k++) {
+            let item_check = document.querySelector(`.item-option-${itemIdList[k]}-${String(parseInt(arr_first_id[k]) + 1)}`);  // 아이템 정보
+            let item_checkbox = document.querySelector(`.item-check-btn-${itemIdList[k]}`); // 체크상자
+            console.log(item_check);
+            console.log(itemIdList[k], arr_first_id[k]);
+
+            getClass = item_check.getAttribute('class');
+            // console.log(getClass);
+            split_C = getClass.split("-"); // split_C[3] : optionId
+            // // 컬러코드를 불러와서 sketch.js에 있는 다시 그리는 함수를 호출
+            // set_color(split_C);
+
+
+            switch (item_obj[arr_first_id[k]].face_location) {
+                case "L":
+                    if (isFirstItem_L == true) {
+                        isFirstItem_L = false;
+                        item_checkbox.innerHTML = '&#10004;';
+                        item_checkbox.classList.add(`checked`);
+                        set_color(split_C);
+                        break;
+                    } else
+                        break;
+                case "C":
+                    if (isFirstItem_C == true) {
+                        isFirstItem_C = false;
+                        item_checkbox.innerHTML = '&#10004;';
+                        item_checkbox.classList.add(`checked`);
+                        set_color(split_C);
+                        break;
+                    } else
+                        break;
+                case "B":
+                    if (isFirstItem_B == true) {
+                        isFirstItem_B = false;
+                        item_checkbox.innerHTML = '&#10004;';
+                        item_checkbox.classList.add(`checked`);
+                        set_color(split_C);
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+    }
+    set_checkbox();
+
+    let left_btn;
+    let right_btn;
+    let pageNum = 1;
+
+
+    left_btn = document.querySelector('.item-prev-btn');
+    right_btn = document.querySelector('.item-next-btn');
+
+    left_btn.addEventListener('click', () => {
+        console.log(pageNum);
+        if (pageNum <= 1) {
+            alert('맨 처음 목록입니다!');
+        } else {
+            fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+                .then(res => res.text())
+                .then(res => {
+                    // console.log(res)
+                    let last_page = `${pageNum}-page`;
+                    pageNum -= 1;
+                    let page = `${pageNum}_page`;
+                    console.log(last_page);
+                    if (document.getElementsByClassName(page) != undefined) {
+                        const elements = document.getElementsByClassName(page);
+                        const next_element = document.getElementsByClassName(last_page);
+                        console.log(next_element);
+                        try {
+                            /* 이전 페이지 삭제 */
+                            for (let k = 0; k < next_element.length; k++) {
+                                next_element[k].parentNode.removeChild(next_element[k]);
+                            }
+                            /* 이전 페이지 복구 */
+                            for (let i = 0; i < elements.length; i++) {
+                                elements[i].style.display = 'block';
+                            }
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                });
+        }
+
+
     });
 
-    const itemTitle = document.createElement('div');
-    itemTitle.classList.add(`item-title-${item_id}`);
-    itemTitle.textContent = item_name;
+    let arr_1 = [];
+    let arr_2 = [];
+    let arr_3 = [];
 
-    itemDiv.appendChild(itemCheck);
-    itemDiv.appendChild(itemImgContainer);
-    itemDiv.appendChild(itemTitle);
-    itemDiv.appendChild(itemOptionContainer);
+    let TotalCnt;
 
-    itemContainer.appendChild(itemDiv);
+    right_btn.addEventListener('click', () => {
+        console.log(pageNum);
+        // 아이템 정보 지우기
+        const cell = document.getElementsByClassName("item-div");
+
+        try {
+            for (let i = 0; i < cell.length; i++) {
+                cell[i].style.display = 'none';
+                cell[i].classList.add(`${pageNum}_page`);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        pageNum += 1;
+        if (pageNum != 1) {
+            fetch(`http://localhost:8080/testAll?pageNum=${pageNum}`)
+                .then(res => res.text())
+                .then(res => {
+                    // console.log(res);
+                    item_obj = {};
+                    option_obj = {};
+                    optionIdList = [];
+                    itemIdList = [];
+                    itemImgList = [];
+                    itemNameList = [];
+                    item_id_list = [];
+                    let itemOptionNameList = [];
+                    let itemColorList = [];
+                    let itemAlphaList = [];
+                    let itemTestLocationList = [];
+
+
+                    arr_1 = res.split('<table class="first_table">');
+                    arr_2 = arr_1[1].split('<td class="invisible-but-need" style="display: none">');
+                    TotalCnt = (arr_2.length) - 1;
+
+                    // 잘 넘어온다면 itemId / itemName / itemImage / itemOptionId / itemOptionName / color / colorCode alpha / face_location  순으로 넘어옴
+
+                    for (let cnt = 1; cnt < TotalCnt; cnt++) {
+                        itemIdList.push(arr_2[cnt].split('+')[1]);
+                        itemNameList.push(arr_2[cnt].split('+')[2]);
+                        itemImgList.push(arr_2[cnt].split('+')[3]);
+                        optionIdList.push(arr_2[cnt].split('+')[4]);
+                        itemOptionNameList.push(arr_2[cnt].split('+')[5]);
+                        itemColorList.push(arr_2[cnt].split('+')[6]);
+                        itemAlphaList.push(arr_2[cnt].split('+')[7]);
+                        itemTestLocationList.push(arr_2[cnt].split('+')[8]);
+                    }
+                    optionIdList.forEach(function (item, index) {
+                        option_obj[item] = {
+                            p_name: itemNameList[index],
+                            name: itemOptionNameList[index],
+                            parent_id: itemIdList[index]
+                        };
+
+                        item_obj[item] = {
+                            parent_id: option_obj[item].parent_id,
+                            id: item,
+                            p_name: option_obj[item].p_name,
+                            name: option_obj[item].name,
+                            face_location: itemTestLocationList[index],
+                            c_code: itemColorList[index],
+                            alpha: itemAlphaList[index]
+                        }
+
+                    });
+                    console.log(item_obj);
+
+                    set_items(pageNum);
+                    // set_checkbox();
+
+                    //
+
+
+                    // const idList = [];
+                    //   for(let i; i<arr_5.length;i++){
+                    //     itemIdList.push();
+                    //     itemNameList.push();
+                    //     itemImgList.push();
+                    //   }
+
+                });
+        } else {
+            return;
+        }
+
+    });
+
+    // 필요한 기능 - 1. 각 부위별로 첫번째 제품 색만 적용시키기 ( 입술, 아이브로우, 볼터치 )
+
+
 </script>
 <script src="/js/sketch.js"></script>
 </html>
