@@ -49,6 +49,7 @@
 </body>
 <script th:inline="javascript">
     let item_obj = {};
+    let itemId_obj = {};
     let option_obj = {};
     let optionIdList = [];
     let itemIdList = [];
@@ -95,6 +96,12 @@
         parent_id: item_ids
     };
 
+    itemId_obj[item_ids] = {
+        face_location: /*[[${item.testLocation}]]*/,
+        c_code: /*[[${item.color}]]*/,
+        alpha: /*[[${item.alpah}]]*/
+    }
+
     item_option_id = /*[[${item.itemOptionId}]]*/;
     item_obj[item_option_id] = {
         parent_id: option_obj[item_option_id].parent_id,
@@ -106,6 +113,8 @@
         c_code: /*[[${item.color}]]*/,
         alpha: /*[[${item.alpah}]]*/
     }
+
+
     /*[/]*/
     console.log(optionIdList);
     /*]]>*/
@@ -236,7 +245,7 @@
                     console.log(e);
                 }
             });
-            console.log(arr_first_id_box);
+            // console.log(arr_first_id_box);
 
             const itemContainer = document.querySelector('.item-container');
             const itemDiv = document.createElement('div');
@@ -247,7 +256,7 @@
             const itemCheck = document.createElement('button');
             itemCheck.classList.add(`item-check-btn-${itemIdList[c]}`);
             itemCheck.classList.add(`${item_obj[arr_first_id_box[c]].face_location}`); // 전체 테스트에도 적용해야하는 부분 1
-            console.log(`${arr_first_id_box[c]} - 첫 옵션아이디값`);
+            // console.log(`${arr_first_id_box[c]} - 첫 옵션아이디값`);
             // console.log(optionIdList)
             // switch 문에서 확인해야할 것 -> 현재 생성되는 버튼의 제품의 face_location 이 어딘지 확인하고, 맨 처음요소만 checkbox 생성
             // console.log(item_obj[optionIdList[c]].face_location);
@@ -349,25 +358,36 @@
             itemImg.src = itemImgList[c];
 
             itemImgContainer.appendChild(itemImg);
-
+            console.log('clicked');
 
             itemImgContainer.addEventListener('click', () => {
-                const checkedContainer = document.querySelector('.checked');
+                const checked = document.getElementsByClassName('checked');
+                const checkedContainer = document.getElementsByClassName('checked');
+                const clicked_item_id = (itemImgContainer.classList[0].split('-'))[3];
+                // console.log(clicked_item_id);
+                console.log(checkedContainer);
+                let clicked_pos;
+                clicked_pos = itemId_obj[clicked_item_id].face_location;
+                console.log(clicked_pos);
 
-                console.log('clicked');
                 if (itemOptionContainer.classList.contains('show')) {
                     itemOptionContainer.classList.remove('show');
                 } else {
                     itemOptionContainer.classList.add('show');
                     is_option_show = true;
-                    if (checkedContainer) {
-                        checkedContainer.innerText = ' ';
-                        checkedContainer.classList.remove('checked');
+                    for(let i=0;i<checked.length;i++){
+                        if(checked[i].classList.contains(clicked_pos)){
+                            checked[i].innerText = ' ';
+                            checked[i].classList.remove('checked');
 
+                        }
+                        else{
+
+                        }
+                        // 체크박스 생성
                         itemImgContainer.previousSibling.innerHTML = '✓';
                         console.log(itemImgContainer.previousSibling);
                         itemImgContainer.previousSibling.classList.add('checked');
-                    } else {
                     }
                 }
             });
