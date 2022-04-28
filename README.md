@@ -1,6 +1,5 @@
 
-# graduate-Project-miki
-스마트 키오스크 MIKI미키
+# 스마트 키오스크 MIKI미키
 
 ![image](https://user-images.githubusercontent.com/43867665/165786178-92817ef0-82ad-4590-a0da-93301e68ce54.png)
 
